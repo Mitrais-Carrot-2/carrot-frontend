@@ -6,9 +6,9 @@ import {useRouter} from "next/router"
 
 export default function Navbar() {
     const router = useRouter();
-    
+
     return (
-        <nav className="navbar navbar-expand-md navbar-light fixed-top bg-light">
+        <nav className="navbar navbar-expand-md navbar-light fixed-top bg-light" style={{marginBottom: `45px`}}>
             <a onClick={() => router.push("/")} className="navbar-brand" href="#">
                 <Image src={mitraisLogo} alt="logo"></Image>
             </a>
