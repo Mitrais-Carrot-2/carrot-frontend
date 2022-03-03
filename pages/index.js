@@ -19,7 +19,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <main role="main" className="container" style={{paddingTop: `45px`}}>
+      <main role="main" className="container">
         <h2 className="mt-4 pl-0 text-grey ml-0">MITRAIS CARROT PROTOTYPE</h2>
         <p className="text-info">
           This page is not a part of Mitrais Carrot Web App, I made it just to
