@@ -1,12 +1,15 @@
 //create navbar component in react
 import Image from "next/image"
 import mitraisLogo from "../public/img/mitrais-logo.png"
+import {useRouter} from "next/router"
 
 
 export default function Navbar() {
+    const router = useRouter();
+    
     return (
         <nav className="navbar navbar-expand-md navbar-light fixed-top bg-light">
-            <a className="navbar-brand" href="#">
+            <a onClick={() => router.push("/")} className="navbar-brand" href="#">
                 <Image src={mitraisLogo} alt="logo"></Image>
             </a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">

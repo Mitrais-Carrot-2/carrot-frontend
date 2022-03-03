@@ -5,7 +5,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useRouter } from "next/router";
 
-
 export default function Home() {
   const router = useRouter();
 
@@ -20,7 +19,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <main role="main" className="container">
+      <main role="main" className="container" style={{paddingTop: `45px`}}>
         <h2 className="mt-4 pl-0 text-grey ml-0">MITRAIS CARROT PROTOTYPE</h2>
         <p className="text-info">
           This page is not a part of Mitrais Carrot Web App, I made it just to
@@ -39,19 +38,31 @@ export default function Home() {
 
           <div className="row">
             <div className="col-md-12">
-              <button onClick={()=> router.push('/employee')} className="btn btn-carrot radius-5">
+              <button
+                onClick={() => router.push("/employee")}
+                className="btn btn-carrot radius-5"
+              >
                 {" "}
                 Employee
               </button>
-              <button onClick={()=> router.push('/manager')} className="btn btn-carrot radius-5">
+              <button
+                onClick={() => router.push("/manager")}
+                className="btn btn-carrot radius-5"
+              >
                 {" "}
                 Manager
               </button>
-              <button onClick={()=> router.push('/merchant')} className="btn btn-carrot radius-5">
+              <button
+                onClick={() => router.push("/merchant")}
+                className="btn btn-carrot radius-5"
+              >
                 {" "}
                 Merchant
               </button>
-              <button onClick={()=> router.push('/farmer')} className="btn btn-carrot radius-5">
+              <button
+                onClick={() => router.push("/farmer")}
+                className="btn btn-carrot radius-5"
+              >
                 {" "}
                 Farmer / Stockist
               </button>
