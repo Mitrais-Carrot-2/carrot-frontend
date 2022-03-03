@@ -3,8 +3,12 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useRouter } from "next/router";
+
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <div className={styles.container}>
       <Head>
@@ -35,29 +39,29 @@ export default function Home() {
 
           <div className="row">
             <div className="col-md-12">
-              <a href="index-employee.html" className="btn btn-carrot radius-5">
+              <button onClick={()=> router.push('/employee')} className="btn btn-carrot radius-5">
                 {" "}
                 Employee
-              </a>
-              <a href="index-manager.html" className="btn btn-carrot radius-5">
+              </button>
+              <button onClick={()=> router.push('/manager')} className="btn btn-carrot radius-5">
                 {" "}
                 Manager
-              </a>
-              <a href="index-merchant.html" className="btn btn-carrot radius-5">
+              </button>
+              <button onClick={()=> router.push('/merchant')} className="btn btn-carrot radius-5">
                 {" "}
                 Merchant
-              </a>
-              <a href="index-farmer.html" className="btn btn-carrot radius-5">
+              </button>
+              <button onClick={()=> router.push('/farmer')} className="btn btn-carrot radius-5">
                 {" "}
                 Farmer / Stockist
-              </a>
-              <a
-                href="index-administrator.html"
+              </button>
+              <button
+                onClick={() => router.push("/admin")}
                 className="btn btn-carrot radius-5"
               >
                 {" "}
                 Administrator
-              </a>
+              </button>
             </div>
           </div>
         </div>
