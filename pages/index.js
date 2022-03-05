@@ -1,8 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import styles from "@styles/Home.module.css";
+import Navbar from "@components/Navbar";
+import Footer from "@components/Footer";
+import StockistModal from "@components/stockistModal";
+import ManagerModal from "@components/ManagerModal";
 import { useRouter } from "next/router";
 
 export default function Home() {
@@ -77,7 +79,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      <ManagerModal/>
+      <StockistModal/>
       <Footer />
     </div>
   );

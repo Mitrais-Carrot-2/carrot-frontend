@@ -1,15 +1,16 @@
+//please ignore if it says eslint typescript error. it's not
 {
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "@/*": [
-                "src/*"
-            ],
             "@components/*": [
-                "src/components/*"
+                "components/*"
             ],
             "@styles/*": [
-                "src/styles/*"
+                "styles/*"
+            ],
+            "@public/*": [
+                "public/*"
             ]
         }
     }
