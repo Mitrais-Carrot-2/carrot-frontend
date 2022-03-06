@@ -3,15 +3,24 @@ import Image from "next/image";
 import styles from "@styles/Home.module.css";
 import Navbar from "@components/Navbar";
 import Footer from "@components/Footer";
-import StockistModal from "@components/stockistModal";
-import ManagerModal from "@components/ManagerModal";
+import StockistLevelModal from "@components/StockistRewardModal";
+import ManagerLevelModal from "@components/ManagerRewardModal";
 import { useRouter } from "next/router";
+import SharingLevelModal from "@components/SharingLevelModal";
 
 export default function Home() {
   const router = useRouter();
 
   return (
-    <div className={styles.container}>
+    <body>
+      <style jsx>{`
+        .btn {
+          margin-left: 10px;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+      `}</style>
+
       <Head>
         <title>Mitrais Carrot</title>
         <meta
@@ -21,9 +30,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <main role="main" className="container">
+      <main role="main" className="container mx-auto sm:px-4">
         <h2 className="mt-4 pl-0 text-grey ml-0">MITRAIS CARROT PROTOTYPE</h2>
-        <p className="text-info">
+        <p className="text-teal-500">
           This page is not a part of Mitrais Carrot Web App, I made it just to
           make it easier for you to switch between role. <br />
           This is a *pre-alpha*, expect plenty of bugs and missing features.
@@ -31,15 +40,15 @@ export default function Home() {
         </p>
       </main>
       <section className="role py-3">
-        <div className="container search-box py-3">
-          <div className="row">
-            <div className="col-md-12">
+        <div className="container mx-auto sm:px-4 search-box py-3">
+          <div className="flex flex-wrap">
+            <div className="md:w-full pr-4 pl-4">
               <h4 className="text-grey-dark">Choose your role:</h4>
             </div>
           </div>
 
-          <div className="row">
-            <div className="col-md-12">
+          <div className="flex flex-wrap">
+            <div className="md:w-full pr-4 pl-4">
               <button
                 onClick={() => router.push("/employee")}
                 className="btn btn-carrot radius-5"
@@ -79,9 +88,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <ManagerModal/>
-      <StockistModal/>
       <Footer />
-    </div>
+      <SharingLevelModal />
+      <ManagerLevelModal />
+      <StockistLevelModal />
+    </body>
   );
 }

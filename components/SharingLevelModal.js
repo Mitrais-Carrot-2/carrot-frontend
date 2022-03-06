@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-sync-scripts */
 
-export default function StockistModal() {
+export default function SharingLevelModal() {
   return (
     <div
       className="modal opacity-0"
-      id="stockistReward"
+      id="sharingLevel"
       tabIndex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -14,7 +14,7 @@ export default function StockistModal() {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalLabel">
-              Add New Stockist Reward
+              Add New Sharing Level
             </h5>
             <button
               type="button"
@@ -28,7 +28,7 @@ export default function StockistModal() {
           <div className="modal-body">
             <form>
               <div className="mb-4">
-                <label htmlFor="text">Type Name</label>
+                <label htmlFor="text">Grade</label>
                 <input
                   id="text"
                   name="text"
@@ -37,20 +37,11 @@ export default function StockistModal() {
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="text1">Carrot</label>
+                <label htmlFor="text1">Sharing Level</label>
                 <input
                   id="text1"
                   name="text1"
                   type="text"
-                  className="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded here"
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="text1">Date</label>
-                <input
-                  id="text1"
-                  name="text1"
-                  type="date"
                   className="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded here"
                 />
               </div>
@@ -59,7 +50,7 @@ export default function StockistModal() {
           <div className="modal-footer">
             <button
               type="button"
-              className="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline font-normal text-blue-700 bg-transparent"
+              className="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline text-blue-700 bg-transparent"
               data-dismiss="modal"
             >
               Cancel

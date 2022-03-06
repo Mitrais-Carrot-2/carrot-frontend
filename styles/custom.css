@@ -1,16 +1,16 @@
 /*@import url('https://fonts.googleapis.com/css?family=Muli:400,600,800');*/
 html {
-  position: relative;
-  min-height: 100%;
+  position: relative !important;
+  min-height: 100% !important;
 }
 
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
-  background: url("../public/img/mitrais-carrot-bg-pattern.png") #ecf0f5;
-  background-position: bottom right;
-  background-repeat: no-repeat;
-  font-family: "Verdana", sans-serif;
+  margin-bottom: 60px !important;
+  background: url("../public/img/mitrais-carrot-bg-pattern.png") #ecf0f5 !important;
+  background-position: bottom right !important;
+  background-repeat: no-repeat !important;
+  font-family: "Verdana", sans-serif !important;
 }
 
 .footer {
@@ -25,7 +25,7 @@ body {
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: 1.8rem !important;
 }
 
 /* Custom page CSS
@@ -34,7 +34,7 @@ h2 {
 /* Not required for template or sticky footer method. */
 
 body > .container {
-  padding: 60px 0 0 0;
+  padding: 60px 0 0 0 !important; 
 }
 
 .footer > .container {
@@ -43,7 +43,7 @@ body > .container {
 }
 
 code {
-  font-size: 80%;
+  font-size: 80% !important;
 }
 
 .navbar-light {
@@ -70,10 +70,10 @@ code {
 }
 
 label {
-  text-transform: uppercase;
-  font-weight: bolder;
-  font-size: 11px;
-  color: #4c1283;
+  text-transform: uppercase !important;
+  font-weight: bolder !important;
+  font-size: 11px !important;
+  color: #4c1283 !important;
 }
 
 .search-box,
@@ -91,11 +91,11 @@ label {
 }
 
 table {
-  font-size: 14px;
+  font-size: 14px !important;
 }
 
 table td {
-  color: #666;
+  color: #666 !important;
 }
 
 .btn {

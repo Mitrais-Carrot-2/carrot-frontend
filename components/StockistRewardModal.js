@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-sync-scripts */
 
-export default function ManagerModal() {
+export default function StockistRewardModal() {
   return (
     <div
       className="modal opacity-0"
-      id="managerReward"
+      id="stockistReward"
       tabIndex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -14,7 +14,7 @@ export default function ManagerModal() {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalLabel">
-              Add New Manager Reward
+              Add New Stockist Reward
             </h5>
             <button
               type="button"
@@ -42,6 +42,15 @@ export default function ManagerModal() {
                   id="text1"
                   name="text1"
                   type="text"
+                  className="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded here"
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="text1">Date</label>
+                <input
+                  id="text1"
+                  name="text1"
+                  type="date"
                   className="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded here"
                 />
               </div>
