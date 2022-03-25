@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Head from "@components/Head";
 import Image from "next/image";
 import styles from "@styles/Home.module.css";
 import Navbar from "@components/Navbar";
@@ -8,19 +8,13 @@ import ManagerRewardModal from "@components/ManagerRewardModal";
 import { useRouter } from "next/router";
 import SharingLevelModal from "@components/SharingLevelModal";
 
+
 export default function Employee() {
   const router = useRouter();
 
   return (
     <body>
-      <Head>
-        <title>Mitrais Carrot</title>
-        <meta
-          name="description"
-          content="Mitrais Carrot is a system used for administrative task of all company trainings."
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Head />
       <Navbar />
       <main role="main" className="container mx-auto sm:px-4">
         <h2 className="mt-4 pl-0 text-grey ml-0">DASHBOARD</h2>

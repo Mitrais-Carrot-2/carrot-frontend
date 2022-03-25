@@ -34,8 +34,9 @@ export default function Navbar() {
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                
               >
-                <i className="fa fa-bell notif-icon"></i>
+                <i className="fa fa-bell fa-2x notif-icon"></i>
                 <div className="notif-active"></div>
               </a>
               <div
