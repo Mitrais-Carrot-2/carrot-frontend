@@ -34,7 +34,6 @@ export default function StaffTable() {
         }
     ];
 
-    // filter staff by date asc
     const sortedStaffs = staffs.sort((a, b) => {
         return new Date(a.date) - new Date(b.date);
     });
