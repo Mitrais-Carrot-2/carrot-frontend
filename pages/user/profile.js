@@ -2,66 +2,73 @@ import Footer from "@components/Footer";
 import Navbar from "@components/Navbar";
 import moment from "moment";
 import Image from "next/image";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function Profile(/* props atau user */) {
-  //below contoh user data
-  const user = {
-    username: "john_doe",
-    email: "johndoe@gmail.com",
-    firstName: "John",
-    lastName: "Doe",
-    address: "Yogyakarta",
-    birthDate: "1997-01-01",
-    joinDate: "2021-10-10",
-    gender: "Male",
-    phoneNum: "08123456789",
-    isActive: true,
-    image:
-      "https://st.depositphotos.com/1771835/2740/i/950/depositphotos_27403227-stock-photo-attractive-young-man-thumbs-up.jpg",
-    jobFamily: "SE",
-    jobGrade: "AN",
-    supervisorId: 0,
-    roles: [
-      {
-        id: 2,
-        name: "ROLE_MANAGER",
-      },
-      {
-        id: 1,
-        name: "ROLE_ADMIN",
-      },
-    ],
-    userGroups: [],
-  };
+  const [user, setUser] = useState({});
+  const [picture, setPicture] = useState("");
+
+  useEffect(() => {
+    axios.get("http://localhost:8181/api/user/5").then((res) => {
+      setUser(res.data), setPicture("/img/defaultImage.png");
+    });
+  }, []);
+
+  //nge check ke api get image, kalo image ada, maka set picturenya. kalo gak ada balik ke default image.
+  // function nya bakal jalan kalo ada state change di user. which is gonna happen once pas on load screen.
+  useEffect(() => {
+    axios
+      .get("http://localhost:8181/api/user/getImage/" + user.username)
+      .then(
+        setPicture("http://localhost:8181/api/user/getImage/" + user.username)
+      )
+      .catch((err) => {
+        setPicture("/img/defaultImage.png");
+      });
+  }, [user]);
 
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto my-5 p-5">
+      <div className="container mx-auto my-5 break-words">
         <div className="md:flex no-wrap md:-mx-2 ">
           {/* <!-- Left Side --> */}
           <div className="w-full md:w-3/12 md:mx-2">
             {/* <!-- Profile Card --> */}
             <div className="bg-white p-3 border-t-4 border-green-400">
-              <div className="overflow-hidden block">
-                <Image
-                  className="h-auto w-full mx-auto"
-                  src={user.image}
-                  alt="profile-picture"
-                  layout="responsive"
-                  width={200}
-                  height={200}
-                ></Image>
+              <div className="overflow-hidden block rounded-full cursor-pointer hover:opacity-70">
+                {picture ? (
+                  <Image
+                    className="h-auto w-full mx-auto"
+                    src={picture}
+                    alt="profile-picture"
+                    layout="responsive"
+                    objectFit="cover"
+                    width={200}
+                    height={200}
+                  ></Image>
+                ) : (
+                  <Image
+                    className="h-auto w-full mx-auto"
+                    src={"/img/loading.gif"}
+                    alt="profile-picture"
+                    layout="responsive"
+                    objectFit="cover"
+                    width={200}
+                    height={200}
+                  ></Image>
+                )}
               </div>
               <h1 className="text-gray-900 font-bold text-xl leading-8 my-1 text-center">
-                {user.username}
+                {user.username ? user.username : "Loading..."}
               </h1>
               <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                 <li className="flex items-center py-3">
                   <span>Status</span>
                   <span className="ml-auto">
                     <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">
-                      {user.isActive ? "Active" : "Inactive"}
+                      {user.active ? "Active" : "Inactive"}
                     </span>
                   </span>
                 </li>
@@ -69,7 +76,9 @@ export default function Profile(/* props atau user */) {
                   <span>Member since</span>
                   <span className="ml-auto">
                     {/* print join date to DD MMMM YYYY */}
-                    {moment(user.joinDate).format("DD MMMM YYYY")}
+                    {user.joinDate
+                      ? moment(user.joinDate).format("DD MMMM YYYY")
+                      : ""}
                   </span>
                 </li>
               </ul>
@@ -113,7 +122,9 @@ export default function Profile(/* props atau user */) {
                   </div>
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">Gender</div>
-                    <div className="px-4 py-2">{user.gender}</div>
+                    <div className="px-4 py-2">
+                      {user.gender ? user.gender : ""}
+                    </div>
                   </div>
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">Contact No.</div>
@@ -139,14 +150,39 @@ export default function Profile(/* props atau user */) {
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">Birthday</div>
                     <div className="px-4 py-2">
-                      {moment(user.birthDate).format("DD MMMM YYYY")}
+                      {user.birthDate
+                        ? moment(user.birthDate).format("DD MMMM YYYY")
+                        : ""}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             {/* <!-- End of about section --> */}
-
+            {user.username ? (
+              <div className="flex flex-row">
+                <div className="text-center mt-6 mx-1">
+                  <button
+                    className="hover:opacity-70 bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+                    type="button"
+                    style={{ transition: "all .15s ease" }}
+                  >
+                    Update Image
+                  </button>
+                </div>
+                <div className="text-center mt-6">
+                  <button
+                    className="hover:opacity-70 bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+                    type="button"
+                    style={{ transition: "all .15s ease" }}
+                  >
+                    Update Profile
+                  </button>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
             <div className="my-4"></div>
           </div>
         </div>
