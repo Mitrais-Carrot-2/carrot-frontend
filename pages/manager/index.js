@@ -29,6 +29,46 @@ export default function Index() {
 const Tabs = ({ color }) => {
     const [openTab, setOpenTab] = React.useState(1);
 
+    const columns = [
+        {
+            name: '#',
+            selector: row => row.numrow,
+            maxWidth: '10px',
+            sortable: true,
+        },
+        {
+            name: 'Rewarded To',
+            selector: row => row.name,
+            minWidth: '200px',
+            sortable: true
+        },
+        {
+            name: 'JF',
+            selector: row => row.jf,
+            sortable: true
+        },
+        {
+            name: 'Grade',
+            selector: row => row.grade,
+            sortable: true
+        },
+        {
+            name: 'Carrot',
+            selector: row => row.carrot,
+            sortable: true
+        },
+        {
+            name: 'Note',
+            selector: row => row.note,
+            sortable: true
+        },
+        {
+            name: 'Date',
+            selector: row => row.date,
+            sortable: true
+        },
+    ];
+
     const staff = [
         {
             id: 1,
@@ -42,7 +82,7 @@ const Tabs = ({ color }) => {
         {
             id: 2,
             name: 'Ervin Howell',
-            jf: 'SQ',
+            jf: 'SE',
             grade: 'TS',
             carrot: 100,
             note: 'C',
@@ -58,18 +98,6 @@ const Tabs = ({ color }) => {
             date: '2020-01-02',
         }
     ];
-
-    // const filteredItems = staff.filter(
-    //     item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()),
-    // );
-
-    // const sortedStaffs = staffs.sort((a, b) => {
-    //     return new Date(a.date) - new Date(b.date);
-    // });
-    // const numberedStaffs = sortedStaffs.map((staff, index) => ({
-    //     ...staff,
-    //     numrow: index + 1,
-    // }));
 
     return (
         <>
@@ -129,7 +157,7 @@ const Tabs = ({ color }) => {
                                         </button>
                                     </div>
                                     <div className="mx-auto">
-                                        <StaffTable />
+                                        <StaffTable columns={columns} data={staff} />
                                     </div>
                                 </div>
                                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">

@@ -2,81 +2,13 @@ import React from 'react';
 import DataTable from 'react-data-table-component';
 import styled from 'styled-components';
 
-export default function StaffTable() {
+export default function StaffTable(props) {
+    console.log(props.data);
+    let staff = props.data || [];
     const [filterText, setFilterText] = React.useState('');
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
 
-    const columns = [
-        {
-            name: '#',
-            selector: row => row.numrow,
-            maxWidth: '10px',
-            sortable: true,
-        },
-        {
-            name: 'Rewarded To',
-            selector: row => row.name,
-            minWidth: '200px',
-            sortable: true
-        },
-        {
-            name: 'JF',
-            selector: row => row.jf,
-            sortable: true
-        },
-        {
-            name: 'Grade',
-            selector: row => row.grade,
-            sortable: true
-        },
-        {
-            name: 'Carrot',
-            selector: row => row.carrot,
-            sortable: true
-        },
-        {
-            name: 'Note',
-            selector: row => row.note,
-            sortable: true
-        },
-        {
-            name: 'Date',
-            selector: row => row.date,
-            sortable: true
-        },
-    ];
-
-    const staffs = [
-        {
-            id: 1,
-            name: 'Leanne Graham',
-            jf: 'SQ',
-            grade: 'TS',
-            carrot: 100,
-            note: 'B',
-            date: '2020-01-01',
-        },
-        {
-            id: 2,
-            name: 'Ervin Howell',
-            jf: 'SE',
-            grade: 'TS',
-            carrot: 100,
-            note: 'C',
-            date: '2020-01-03',
-        },
-        {
-            id: 3,
-            name: 'Clementine Bauch',
-            jf: 'SQ',
-            grade: 'TS',
-            carrot: 100,
-            note: 'A',
-            date: '2020-01-02',
-        }
-    ];
-
-    const sortedStaffs = staffs.sort((a, b) => {
+    const sortedStaffs = staff.sort((a, b) => {
         return new Date(b.date) - new Date(a.date);
     });
 
@@ -105,7 +37,7 @@ export default function StaffTable() {
 
     return (
         <DataTable
-			columns={columns}
+			columns={props.columns}
 			data={filteredItems}
 			pagination
 			paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
@@ -114,6 +46,7 @@ export default function StaffTable() {
 			persistTableHead
             // defaultSortFieldId={7}
 		/>
+        // <h1>Hello</h1>
     );
 }
 
@@ -149,7 +82,6 @@ const TextField = styled.input`
 		cursor: pointer;
 	}
 `;
-
 
 const ClearButton = styled.button`
 	border-top-left-radius: 0;
