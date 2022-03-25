@@ -31,13 +31,13 @@ export default function Profile(/* props atau user */) {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto my-5 p-5 break-words">
+      <div className="container mx-auto my-5 break-words">
         <div className="md:flex no-wrap md:-mx-2 ">
           {/* <!-- Left Side --> */}
           <div className="w-full md:w-3/12 md:mx-2">
             {/* <!-- Profile Card --> */}
             <div className="bg-white p-3 border-t-4 border-green-400">
-              <div className="overflow-hidden block rounded-full ">
+              <div className="overflow-hidden block rounded-full cursor-pointer hover:opacity-70">
                 {picture ? (
                   <Image
                     className="h-auto w-full mx-auto"
@@ -68,7 +68,7 @@ export default function Profile(/* props atau user */) {
                   <span>Status</span>
                   <span className="ml-auto">
                     <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">
-                      {user.isActive ? "Active" : "Inactive"}
+                      {user.active ? "Active" : "Inactive"}
                     </span>
                   </span>
                 </li>
@@ -122,7 +122,9 @@ export default function Profile(/* props atau user */) {
                   </div>
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">Gender</div>
-                    <div className="px-4 py-2">{user.gender}</div>
+                    <div className="px-4 py-2">
+                      {user.gender ? user.gender : ""}
+                    </div>
                   </div>
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">Contact No.</div>
@@ -157,7 +159,30 @@ export default function Profile(/* props atau user */) {
               </div>
             </div>
             {/* <!-- End of about section --> */}
-
+            {user.username ? (
+              <div className="flex flex-row">
+                <div className="text-center mt-6 mx-1">
+                  <button
+                    className="hover:opacity-70 bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+                    type="button"
+                    style={{ transition: "all .15s ease" }}
+                  >
+                    Update Image
+                  </button>
+                </div>
+                <div className="text-center mt-6">
+                  <button
+                    className="hover:opacity-70 bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+                    type="button"
+                    style={{ transition: "all .15s ease" }}
+                  >
+                    Update Profile
+                  </button>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
             <div className="my-4"></div>
           </div>
         </div>
