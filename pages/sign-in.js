@@ -21,7 +21,7 @@ export default function signIn() {
             <div className="flex content-center items-center justify-center h-full">
               <div className="w-full lg:w-4/12 px-4">
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-white border-0">
-                  <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+                  <div className="flex-auto px-4 lg:px-10 pb-3 pt-2">
                     <div className="text-gray-500 text-center my-3">
                       <Image src={mitraisLogo} alt="logo"></Image>
                     </div>
@@ -65,26 +65,6 @@ export default function signIn() {
                         </button>
                       </div>
                     </form>
-                  </div>
-                </div>
-                <div className="flex flex-wrap mt-6">
-                  <div className="w-1/2">
-                    <a
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      className="text-gray-300"
-                    >
-                      <small>Forgot password?</small>
-                    </a>
-                  </div>
-                  <div className="w-1/2 text-right">
-                    <a
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      className="text-gray-300"
-                    >
-                      <small>Create new account</small>
-                    </a>
                   </div>
                 </div>
               </div>
