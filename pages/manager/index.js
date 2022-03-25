@@ -3,6 +3,7 @@ import Navbar from '@components/Navbar';
 import Head from '@components/Head';
 import Freezer from './freezer';
 import StaffTable from './staffTable';
+import StaffGroupTable from './staffGroupTable';
 
 export default function Index() {
     return (
@@ -27,6 +28,49 @@ export default function Index() {
 
 const Tabs = ({ color }) => {
     const [openTab, setOpenTab] = React.useState(1);
+
+    const staff = [
+        {
+            id: 1,
+            name: 'Leanne Graham',
+            jf: 'SQ',
+            grade: 'TS',
+            carrot: 100,
+            note: 'B',
+            date: '2020-01-01',
+        },
+        {
+            id: 2,
+            name: 'Ervin Howell',
+            jf: 'SQ',
+            grade: 'TS',
+            carrot: 100,
+            note: 'C',
+            date: '2020-01-03',
+        },
+        {
+            id: 3,
+            name: 'Clementine Bauch',
+            jf: 'SQ',
+            grade: 'TS',
+            carrot: 100,
+            note: 'A',
+            date: '2020-01-02',
+        }
+    ];
+
+    // const filteredItems = staff.filter(
+    //     item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()),
+    // );
+
+    // const sortedStaffs = staffs.sort((a, b) => {
+    //     return new Date(a.date) - new Date(b.date);
+    // });
+    // const numberedStaffs = sortedStaffs.map((staff, index) => ({
+    //     ...staff,
+    //     numrow: index + 1,
+    // }));
+
     return (
         <>
             <div className="flex flex-wrap mt-3">
@@ -90,7 +134,7 @@ const Tabs = ({ color }) => {
                                 </div>
                                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                                     <div className="mx-auto">
-                                        <StaffTable />
+                                        <StaffGroupTable />
                                     </div>
                                 </div>
                             </div>

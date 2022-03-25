@@ -1,46 +1,10 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
 import styled from 'styled-components';
-// import SortIcon from "@material-ui/icons/ArrowDownward";
 
 export default function StaffTable() {
-    const staffs = [
-        {
-            id: 1,
-            name: 'Leanne Graham',
-            jf: 'SQ',
-            grade: 'TS',
-            carrot: 100,
-            note: 'B',
-            date: '2020-01-01',
-        },
-        {
-            id: 2,
-            name: 'Ervin Howell',
-            jf: 'SQ',
-            grade: 'TS',
-            carrot: 100,
-            note: 'C',
-            date: '2020-01-03',
-        },
-        {
-            id: 3,
-            name: 'Clementine Bauch',
-            jf: 'SQ',
-            grade: 'TS',
-            carrot: 100,
-            note: 'A',
-            date: '2020-01-02',
-        }
-    ];
-
-    const sortedStaffs = staffs.sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-    });
-    const numberedStaffs = sortedStaffs.map((staff, index) => ({
-        ...staff,
-        numrow: index + 1,
-    }));
+    const [filterText, setFilterText] = React.useState('');
+	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
 
     const columns = [
         {
@@ -80,10 +44,48 @@ export default function StaffTable() {
         },
     ];
 
-    const [filterText, setFilterText] = React.useState('');
-	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
+    const staffs = [
+        {
+            id: 1,
+            name: 'Leanne Graham',
+            jf: 'SQ',
+            grade: 'TS',
+            carrot: 100,
+            note: 'B',
+            date: '2020-01-01',
+        },
+        {
+            id: 2,
+            name: 'Ervin Howell',
+            jf: 'SE',
+            grade: 'TS',
+            carrot: 100,
+            note: 'C',
+            date: '2020-01-03',
+        },
+        {
+            id: 3,
+            name: 'Clementine Bauch',
+            jf: 'SQ',
+            grade: 'TS',
+            carrot: 100,
+            note: 'A',
+            date: '2020-01-02',
+        }
+    ];
+
+    const sortedStaffs = staffs.sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+    });
+
+    const numberedStaffs = sortedStaffs.map((staff, index) => ({
+        ...staff,
+        numrow: index + 1,
+    }));
+
 	const filteredItems = numberedStaffs.filter(
-		item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()),
+		item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()) 
+            // || item.jf && item.jf.toLowerCase().includes(filterText.toLowerCase()),
 	);
 
 	const subHeaderComponentMemo = React.useMemo(() => {
@@ -109,89 +111,8 @@ export default function StaffTable() {
 			subHeaderComponent={subHeaderComponentMemo}
 			persistTableHead
             // defaultSortFieldId={7}
-            // sortIcon={<SortIcon />}
 		/>
-        
-        // <table id="dataTable" className="table-responsive table-bordered">
-        //     <thead className="bg-gray-50 text-center">
-        //         <tr>
-        //             <th className="">
-        //                 #
-        //             </th>
-        //             <th className="w-50">
-        //                 Rewarded To
-        //             </th>
-        //             <th className="px-4">
-        //                 JF
-        //             </th>
-        //             <th className="px-4">
-        //                 Grade
-        //             </th>
-        //             <th className="px-4">
-        //                 Carrot
-        //             </th>
-        //             <th className="w-50">
-        //                 Note
-        //             </th>
-        //             <th className="px-5">
-        //                 Date
-        //             </th>
-        //         </tr>
-        //     </thead>
-        //     <tbody className="bg-white">
-        //         <tr className="whitespace-nowrap">
-        //             <td className="py-2 text-center">
-        //                 1
-        //             </td>
-        //             <td className="py-2 text-center">
-        //                 <div className="text-gray-900">
-        //                     Cinthya Kusumadewi
-        //                 </div>
-        //             </td>
-        //             <td className="py-2 text-center">
-        //                 <div className="">SQ</div>
-        //             </td>
-        //             <td className="py-2 text-center">
-        //                 <div className="">TS</div>
-        //             </td>
-        //             <td className="py-2 text-center">
-        //                 <div className="">100</div>
-        //             </td>
-        //             <td className="py-2 text-center">
-        //                 <div className="">This is note.</div>
-        //             </td>
-        //             <td className="py-2 text-center">
-        //                 2021-1-12
-        //             </td>
-        //         </tr>
-        //         <tr className="whitespace-nowrap">
-        //             <td className="py-2 text-center">
-        //                 2
-        //             </td>
-        //             <td className="py-2 text-center">
-        //                 <div className="text-gray-900">
-        //                     Cinthya Kusumadewi
-        //                 </div>
-        //             </td>
-        //             <td className="py-2 text-center">
-        //                 <div className="">SQ</div>
-        //             </td>
-        //             <td className="py-2 text-center">
-        //                 <div className="">TS</div>
-        //             </td>
-        //             <td className="py-2 text-center">
-        //                 <div className="">100</div>
-        //             </td>
-        //             <td className="py-2 text-center">
-        //                 <div className="">This is note.</div>
-        //             </td>
-        //             <td className="py-2 text-center">
-        //                 2021-1-12
-        //             </td>
-        //         </tr>
-        //     </tbody>
-        // </table>
-    )
+    );
 }
 
 
@@ -205,9 +126,9 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 			value={filterText}
 			onChange={onFilter}
 		/>
-		{/* <ClearButton type="button" onClick={onClear}>
-			Clear
-		</ClearButton> */}
+		<ClearButton type="button" onClick={onClear}>
+			<i className='fa fa-remove text-red-500'></i>
+		</ClearButton>
 	</>
 );
 
@@ -228,16 +149,17 @@ const TextField = styled.input`
 `;
 
 
-// const ClearButton = styled(Button)`
-// 	border-top-left-radius: 0;
-// 	border-bottom-left-radius: 0;
-// 	border-top-right-radius: 5px;
-// 	border-bottom-right-radius: 5px;
-// 	height: 34px;
-// 	width: 32px;
-// 	text-align: center;
-// 	display: flex;
-// 	align-items: center;
-// 	justify-content: center;
-// `;
+const ClearButton = styled.button`
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+    border: 1px solid #e5e5e5;
+	height: 32px;
+	width: 32px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
 
