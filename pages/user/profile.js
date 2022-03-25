@@ -15,6 +15,8 @@ export default function Profile(/* props atau user */) {
     });
   }, []);
 
+  //nge check ke api get image, kalo image ada, maka set picturenya. kalo gak ada balik ke default image.
+  // function nya bakal jalan kalo ada state change di user. which is gonna happen once pas on load screen.
   useEffect(() => {
     axios
       .get("http://localhost:8181/api/user/getImage/" + user.username)
@@ -29,7 +31,6 @@ export default function Profile(/* props atau user */) {
   return (
     <div>
       <Navbar />
-      {/* overflow-wrap: break-word; */}
       <div className="container mx-auto my-5 p-5 break-words">
         <div className="md:flex no-wrap md:-mx-2 ">
           {/* <!-- Left Side --> */}
