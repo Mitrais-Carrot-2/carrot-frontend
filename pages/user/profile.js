@@ -8,16 +8,23 @@ import { useState, useEffect } from "react";
 export default function Profile(/* props atau user */) {
   const [user, setUser] = useState({});
   const [picture, setPicture] = useState("");
-  const [dot, setDot] = useState(".");
 
   useEffect(() => {
-    axios.get("http://localhost:8181/api/user/4").then((res) => {
-      setUser(res.data),
-        setPicture(
-          "http://localhost:8181/api/user/getImage/" + res.data.username
-        );
+    axios.get("http://localhost:8181/api/user/5").then((res) => {
+      setUser(res.data), setPicture("/img/defaultImage.png");
     });
   }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8181/api/user/getImage/" + user.username)
+      .then(
+        setPicture("http://localhost:8181/api/user/getImage/" + user.username)
+      )
+      .catch((err) => {
+        setPicture("/img/defaultImage.png");
+      });
+  }, [user]);
 
   return (
     <div>
