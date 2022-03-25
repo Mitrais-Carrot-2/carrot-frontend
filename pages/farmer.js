@@ -19,8 +19,7 @@ export default function farmer() {
     <div>
       <Navbar />
       <div className="container">
-          <p>{barns.map(barn => barn.id)}</p>
-        <ShowBarn />
+        <ShowBarn barns={barns} />
       </div>
     </div>
   );

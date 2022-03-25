@@ -20,7 +20,6 @@ export default function Home() {
           margin-bottom: 10px;
         }
       `}</style>
-
       <Head>
         <title>Mitrais Carrot</title>
         <meta
