@@ -30,7 +30,7 @@ export default function Home() {
       </Head>
       <Navbar />
       <main role="main" className="container mx-auto sm:px-4">
-        <h2 className="mt-4 pl-0 text-grey ml-0">MITRAIS CARROT PROTOTYPE</h2>
+        <h2 className="pl-0 text-grey ml-0">MITRAIS CARROT PROTOTYPE</h2>
         <p className="text-teal-500">
           This page is not a part of Mitrais Carrot Web App, I made it just to
           make it easier for you to switch between role. <br />

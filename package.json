@@ -13,10 +13,12 @@
     "url": "https://github.com/Mitrais-Carrot-2/carrot-frontend.git"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "bootstrap": "4",
     "font-awesome": "^4.7.0",
     "jquery": "^3.6.0",
     "material-ui-icons": "^1.0.0-beta.36",
+    "moment": "^2.29.1",
     "next": "12.1.0",
     "popper.js": "^1.16.1",
     "react": "17.0.2",
