@@ -161,4 +161,3 @@ const ClearButton = styled.button`
 	align-items: center;
 	justify-content: center;
 `;
-
