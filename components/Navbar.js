@@ -7,7 +7,7 @@ export default function Navbar() {
   const router = useRouter();
 
   return (
-    <header>
+    <header className="mb-20">
       <nav className="navbar navbar-expand-md navbar-light fixed-top bg-light">
         <a onClick={() => router.push("/")} className="navbar-brand" href="#">
           <Image src={mitraisLogo} alt="logo"></Image>
