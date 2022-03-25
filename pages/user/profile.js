@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 export default function Profile(/* props atau user */) {
   const [user, setUser] = useState({});
   const [picture, setPicture] = useState("");
+  const [dot, setDot] = useState(".");
 
   useEffect(() => {
     axios.get("http://localhost:8181/api/user/4").then((res) => {
@@ -40,11 +41,19 @@ export default function Profile(/* props atau user */) {
                     height={200}
                   ></Image>
                 ) : (
-                  <div></div>
+                  <Image
+                    className="h-auto w-full mx-auto"
+                    src={"/img/loading.gif"}
+                    alt="profile-picture"
+                    layout="responsive"
+                    objectFit="cover"
+                    width={200}
+                    height={200}
+                  ></Image>
                 )}
               </div>
               <h1 className="text-gray-900 font-bold text-xl leading-8 my-1 text-center">
-                {user.username}
+                {user.username ? user.username : "Loading..."}
               </h1>
               <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                 <li className="flex items-center py-3">
@@ -59,7 +68,9 @@ export default function Profile(/* props atau user */) {
                   <span>Member since</span>
                   <span className="ml-auto">
                     {/* print join date to DD MMMM YYYY */}
-                    {moment(user.joinDate).format("DD MMMM YYYY")}
+                    {user.joinDate
+                      ? moment(user.joinDate).format("DD MMMM YYYY")
+                      : ""}
                   </span>
                 </li>
               </ul>
@@ -129,7 +140,9 @@ export default function Profile(/* props atau user */) {
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">Birthday</div>
                     <div className="px-4 py-2">
-                      {moment(user.birthDate).format("DD MMMM YYYY")}
+                      {user.birthDate
+                        ? moment(user.birthDate).format("DD MMMM YYYY")
+                        : ""}
                     </div>
                   </div>
                 </div>
