@@ -3,9 +3,6 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useState } from "react";
 
 export default function Modal(props) {
-  const [body, setBody] = useState(props.body);
-  const [title, setTitle] = useState(props.title);
-  const [action, setAction] = useState(props.action);
   return (
     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
       <div className="relative w-auto my-6 mx-auto max-w-3xl h-5/6">
@@ -13,7 +10,7 @@ export default function Modal(props) {
         <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none  px-10 ">
           {/*header*/}
           <div className="flex items-start justify-between py-5 border-b border-solid border-blueGray-200 rounded-t">
-            <h3 className="text-3xl font-semibold">{title}</h3>
+            <h3 className="text-3xl font-semibold">{props.title}</h3>
             <button
               className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
               onClick={() => props.closeClick(false)}
@@ -37,7 +34,7 @@ export default function Modal(props) {
               type="button"
               onClick={() => props.actionClick()}
             >
-              {action}
+              {props.action}
             </button>
           </div>
         </div>
