@@ -4,10 +4,13 @@ import moment from "moment";
 import Image from "next/image";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Modal from "@components/Modal";
 
 export default function Profile(/* props atau user */) {
   const [user, setUser] = useState({});
   const [picture, setPicture] = useState("");
+  const [modalUserInfo, setModalUserInfo] = useState(false);
+  const [modalImage, setModalImage] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:8181/api/user/5").then((res) => {
@@ -37,7 +40,10 @@ export default function Profile(/* props atau user */) {
           <div className="w-full md:w-3/12 md:mx-2">
             {/* <!-- Profile Card --> */}
             <div className="bg-white p-3 border-t-4 border-green-400">
-              <div className="overflow-hidden block rounded-full cursor-pointer hover:opacity-70">
+              <div
+                className="overflow-hidden block rounded-full cursor-pointer hover:opacity-70"
+                onClick={() => setModalImage(true)}
+              >
                 {picture ? (
                   <Image
                     className="h-auto w-full mx-auto"
@@ -166,6 +172,7 @@ export default function Profile(/* props atau user */) {
                     className="hover:opacity-70 bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
                     type="button"
                     style={{ transition: "all .15s ease" }}
+                    onClick={() => setModalImage(true)}
                   >
                     Update Image
                   </button>
@@ -175,6 +182,7 @@ export default function Profile(/* props atau user */) {
                     className="hover:opacity-70 bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
                     type="button"
                     style={{ transition: "all .15s ease" }}
+                    onClick={() => setModalImage(true)}
                   >
                     Update Profile
                   </button>
@@ -188,6 +196,92 @@ export default function Profile(/* props atau user */) {
         </div>
       </div>
       <Footer />
+      {modalUserInfo && (
+        <Modal
+          title="Update Profile"
+          body={profileModal()}
+          action="Change User Information"
+          closeClick={setModalUserInfo}
+        />
+      )}
+      {modalImage && (
+        <Modal
+          title="Update Image"
+          body={imageModal()}
+          action="Change Profile Picture"
+          closeClick={setModalImage}
+        />
+      )}
     </div>
   );
+
+  function profileModal() {
+    return (
+      <div>
+        <form>
+          <h2>Barn Details:</h2>
+          <div className="barn-details">
+            <label>Barn Name:</label>
+            <input type="text" name="barnName" />
+            <label>Start Periode:</label>
+            <input type="date" name="startPeriode" />
+            <label>End Periode:</label>
+            <input type="date" name="endPeriode" />
+            <label>Carrot Amount</label>
+            <input type="number" name="carrotAmount" />
+          </div>
+        </form>
+        <style>{`
+          .barn-details {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: column wrap;
+            justify-content: center;
+          }
+          .barn-details input {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  function imageModal() {
+    return (
+      <div>
+        <form>
+          <h2>Barn Details:</h2>
+          <div className="barn-details">
+            <label>Barn Name:</label>
+            <input type="text" name="barnName" />
+            <label>Start Periode:</label>
+            <input type="date" name="startPeriode" />
+            <label>End Periode:</label>
+            <input type="date" name="endPeriode" />
+            <label>Carrot Amount</label>
+            <input type="number" name="carrotAmount" />
+          </div>
+        </form>
+        <style>{`
+          .barn-details {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: column wrap;
+            justify-content: center;
+          }
+          .barn-details input {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+          }
+        `}</style>
+      </div>
+    );
+  }
 }
