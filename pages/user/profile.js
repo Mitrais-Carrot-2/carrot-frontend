@@ -9,36 +9,6 @@ export default function Profile(/* props atau user */) {
   const [user, setUser] = useState({});
   const [picture, setPicture] = useState("");
 
-  //   below contoh user data
-  //   const user = {
-  //     username: "john_doe",
-  //     email: "johndoe@gmail.com",
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     address: "Yogyakarta",
-  //     birthDate: "1997-01-01",
-  //     joinDate: "2021-10-10",
-  //     gender: "Male",
-  //     phoneNum: "08123456789",
-  //     isActive: true,
-  //     image:
-  //       "https://st.depositphotos.com/1771835/2740/i/950/depositphotos_27403227-stock-photo-attractive-young-man-thumbs-up.jpg",
-  //     jobFamily: "SE",
-  //     jobGrade: "AN",
-  //     supervisorId: 0,
-  //     roles: [
-  //       {
-  //         id: 2,
-  //         name: "ROLE_MANAGER",
-  //       },
-  //       {
-  //         id: 1,
-  //         name: "ROLE_ADMIN",
-  //       },
-  //     ],
-  //     userGroups: [],
-  //   };
-
   useEffect(() => {
     axios.get("http://localhost:8181/api/user/4").then((res) => {
       setUser(res.data),
@@ -51,7 +21,8 @@ export default function Profile(/* props atau user */) {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto my-5 p-5">
+      {/* overflow-wrap: break-word; */}
+      <div className="container mx-auto my-5 p-5 break-words">
         <div className="md:flex no-wrap md:-mx-2 ">
           {/* <!-- Left Side --> */}
           <div className="w-full md:w-3/12 md:mx-2">
