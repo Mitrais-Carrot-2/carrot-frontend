@@ -2,37 +2,51 @@ import Footer from "@components/Footer";
 import Navbar from "@components/Navbar";
 import moment from "moment";
 import Image from "next/image";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function Profile(/* props atau user */) {
-  //below contoh user data
-  const user = {
-    username: "john_doe",
-    email: "johndoe@gmail.com",
-    firstName: "John",
-    lastName: "Doe",
-    address: "Yogyakarta",
-    birthDate: "1997-01-01",
-    joinDate: "2021-10-10",
-    gender: "Male",
-    phoneNum: "08123456789",
-    isActive: true,
-    image:
-      "https://st.depositphotos.com/1771835/2740/i/950/depositphotos_27403227-stock-photo-attractive-young-man-thumbs-up.jpg",
-    jobFamily: "SE",
-    jobGrade: "AN",
-    supervisorId: 0,
-    roles: [
-      {
-        id: 2,
-        name: "ROLE_MANAGER",
-      },
-      {
-        id: 1,
-        name: "ROLE_ADMIN",
-      },
-    ],
-    userGroups: [],
-  };
+  const [user, setUser] = useState({});
+  const [picture, setPicture] = useState("");
+
+  //   below contoh user data
+  //   const user = {
+  //     username: "john_doe",
+  //     email: "johndoe@gmail.com",
+  //     firstName: "John",
+  //     lastName: "Doe",
+  //     address: "Yogyakarta",
+  //     birthDate: "1997-01-01",
+  //     joinDate: "2021-10-10",
+  //     gender: "Male",
+  //     phoneNum: "08123456789",
+  //     isActive: true,
+  //     image:
+  //       "https://st.depositphotos.com/1771835/2740/i/950/depositphotos_27403227-stock-photo-attractive-young-man-thumbs-up.jpg",
+  //     jobFamily: "SE",
+  //     jobGrade: "AN",
+  //     supervisorId: 0,
+  //     roles: [
+  //       {
+  //         id: 2,
+  //         name: "ROLE_MANAGER",
+  //       },
+  //       {
+  //         id: 1,
+  //         name: "ROLE_ADMIN",
+  //       },
+  //     ],
+  //     userGroups: [],
+  //   };
+
+  useEffect(() => {
+    axios.get("http://localhost:8181/api/user/4").then((res) => {
+      setUser(res.data),
+        setPicture(
+          "http://localhost:8181/api/user/getImage/" + res.data.username
+        );
+    });
+  }, []);
 
   return (
     <div>
@@ -43,15 +57,20 @@ export default function Profile(/* props atau user */) {
           <div className="w-full md:w-3/12 md:mx-2">
             {/* <!-- Profile Card --> */}
             <div className="bg-white p-3 border-t-4 border-green-400">
-              <div className="overflow-hidden block">
-                <Image
-                  className="h-auto w-full mx-auto"
-                  src={user.image}
-                  alt="profile-picture"
-                  layout="responsive"
-                  width={200}
-                  height={200}
-                ></Image>
+              <div className="overflow-hidden block rounded-full ">
+                {picture ? (
+                  <Image
+                    className="h-auto w-full mx-auto"
+                    src={picture}
+                    alt="profile-picture"
+                    layout="responsive"
+                    objectFit="cover"
+                    width={200}
+                    height={200}
+                  ></Image>
+                ) : (
+                  <div></div>
+                )}
               </div>
               <h1 className="text-gray-900 font-bold text-xl leading-8 my-1 text-center">
                 {user.username}
