@@ -1,7 +1,6 @@
 import React from "react";
 import BarnReward from "./BarnReward";
-import { AiOutlineClose } from "react-icons/ai";
-import Table from "@components/Table";
+// import { AiOutlineClose } from "react-icons/ai";
 import Modal from "@components/Modal";
 
 export default function CreateBarn(props) {

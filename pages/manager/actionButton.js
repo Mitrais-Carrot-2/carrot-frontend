@@ -16,10 +16,10 @@ export default function ActionButton({id}){
         <>
             <button type="button" className="btn border-blue-600 mr-2" onClick={() => {
                 modalListStaff(id)
-            }}><i className="fa fa-users text-blue-600 fa-x"></i></button>
+            }}><i className="fa fa-users text-blue-600 fa-x px-1"></i></button>
             <button type="button" className="btn border-green-600 mr-3" onClick={() => {
                 shareToGroup(id)
-            }}><i className="fa fa-send text-green-600 fa-x"></i></button>
+            }}><i className="fa fa-send text-green-600 fa-x px-1"></i></button>
         </>
     );
 }

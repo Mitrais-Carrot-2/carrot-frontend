@@ -10,11 +10,13 @@ export default function StaffTable() {
         {
             name: '#',
             selector: row => row.numrow,
+            maxWidth: '10px',
             sortable: true,
         },
         {
             name: 'Rewarded To',
             selector: row => row.name,
+            minWidth: '200px',
             sortable: true
         },
         {

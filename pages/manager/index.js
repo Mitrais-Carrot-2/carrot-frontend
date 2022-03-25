@@ -76,13 +76,13 @@ const Tabs = ({ color }) => {
             <div className="flex flex-wrap mt-3">
                 <div className="w-full">
                     <ul
-                        className="flex list-none flex-wrap pt-3 flex-row border-b"
+                        className="flex list-none flex-wrap flex-row border-b border-grey-light"
                         role="tablist"
                     >
-                        <li className="-mb-px mr-2 last:mr-0 w-40 text-center">
+                        <li className="-mb-px last:mr-0 w-20 text-center">
                             <a
                                 className={
-                                    "text-xs font-bold uppercase py-3 rounded block leading-normal " +
+                                    "text-xs font-bold uppercase py-2 rounded block leading-normal " +
                                     (openTab === 1
                                         ? "text-black border-2 border-b-white"
                                         : "text-grey")
@@ -98,10 +98,10 @@ const Tabs = ({ color }) => {
                                 Staff
                             </a>
                         </li>
-                        <li className="-mb-px mr-2 last:mr-0 w-40 text-center">
+                        <li className="-mb-px mr-2 last:mr-0 w-36 text-center">
                             <a
                                 className={
-                                    "text-xs font-bold uppercase py-3 rounded block leading-normal " +
+                                    "text-xs font-bold uppercase py-2 rounded block leading-normal " +
                                     (openTab === 2
                                         ? "text-black border-2 border-b-white"
                                         : "text-grey")
@@ -122,7 +122,7 @@ const Tabs = ({ color }) => {
                         <div className="pb-5 flex-auto">
                             <div className="tab-content tab-space">
                                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
-                                    <div className="grid place-content-center py-4">
+                                    <div className="grid place-content-center pt-4">
                                         <button className='btn bg-[#17a2b8] text-white'>
                                             <i className="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;
                                             Reward Carrot

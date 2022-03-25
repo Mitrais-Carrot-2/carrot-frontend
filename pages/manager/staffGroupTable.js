@@ -12,6 +12,7 @@ export default function StaffGroupTable() {
         {
             name: '#',
             selector: row => row.numrow,
+            maxWidth: '10px',
             sortable: true,
         },
         {
@@ -22,6 +23,7 @@ export default function StaffGroupTable() {
         {
             name: 'Group Name',
             selector: row => row.name,
+            minWidth: '200px',
             sortable: true
         },
         {
@@ -112,7 +114,6 @@ export default function StaffGroupTable() {
         />
     );
 }
-
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
     <>

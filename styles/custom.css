@@ -620,7 +620,7 @@ a:hover{
   border: 1px solid rgba(0,0,0,.12);
   display: block;
   width: 100%;
-  overflow-x: auto;
+  /* overflow-x: auto; */
   -webkit-overflow-scrolling: touch;
 }
 
@@ -635,4 +635,8 @@ a:hover{
 
 .rdt_TableBody .rdt_TableRow:nth-child(even):hover{
   background-color: #f1f1f1;
+}
+
+.modal-content{
+  padding: 0 !important;
 }
