@@ -8,8 +8,17 @@ export default function StaffTable(props) {
     const [filterText, setFilterText] = React.useState('');
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
 
+	// // sort staff by name ascending
+	// staff.sort((a, b) => {
+	// 	if (a.name < b.name) {
+	// 		return -1;
+	// 	}	
+
     const sortedStaffs = staff.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
+		if (a.name < b.name) {
+			return -1;
+		}
+        // return new Date(b.date) - new Date(a.date);
     });
 
     const numberedStaffs = sortedStaffs.map((staff, index) => ({

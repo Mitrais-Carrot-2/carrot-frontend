@@ -65,17 +65,37 @@ export default function StaffGroupTable() {
     const staffs = [
         {
             id: 1,
-            name: 'Leanne Graham',
+            name: 'Software Engineering',
             allocation: 100,
             member: 3,
             total: 300,
             note: 'B',
             action: [],
         },
+        {
+            id: 2,
+            name: 'Software Quality',
+            allocation: 200,
+            member: 2,
+            total: 400,
+            note: 'C',
+            action: [],
+        },
+        {
+            id: 3,
+            name: 'Java Developer',
+            allocation: 100,
+            member: 10,
+            total: 1000,
+            note: 'A',
+            action: [],
+        },
     ];
 
     const sortedStaffs = staffs.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
+        if (a.name < b.name) {
+			return -1;
+		}
     });
 
     const numberedStaffs = sortedStaffs.map((staff, index) => ({
