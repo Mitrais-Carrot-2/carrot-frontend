@@ -7,29 +7,34 @@ import { useState, useEffect } from "react";
 import Modal from "@components/Modal";
 
 export default function Profile(/* props atau user */) {
+  let username = "Ilham";
   const [user, setUser] = useState({});
   const [picture, setPicture] = useState("");
+  const [supervisorName, setSupervisorName] = useState("");
   const [modalUserInfo, setModalUserInfo] = useState(false);
   const [modalImage, setModalImage] = useState(false);
+  const [modalPassword, setModalPassword] = useState(false);
 
-  useEffect(() => {
-    axios.get("http://localhost:8181/api/user/5").then((res) => {
-      setUser(res.data), setPicture("/img/defaultImage.png");
-    });
-  }, []);
-
-  //nge check ke api get image, kalo image ada, maka set picturenya. kalo gak ada balik ke default image.
-  // function nya bakal jalan kalo ada state change di user. which is gonna happen once pas on load screen.
   useEffect(() => {
     axios
-      .get("http://localhost:8181/api/user/getImage/" + user.username)
-      .then(
-        setPicture("http://localhost:8181/api/user/getImage/" + user.username)
-      )
-      .catch((err) => {
-        setPicture("/img/defaultImage.png");
+      .get("http://localhost:8181/api/user/username/" + username)
+      .then((res) => {
+        setUser(res.data), setPicture("/img/defaultImage.png");
+        console.log(res.data);
+        axios
+          .get("http://localhost:8181/api/user/" + res.data.supervisorId)
+          .then((res) => {
+            setSupervisorName(res.data.firstName + " " + res.data.lastName);
+            console.log(res.data.firstName + " " + res.data.lastName);
+          });
+        axios
+          .get("http://localhost:8181/api/user/Image/" + username)
+          .then(setPicture("http://localhost:8181/api/user/Image/" + username))
+          .catch((err) => {
+            setPicture("/img/defaultImage.png");
+          });
       });
-  }, [user]);
+  }, [username]);
 
   return (
     <div>
@@ -53,6 +58,8 @@ export default function Profile(/* props atau user */) {
                     objectFit="cover"
                     width={200}
                     height={200}
+                    priority={1}
+                    as="picture"
                   ></Image>
                 ) : (
                   <Image
@@ -63,6 +70,7 @@ export default function Profile(/* props atau user */) {
                     objectFit="cover"
                     width={200}
                     height={200}
+                    priority={2}
                   ></Image>
                 )}
               </div>
@@ -127,6 +135,10 @@ export default function Profile(/* props atau user */) {
                     <div className="px-4 py-2">{user.lastName}</div>
                   </div>
                   <div className="grid grid-cols-2">
+                    <div className="px-4 py-2 font-semibold">Email</div>
+                    <div className="px-4 py-2">{user.email}</div>
+                  </div>
+                  <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">Gender</div>
                     <div className="px-4 py-2">
                       {user.gender ? user.gender : ""}
@@ -134,7 +146,7 @@ export default function Profile(/* props atau user */) {
                   </div>
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">Contact No.</div>
-                    <div className="px-4 py-2">{user.phoneNum}</div>
+                    <div className="px-4 py-2">{user.phone}</div>
                   </div>
                   <div className="grid grid-cols-2">
                     <div className="px-4 py-2 font-semibold">
@@ -161,13 +173,31 @@ export default function Profile(/* props atau user */) {
                         : ""}
                     </div>
                   </div>
+                  <div className="grid grid-cols-2">
+                    <div className="px-4 py-2 font-semibold">Supervisor</div>
+                    <div className="px-4 py-2">
+                      {supervisorName ? supervisorName : "loading..."}
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2">
+                    <div className="px-4 py-2 font-semibold">Job Family</div>
+                    <div className="px-4 py-2">{user.jobFamily}</div>
+                  </div>
+                  <div className="grid grid-cols-2">
+                    <div className="px-4 py-2 font-semibold">Job Grade</div>
+                    <div className="px-4 py-2">{user.jobGrade}</div>
+                  </div>
+                  <div className="grid grid-cols-2">
+                    <div className="px-4 py-2 font-semibold">Office</div>
+                    <div className="px-4 py-2">{user.office}</div>
+                  </div>
                 </div>
               </div>
             </div>
             {/* <!-- End of about section --> */}
             {user.username ? (
               <div className="flex flex-row">
-                <div className="text-center mt-6 mx-1">
+                <div className="text-center m-2">
                   <button
                     className="hover:opacity-70 bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
                     type="button"
@@ -177,14 +207,24 @@ export default function Profile(/* props atau user */) {
                     Update Image
                   </button>
                 </div>
-                <div className="text-center mt-6">
+                <div className="text-center m-2">
                   <button
                     className="hover:opacity-70 bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
                     type="button"
                     style={{ transition: "all .15s ease" }}
-                    onClick={() => setModalImage(true)}
+                    onClick={() => setModalUserInfo(true)}
                   >
-                    Update Profile
+                    Update Profiles
+                  </button>
+                </div>
+                <div className="text-center m-2">
+                  <button
+                    className="hover:opacity-70 bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+                    type="button"
+                    style={{ transition: "all .15s ease" }}
+                    onClick={() => setModalPassword(true)}
+                  >
+                    Change Password
                   </button>
                 </div>
               </div>
@@ -212,23 +252,58 @@ export default function Profile(/* props atau user */) {
           closeClick={setModalImage}
         />
       )}
+      {modalPassword && (
+        <Modal
+          title="Update Password"
+          body={passwordModal()}
+          action="Change Password"
+          closeClick={setModalPassword}
+        />
+      )}
     </div>
   );
 
+  // change profile info modal
   function profileModal() {
     return (
       <div>
         <form>
-          <h2>Barn Details:</h2>
+          <div className="user-details">
+            <label>First name:</label>
+            <input type="text" name="firstName" />
+            <label>Last name:</label>
+            <input type="text" name="lastName" />
+            <label>Address:</label>
+            <input type="text" name="address" />
+          </div>
+        </form>
+        <style>{`
+          .user-details {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: column wrap;
+            justify-content: center;
+          }
+          .user-details input {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  // change profile image modal
+  function imageModal() {
+    return (
+      <div>
+        <form>
           <div className="barn-details">
-            <label>Barn Name:</label>
-            <input type="text" name="barnName" />
-            <label>Start Periode:</label>
-            <input type="date" name="startPeriode" />
-            <label>End Periode:</label>
-            <input type="date" name="endPeriode" />
-            <label>Carrot Amount</label>
-            <input type="number" name="carrotAmount" />
+            <label>Insert image:</label>
+            <input type="file" name="image-file" />
           </div>
         </form>
         <style>{`
@@ -250,31 +325,26 @@ export default function Profile(/* props atau user */) {
     );
   }
 
-  function imageModal() {
+  function passwordModal() {
     return (
       <div>
         <form>
-          <h2>Barn Details:</h2>
-          <div className="barn-details">
-            <label>Barn Name:</label>
-            <input type="text" name="barnName" />
-            <label>Start Periode:</label>
-            <input type="date" name="startPeriode" />
-            <label>End Periode:</label>
-            <input type="date" name="endPeriode" />
-            <label>Carrot Amount</label>
-            <input type="number" name="carrotAmount" />
+          <div className="password-modal">
+            <label>Old Password:</label>
+            <input type="text" name="oldPassword" />
+            <label>New Password:</label>
+            <input type="text" name="newPassword" />
           </div>
         </form>
         <style>{`
-          .barn-details {
+          .password-modal{
             padding: 20px;
             display: flex;
             flex-direction: column;
             flex-wrap: column wrap;
             justify-content: center;
           }
-          .barn-details input {
+          .password-modal input {
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;

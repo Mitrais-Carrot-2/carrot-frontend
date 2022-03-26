@@ -11,7 +11,7 @@ export default function Modal(props) {
           {/*content*/}
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none  px-10 ">
             {/*header*/}
-            <div className="flex items-start justify-between pt-5 pb-4 mb-4 border-b border-solid border-blueGray-200 rounded-t">
+            <div className="flex items-start justify-between pt-5 pb-4 mb-2 border-b border-solid border-blueGray-200 rounded-t">
               <h3 className="text-3xl font-semibold">{props.title}</h3>
               <button
                 className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
