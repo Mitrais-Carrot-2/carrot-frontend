@@ -1,9 +1,24 @@
 import React from "react";
 import BarnReward from "./BarnReward";
-// import { AiOutlineClose } from "react-icons/ai";
 import Modal from "@components/Modal";
+import moment from "moment";
+import { useState } from "react";
+import axios from "axios";
 
 export default function CreateBarn(props) {
+  const today = moment().format("YYYY-MM-DD");
+  const nextYear = moment().add(1, "year").format("YYYY-MM-DD");
+  const [newBarn, setNewBarn] = useState({
+    barn_name: "",
+    start_date: today,
+    end_date: nextYear,
+    carrot_amount: 0,
+  });
+
+  function passNewBarnWithApi() {
+    console.log(newBarn);
+    axios.post("http://localhost:8181/api/farmer/barn/", newBarn);
+  }
   function createTable() {
     return (
       <div>
@@ -11,13 +26,35 @@ export default function CreateBarn(props) {
           <h2>Barn Details:</h2>
           <div className="barn-details">
             <label>Barn Name:</label>
-            <input type="text" name="barnName" />
+            <input
+              value={newBarn.barn_name}
+              type="text"
+              name="barnName"
+              onChange={(item) => setNewBarn({ ...newBarn, barn_name: item.target.value })}
+            />
             <label>Start Periode:</label>
-            <input type="date" name="startPeriode" />
+            <input
+              value={newBarn.start_date}
+              type="date"
+              name="startPeriode"
+              onChange={(item) => setNewBarn({ ...newBarn, start_date: item.target.value })}
+            />
             <label>End Periode:</label>
-            <input type="date" name="endPeriode" />
+            <input
+              value={newBarn.end_date}
+              type="date"
+              name="endPeriode"
+              onChange={(item) => setNewBarn({ ...newBarn, end_date: item.target.value })}
+            />
             <label>Carrot Amount</label>
-            <input type="number" name="carrotAmount" />
+            <input
+              value={newBarn.carrot_amount}
+              type="number"
+              name="carrotAmount"
+              onChange={(item) =>
+                setNewBarn({ ...newBarn, carrot_amount: item.target.value })
+              }
+            />
           </div>
 
           <h2>Barn Settings:</h2>
@@ -42,8 +79,14 @@ export default function CreateBarn(props) {
     );
   }
   return (
-    <div >
-      <Modal title="Create Barn" body={createTable()} action="Create Barn" closeClick={props.closeClick} />
+    <div>
+      <Modal
+        title="Create Barn"
+        body={createTable()}
+        action="Create Barn"
+        closeClick={props.closeClick}
+        actionClick={passNewBarnWithApi}
+      />
     </div>
   );
 }
