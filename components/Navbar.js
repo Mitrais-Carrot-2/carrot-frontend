@@ -8,7 +8,7 @@ export default function Navbar() {
 
   return (
     <header className="mb-20 z-0">
-      <nav className="navbar navbar-expand-md navbar-light fixed-top bg-light">
+      <nav className="navbar navbar-expand-md navbar-light fixed-top bg-light z-0">
         <a onClick={() => router.push("/")} className="navbar-brand" href="#">
           <Image src={mitraisLogo} alt="logo"></Image>
         </a>

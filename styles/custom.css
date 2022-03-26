@@ -34,7 +34,7 @@ h2 {
 /* Not required for template or sticky footer method. */
 
 body > .container {
-  padding: 10px 0 0 0 !important; 
+  padding: 10px 0 0 0 !important;
 }
 
 .footer > .container {
@@ -73,7 +73,6 @@ label {
   text-transform: uppercase !important;
   font-weight: bolder !important;
   font-size: 11px !important;
-  color: #4c1283 !important;
 }
 
 .search-box,
@@ -604,39 +603,38 @@ a:not([href]):not([tabindex]) {
 }
 
 .box-title-hr {
-  border-top: 3px solid #FF5722;
+  border-top: 3px solid #ff5722;
   width: 30px;
   margin-left: 0;
   margin-bottom: 0px;
 }
 
-a:hover{
+a:hover {
   text-decoration: none;
   color: #333;
 }
 
-
-.rdt_Table{
-  border: 1px solid rgba(0,0,0,.12);
+.rdt_Table {
+  border: 1px solid rgba(0, 0, 0, 0.12);
   display: block;
   width: 100%;
   /* overflow-x: auto; */
   -webkit-overflow-scrolling: touch;
 }
 
-.rdt_TableCol{
+.rdt_TableCol {
   font-weight: bold;
   font-size: 13px;
 }
 
-.rdt_TableBody .rdt_TableRow:nth-child(odd){
+.rdt_TableBody .rdt_TableRow:nth-child(odd) {
   background-color: #f1f1f1;
 }
 
-.rdt_TableBody .rdt_TableRow:nth-child(even):hover{
+.rdt_TableBody .rdt_TableRow:nth-child(even):hover {
   background-color: #f1f1f1;
 }
 
-.modal-content{
+.modal-content {
   padding: 0 !important;
 }
