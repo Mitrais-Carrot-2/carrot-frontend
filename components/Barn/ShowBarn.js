@@ -6,6 +6,7 @@ import Barn from "./Barn";
 export default function ShowBarn(props) {
   const [showCreateBarn, setShowCreateBarn] = useState(false);
   const [showBarnInfo, setShowBarnInfo] = useState(false);
+  const [selectedBarnId, setSelectedBarnId] = useState({});
   return (
     <div>
       <h1>List of Barn:</h1>
@@ -24,9 +25,9 @@ export default function ShowBarn(props) {
         </thead>
         {props.barns.map((barn, index) => {
           return (
-            <tbody key={index}>
+            <tbody key={barn.id}>
               <tr>
-                <td>{index + 1}</td>
+                <td>{barn.id}</td>
                 <td>{barn.barnName}</td>
                 <td>{barn.startDate}</td>
                 <td>{barn.endDate}</td>
@@ -36,6 +37,7 @@ export default function ShowBarn(props) {
                 <td>
                   <button
                     onClick={() => {
+                      setSelectedBarnId(barn);
                       setShowBarnInfo(true);
                     }}
                   >
@@ -57,7 +59,7 @@ export default function ShowBarn(props) {
         Create Barn
       </button>
       {showCreateBarn && <CreateBarn closeClick={setShowCreateBarn} />}
-      {showBarnInfo && <Barn closeClick={setShowBarnInfo} />}
+      {showBarnInfo && <Barn barnId={selectedBarnId} closeClick={setShowBarnInfo} />}
 
       <style jsx>{`
         h1 {
