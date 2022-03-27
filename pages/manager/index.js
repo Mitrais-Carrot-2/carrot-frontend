@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '@components/Navbar';
 import Head from '@components/Head';
 import Freezer from './freezer';
@@ -8,7 +8,19 @@ import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import FormShare from "./formShare";
 
 export default function Index() {
+    // axios fetch data from http://localhost:8181/api/manager/freezer
+    const [freezer, setFreezer] = React.useState([]);
 
+    useEffect(() => {
+        fetch('http://localhost:8181/api/manager/freezer')
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data);
+                setFreezer(data);
+            });
+    }, []);
+
+    
     return (
         <body>
             <Head />
@@ -22,7 +34,7 @@ export default function Index() {
                 <div className='container mx-auto px-4 py-2 mt-4 bg-white rounded-lg'>
                     <hr className="box-title-hr mt-4" />
                     <h3 className="pl-0 text-lg text-grey ml-0 font-bold tracking-widest">FREEZER DETAIL</h3>
-                    <Freezer />
+                    <Freezer freezer={freezer} />
                     <br />
                 </div>
                 <div className='container mx-auto px-4 py-2 mt-4 bg-white rounded-lg'>
@@ -79,7 +91,7 @@ const Tabs = ({ color }) => {
         },
     ];
 
-    const staff = [
+    const staffHistory = [
         {
             id: 1,
             name: 'Leanne Graham',
@@ -108,6 +120,21 @@ const Tabs = ({ color }) => {
             date: '2020-01-02',
         }
     ];
+
+    let sendStaff = () => {
+        alert('send staff');
+    }
+
+    const [staff, setStaff] = React.useState([]);
+    let manager_id = 1;
+    useEffect(() => {
+        fetch('http://localhost:8181/api/manager/'+manager_id+'/staff/')
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data);
+                setStaff(data);
+            });
+    }, []);
 
     return (
         <>
@@ -204,7 +231,7 @@ const Tabs = ({ color }) => {
                                                 </button>
                                             </div>
                                             <ModalBody>
-                                                <FormShare receiver='staff' />
+                                                <FormShare staff={staff} receiver='staff' />
                                             </ModalBody>
                                             <ModalFooter>
                                                 <Button
@@ -215,6 +242,7 @@ const Tabs = ({ color }) => {
                                                     Close
                                                 </Button>
                                                 <Button
+                                                    onClick={() => sendStaff()}
                                                     className="px-4 bg-[#ff5722] border-none hover:bg-[#f2734b]"
                                                     type="button">
                                                     Reward Now 
@@ -223,7 +251,7 @@ const Tabs = ({ color }) => {
                                         </Modal>
                                     </div>
                                     <div className="mx-auto">
-                                        <StaffTable columns={columns} data={staff} />
+                                        <StaffTable columns={columns} data={staffHistory} />
                                     </div>
                                 </div>
                                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">

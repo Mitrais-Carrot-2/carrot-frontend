@@ -1,47 +1,53 @@
-import Head from '@components/Head';
-import Navbar from '@components/Navbar';
 import React from 'react';
+import Select from 'react-select';
 
 export default function FormShare(props) {
+    const [staffId, setStaffId] = React.useState([]);
+
+    let options = [
+        // { value: 1, label: 'Andrew' },
+        // { value: 2, label: 'Sarah' },
+        // { value: 3, label: 'Garrett' },
+        // { value: 4, label: 'James' },
+      ];
+
+    // create if props.staffs is exist
+    if(props.receiver == 'staff') {
+        options = props.staff.map(staff => {
+            return {
+                value: staff.userId,
+                label: `${staff.firstName} ${staff.lastName} (${staff.jobFamily}-${staff.jobGrade}, ${staff.office})`
+            }
+        });
+    }
+
+    let staffChange = (selectedOption) => {
+        // setStaffId(selectedOption.value);
+        console.log(`Option selected:`, selectedOption.value);
+    }
+
     return (
         <>
             <form className='px-3' method="post">
-                <div class="form-group mb-6">
+                <div className="form-group mb-6">
                     {props.receiver == 'staff' ?
                         <>
-                            <label for="exampleInputEmail2" class="form-label inline-block mb-2 text-gray-700">Staff</label>
-                            <input
-                                autoComplete='nope'
-                                list='staffs'
-                                type="text"
-                                class="form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputEmail2"
-                                aria-describedby="emailHelp" placeholder="Select Staff" required />
-                            <datalist id='staffs'>
-                                <option>Audrey Hepburn</option>
-                                <option>James</option>
-                            </datalist>
+                            <label for="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Staff</label>
+                            <Select
+                                id='staff-id'
+                                name="staff-id"
+                                // value={1}
+                                options={options}
+                                onChange={staffChange}
+                            />  
                         </> :
                         <>
-                            <label for="exampleInputEmail2" class="form-label inline-block mb-2 text-gray-700">Group Name</label>
+                            <label for="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Group Name</label>
                             <input
                                 value={props.groupName}
                                 autoComplete='off'
                                 type="text"
-                                class="form-control
+                                className="form-control
                                 block
                                 w-full
                                 px-3
@@ -60,12 +66,12 @@ export default function FormShare(props) {
                         </>
                     }
                 </div>
-                <div class="form-group mb-6">
-                    <label for="exampleInputPassword2" class="form-label inline-block mb-2 text-gray-700">Carrot Amount</label>
-                    <input type="number" min='1' class="form-control block
+                <div className="form-group mb-6">
+                    <label for="exampleInputPassword2" className="form-label inline-block mb-2 text-gray-700">Carrot Amount</label>
+                    <input type="number" min='1' className="form-control block
         w-full
         px-3
-        py-1.5
+        py-3
         text-base
         font-normal
         text-gray-700
@@ -76,13 +82,13 @@ export default function FormShare(props) {
         ease-in-out
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputPassword2"
-                        placeholder="Carrot Amount" required />
+                        placeholder={props.receiver == 'staff'? "Carrot Amount" : "Carrot Amount per Staff"}  required />
                 </div>
-                <div class="form-group mb-6">
-                    <label for="exampleInputEmail2" class="form-label inline-block mb-2 text-gray-700">Note</label>
+                <div className="form-group mb-6">
+                    <label for="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Note</label>
                     <textarea
                         rows={3}
-                        class="form-control
+                        className="form-control
                                 block
                                 w-full
                                 px-3

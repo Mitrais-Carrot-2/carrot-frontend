@@ -83,7 +83,7 @@ export default function ActionButton({ id }) {
         <>
             <Modal
                 size="lg"
-                style={{ maxWidth: '800px', width: '100%' }}
+                // style={{ maxWidth: '800px', width: '100%' }}
                 toggle={() => setModalStaffOpen(!modalStaffOpen)}
                 isOpen={modalStaffOpen}
             >
@@ -124,7 +124,8 @@ export default function ActionButton({ id }) {
 
             <Modal
                 size="lg"
-                style={{ maxWidth: '500px', width: '100%' }}
+                className="sm:w-full md:w-full lg:w-1/3"
+                // style={{ maxWidth: '500px', width: '100%' }}
                 toggle={() => setModalShareOpen(!modalShareOpen)}
                 isOpen={modalShareOpen}
             >

@@ -2,71 +2,57 @@ import Head from '@components/Head';
 import Navbar from '@components/Navbar';
 import React from 'react';
 
-export default function Freezer() {
+export default function Freezer({freezer}) {
+    console.log(freezer);
     return (
         <>
-            <div class="sm:columns-5 mt-3">
-                <div class="w-full">
-                    <label class="form-label inline-block mb-2 text-gray-700">Barn Name</label>
+            <div className="sm:columns-5 mt-3">
+                <div className="w-full">
+                    <label className="form-label inline-block mb-2 text-gray-700">Barn Name</label>
                     <input
+                        value={freezer.barn_name}
                         id='barn-name'
                         type="text"
-                        class="form-control block"
+                        className="form-control block"
                         disabled />
                 </div>
-                <div class="w-full">
-                    <label class="form-label inline-block mb-2 text-gray-700">Period</label>
+                <div className="w-full">
+                    <label className="form-label inline-block mb-2 text-gray-700">Period</label>
                     <input
+                        value={freezer.barn_period}
                         id='period'
                         type="text"
-                        class="form-control block"
+                        className="form-control block"
                         disabled />
                 </div>
-                <div class="w-full">
-                    <label class="form-label inline-block mb-2 text-gray-700">Barn Owner</label>
+                <div className="w-full">
+                    <label className="form-label inline-block mb-2 text-gray-700">Barn Owner</label>
                     <input
+                        value={freezer.barn_owner}
                         id='barn-owner'
                         type="text"
-                        class="form-control block"
+                        className="form-control block"
                         disabled />
                 </div>
-                <div class="w-full">
-                    <label class="form-label inline-block mb-2 text-gray-700">Carrot Given</label>
+                <div className="w-full">
+                    <label className="form-label inline-block mb-2 text-gray-700">Carrot Given</label>
                     <input
+                        value={freezer.distributed_carrot}
                         id='carrot-given'
                         type="number"
-                        class="form-control block"
+                        className="form-control block"
                         disabled />
                 </div>
-                <div class="w-full">
-                    <label class="form-label inline-block mb-2 text-gray-700">Carrot Left</label>
+                <div className="w-full">
+                    <label className="form-label inline-block mb-2 text-gray-700">Carrot Left</label>
                     <input
+                        value={freezer.carrot_amount}
                         id='carrot-left'
                         type="number"
-                        class="form-control block"
+                        className="form-control block"
                         disabled />
                 </div>
             </div>
-            {/* <table className="table-auto w-full md:w-1/2 table-bordered mt-3">
-                <tbody>
-                    <tr>
-                        <th className="px-4 py-2">Barn Name</th>
-                        <td style={{ textAlign: "right" }}>Barn Name</td>
-                    </tr>
-                    <tr>
-                        <th className="px-4 py-2">Total Carrot</th>
-                        <td style={{ textAlign: "right" }}>0</td>
-                    </tr>
-                    <tr>
-                        <th className="px-4 py-2">Rewarded Carrot</th>
-                        <td style={{ textAlign: "right" }}>0</td>
-                    </tr>
-                    <tr>
-                        <th className="px-4 py-2">My Basket</th>
-                        <td style={{ textAlign: "right" }}>0</td>
-                    </tr>
-                </tbody>
-            </table> */}
         </>
     )
 }
