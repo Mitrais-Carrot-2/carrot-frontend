@@ -1,7 +1,7 @@
 import Navbar from "@components/Navbar";
 import Footer from "@components/Footer";
 import Header from "@components/Header";
-
+import Head from "@components/Head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -27,7 +27,6 @@ export default function Bazaar() {
                 <td>{item.startDate}</td>
                 <td>{item.endDate}</td>
             </tr>
-            // initId += 1
         })
     }
 
@@ -42,7 +41,7 @@ export default function Bazaar() {
                 margin-bottom: 10px;
                 }
             `}</style>
-            <Header />
+            <Head />
             <Navbar />
             <section className="features py-3">
                 <div className="container mx-auto sm: px-4 search-box py-3">
@@ -97,10 +96,6 @@ export default function Bazaar() {
                             <td>2/04/2022</td>
                             <td></td>
                         </tr>
-                        {/* <div>
-                            <p>{bazaar.map(item => item.bazaarName)}</p>
-
-                        </div> */}
                         {bazaars.map((data, index) => (
                             <tr key={index + 1}>
                                 <td>{index + 1}</td>
