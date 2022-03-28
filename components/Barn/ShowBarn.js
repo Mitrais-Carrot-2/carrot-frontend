@@ -11,7 +11,7 @@ export default function ShowBarn(props) {
 
   useEffect(() => {
     props.barns.sort((a, b) => a.barnName.localeCompare(b.barnName))
-    setBarns(props.barns);
+    // setBarns(props.barns);
   },[]);
 
   function shortByName() {
@@ -45,26 +45,26 @@ export default function ShowBarn(props) {
           <tr>
             <th>No.</th>
             <th
-              onClick={() => shortByName()}
+              // onClick={() => shortByName()}
             >Barn Name</th>
             <th
-              onClick={() => shortByDate()}
+              // onClick={() => shortByDate()}
             >Start Periode</th>
             <th
-              onClick={() => shortByDate()}
+              // onClick={() => shortByDate()}
             >End Periode</th>
             <th
-              onClick={() => shortByAmount()}
+              // onClick={() => shortByAmount()}
             >Carrot Amount</th>
             <th>Distributed Carrot</th>
             <th
-              onClick={() => sortByActive()}
+              // onClick={() => sortByActive()}
             >Status</th>
             <th>Action</th>
           </tr>
         </thead>
         {
-        barns
+        props.barns
         .map((barn, index) => {
           return (
             <tbody key={barn.id}>
