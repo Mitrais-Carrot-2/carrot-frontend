@@ -11,13 +11,15 @@ import axios from "axios";
 export default function StaffGroup() {
     const router = useRouter();
 
-    const url = 'http://localhost:8181/api/bazaar'
+    const url = 'http://localhost:8181/api/bazaar/group'
     const [groups, setGroup] = useState([]);
 
-    // useEffect(() => {
-    //     axios.get(url).then(response => setBazaar(response.data));
-    // }, [])
+    useEffect(() => {
+        axios.get(url).then(response => setGroup(response.data));
+    }, [])
     // console.log(bazaar)
+
+
 
     const renderTable = () => {
         let initId = 0
@@ -73,14 +75,16 @@ export default function StaffGroup() {
                             <td>This is a note</td>
                             {/* <td></td> */}
                         </tr>
-                        {/* {bazaars.map((data, index) => (
+                        {groups.map((data, index) => (
                             <tr key={index + 1}>
                                 <td>{index + 1}</td>
-                                <td>{data.bazaarName}</td>
-                                <td>{data.startDate}</td>
-                                <td>{data.endDate}</td>
+                                <td>{data.name}</td>
+                                <td>{data.managerId}</td>
+                                <td>{data.allocation}</td>
+                                <td>{data.note}</td>
+                                <td></td>
                             </tr>
-                        ))} */}
+                        ))}
                     </table>
                 </div>
             </section>
