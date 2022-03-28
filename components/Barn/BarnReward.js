@@ -1,6 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
-export default function BarnReward() {
+export default function BarnReward(props) {
+  const [reward, setReward] = useState([])
+
+  useEffect(() => {
+    console.log(props.id.id)
+    axios.get(`http://localhost:8181/api/admin/barnReward/${props.id.id}`)
+      .then((res) => {
+        console.log(res);
+        setReward(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
       <form>

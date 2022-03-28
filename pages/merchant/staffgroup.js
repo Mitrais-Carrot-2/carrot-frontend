@@ -7,17 +7,21 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import CreateGroup from "./createGroup";
 
 export default function StaffGroup() {
     const router = useRouter();
 
-    const url = 'http://localhost:8181/api/bazaar'
+    const url = 'http://localhost:8181/api/bazaar/group'
     const [groups, setGroup] = useState([]);
+    const [showCreateGroup, setShowCreateGroup] = useState(false);
 
-    // useEffect(() => {
-    //     axios.get(url).then(response => setBazaar(response.data));
-    // }, [])
+    useEffect(() => {
+        axios.get(url).then(response => setGroup(response.data));
+    }, [])
     // console.log(bazaar)
+
+
 
     const renderTable = () => {
         let initId = 0
@@ -48,10 +52,17 @@ export default function StaffGroup() {
                     <div className="row d-flex px-4">
                         <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Group List</h2>
                         <div className="col-md-6">
-                            <button className="col-sm-6 btn btn-info mt-4 pull-right radius-5">
+                            <button
+                                className="col-sm-6 btn btn-info mt-4 pull-right radius-5"
+                                onClick={() => {
+                                    setShowCreateGroup(true);
+                                }}
+                                >
+
                                 {" "}
                                 Create New Group
                             </button>
+                            {showCreateGroup && <CreateGroup closeClick={setShowCreateGroup} />}
                         </div>
                     </div>
                     <table className="table table-hover mt-3">
@@ -73,14 +84,16 @@ export default function StaffGroup() {
                             <td>This is a note</td>
                             {/* <td></td> */}
                         </tr>
-                        {/* {bazaars.map((data, index) => (
+                        {groups.map((data, index) => (
                             <tr key={index + 1}>
                                 <td>{index + 1}</td>
-                                <td>{data.bazaarName}</td>
-                                <td>{data.startDate}</td>
-                                <td>{data.endDate}</td>
+                                <td>{data.name}</td>
+                                <td>{data.managerId}</td>
+                                <td>{data.allocation}</td>
+                                <td>{data.note}</td>
+                                <td></td>
                             </tr>
-                        ))} */}
+                        ))}
                     </table>
                 </div>
             </section>

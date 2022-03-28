@@ -6,14 +6,15 @@ import "font-awesome/css/font-awesome.css";
 import "@material-tailwind/react/tailwind.css";
 //import popper
 import "popper.js";
+// import { wrapper } from "../redux/store"
 
 function MyApp({ Component, pageProps }) {
-  useEffect(() => {
-    import("jquery/dist/jquery.js");
-  }, []);
-  useEffect(() => {
-    import("bootstrap/dist/js/bootstrap.js");
-  }, []);
+  // useEffect(() => {
+  //   import("jquery/dist/jquery.js");
+  // }, []);
+  // useEffect(() => {
+  //   import("bootstrap/dist/js/bootstrap.js");
+  // }, []);
 
   return (
     <>

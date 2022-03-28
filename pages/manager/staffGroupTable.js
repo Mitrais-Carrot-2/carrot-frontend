@@ -51,9 +51,6 @@ export default function StaffGroupTable() {
             cell: (row) => {
                 return (
                     <Fragment>
-                        {/* <button onClick={() => {
-                            console.log('wuhuu');
-                        }}>List</button> */}
                         <ActionButton id={row.id} />
                     </Fragment>
                 );
