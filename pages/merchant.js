@@ -9,13 +9,6 @@ export default function MerchantPage() {
     const router = useRouter();
     return (
         <body>
-            <style jsx>{`
-                .btn {
-                margin-left: 10px;
-                margin-top: 10px;
-                margin-bottom: 10px;
-                }
-            `}</style>
             <Head />
             <Navbar />
             <Merchant />
