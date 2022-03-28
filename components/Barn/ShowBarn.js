@@ -10,27 +10,27 @@ export default function ShowBarn(props) {
   const [barns, setBarns] = useState([]);
 
   useEffect(() => {
-    props.barns.sort((a, b) => a.barnName.localeCompare(b.barnName))
+    props.barns.sort((a, b) => a.barnName.localeCompare(b.barnName));
     // setBarns(props.barns);
-  },[]);
+  }, []);
 
   function shortByName() {
-    props.barns.sort((a, b) => a.barnName.localeCompare(b.barnName))
+    props.barns.sort((a, b) => a.barnName.localeCompare(b.barnName));
     setBarns(props.barns);
   }
 
   function shortByAmount() {
-    props.barns.sort((a, b) => a.carrotAmount - b.carrotAmount)
+    props.barns.sort((a, b) => a.carrotAmount - b.carrotAmount);
     setBarns(props.barns);
   }
 
   function shortByDate() {
-    props.barns.sort((a, b) => a.startDate.localeCompare(b.startDate))
+    props.barns.sort((a, b) => a.startDate.localeCompare(b.startDate));
     setBarns(props.barns);
   }
 
-  function sortByActive(){
-    props.barns.sort((a, b) => a.active - b.active)
+  function sortByActive() {
+    props.barns.sort((a, b) => a.active - b.active);
     setBarns(props.barns);
   }
 
@@ -45,31 +45,39 @@ export default function ShowBarn(props) {
           <tr>
             <th>No.</th>
             <th
-              // onClick={() => shortByName()}
-            >Barn Name</th>
+            // onClick={() => shortByName()}
+            >
+              Barn Name
+            </th>
             <th
-              // onClick={() => shortByDate()}
-            >Start Periode</th>
+            // onClick={() => shortByDate()}
+            >
+              Start Periode
+            </th>
             <th
-              // onClick={() => shortByDate()}
-            >End Periode</th>
+            // onClick={() => shortByDate()}
+            >
+              End Periode
+            </th>
             <th
-              // onClick={() => shortByAmount()}
-            >Carrot Amount</th>
+            // onClick={() => shortByAmount()}
+            >
+              Carrot Amount
+            </th>
             <th>Distributed Carrot</th>
             <th
-              // onClick={() => sortByActive()}
-            >Status</th>
+            // onClick={() => sortByActive()}
+            >
+              Status
+            </th>
             <th>Action</th>
           </tr>
         </thead>
-        {
-        props.barns
-        .map((barn, index) => {
+        {props.barns.map((barn, index) => {
           return (
             <tbody key={barn.id}>
               <tr>
-                <td>{index+1}</td>
+                <td>{index + 1}</td>
                 <td>{barn.barnName}</td>
                 <td>{barn.startDate}</td>
                 <td>{barn.endDate}</td>
@@ -100,8 +108,16 @@ export default function ShowBarn(props) {
       >
         Create Barn
       </button>
-      {showCreateBarn && <CreateBarn closeClick={setShowCreateBarn} refreshPage={relodePage} />}
-      {showBarnInfo && <Barn barnId={selectedBarnId} closeClick={setShowBarnInfo} refreshPage={relodePage} />}
+      {showCreateBarn && (
+        <CreateBarn closeClick={setShowCreateBarn} refreshPage={relodePage} />
+      )}
+      {showBarnInfo && (
+        <Barn
+          barnId={selectedBarnId}
+          closeClick={setShowBarnInfo}
+          refreshPage={relodePage}
+        />
+      )}
 
       <style jsx>{`
         h1 {
