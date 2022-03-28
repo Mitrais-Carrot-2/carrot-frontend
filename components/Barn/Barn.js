@@ -9,16 +9,18 @@ export default function Barn(props) {
     barnName: "Barn xxxx",
     carrotAmount: 0,
     endDate: "0000-00-00",
-    id: 0,
     startDate: "0000-00-00",
   });
 
   useEffect(() => {
-    // axios
-    //   .get(`http://localhost:8181/api/farmer/barn/${props.barnId}`)
-    //   .then((res) => setSelectedBarn(res.data));
+    
     setSelectedBarn(
-      props.barnId //gagal fetch karena key value berbeda
+      {
+        barnName: props.barnId.barnName,
+        carrotAmount: props.barnId.carrotAmount,
+        endDate: props.barnId.endDate,
+        startDate: props.barnId.startDate,
+      } 
     );
     console.log(props.barnId);
   }, []);
@@ -101,8 +103,19 @@ export default function Barn(props) {
     );
   }
 
-  function action() {
-    console.log("button clicked");
+  function saveBarn() {
+    axios
+      .put(`http://localhost:8181/api/farmer/barn/${props.barnId.id}`, selectedBarn)
+      .then((res) => {
+        console.log(res);
+        props.refreshPage();
+      })
+      .catch((err) => {
+        console.log(err);
+        // TODO: Prompt error message
+      }
+      );
+    
   }
   return (
     <div>
@@ -112,7 +125,7 @@ export default function Barn(props) {
         body={createTable()}
         closeClick={props.closeClick}
         action="Save"
-        actionClick={action}
+        actionClick={saveBarn}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CreateBarn from "./CreateBarn";
 import Barn from "./Barn";
 // import { useState } from 'react/cjs/react.production.min'
@@ -7,6 +7,36 @@ export default function ShowBarn(props) {
   const [showCreateBarn, setShowCreateBarn] = useState(false);
   const [showBarnInfo, setShowBarnInfo] = useState(false);
   const [selectedBarnId, setSelectedBarnId] = useState({});
+  const [barns, setBarns] = useState([]);
+
+  useEffect(() => {
+    props.barns.sort((a, b) => a.barnName.localeCompare(b.barnName))
+    setBarns(props.barns);
+  },[]);
+
+  function shortByName() {
+    props.barns.sort((a, b) => a.barnName.localeCompare(b.barnName))
+    setBarns(props.barns);
+  }
+
+  function shortByAmount() {
+    props.barns.sort((a, b) => a.carrotAmount - b.carrotAmount)
+    setBarns(props.barns);
+  }
+
+  function shortByDate() {
+    props.barns.sort((a, b) => a.startDate.localeCompare(b.startDate))
+    setBarns(props.barns);
+  }
+
+  function sortByActive(){
+    props.barns.sort((a, b) => a.active - b.active)
+    setBarns(props.barns);
+  }
+
+  function relodePage() {
+    window.location.reload();
+  }
   return (
     <div>
       <h1>List of Barn:</h1>
@@ -14,20 +44,32 @@ export default function ShowBarn(props) {
         <thead>
           <tr>
             <th>No.</th>
-            <th>Barn Name</th>
-            <th>Start Periode</th>
-            <th>End Periode</th>
-            <th>Carrot Amount</th>
+            <th
+              onClick={() => shortByName()}
+            >Barn Name</th>
+            <th
+              onClick={() => shortByDate()}
+            >Start Periode</th>
+            <th
+              onClick={() => shortByDate()}
+            >End Periode</th>
+            <th
+              onClick={() => shortByAmount()}
+            >Carrot Amount</th>
             <th>Distributed Carrot</th>
-            <th>Status</th>
+            <th
+              onClick={() => sortByActive()}
+            >Status</th>
             <th>Action</th>
           </tr>
         </thead>
-        {props.barns.map((barn, index) => {
+        {
+        barns
+        .map((barn, index) => {
           return (
             <tbody key={barn.id}>
               <tr>
-                <td>{barn.id}</td>
+                <td>{index+1}</td>
                 <td>{barn.barnName}</td>
                 <td>{barn.startDate}</td>
                 <td>{barn.endDate}</td>
@@ -58,8 +100,8 @@ export default function ShowBarn(props) {
       >
         Create Barn
       </button>
-      {showCreateBarn && <CreateBarn closeClick={setShowCreateBarn} />}
-      {showBarnInfo && <Barn barnId={selectedBarnId} closeClick={setShowBarnInfo} />}
+      {showCreateBarn && <CreateBarn closeClick={setShowCreateBarn} refreshPage={relodePage} />}
+      {showBarnInfo && <Barn barnId={selectedBarnId} closeClick={setShowBarnInfo} refreshPage={relodePage} />}
 
       <style jsx>{`
         h1 {
