@@ -73,7 +73,9 @@ export default function ShowBarn(props) {
             <th>Action</th>
           </tr>
         </thead>
-        {props.barns.map((barn, index) => {
+        {props.barns
+        .sort((a, b) => a.barnName.localeCompare(b.barnName))
+        .map((barn, index) => {
           return (
             <tbody key={barn.id}>
               <tr>
