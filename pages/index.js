@@ -12,7 +12,7 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <body>
+    <>
       <style jsx>{`
         .btn {
           margin-left: 10px;
@@ -91,6 +91,6 @@ export default function Home() {
       <SharingLevelModal />
       <ManagerLevelModal />
       <StockistLevelModal />
-    </body>
+    </>
   );
 }

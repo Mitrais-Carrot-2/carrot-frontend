@@ -3,7 +3,7 @@ import DataTable from 'react-data-table-component';
 import styled from 'styled-components';
 
 export default function StaffTable(props) {
-    console.log(props.data);
+    // console.log(props.data);
     let staff = props.data || [];
     const [filterText, setFilterText] = React.useState('');
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
@@ -55,7 +55,6 @@ export default function StaffTable(props) {
 			persistTableHead
             // defaultSortFieldId={7}
 		/>
-        // <h1>Hello</h1>
     );
 }
 

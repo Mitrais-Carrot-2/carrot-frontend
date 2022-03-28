@@ -3,7 +3,7 @@ import Navbar from '@components/Navbar';
 import React from 'react';
 
 export default function Freezer({freezer}) {
-    console.log(freezer);
+    // console.log(freezer);
     return (
         <>
             <div className="sm:columns-5 mt-3">
