@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import "@styles/custom.css";
 import "@styles/globals.css";
 import "font-awesome/css/font-awesome.css";
+import "@material-tailwind/react/tailwind.css";
 //import popper
 import "popper.js";
 
