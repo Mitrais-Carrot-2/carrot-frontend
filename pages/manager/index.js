@@ -15,7 +15,6 @@ export default function Index() {
         fetch('http://localhost:8181/api/manager/freezer')
             .then(res => res.json())
             .then(data => {
-                // console.log(data);
                 setFreezer(data);
             });
     }, []);
@@ -40,14 +39,14 @@ export default function Index() {
                 <div className='container mx-auto px-4 py-2 mt-4 bg-white rounded-lg'>
                     <hr className="box-title-hr mt-4" />
                     <h3 className="pl-0 text-lg text-grey ml-0 font-bold tracking-widest">DISTRIBUTION DETAIL</h3>
-                    <Tabs color="orange" />
+                    <Tabs freezer={freezer} />
                 </div>
             </div>
         </body>
     )
 }
 
-const Tabs = ({ color }) => {
+const Tabs = (props) => {
     const [openTab, setOpenTab] = React.useState(1);
     const [modalShareOpen, setModalShareOpen] = React.useState(false);
 
@@ -127,8 +126,9 @@ const Tabs = ({ color }) => {
 
     const [staff, setStaff] = React.useState([]);
     let manager_id = 1;
+    
     useEffect(() => {
-        fetch('http://localhost:8181/api/manager/'+manager_id+'/staff/')
+        fetch(`http://localhost:8181/api/manager/${+manager_id}/staff/`)
             .then(res => res.json())
             .then(data => {
                 // console.log(data);
@@ -182,32 +182,16 @@ const Tabs = ({ color }) => {
                                 Staff Group
                             </a>
                         </li>
-                        {/* <li className="-mb-px mr-2 last:mr-0 w-40 text-center">
-                            <a
-                                className={
-                                    "text-xs font-bold uppercase py-3 rounded block leading-normal " +
-                                    (openTab === 3
-                                        ? "text-black border-2 border-b-white"
-                                        : "text-grey")
-                                }
-                                onClick={e => {
-                                    e.preventDefault();
-                                    setOpenTab(3);
-                                }}
-                                data-toggle="tab"
-                                href="#link3"
-                                role="tablist"
-                            >
-                                Freezer History
-                            </a>
-                        </li> */}
                     </ul>
                     <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 rounded">
                         <div className="pb-5 flex-auto">
                             <div className="tab-content tab-space">
                                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
                                     <div className="grid place-content-center pt-4">
-                                        <button onClick={() => setModalShareOpen(!modalShareOpen)} className='btn bg-[#17a2b8] text-white'>
+                                        <button onClick={() => 
+                                        // openModalShare()
+                                        setModalShareOpen(!modalShareOpen)
+                                    } className='btn bg-[#17a2b8] text-white'>
                                             <i className="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;
                                             Reward Carrot
                                         </button>

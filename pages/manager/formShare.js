@@ -4,15 +4,10 @@ import Select from 'react-select';
 export default function FormShare(props) {
     const [staffId, setStaffId] = React.useState([]);
 
-    let options = [
-        // { value: 1, label: 'Andrew' },
-        // { value: 2, label: 'Sarah' },
-        // { value: 3, label: 'Garrett' },
-        // { value: 4, label: 'James' },
-      ];
+    let options = [];
 
-    // create if props.staffs is exist
     if(props.receiver == 'staff') {
+        // console.log('staff', props.staff);
         options = props.staff.map(staff => {
             return {
                 value: staff.userId,
