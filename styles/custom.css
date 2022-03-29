@@ -33,8 +33,14 @@ h2 {
 
 /* Not required for template or sticky footer method. */
 
-body > .container {
-  padding: 10px 0 0 0 !important;
+/* .container {
+  padding: 48px 80px;
+} */
+
+@media screen and (min-width: 1281px) {
+  .container {
+    max-width: 1024px !important;
+  }
 }
 
 .footer > .container {
