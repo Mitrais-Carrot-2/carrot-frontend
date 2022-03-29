@@ -32,6 +32,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
+      <div className="container">
       <main role="main" className="container mx-auto sm:px-4">
         <h2 className="pl-0 text-grey ml-0">MITRAIS CARROT PROTOTYPE</h2>
         <p className="text-teal-500">
@@ -90,6 +91,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </div>
       <Footer />
       <SharingLevelModal />
       <ManagerLevelModal />
