@@ -43,6 +43,7 @@ export default function StaffGroup() {
 
             <Head />
             <Navbar />
+            <div className="container">
             <Merchant />
             <section className="group-table">
                 <div className="row d-flex px-10">
@@ -97,6 +98,8 @@ export default function StaffGroup() {
                     </table>
                 </div>
             </section>
+            
+            </div>
             <Footer />
         </body>
     )
