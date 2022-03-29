@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios, { Axios } from "axios";
 
+import Reward from "./Reward";
+
 export default function BarnReward(props) {
   const [reward, setReward] = useState([]);
   const [newReward, setNewReward] = useState({
-    barn_id: props.id.id
-  })
-
+    barn_id: props.id.id,
+  });
+  
+  const [editedValue, setEditedValue] = useState({});
   useEffect(() => {
     axios
       .get(`http://localhost:8181/api/admin/barnReward/${props.id.id}`)
@@ -33,32 +36,42 @@ export default function BarnReward(props) {
   }
 
   function appendReward() {
-    
-    axios.post(`http://localhost:8181/api/admin/barnReward/`, newReward )
+    axios
+      .post(`http://localhost:8181/api/admin/barnReward/`, newReward)
       .then((res) => {
         console.log(res);
-        setReward([...reward, 
+        setReward([
+          ...reward,
           {
             barnId: props.id.id,
             rewardDescription: newReward.reward_decription,
             carrotAmount: newReward.carrot_amount,
             givingConditional: newReward.giving_conditional,
-          }
+          },
         ]);
       })
       .catch((err) => {
         console.log(err);
       });
-      setNewReward({barn_id: props.id.id});
+    setNewReward({ barn_id: props.id.id });
   }
+
+  function editReward(editedValue) {
+    const id = editedValue.id;
+    const send ={
+      reward_description: editedValue.rewardDescription,
+      carrot_amount: editedValue.carrotAmount,
+      giving_conditional: editedValue.givingConditional,
+    }
+    axios.put(`http://localhost:8181/api/admin/barnReward/${id}`, send)
+  }
+    
 
   return (
     <div>
       <form>
         <div className="form-group">
-          <table 
-            name="rewardTable"
-          >
+          <table name="rewardTable">
             <thead>
               <tr>
                 <th>No.</th>
@@ -71,51 +84,45 @@ export default function BarnReward(props) {
             <tbody>
               {reward.map((item, index) => {
                 return (
+                  
                   <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{item.rewardDescription}</td>
-                    <td>{item.carrotAmount}</td>
-                    <td>{item.givingConditional}</td>
-                    <td>
-                      <p
-                        onClick={() => {
-                          deleteReward(item.id);
-                        }}
-                        className="btn btn-danger"
-                      >
-                        Delete
-                      </p>
-                    </td>
+                    <Reward index ={index} reward={item} deleteReward={deleteReward} editReward={editReward}/>
                   </tr>
                 );
               })}
               <tr>
                 <td
-                style={{
-                  textAlign: "center",
-                }}> ... </td>
-                <td>
-                  <input 
-                  type="text"
-                  name="rewardDescription"
-                  onChange={(e) => {
-                    setNewReward({
-                      ...newReward,
-                      reward_decription: e.target.value,
-                    });
+                  style={{
+                    textAlign: "center",
                   }}
+                >
+                  {" "}
+                  ...{" "}
+                </td>
+                <td>
+                  <input
+                    className="active"
+                    type="text"
+                    name="rewardDescription"
+                    onChange={(e) => {
+                      setNewReward({
+                        ...newReward,
+                        reward_decription: e.target.value,
+                      });
+                    }}
                   />
                 </td>
                 <td>
                   <input
-                  type="number"
-                  name="carrotAmount"
-                  onChange={(e) => {
-                    setNewReward({
-                      ...newReward,
-                      carrot_amount: e.target.value,
-                    });
-                  }}
+                    className="active"
+                    type="number"
+                    name="carrotAmount"
+                    onChange={(e) => {
+                      setNewReward({
+                        ...newReward,
+                        carrot_amount: e.target.value,
+                      });
+                    }}
                     style={{
                       width: "100px",
                       textAlign: "center",
@@ -123,20 +130,21 @@ export default function BarnReward(props) {
                   />
                 </td>
                 <td>
-                  <input 
-                  type="text"
-                  name="givingConditional"
-                  onChange={(e) => {
-                    setNewReward({
-                      ...newReward,
-                      giving_conditional: e.target.value,
-                    });
-                  }}
+                  <input
+                    className="active"
+                    type="text"
+                    name="givingConditional"
+                    onChange={(e) => {
+                      setNewReward({
+                        ...newReward,
+                        giving_conditional: e.target.value,
+                      });
+                    }}
                   />
                 </td>
                 <td>
                   <p
-                    className="btn btn-primary"
+                    className="btn btn-primary py-0 px-1"
                     onClick={() => {
                       appendReward();
                     }}
@@ -173,12 +181,15 @@ export default function BarnReward(props) {
           padding: 0.5rem;
           text-align: center;
         }
-        input {
+        .active {
           margin-bottom: 10px;
           border: 4px solid #ccc;
           border-radius: 5px;
           padding: 10px;
           height: 30px;
+        }
+        .non-active{
+          text-align: center;
         }
       `}</style>
     </div>
