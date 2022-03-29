@@ -13,8 +13,11 @@ import carrotIcon from "@public/img/mc-icon-carrot.png";
 import carrotIconTwo from "@public/img/mc-icon-transaction.png";
 import { Button, ButtonDropdown } from "reactstrap";
 
-// import { login } from "redux/actions/authActions";
-// import { wrapper } from "redux/store";
+import { createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunkMiddleware from "redux-thunk";
+import reducer from "../redux/reducers";
+import { createWrapper } from "next-redux-wrapper";
 
 export default function Home() {
   const router = useRouter();
@@ -173,6 +176,18 @@ export default function Home() {
     </>
   );
 }
-// export const getServerSideProps = wrapper.getServerSideProps( async ({req, store}) => {
-//   await store.dispatch(login(req))
-// });
+
+
+const bindMiddleware = (middleware) => {
+  if (process.env.NODE_ENV !== "production") {
+    const { composeWithDevTools } = require("redux-devtools-extension");
+    return composeWithDevTools(applyMiddleware(...middleware));
+  }
+  return applyMiddleware(...middleware);
+};
+
+const initStore = () => {
+  return createStore(reducer, bindMiddleware([thunkMiddleware]));
+};
+
+export const wrapper = createWrapper(initStore);
