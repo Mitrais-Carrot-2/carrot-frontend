@@ -4,7 +4,10 @@ import "@styles/custom.css";
 import "@styles/globals.css";
 import "font-awesome/css/font-awesome.css";
 import "popper.js";
-// import { wrapper } from "../redux/store"
+
+import { Provider } from "react-redux";
+import withRedux from "next-redux-wrapper";
+import { initStore } from "../redux/store";
 
 function MyApp({ Component, pageProps }) {
   // useEffect(() => {
@@ -15,10 +18,13 @@ function MyApp({ Component, pageProps }) {
   // }, []);
 
   return (
-    <>
-      <Component {...pageProps} />
-    </>
+    // <Container>
+      // <Provider store={store}>
+        <Component {...pageProps} />
+      // </Provider>
+    // </Container>
   );
 }
 
 export default MyApp;
+// export default wrapper.withRedux(MyApp);
