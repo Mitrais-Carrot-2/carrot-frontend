@@ -8,7 +8,6 @@ export default function BarnReward(props) {
   })
 
   useEffect(() => {
-    console.log(props.id.id);
     axios
       .get(`http://localhost:8181/api/admin/barnReward/${props.id.id}`)
       .then((res) => {
@@ -21,12 +20,12 @@ export default function BarnReward(props) {
   }, []);
 
   function deleteReward(id) {
-    // TODO : Buat API untuk menghapus reward
     axios
       .delete(`http://localhost:8181/api/admin/barnReward/${id}`)
       .then((res) => {
         console.log(res);
-        // props.reloadPage();
+        const noDeleted = reward.filter((item) => item.id !== id);
+        setReward(noDeleted);
       })
       .catch((err) => {
         console.log(err);
@@ -34,17 +33,18 @@ export default function BarnReward(props) {
   }
 
   function appendReward() {
-    setReward([...reward, 
-      {
-        barnId: props.id.id,
-        rewardDescription: newReward.reward_description,
-        carrotAmount: newReward.carrot_amount,
-        givingConditional: newReward.giving_conditional,
-      }
-    ]);
+    
     axios.post(`http://localhost:8181/api/admin/barnReward/`, newReward )
       .then((res) => {
         console.log(res);
+        setReward([...reward, 
+          {
+            barnId: props.id.id,
+            rewardDescription: newReward.reward_decription,
+            carrotAmount: newReward.carrot_amount,
+            givingConditional: newReward.giving_conditional,
+          }
+        ]);
       })
       .catch((err) => {
         console.log(err);
@@ -56,7 +56,9 @@ export default function BarnReward(props) {
     <div>
       <form>
         <div className="form-group">
-          <table>
+          <table 
+            name="rewardTable"
+          >
             <thead>
               <tr>
                 <th>No.</th>
@@ -69,7 +71,7 @@ export default function BarnReward(props) {
             <tbody>
               {reward.map((item, index) => {
                 return (
-                  <tr key={item.index}>
+                  <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{item.rewardDescription}</td>
                     <td>{item.carrotAmount}</td>
@@ -77,7 +79,7 @@ export default function BarnReward(props) {
                     <td>
                       <p
                         onClick={() => {
-                          deleteReward(item.index);
+                          deleteReward(item.id);
                         }}
                         className="btn btn-danger"
                       >
@@ -99,7 +101,7 @@ export default function BarnReward(props) {
                   onChange={(e) => {
                     setNewReward({
                       ...newReward,
-                      reward_description: e.target.value,
+                      reward_decription: e.target.value,
                     });
                   }}
                   />
