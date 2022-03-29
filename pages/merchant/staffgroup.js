@@ -7,12 +7,14 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import CreateGroup from "./createGroup";
 
 export default function StaffGroup() {
     const router = useRouter();
 
     const url = 'http://localhost:8181/api/bazaar/group'
     const [groups, setGroup] = useState([]);
+    const [showCreateGroup, setShowCreateGroup] = useState(false);
 
     useEffect(() => {
         axios.get(url).then(response => setGroup(response.data));
@@ -50,10 +52,17 @@ export default function StaffGroup() {
                     <div className="row d-flex px-4">
                         <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Group List</h2>
                         <div className="col-md-6">
-                            <button className="col-sm-6 btn btn-info mt-4 pull-right radius-5">
+                            <button
+                                className="col-sm-6 btn btn-info mt-4 pull-right radius-5"
+                                onClick={() => {
+                                    setShowCreateGroup(true);
+                                }}
+                                >
+
                                 {" "}
                                 Create New Group
                             </button>
+                            {showCreateGroup && <CreateGroup closeClick={setShowCreateGroup} />}
                         </div>
                     </div>
                     <table className="table table-hover mt-3">

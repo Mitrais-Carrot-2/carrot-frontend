@@ -8,12 +8,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 
+import CreateBazaar from "./createBazaar";
+
 export default function Bazaar() {
     const router = useRouter();
 
     const url = 'http://localhost:8181/api/bazaar'
     const [bazaars, setBazaar] = useState([]);
-
+    const [showCreateBazaar, setShowCreateBazaar] = useState(false);
     useEffect(() => {
         axios.get(url).then(response => setBazaar(response.data));
     }, [])
@@ -27,6 +29,7 @@ export default function Bazaar() {
                 <td>{item.bazaarName}</td>
                 <td>{item.startDate}</td>
                 <td>{item.endDate}</td>
+                <td></td>
             </tr>
         })
     }
@@ -47,10 +50,13 @@ export default function Bazaar() {
                     <div className="row d-flex px-4">
                         <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Bazaar List</h2>
                         <div className="col-md-6">
-                            <button className="col-sm-6 btn btn-info mt-4 pull-right radius-5">
+                            <button
+                                className="col-sm-6 btn btn-info mt-4 pull-right radius-5"
+                                onClick={() => { setShowCreateBazaar(true) }}>
                                 {" "}
                                 Create New Bazaar
                             </button>
+                            {showCreateBazaar && <CreateBazaar closeClick={setShowCreateBazaar} />}
                         </div>
                     </div>
                     <table className="table table-hover mt-3">
@@ -76,6 +82,7 @@ export default function Bazaar() {
                                 <td>{data.bazaarName}</td>
                                 <td>{data.startDate}</td>
                                 <td>{data.endDate}</td>
+                                <td></td>
                             </tr>
                         ))}
                     </table>

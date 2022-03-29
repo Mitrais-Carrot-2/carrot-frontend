@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CreateBarn from "./CreateBarn";
 import Barn from "./Barn";
-// import { useState } from 'react/cjs/react.production.min'
 
 export default function ShowBarn(props) {
   const [showCreateBarn, setShowCreateBarn] = useState(false);

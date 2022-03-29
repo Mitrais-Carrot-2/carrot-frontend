@@ -82,7 +82,7 @@ export default function Barn(props) {
           </div>
 
           <h2>Barn Settings:</h2>
-          <BarnReward />
+          <BarnReward id={props.barnId} />
         </form>
         <style jsx>{`
           .barn-details {
