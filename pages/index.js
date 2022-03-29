@@ -112,7 +112,7 @@ export default function Home() {
               <div className="max-w-[300px] w-[33%] p-4 flex flex-row bg-gradient-to-r from-cyan-500 to-blue-500 rounded ">
                 <div>
                   <Image
-                    className="h-auto w-full mx-auto rounded-full cursor-pointer hover:opacity-70"
+                    className="h-auto w-full mx-auto rounded-full"
                     alt="user-profile"
                     src={defaultImage}
                     width={60}
@@ -128,7 +128,7 @@ export default function Home() {
               <div className="max-w-[300px] w-[33%] p-4 flex flex-row bg-gradient-to-r from-orange-700 to-orange-400 rounded">
                 <div>
                   <Image
-                    className="h-auto w-full mx-auto rounded-full cursor-pointer hover:opacity-70"
+                    className="h-auto w-full mx-auto rounded-full"
                     alt="user-profile"
                     src={carrotIcon}
                     width={60}
@@ -146,7 +146,7 @@ export default function Home() {
               <div className="max-w-[300px] w-[33%] p-4 flex flex-row bg-gradient-to-r from-blue-900 to-blue-500 rounded">
                 <div>
                   <Image
-                    className="h-auto w-full mx-auto rounded-full cursor-pointer hover:opacity-70"
+                    className="h-auto w-full mx-auto rounded-full"
                     alt="user-profile"
                     src={carrotIconTwo}
                     width={60}
