@@ -32,7 +32,7 @@ export default function CreateItem(props) {
                             type="number"
                             name="bazaarName"
                             onChange={(item) => setBazaarItem({ ...bazaarItem, bazaar: item.target.value })}
-                            required
+
                         />
 
                         <label>Item Name:</label>
@@ -41,7 +41,7 @@ export default function CreateItem(props) {
                             type="text"
                             name="itemName"
                             onChange={(item) => setBazaarItem({ ...bazaarItem, name: item.target.value })}
-                            required
+
                         />
 
                         <label>Item Price:</label>
@@ -50,7 +50,7 @@ export default function CreateItem(props) {
                             type="number"
                             name="itemPrice"
                             onChange={(item) => setBazaarItem({ ...bazaarItem, price: item.target.value })}
-                            required
+
                         />
 
                         <label>Item Quantity:</label>
@@ -59,7 +59,7 @@ export default function CreateItem(props) {
                             type="number"
                             name="itemQuantity"
                             onChange={(item) => setBazaarItem({ ...bazaarItem, quantity: item.target.value })}
-                            required
+
                         />
 
                         <label>Item Description:</label>
