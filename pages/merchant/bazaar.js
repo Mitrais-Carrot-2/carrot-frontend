@@ -34,15 +34,12 @@ export default function Bazaar() {
         })
     }
 
-
-
     return (
-        <>
-
+        <body>
             <Head />
             <Navbar />
-            <div className="container">
             <Merchant />
+            <div className="container">
             <section className="bazaar-table">
                 <div className="row d-flex px-10">
                     <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-2">Bazaar Dashboard</h2>
@@ -92,6 +89,6 @@ export default function Bazaar() {
             
             </div>
             <Footer />
-        </>
+        </body>
     )
 }
