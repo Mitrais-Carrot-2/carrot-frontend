@@ -7,6 +7,7 @@ import StaffGroupTable from './staffGroupTable';
 import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import FormShare from "./formShare";
 import axios from 'axios';
+import { getCookie } from 'redux/actions/authAction';
 
 export default function Index() {
     const [freezer, setFreezer] = React.useState([]);
@@ -14,7 +15,8 @@ export default function Index() {
     useEffect(() => {
         axios.get("http://localhost:8181/api/manager/freezer", {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                // Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${getCookie('token')}`
             }
         }).then((res) => {
                 setFreezer(res.data);
@@ -62,7 +64,8 @@ const Tabs = (props) => {
         setManagerId(id);
         axios.get(`http://localhost:8181/api/manager/${id}/staff/`, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                // Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${getCookie('token')}`
             }
         }).then((res) => {
             console.log(res.data);

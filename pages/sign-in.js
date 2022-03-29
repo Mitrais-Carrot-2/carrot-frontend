@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import Footer from "@components/Footer";
 import mitraisLogo from "@public/img/mitrais-logo.png";
 import Image from "next/image";
 import axios from "axios";
 
-import {connect} from 'react-redux'
-// import {login} from "../redux/actions/AuthActionCreators";
+import { connect } from "react-redux";
+import {
+  authenticate,
+  checkServerSideCookie,
+} from "../redux/actions/authAction";
+import Layout from "../components/Layout";
+import { wrapper } from "../redux";
+import Router from "next/router";
+import Head from "@components/Head";
 
-export default function signIn() {
+const SignIn = ({ authenticate, token }) => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
@@ -17,30 +24,41 @@ export default function signIn() {
     password: "",
   });
   
+  useEffect(() => {
+    if (token) {
+      Router.push("/");
+    }
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
   };
 
   function signIn(){
-    console.log(loginData);
-    axios.post("http://localhost:8181/api/auth/login", loginData)
-      .then((res) => {
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("username", res.data.username);
-        localStorage.setItem("id", res.data.id);
-
-        window.location.href = "/";
-      })
-      .catch((err) => {
-        console.log(err);
-        setError("Username / Password is incorrect");
-      });
+    let status = authenticate(loginData);
+    if(!status){
+      setError("Username / Password is incorrect");
+    }
+    // console.log(loginData);
+    // axios.post("http://localhost:8181/api/auth/login", loginData)
+    //   .then((res) => {
+    //     localStorage.setItem("token", res.data.token);
+    //     localStorage.setItem("username", res.data.username);
+    //     localStorage.setItem("id", res.data.id);
+        
+    //     window.location.href = "/";
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setError("Username / Password is incorrect");
+    //   });
   }
 
 
   return (
     <>
+      <Head />
       <main>
         <section className="absolute w-full h-full">
           <div
@@ -121,3 +139,30 @@ export default function signIn() {
     </>
   );
 }
+
+// create function to get server side props
+// export const getServerSideProps = async (ctx) => {
+//   const { token } = checkServerSideCookie(ctx);
+//   return { token };
+// };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (context) => {
+    async function fetchData() {
+      const { token } = checkServerSideCookie(context);
+      console.log(token);
+      // const token = context.store.getState().authentication.token;
+      return { props: {token} };
+      // await checkServerSideCookie(context);
+    }
+    
+    // return {
+    //   props: {
+    //     token,
+    //   },
+    // };
+  }
+);
+
+export default connect((state) => state, { authenticate })(SignIn);
+// export default SignIn;
