@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 export default function Merchant() {
     const router = useRouter();
     return (
-        <body>
+        <div className="container">
             <style jsx>{`
                 .btn {
                 margin-left: 10px;
@@ -33,6 +33,6 @@ export default function Merchant() {
                     </div>
                 </div>
             </section>
-        </body>
+        </div>
     )
 }
