@@ -7,7 +7,8 @@ import "@material-tailwind/react/tailwind.css";
 //import popper
 import "popper.js";
 
-// import { Provider } from "react-redux";
+import { Provider } from "react-redux";
+import { wrapper } from "../redux";
 // import withRedux from "next-redux-wrapper";
 // import { initStore } from "../redux/store";
 
@@ -28,5 +29,5 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
-// export default wrapper.withRedux(MyApp);
+// export default MyApp;
+export default wrapper.withRedux(MyApp);

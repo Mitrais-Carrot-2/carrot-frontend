@@ -34,12 +34,11 @@ export default function Navbar() {
               height={40}
               objectFit="cover"
             />
-            <Button className="hidden" />
           </a>
           <Popover placement="bottom" ref={profileButtonRef}>
             <PopoverContainer className="ml-3">
               <PopoverHeader>
-                <div className="flex flex-col items-center pb-4">
+                <div className="flex flex-col items-center mb-4 hover:bg-orange-500 ">
                   <Image
                     className="h-auto w-full mx-auto rounded-full cursor-pointer hover:opacity-70"
                     alt="user-profile"
@@ -57,17 +56,18 @@ export default function Navbar() {
               <PopoverBody>
                 <div
                   onClick={() => router.push("/user/profile")}
-                  className="cursor-pointer hover:bg-orange-500 rounded"
+                  className="cursor-pointer hover:bg-orange-500 rounded hover:text-white"
                 >
-                  <p className="lp-2">Settings</p>
+                  <p className="text-center"> Settings</p>
                   {/* kok gak bisa implement checkbox di dalem pop overnya ??!!! naniiii - ilham */}
                   {/* TODO */}
                   {/* <input type="checkbox"> Email Notification</input> */}
                 </div>
-                <div></div>
-                <Button className="pt-2 mt-4" color="orange">
-                  Logout
-                </Button>
+                <div style={{ textAlign: "-webkit-center" }}>
+                  <Button className="pt-2 mt-4" color="orange">
+                    <p>Logout</p>
+                  </Button>
+                </div>
               </PopoverBody>
             </PopoverContainer>
           </Popover>
