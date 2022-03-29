@@ -8,6 +8,9 @@ import ManagerLevelModal from "@components/ManagerRewardModal";
 import { useRouter } from "next/router";
 import SharingLevelModal from "@components/SharingLevelModal";
 
+// import { login } from "redux/actions/authActions";
+// import { wrapper } from "redux/store";
+
 export default function Home() {
   const router = useRouter();
 
@@ -94,3 +97,7 @@ export default function Home() {
     </>
   );
 }
+
+// export const getServerSideProps = wrapper.getServerSideProps( async ({req, store}) => {
+//   await store.dispatch(login(req))
+// });

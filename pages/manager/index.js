@@ -6,17 +6,22 @@ import StaffTable from './staffTable';
 import StaffGroupTable from './staffGroupTable';
 import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import FormShare from "./formShare";
+import axios from 'axios';
 
 export default function Index() {
-    // axios fetch data from http://localhost:8181/api/manager/freezer
     const [freezer, setFreezer] = React.useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8181/api/manager/freezer')
-            .then(res => res.json())
-            .then(data => {
-                setFreezer(data);
-            });
+        axios.get("http://localhost:8181/api/manager/freezer", {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        }).then((res) => {
+                setFreezer(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });    
     }, []);
 
     
@@ -24,7 +29,8 @@ export default function Index() {
         <body>
             <Head />
             <Navbar />
-            <div className="container w-5/6 mx-auto">
+            <div className="container">
+            {/* <div className="container w-5/6 mx-auto"> */}
                 <div className="mx-auto font-medium">
                     {/* <a href='#' className="bg-[#ff5722] text-white px-4 py-2.5 rounded-md text-1xl hover:bg-orange-600 transition duration-300">Share Carrot</a>
                     <a href='#' className="text-grey capitalize px-4 py-2.5 rounded-md text-1xl">Bazaar</a> */}
@@ -49,6 +55,23 @@ export default function Index() {
 const Tabs = (props) => {
     const [openTab, setOpenTab] = React.useState(1);
     const [modalShareOpen, setModalShareOpen] = React.useState(false);
+    const [managerId, setManagerId] = React.useState('');
+    // create use effect to get id from local storage
+    useEffect(() => {
+        let id = localStorage.getItem('id');
+        setManagerId(id);
+        axios.get(`http://localhost:8181/api/manager/${id}/staff/`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        }).then((res) => {
+            console.log(res.data);
+            setStaff(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, []);
 
     const columns = [
         {
@@ -125,16 +148,7 @@ const Tabs = (props) => {
     }
 
     const [staff, setStaff] = React.useState([]);
-    let manager_id = 1;
-    
-    useEffect(() => {
-        fetch(`http://localhost:8181/api/manager/${+manager_id}/staff/`)
-            .then(res => res.json())
-            .then(data => {
-                // console.log(data);
-                setStaff(data);
-            });
-    }, []);
+    // access managerId from local storage
 
     return (
         <>
