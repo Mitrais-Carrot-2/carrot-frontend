@@ -16,11 +16,11 @@ export default function farmer() {
       }, []);
 
   return (
-    <div>
+    <body>
       <Navbar />
       <div className="container">
         <ShowBarn barns={barns} />
       </div>
-    </div>
+    </body>
   );
 }

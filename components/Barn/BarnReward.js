@@ -68,7 +68,9 @@ export default function BarnReward(props) {
     
 
   return (
-    <div>
+    <div
+      className="overflow-x-scroll"
+    >
       <form>
         <div className="form-group">
           <table name="rewardTable">
@@ -158,6 +160,7 @@ export default function BarnReward(props) {
         </div>
       </form>
       <style jsx>{`
+
         form {
           display: flex;
           flex-direction: column;
@@ -167,6 +170,8 @@ export default function BarnReward(props) {
         }
         table {
           border: 1px solid black;
+          border-collapse: collapse;
+          width: 100%;
         }
         table thead {
           background-color: #ddd;
