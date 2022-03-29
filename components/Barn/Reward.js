@@ -88,7 +88,7 @@ export default function Reward(props) {
                       <span> </span>
                       <p
                         onClick={() => {
-                          deleteReward(props.reward.id);
+                          props.deleteReward(props.reward.id);
                         }}
                         className="btn bg-red-500 hover:bg-red-700 text-white font-bold py-0 px-0 rounded "
                       >
@@ -106,6 +106,10 @@ export default function Reward(props) {
                       .non-active{
                         text-align: center;
                       }
+                      td {
+                        padding: 0.5rem;
+                        text-align: center;
+                        }
                     `}</style>
     </>
   )
