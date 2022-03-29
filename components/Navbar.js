@@ -34,7 +34,6 @@ export default function Navbar() {
               height={40}
               objectFit="cover"
             />
-            <Button className="hidden" />
           </a>
           <Popover placement="bottom" ref={profileButtonRef}>
             <PopoverContainer className="ml-3">
@@ -66,7 +65,7 @@ export default function Navbar() {
                 </div>
                 <div style={{ textAlign: "-webkit-center" }}>
                   <Button className="pt-2 mt-4" color="orange">
-                    Logout
+                    <p>Logout</p>
                   </Button>
                 </div>
               </PopoverBody>
