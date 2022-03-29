@@ -6,7 +6,7 @@ export default function Freezer({freezer}) {
     // console.log(freezer);
     return (
         <>
-            <div className="sm:columns-5 mt-3">
+            <div className="sm:columns-6 mt-3">
                 <div className="w-full">
                     <label className="form-label inline-block mb-2 text-gray-700">Barn Name</label>
                     <input
@@ -17,9 +17,18 @@ export default function Freezer({freezer}) {
                         disabled />
                 </div>
                 <div className="w-full">
-                    <label className="form-label inline-block mb-2 text-gray-700">Period</label>
+                    <label className="form-label inline-block mb-2 text-gray-700">Start Date</label>
                     <input
-                        value={freezer.barn_period}
+                        value={freezer.start_date}
+                        id='period'
+                        type="text"
+                        className="form-control block"
+                        disabled />
+                </div>
+                <div className="w-full">
+                    <label className="form-label inline-block mb-2 text-gray-700">End Date</label>
+                    <input
+                        value={freezer.end_date}
                         id='period'
                         type="text"
                         className="form-control block"

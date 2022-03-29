@@ -35,7 +35,24 @@ h2 {
 
 body > .container {
   padding: 10px 0 0 0 !important;
+  width: 83.333333%;
+  margin: 0 auto;
 }
+/* .container {
+  padding: 48px 80px;
+} */
+
+/* @media screen and (min-width: 1281px) {
+  .container {
+    max-width: 1024px !important;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    max-width: 768px !important;
+  }
+} */
 
 .footer > .container {
   padding-right: 15px;
