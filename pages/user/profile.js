@@ -42,7 +42,7 @@ export default function Profile(/* props atau user */) {
       <div className="container mx-auto my-5 break-words">
         <div className="md:flex no-wrap md:-mx-2 ">
           {/* <!-- Left Side --> */}
-          <div className="w-full md:w-3/12 md:mx-2">
+          <div className="md:w-3/12 md:mx-2">
             {/* <!-- Profile Card --> */}
             <div className="bg-white p-3 border-t-4 border-green-400">
               <div
