@@ -57,7 +57,7 @@ export default function StaffGroup() {
                                 onClick={() => {
                                     setShowCreateGroup(true);
                                 }}
-                                >
+                            >
 
                                 {" "}
                                 Create New Group
@@ -70,8 +70,8 @@ export default function StaffGroup() {
                             <tr>
                                 <th itemScope="col" aria-rowspan={2}>#</th>
                                 <th itemScope="col" aria-rowspan={2}>Group Name</th>
-                                <th itemScope="col" aria-rowSpan={2}>Manager</th>
-                                <th itemScope="col" aria-rowSpan={2}>Allocation</th>
+                                <th itemScope="col" aria-rowspan={2}>Manager</th>
+                                <th itemScope="col" aria-rowspan={2}>Allocation</th>
                                 <th itemScope="col" aria-rowspan={2}>Note</th>
                                 <th itemScope="col" aria-rowspan={2}>Action</th>
                             </tr>

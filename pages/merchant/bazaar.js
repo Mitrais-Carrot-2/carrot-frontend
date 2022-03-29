@@ -37,7 +37,7 @@ export default function Bazaar() {
 
 
     return (
-        <body>
+        <>
 
             <Head />
             <Navbar />
@@ -64,18 +64,18 @@ export default function Bazaar() {
                             <tr>
                                 <th itemScope="col" aria-rowspan={2}>#</th>
                                 <th itemScope="col" aria-rowspan={2}>Bazaar Name</th>
-                                <th itemScope="col" aria-rowSpan={2}>Start Date</th>
-                                <th itemScope="col" aria-rowSpan={2}>End Date</th>
+                                <th itemScope="col" aria-rowspan={2}>Start Date</th>
+                                <th itemScope="col" aria-rowspan={2}>End Date</th>
                                 <th itemScope="col" aria-rowspan={2}>Action</th>
                             </tr>
                         </thead>
-                        <tr>
+                        {/* <tr>
                             <td>1</td>
                             <td>First Bazaar</td>
                             <td>2/02/2020</td>
                             <td>2/04/2022</td>
                             <td></td>
-                        </tr>
+                        </tr> */}
                         {bazaars.map((data, index) => (
                             <tr key={index + 1}>
                                 <td>{index + 1}</td>
@@ -89,6 +89,6 @@ export default function Bazaar() {
                 </div>
             </section>
             <Footer />
-        </body>
+        </>
     )
 }
