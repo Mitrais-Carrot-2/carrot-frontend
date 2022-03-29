@@ -43,6 +43,12 @@ h2 {
   }
 }
 
+@media screen and (min-width: 1024px) {
+  .container {
+    max-width: 768px !important;
+  }
+}
+
 .footer > .container {
   padding-right: 15px;
   padding-left: 15px;
