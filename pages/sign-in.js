@@ -4,6 +4,9 @@ import mitraisLogo from "@public/img/mitrais-logo.png";
 import Image from "next/image";
 import axios from "axios";
 
+import {connect} from 'react-redux'
+import {login} from "../redux/actions/AuthActionCreators";
+
 export default function signIn() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -30,6 +33,7 @@ export default function signIn() {
         window.location.href = "/";
       })
       .catch((err) => {
+        console.log(err);
         setError("Username / Password is incorrect");
       });
   }
