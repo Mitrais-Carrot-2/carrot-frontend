@@ -120,14 +120,15 @@ export default function CreateBazaar(props) {
                     </Button>
                 </ModalFooter>
             </Modal> */}
-
-            <Modal
-                title="Create Bazaar"
-                body={createBazaar()}
-                action="Create Bazaar"
-                closeClick={props.closeClick}
-                actionClick={postBazaar}
-            />
+            <div id="modal">
+                <Modal
+                    title="Create Bazaar"
+                    body={createBazaar()}
+                    action="Create Bazaar"
+                    closeClick={props.closeClick}
+                    actionClick={postBazaar}
+                />
+            </div>
         </>
     )
 }

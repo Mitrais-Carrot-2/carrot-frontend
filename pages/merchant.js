@@ -8,11 +8,11 @@ import { useRouter } from "next/router";
 export default function MerchantPage() {
     const router = useRouter();
     return (
-        <body>
+        <>
             <Head />
             <Navbar />
             <Merchant />
             <Footer />
-        </body>
+        </>
     )
 }

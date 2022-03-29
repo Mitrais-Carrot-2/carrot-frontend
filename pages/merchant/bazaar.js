@@ -34,14 +34,12 @@ export default function Bazaar() {
         })
     }
 
-
-
     return (
         <body>
-
             <Head />
             <Navbar />
             <Merchant />
+            <div className="container">
             <section className="bazaar-table">
                 <div className="row d-flex px-10">
                     <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-2">Bazaar Dashboard</h2>
@@ -64,18 +62,18 @@ export default function Bazaar() {
                             <tr>
                                 <th itemScope="col" aria-rowspan={2}>#</th>
                                 <th itemScope="col" aria-rowspan={2}>Bazaar Name</th>
-                                <th itemScope="col" aria-rowSpan={2}>Start Date</th>
-                                <th itemScope="col" aria-rowSpan={2}>End Date</th>
+                                <th itemScope="col" aria-rowspan={2}>Start Date</th>
+                                <th itemScope="col" aria-rowspan={2}>End Date</th>
                                 <th itemScope="col" aria-rowspan={2}>Action</th>
                             </tr>
                         </thead>
-                        <tr>
+                        {/* <tr>
                             <td>1</td>
                             <td>First Bazaar</td>
                             <td>2/02/2020</td>
                             <td>2/04/2022</td>
                             <td></td>
-                        </tr>
+                        </tr> */}
                         {bazaars.map((data, index) => (
                             <tr key={index + 1}>
                                 <td>{index + 1}</td>
@@ -88,6 +86,8 @@ export default function Bazaar() {
                     </table>
                 </div>
             </section>
+            
+            </div>
             <Footer />
         </body>
     )

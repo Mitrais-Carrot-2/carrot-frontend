@@ -40,10 +40,10 @@ export default function StaffGroup() {
 
     return (
         <body>
-
             <Head />
             <Navbar />
             <Merchant />
+            <div className="container">
             <section className="group-table">
                 <div className="row d-flex px-10">
                     <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-2">Staff Group Dashboard</h2>
@@ -57,7 +57,7 @@ export default function StaffGroup() {
                                 onClick={() => {
                                     setShowCreateGroup(true);
                                 }}
-                                >
+                            >
 
                                 {" "}
                                 Create New Group
@@ -70,8 +70,8 @@ export default function StaffGroup() {
                             <tr>
                                 <th itemScope="col" aria-rowspan={2}>#</th>
                                 <th itemScope="col" aria-rowspan={2}>Group Name</th>
-                                <th itemScope="col" aria-rowSpan={2}>Manager</th>
-                                <th itemScope="col" aria-rowSpan={2}>Allocation</th>
+                                <th itemScope="col" aria-rowspan={2}>Manager</th>
+                                <th itemScope="col" aria-rowspan={2}>Allocation</th>
                                 <th itemScope="col" aria-rowspan={2}>Note</th>
                                 <th itemScope="col" aria-rowspan={2}>Action</th>
                             </tr>
@@ -97,6 +97,8 @@ export default function StaffGroup() {
                     </table>
                 </div>
             </section>
+            
+            </div>
             <Footer />
         </body>
     )

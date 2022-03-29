@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState } from "react";
+import axios, { Axios } from "axios";
 
 export default function BarnReward(props) {
-  const [reward, setReward] = useState([])
+  const [reward, setReward] = useState([]);
+  const [newReward, setNewReward] = useState({
+    barn_id: props.id.id
+  })
 
   useEffect(() => {
-    console.log(props.id.id)
-    axios.get(`http://localhost:8181/api/admin/barnReward/${props.id.id}`)
+    axios
+      .get(`http://localhost:8181/api/admin/barnReward/${props.id.id}`)
       .then((res) => {
         console.log(res);
         setReward(res.data);
@@ -16,11 +19,46 @@ export default function BarnReward(props) {
       });
   }, []);
 
+  function deleteReward(id) {
+    axios
+      .delete(`http://localhost:8181/api/admin/barnReward/${id}`)
+      .then((res) => {
+        console.log(res);
+        const noDeleted = reward.filter((item) => item.id !== id);
+        setReward(noDeleted);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function appendReward() {
+    
+    axios.post(`http://localhost:8181/api/admin/barnReward/`, newReward )
+      .then((res) => {
+        console.log(res);
+        setReward([...reward, 
+          {
+            barnId: props.id.id,
+            rewardDescription: newReward.reward_decription,
+            carrotAmount: newReward.carrot_amount,
+            givingConditional: newReward.giving_conditional,
+          }
+        ]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      setNewReward({barn_id: props.id.id});
+  }
+
   return (
     <div>
       <form>
         <div className="form-group">
-          <table>
+          <table 
+            name="rewardTable"
+          >
             <thead>
               <tr>
                 <th>No.</th>
@@ -31,16 +69,84 @@ export default function BarnReward(props) {
               </tr>
             </thead>
             <tbody>
+              {reward.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{item.rewardDescription}</td>
+                    <td>{item.carrotAmount}</td>
+                    <td>{item.givingConditional}</td>
+                    <td>
+                      <p
+                        onClick={() => {
+                          deleteReward(item.id);
+                        }}
+                        className="btn btn-danger"
+                      >
+                        Delete
+                      </p>
+                    </td>
+                  </tr>
+                );
+              })}
               <tr>
-                <td>1</td>
-                <td>Birthday Reward</td>
-                <td>10</td>
-                <td>REWARD_BIRTHDAY</td>
-                <button>Delete</button>
+                <td
+                style={{
+                  textAlign: "center",
+                }}> ... </td>
+                <td>
+                  <input 
+                  type="text"
+                  name="rewardDescription"
+                  onChange={(e) => {
+                    setNewReward({
+                      ...newReward,
+                      reward_decription: e.target.value,
+                    });
+                  }}
+                  />
+                </td>
+                <td>
+                  <input
+                  type="number"
+                  name="carrotAmount"
+                  onChange={(e) => {
+                    setNewReward({
+                      ...newReward,
+                      carrot_amount: e.target.value,
+                    });
+                  }}
+                    style={{
+                      width: "100px",
+                      textAlign: "center",
+                    }}
+                  />
+                </td>
+                <td>
+                  <input 
+                  type="text"
+                  name="givingConditional"
+                  onChange={(e) => {
+                    setNewReward({
+                      ...newReward,
+                      giving_conditional: e.target.value,
+                    });
+                  }}
+                  />
+                </td>
+                <td>
+                  <p
+                    className="btn btn-primary"
+                    onClick={() => {
+                      appendReward();
+                    }}
+                  >
+                    +
+                  </p>
+                </td>
               </tr>
             </tbody>
           </table>
-          <button >+create reward</button>
         </div>
       </form>
       <style jsx>{`
@@ -58,6 +164,7 @@ export default function BarnReward(props) {
           background-color: #ddd;
           font-weight: bold;
           font-size: 1rem;
+          text-align: center;
         }
         table thead th {
           padding: 0.5rem;
@@ -66,18 +173,14 @@ export default function BarnReward(props) {
           padding: 0.5rem;
           text-align: center;
         }
-        button {
-          font-size: 0.9rem;
-          background-color: #ddd;
-          margin-top: 0.25rem;
-          margin-left: 1rem;
-          padding: 0.2rem;
-          border: 1px solid black;
-          border-radius: 0.5rem;
-
+        input {
+          margin-bottom: 10px;
+          border: 4px solid #ccc;
+          border-radius: 5px;
+          padding: 10px;
+          height: 30px;
         }
-
       `}</style>
     </div>
-  )
+  );
 }

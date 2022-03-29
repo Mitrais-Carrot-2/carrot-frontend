@@ -66,7 +66,8 @@ export default function CreateBarn(props) {
           </div>
 
           <h2>Barn Settings:</h2>
-          <BarnReward />
+          Available at Manage Barn
+          {/* <BarnReward /> */}
         </form>
         <style jsx>{`
           .barn-details {

@@ -4,13 +4,14 @@ export default function Merchant() {
     const router = useRouter();
     return (
         <body>
-            <style jsx>{`
-                .btn {
-                margin-left: 10px;
-                margin-top: 10px;
-                margin-bottom: 10px;
-                }
-            `}</style>
+        <style jsx>{`
+        .btn {
+            margin-left: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        `}</style>
+        <div className="container">
             <section className="features py-3">
                 <div className="container mx-auto sm: px-4 search-box py-3">
                     <div className="flex flex-wrap">
@@ -33,6 +34,7 @@ export default function Merchant() {
                     </div>
                 </div>
             </section>
+        </div>
         </body>
     )
 }
