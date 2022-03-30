@@ -21,18 +21,6 @@ export default function Bazaar() {
     }, [])
     // console.log(bazaar)
 
-    const renderTable = () => {
-        let initId = 0
-        return bazaars.map((item, index) => {
-            <tr key={index + 1}>
-                <td>{index + 1}</td>
-                <td>{item.bazaarName}</td>
-                <td>{item.startDate}</td>
-                <td>{item.endDate}</td>
-                <td></td>
-            </tr>
-        })
-    }
 
     function reloadPage() {
         window.location.reload();
@@ -71,13 +59,6 @@ export default function Bazaar() {
                                     <th itemScope="col" aria-rowspan={2}>Action</th>
                                 </tr>
                             </thead>
-                            {/* <tr>
-                            <td>1</td>
-                            <td>First Bazaar</td>
-                            <td>2/02/2020</td>
-                            <td>2/04/2022</td>
-                            <td></td>
-                        </tr> */}
                             {bazaars.map((data, index) => (
                                 <tr key={index + 1}>
                                     <td>{index + 1}</td>
