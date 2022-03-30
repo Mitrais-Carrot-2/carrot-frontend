@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import CreateItem from "./createItem";
+import CreateItem from "./features/createItem";
 
 export default function BazaarItem() {
     const router = useRouter();
@@ -58,6 +58,7 @@ export default function BazaarItem() {
                             <thead>
                                 <tr>
                                     <th itemScope="col" aria-rowspan={2}>#</th>
+                                    <th itemScope="col" aria-rowspan={2} style={{ display: "none" }}>id</th>
                                     <th itemScope="col" aria-rowspan={2}>Bazaar Name</th>
                                     <th itemScope="col" aria-rowspan={2}>Item Name</th>
                                     <th itemScope="col" aria-rowspan={2}>Price</th>
@@ -69,6 +70,7 @@ export default function BazaarItem() {
                             {bazaarItem.map((data, index) => (
                                 <tr key={index + 1}>
                                     <td>{index + 1}</td>
+                                    <td style={{ display: "none" }}>{data.id}</td>
                                     <td>{data.bazaar.bazaarName}</td>
                                     <td>{data.name}</td>
                                     <td>{data.price}</td>

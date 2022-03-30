@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 
-import CreateBazaar from "./createBazaar";
+import CreateBazaar from "./features/createBazaar";
 
 export default function Bazaar() {
     const router = useRouter();
@@ -53,6 +53,7 @@ export default function Bazaar() {
                             <thead>
                                 <tr>
                                     <th itemScope="col" aria-rowspan={2}>#</th>
+                                    <th itemScope="col" aria-rowspan={2} style={{ display: "none" }}>id</th>
                                     <th itemScope="col" aria-rowspan={2}>Bazaar Name</th>
                                     <th itemScope="col" aria-rowspan={2}>Start Date</th>
                                     <th itemScope="col" aria-rowspan={2}>End Date</th>
@@ -62,6 +63,7 @@ export default function Bazaar() {
                             {bazaars.map((data, index) => (
                                 <tr key={index + 1}>
                                     <td>{index + 1}</td>
+                                    <td style={{ display: "none" }}>{data.id}</td>
                                     <td>{data.bazaarName}</td>
                                     <td>{data.startDate}</td>
                                     <td>{data.endDate}</td>
