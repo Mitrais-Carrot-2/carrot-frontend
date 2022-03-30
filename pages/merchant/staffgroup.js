@@ -32,6 +32,13 @@ export default function StaffGroup() {
                 <td>{item.managerId}</td>
                 <td>{item.allocation}</td>
                 <td>{item.note}</td>
+                <td>
+                    <button type="button" className="btn border-blue-600 mr-2">
+                        <i className="fa fa-edit text-blue-600 fa-x px-1">
+
+                        </i>
+                    </button>
+                </td>
             </tr>
         })
     }
@@ -44,60 +51,66 @@ export default function StaffGroup() {
             <Navbar />
             <Merchant />
             <div className="container">
-            <section className="group-table">
-                <div className="row d-flex px-10">
-                    <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-2">Staff Group Dashboard</h2>
-                </div>
-                <div className="container mx-auto sm: px-4 search-box py-3">
-                    <div className="row d-flex px-4">
-                        <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Group List</h2>
-                        <div className="col-md-6">
-                            <button
-                                className="col-sm-6 btn btn-info mt-4 pull-right radius-5"
-                                onClick={() => {
-                                    setShowCreateGroup(true);
-                                }}
-                            >
-
-                                {" "}
-                                Create New Group
-                            </button>
-                            {showCreateGroup && <CreateGroup closeClick={setShowCreateGroup} />}
-                        </div>
+                <section className="group-table">
+                    <div className="row d-flex px-10">
+                        <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-2">Staff Group Dashboard</h2>
                     </div>
-                    <table className="table table-hover mt-3">
-                        <thead>
-                            <tr>
-                                <th itemScope="col" aria-rowspan={2}>#</th>
-                                <th itemScope="col" aria-rowspan={2}>Group Name</th>
-                                <th itemScope="col" aria-rowspan={2}>Manager</th>
-                                <th itemScope="col" aria-rowspan={2}>Allocation</th>
-                                <th itemScope="col" aria-rowspan={2}>Note</th>
-                                <th itemScope="col" aria-rowspan={2}>Action</th>
-                            </tr>
-                        </thead>
-                        <tr>
-                            <td>1</td>
-                            <td>Test Group</td>
-                            <td>2</td>
-                            <td>200</td>
-                            <td>This is a note</td>
-                            {/* <td></td> */}
-                        </tr>
-                        {groups.map((data, index) => (
-                            <tr key={index + 1}>
-                                <td>{index + 1}</td>
-                                <td>{data.name}</td>
-                                <td>{data.managerId}</td>
-                                <td>{data.allocation}</td>
-                                <td>{data.note}</td>
+                    <div className="container mx-auto sm: px-4 search-box py-3">
+                        <div className="row d-flex px-4">
+                            <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Group List</h2>
+                            <div className="col-md-6">
+                                <button
+                                    className="col-sm-6 btn btn-info mt-4 pull-right radius-5"
+                                    onClick={() => {
+                                        setShowCreateGroup(true);
+                                    }}
+                                >
+
+                                    {" "}
+                                    Create New Group
+                                </button>
+                                {showCreateGroup && <CreateGroup closeClick={setShowCreateGroup} />}
+                            </div>
+                        </div>
+                        <table className="table table-hover mt-3">
+                            <thead>
+                                <tr>
+                                    <th itemScope="col" aria-rowspan={2}>#</th>
+                                    <th itemScope="col" aria-rowspan={2}>Group Name</th>
+                                    <th itemScope="col" aria-rowspan={2}>Manager</th>
+                                    <th itemScope="col" aria-rowspan={2}>Allocation</th>
+                                    <th itemScope="col" aria-rowspan={2}>Note</th>
+                                    <th itemScope="col" aria-rowspan={2}>Action</th>
+                                </tr>
+                            </thead>
+                            {/* <tr>
+                                <td>1</td>
+                                <td>Test Group</td>
+                                <td>2</td>
+                                <td>200</td>
+                                <td>This is a note</td>
                                 <td></td>
-                            </tr>
-                        ))}
-                    </table>
-                </div>
-            </section>
-            
+                            </tr> */}
+                            {groups.map((data, index) => (
+                                <tr key={index + 1}>
+                                    <td>{index + 1}</td>
+                                    <td>{data.name}</td>
+                                    <td>{data.managerId}</td>
+                                    <td>{data.allocation}</td>
+                                    <td>{data.note}</td>
+                                    <td>
+                                        <button type="button" className="btn border-blue-600 mr-2">
+                                            <i className="fa fa-edit text-blue-600 fa-x px-1">
+
+                                            </i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </table>
+                    </div>
+                </section>
+
             </div>
             <Footer />
         </body>
