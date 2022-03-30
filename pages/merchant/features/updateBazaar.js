@@ -1,10 +1,11 @@
 import axios from "axios";
 // import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "@components/Modal";
 
-export default function CreateBazaar(props) {
-    const [modalCreateBazaar, setModalCreateBazaar] = useState(false);
+export default function UpdateBazaar(props) {
+    const [modalUpdateBazaar, setModalUpdateBazaar] = useState(false);
+    const [id, setId] = useState(0)
     const [bazaar, setBazaar] = useState({
         bazaarName: "",
         startDate: "",
@@ -12,9 +13,17 @@ export default function CreateBazaar(props) {
 
     })
 
+    useEffect(() => {
+        setBazaar({
+            bazaarName: props.updateData.bazaarName,
+            startDate: props.updateData.startDate,
+            endDate: props.updateData.endDate,
+        })
+        setId(props.updateData.id)
+    }, [])
 
-    function postBazaar() {
-        axios.post("http://localhost:8181/api/bazaar", bazaar)
+    function updatePostBazaar() {
+        axios.put(`http://localhost:8181/api/bazaar/${id}`, bazaar)
             .then((res) => {
                 props.closeClick();
                 props.refreshPage();
@@ -31,7 +40,7 @@ export default function CreateBazaar(props) {
     //     )
     // }
 
-    function createBazaar() {
+    function updateBazaar() {
         return (
             <>
                 <form>
@@ -83,13 +92,14 @@ export default function CreateBazaar(props) {
 
     return (
         <>
+
             <div id="modal">
                 <Modal
-                    title="Create Bazaar"
-                    body={createBazaar()}
-                    action="Create Bazaar"
+                    title="Update Bazaar"
+                    body={updateBazaar()}
+                    action="Update Bazaar"
                     closeClick={props.closeClick}
-                    actionClick={postBazaar}
+                    actionClick={updatePostBazaar}
                 />
             </div>
         </>

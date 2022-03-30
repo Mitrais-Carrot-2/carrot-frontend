@@ -26,6 +26,8 @@ export default function StaffGroupMember(props) {
         // managerId: 1
     })
     const url = `http://localhost:8181/api/bazaar/group/${groupId}`
+    // axios.get(`http://localhost:8181/api/bazaar/group/details/${groupId}`).then(response => setGroup(response.data));
+    // console.log(group)
     useEffect(() => {
         // console.log(props.router.query.groupId)
         // console.log("useEffect gid: " + groupId)
@@ -48,6 +50,8 @@ export default function StaffGroupMember(props) {
     function reloadPage() {
         window.location.reload();
     }
+
+
 
     return (
         <body>
