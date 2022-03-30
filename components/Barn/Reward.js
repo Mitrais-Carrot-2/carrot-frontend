@@ -66,7 +66,6 @@ export default function Reward(props) {
                       
                       <Button
                         name={"edit" + props.index}
-                        value="Edit"
                         onClick={() => {
                             setIsEdited? props.editReward(editedValue) : null
                             console.log(editedValue);

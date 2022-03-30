@@ -7,20 +7,19 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import CreateItem from "./createItem";
 
-import CreateBazaar from "./createBazaar";
-
-export default function Bazaar() {
+export default function BazaarItem() {
     const router = useRouter();
 
-    const url = 'http://localhost:8181/api/bazaar'
-    const [bazaars, setBazaar] = useState([]);
-    const [showCreateBazaar, setShowCreateBazaar] = useState(false);
+    const url = 'http://localhost:8181/api/bazaar/item'
+    const [bazaarItem, setBazaarItem] = useState([]);
+    const [showCreateItem, setShowCreateItem] = useState(false);
+
     useEffect(() => {
-        axios.get(url).then(response => setBazaar(response.data));
+        axios.get(url).then(response => setBazaarItem(response.data));
     }, [])
     // console.log(bazaar)
-
 
     function reloadPage() {
         window.location.reload();
@@ -32,21 +31,27 @@ export default function Bazaar() {
             <Navbar />
             <Merchant />
             <div className="container">
-                <section className="bazaar-table">
+                <section className="group-table">
                     <div className="row d-flex px-10">
-                        <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-2">Bazaar Dashboard</h2>
+                        <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-2">Bazaar Item Dashboard</h2>
                     </div>
                     <div className="container mx-auto sm: px-4 search-box py-3">
                         <div className="row d-flex px-4">
-                            <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Bazaar List</h2>
+                            <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Item List</h2>
                             <div className="col-md-6">
                                 <button
                                     className="col-sm-6 btn btn-info mt-4 pull-right radius-5"
-                                    onClick={() => { setShowCreateBazaar(true) }}>
+                                    onClick={() => {
+                                        setShowCreateItem(true);
+                                    }}
+                                >
+
                                     {" "}
-                                    Create New Bazaar
+                                    Create New Item
                                 </button>
-                                {showCreateBazaar && <CreateBazaar closeClick={setShowCreateBazaar} refreshPage={reloadPage} />}
+                                {/* {<CreateItem setModalCreateItem(!modalCreateItem) />} */}
+                                {showCreateItem && <CreateItem closeClick={setShowCreateItem} refreshPage={reloadPage} />}
+                                {/* {showCreateGroup && <CreateGroup closeClick={setShowCreateGroup} />} */}
                             </div>
                         </div>
                         <table className="table table-hover mt-3">
@@ -54,17 +59,21 @@ export default function Bazaar() {
                                 <tr>
                                     <th itemScope="col" aria-rowspan={2}>#</th>
                                     <th itemScope="col" aria-rowspan={2}>Bazaar Name</th>
-                                    <th itemScope="col" aria-rowspan={2}>Start Date</th>
-                                    <th itemScope="col" aria-rowspan={2}>End Date</th>
+                                    <th itemScope="col" aria-rowspan={2}>Item Name</th>
+                                    <th itemScope="col" aria-rowspan={2}>Price</th>
+                                    <th itemScope="col" aria-rowspan={2}>Quantity</th>
+                                    <th itemScope="col" aria-rowspan={2}>Description</th>
                                     <th itemScope="col" aria-rowspan={2}>Action</th>
                                 </tr>
                             </thead>
-                            {bazaars.map((data, index) => (
+                            {bazaarItem.map((data, index) => (
                                 <tr key={index + 1}>
                                     <td>{index + 1}</td>
-                                    <td>{data.bazaarName}</td>
-                                    <td>{data.startDate}</td>
-                                    <td>{data.endDate}</td>
+                                    <td>{data.bazaar.bazaarName}</td>
+                                    <td>{data.name}</td>
+                                    <td>{data.price}</td>
+                                    <td>{data.quantity}</td>
+                                    <td>{data.description}</td>
                                     <td>
                                         <button type="button" className="btn border-blue-600 mr-2">
                                             <i className="fa fa-edit text-blue-600 fa-x px-1">

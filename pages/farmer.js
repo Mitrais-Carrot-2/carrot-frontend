@@ -1,26 +1,59 @@
 import ShowBarn from "@components/Barn/ShowBarn";
 import Navbar from "@components/Navbar";
+import Distribution from "@components/Barn/Distribution";
 import React from "react";
 import axios from "axios";
 import Head from "next/head";
 import { headers } from "next.config";
 import { useState, useEffect } from "react";
+import { Button } from "reactstrap";
 
 export default function farmer() {
-  const [barns, setBarns] = React.useState([]);
-  
+  const [barns, setBarns] = useState([]);
+  const [activeBarn, setActiveBarn] = useState({});
+  const [showBarns, setShowBarns] = useState(true);
+  const [showDistribution, setShowDistribution] = useState(false);
+
   useEffect(() => {
-        axios
-          .get("http://localhost:8181/api/farmer/barn/")
-          .then((res) => setBarns(res.data));
-      }, []);
+    axios
+      .get("http://localhost:8181/api/farmer/barn/")
+      .then((res) => setBarns(res.data));
+  }, []);
 
   return (
-    <div>
+    <body>
       <Navbar />
-      <div className="container">
-        <ShowBarn barns={barns} />
+      <div className="container text-center bg-white overflow-x-auto overflow-y-auto h-auto py-20 ">
+        <Button
+          className="btn bg-orange-600 mb-2"
+          onClick={() => {
+            setShowBarns(true);
+            setShowDistribution(false);
+          }}
+        >
+          {" "}
+          Dashboard{" "}
+        </Button>
+        <Button
+          className="btn bg-orange-600 ml-2 mb-2"
+          onClick={() => {
+            setShowBarns(false);
+            setShowDistribution(true);
+            barns.find((barn) => {
+              if (barn.isActive) {
+                setActiveBarn(barn);
+              }
+            });
+          }}
+        >
+          Distribution
+        </Button>
       </div>
-    </div>
+
+      <div className="container">
+        {showBarns && <ShowBarn barns={barns} />}
+        {showDistribution && <Distribution barn={activeBarn} />}
+      </div>
+    </body>
   );
 }

@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function BarnHistory() {
   return (
-    <div>BarnHistory</div>
+    <div>BarnHistory WIP</div>
   )
 }

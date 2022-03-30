@@ -1,6 +1,6 @@
 //create navbar component in react
 import Image from "next/image";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import mitraisLogo from "@public/img/mitrais-logo.png";
 import defaultImage from "@public/img/defaultImage.png";
 import { useRouter } from "next/router";
@@ -10,12 +10,28 @@ import PopoverContainer from "@material-tailwind/react/PopoverContainer";
 import PopoverHeader from "@material-tailwind/react/PopoverHeader";
 import PopoverBody from "@material-tailwind/react/PopoverBody";
 import Button from "@material-tailwind/react/Button";
+import cookie from "js-cookie";
 
 export default function Navbar() {
   const router = useRouter();
   const profileButtonRef = useRef();
   const notifRef = useRef();
-  const [user, setUser] = useState({});
+  const [username, setUsername] = useState({});
+
+  useEffect(() => {
+    if (cookie.get("username")) {
+      setUsername(cookie.get("username"));
+      console.log(username);
+    }
+  }, [username]);
+
+  const handleLogout = () => {
+    cookie.remove("token");
+    cookie.remove("username");
+    cookie.remove("id");
+    cookie.remove("roles");
+    router.push("/sign-in");
+  };
 
   return (
     <header className="mb-20 z-10" style={{ borderBottom: "groove" }}>
@@ -64,7 +80,11 @@ export default function Navbar() {
                   {/* <input type="checkbox"> Email Notification</input> */}
                 </div>
                 <div style={{ textAlign: "-webkit-center" }}>
-                  <Button className="pt-2 mt-4" color="orange">
+                  <Button
+                    className="pt-2 mt-4"
+                    color="orange"
+                    onClick={() => handleLogout()}
+                  >
                     <p>Logout</p>
                   </Button>
                 </div>

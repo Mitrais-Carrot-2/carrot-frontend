@@ -12,15 +12,22 @@ import defaultProduct from "@public/img/default-product.png";
 import carrotIcon from "@public/img/mc-icon-carrot.png";
 import carrotIconTwo from "@public/img/mc-icon-transaction.png";
 import { Button, ButtonDropdown } from "reactstrap";
-
 import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 import thunkMiddleware from "redux-thunk";
 import reducer from "../redux/reducers";
 import { createWrapper } from "next-redux-wrapper";
+import jsCookie from "js-cookie";
+import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
+
+  //check cookies for token if cookies is not found redirect to sign in page
+  useEffect(() => {
+    if (!jsCookie.get("token")) {
+      router.push("/sign-in");
+    }
+  });
 
   const user = {
     firstName: "Ilham",
@@ -176,7 +183,6 @@ export default function Home() {
     </>
   );
 }
-
 
 const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== "production") {
