@@ -13,20 +13,26 @@ import Button from "@material-tailwind/react/Button";
 import cookie from "js-cookie";
 import { removeUser } from "redux/reducers/userReducer";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import jsCookie from "js-cookie";
 
 export default function Navbar() {
   const dispatch = useDispatch();
   const router = useRouter();
   const profileButtonRef = useRef();
   const notifRef = useRef();
-  const [username, setUsername] = useState({});
+  const user = useSelector((state) => (state.user.info ? state.user.info : {}));
+  const roles = jsCookie.get("roles").substring(5);
+  const picture = user
+    ? "http://localhost:8181/api/user/Image/" + user.username
+    : "/img/defaultImage.png";
 
   useEffect(() => {
-    if (cookie.get("username")) {
-      setUsername(cookie.get("username"));
-      console.log(username);
+    if (!jsCookie.get("token")) {
+      router.push("/sign-in");
     }
-  }, [username]);
+    console.log(user);
+  });
 
   const handleLogout = () => {
     cookie.remove("token");
@@ -51,7 +57,7 @@ export default function Navbar() {
             <Image
               className="h-auto w-full mx-auto rounded-full cursor-pointer hover:opacity-70"
               alt="user-profile"
-              src={defaultImage}
+              src={picture}
               width={40}
               height={40}
               objectFit="cover"
@@ -64,16 +70,18 @@ export default function Navbar() {
                   <Image
                     className="h-auto w-full mx-auto rounded-full cursor-pointer hover:opacity-70"
                     alt="user-profile"
-                    src={defaultImage}
+                    src={picture}
                     width={80}
                     height={80}
                     objectFit="cover"
                     onClick={() => router.push("/user/profile")}
                   />
                 </div>
-                <h3>Ilham Fadhil</h3>
-                <p>JP, SE</p>
-                <p>Staff</p>
+                <h3>{user.firstName + " " + user.lastName}</h3>
+                <p>
+                  {user.jobFamily}, {user.jobGrade}
+                </p>
+                <p>{roles ? roles : ""}</p>
               </PopoverHeader>
               <PopoverBody>
                 <div
