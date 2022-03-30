@@ -28,6 +28,9 @@ export default function Navbar() {
     : "/img/defaultImage.png";
 
   useEffect(() => {
+    // if (cookie.get("username")) {
+    //   setUsername(cookie.get("username"));
+      // console.log(username);
     if (!jsCookie.get("token")) {
       router.push("/sign-in");
     }

@@ -15,9 +15,9 @@ export const authenticate = (user) => (dispatch) => {
 
       axios
         .get("http://localhost:8181/api/user/username/" + res.data.username)
-        .then((res2) => {
-          dispatch(setUser(res2.data));
-          console.log(res2.data);
+        .then((user) => {
+          dispatch(setUser(user.data));
+          console.log(user.data);
         });
 
       Router.push("/");
