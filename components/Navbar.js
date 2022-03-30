@@ -11,8 +11,11 @@ import PopoverHeader from "@material-tailwind/react/PopoverHeader";
 import PopoverBody from "@material-tailwind/react/PopoverBody";
 import Button from "@material-tailwind/react/Button";
 import cookie from "js-cookie";
+import { removeUser } from "redux/reducers/userReducer";
+import { useDispatch } from "react-redux";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const profileButtonRef = useRef();
   const notifRef = useRef();
@@ -30,6 +33,9 @@ export default function Navbar() {
     cookie.remove("username");
     cookie.remove("id");
     cookie.remove("roles");
+
+    dispatch(removeUser());
+
     router.push("/sign-in");
   };
 
