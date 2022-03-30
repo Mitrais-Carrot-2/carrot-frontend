@@ -22,7 +22,7 @@ export default function Navbar() {
   const profileButtonRef = useRef();
   const notifRef = useRef();
   const user = useSelector((state) => (state.user.info ? state.user.info : {}));
-  const roles = jsCookie.get("roles").substring(5);
+  const roles = jsCookie.get("roles") ? jsCookie.get("roles").substring(5) : "";
   const picture = user
     ? "http://localhost:8181/api/user/Image/" + user.username
     : "/img/defaultImage.png";
