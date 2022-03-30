@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import CreateBarn from "./CreateBarn";
 import Barn from "./Barn";
+import BarnHistory from "./BarnHistory";
+import Modal from "@components/Modal";
 
 export default function ShowBarn(props) {
   const [showCreateBarn, setShowCreateBarn] = useState(false);
   const [showBarnInfo, setShowBarnInfo] = useState(false);
+  const [showBarnHistory, setShowBarnHistory] = useState(false);
   const [selectedBarnId, setSelectedBarnId] = useState({});
   const [barns, setBarns] = useState([]);
 
@@ -99,7 +102,12 @@ export default function ShowBarn(props) {
                       >
                         Manage
                       </button>
-                      <button>History</button>
+                      <button
+                        onClick={() => {
+                          setSelectedBarnId(barn);
+                          setShowBarnHistory(true);
+                        }}
+                      >History</button>
                     </td>
                   </tr>
                 </tbody>
@@ -122,6 +130,16 @@ export default function ShowBarn(props) {
           barnId={selectedBarnId}
           closeClick={setShowBarnInfo}
           refreshPage={relodePage}
+        />
+      )}
+      {showBarnHistory && (
+        <Modal
+          title ={"History of "+selectedBarnId.barnName}
+          body={<BarnHistory barnId={selectedBarnId} closeClick={setShowBarnHistory} />}
+          closeClick={setShowBarnHistory}
+          action="OK"
+          actionClick={setShowBarnHistory}
+          
         />
       )}
 
