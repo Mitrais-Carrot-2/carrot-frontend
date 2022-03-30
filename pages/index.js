@@ -12,25 +12,26 @@ import defaultProduct from "@public/img/default-product.png";
 import carrotIcon from "@public/img/mc-icon-carrot.png";
 import carrotIconTwo from "@public/img/mc-icon-transaction.png";
 import { Button, ButtonDropdown } from "reactstrap";
-
 import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 import thunkMiddleware from "redux-thunk";
 import reducer from "../redux/reducers";
 import { createWrapper } from "next-redux-wrapper";
+import jsCookie from "js-cookie";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
+  const dispatch = useDispatch();
   const router = useRouter();
+  const user = useSelector((state) => (state.user.info ? state.user.info : {}));
 
-  const user = {
-    firstName: "Ilham",
-    jobFamily: "SE",
-    jobGrade: "JP",
-    lastName: "Fadhil",
-    roles: {
-      name: "STAFF",
-    },
-  };
+  //check cookies for token if cookies is not found redirect to sign in page
+  useEffect(() => {
+    if (!jsCookie.get("token")) {
+      router.push("/sign-in");
+    }
+    console.log(user);
+  });
 
   return (
     <>
@@ -125,7 +126,7 @@ export default function Home() {
                 </div>
                 <div className="p-2">
                   <h3>{user.firstName + " " + user.lastName}</h3>
-                  <h4>Mitrais {user.roles.name}</h4>
+                  <h4>Mitrais {user.roles ? user.roles.name : ""}</h4>
                 </div>
               </div>
               <div className="max-w-[300px] w-[33%] p-4 flex flex-row bg-gradient-to-r from-orange-700 to-orange-400 rounded">
@@ -176,7 +177,6 @@ export default function Home() {
     </>
   );
 }
-
 
 const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== "production") {
