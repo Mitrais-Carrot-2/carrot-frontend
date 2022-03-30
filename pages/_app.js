@@ -11,8 +11,10 @@ import "popper.js";
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducer from "../redux/reducers";
-const store = createStore(reducer, applyMiddleware(thunk));
+import { useStore } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
+// const store = createStore(reducer, applyMiddleware(thunk));
 import { wrapper } from "../redux";
 
 function MyApp({ Component, pageProps }) {
@@ -22,13 +24,11 @@ function MyApp({ Component, pageProps }) {
   // useEffect(() => {
   //   import("bootstrap/dist/js/bootstrap.js");
   // }, []);
-
+  const store = useStore((state) => state);
   return (
-    // <Container>
-      <Provider store={store}>
+      <PersistGate persistor={store.__persistor} loading={<div>Loading</div>}>
         <Component {...pageProps} />
-      </Provider>
-    // </Container>
+      </PersistGate>
   );
 }
 

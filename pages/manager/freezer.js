@@ -9,7 +9,7 @@ import React from 'react';
 function Freezer(props) {
 // function Freezer(props) {
     let freezer = props.freezer;
-    console.log("freezer", freezer);
+    // console.log("freezer", freezer);
     return (
         <>
             <div className="sm:columns-6 mt-3">

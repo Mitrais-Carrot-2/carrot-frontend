@@ -10,8 +10,7 @@ const initialState = {
         barn_owner : "",
         distributed_carrot : "",
         carrot_amount : ""
-    },
-    staff: ['staff'],
+    }
 };
 
 const managerReducer = (state = initialState, action) => {
@@ -22,7 +21,8 @@ const managerReducer = (state = initialState, action) => {
                 ...action.payload,
             };
         case MANAGER_GET_FREEZER:
-            return { ...state, freezer: action.payload };
+            // return { ...state, freezer: action.payload };
+            state.freezer = action.payload;
         case MANAGER_GET_STAFF:
             return { ...state, staff: action.payload };
         default:

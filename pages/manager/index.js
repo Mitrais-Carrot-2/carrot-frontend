@@ -15,8 +15,10 @@ import { bindActionCreators } from 'redux';
 
 const Index = ({getFreezer, freezer, token}) => {
    useEffect(() => {
-        getFreezer(token);
-        console.log("-------", freezer, token);
+        getFreezer("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcmVsIiwiaWF0IjoxNjQ4NTM2NjcxLCJleHAiOjE2NDg2MjMwNzF9._n1k8IT-e4JFRcGU5Hl6HXDC7Ksk1-gNdPbv2xX4M8r4z0K19AZBO1FbMiLbrC-ZKuARiG52Q3ImBULxVhZEXQ");
+        console.log("token", token);
+        console.log("freezer", freezer);
+        // console.log("-------", freezer, token);
     }, []);
 
     return (
@@ -268,7 +270,7 @@ const Tabs = (props) => {
 
 const mapStateToProps = (state) => ({
     freezer: state.manager.freezer,
-    token: state.authentication.token,
+    token: state.authentication,
 })
 
 const mapDispatchToProps = (dispatch) => {

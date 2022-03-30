@@ -12,6 +12,7 @@ import { wrapper } from "../redux";
 import Router from "next/router";
 import Head from "@components/Head";
 import jsCookie from "js-cookie";
+import { bindActionCreators } from "redux";
 
 const SignIn = ({ authenticate, token }) => {
   const [error, setError] = React.useState("");
@@ -145,21 +146,33 @@ const SignIn = ({ authenticate, token }) => {
 //   return { token };
 // };
 
-export const getServerSideProps = wrapper.getServerSideProps((context) => {
-  async function fetchData() {
-    const { token } = checkServerSideCookie(context);
-    console.log(token);
-    // const token = context.store.getState().authentication.token;
-    return { props: { token } };
-    // await checkServerSideCookie(context);
-  }
+// export const getServerSideProps = wrapper.getServerSideProps((context) => {
+//   async function fetchData() {
+//     const { token } = checkServerSideCookie(context);
+//     console.log(token);
+//     // const token = context.store.getState().authentication.token;
+//     return { props: { token } };
+//     // await checkServerSideCookie(context);
+//   }
 
-  // return {
-  //   props: {
-  //     token,
-  //   },
-  // };
-});
+//   // return {
+//   //   props: {
+//   //     token,
+//   //   },
+//   // };
+// });
 
-export default connect((state) => state, { authenticate })(SignIn);
+// export default connect((state) => state, { authenticate })(SignIn);
 // export default SignIn;
+
+const mapStateToProps = (state) => ({
+  token: state.authentication.token,
+})
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      authenticate: bindActionCreators(authenticate, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
