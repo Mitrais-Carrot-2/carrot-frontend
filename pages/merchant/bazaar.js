@@ -8,7 +8,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 
-import CreateBazaar from "./createBazaar";
+import CreateBazaar from "./features/createBazaar";
+import UpdateBazaar from "./features/updateBazaar";
 
 export default function Bazaar() {
     const router = useRouter();
@@ -16,6 +17,9 @@ export default function Bazaar() {
     const url = 'http://localhost:8181/api/bazaar'
     const [bazaars, setBazaar] = useState([]);
     const [showCreateBazaar, setShowCreateBazaar] = useState(false);
+    const [showUpdateBazaar, setShowUpdateBazaar] = useState(false);
+    const [selectedBazaar, setSelectedBazaar] = useState({});
+
     useEffect(() => {
         axios.get(url).then(response => setBazaar(response.data));
     }, [])
@@ -53,6 +57,7 @@ export default function Bazaar() {
                             <thead>
                                 <tr>
                                     <th itemScope="col" aria-rowspan={2}>#</th>
+                                    <th itemScope="col" aria-rowspan={2} style={{ display: "none" }}>id</th>
                                     <th itemScope="col" aria-rowspan={2}>Bazaar Name</th>
                                     <th itemScope="col" aria-rowspan={2}>Start Date</th>
                                     <th itemScope="col" aria-rowspan={2}>End Date</th>
@@ -62,15 +67,22 @@ export default function Bazaar() {
                             {bazaars.map((data, index) => (
                                 <tr key={index + 1}>
                                     <td>{index + 1}</td>
+                                    <td style={{ display: "none" }}>{data.id}</td>
                                     <td>{data.bazaarName}</td>
                                     <td>{data.startDate}</td>
                                     <td>{data.endDate}</td>
                                     <td>
-                                        <button type="button" className="btn border-blue-600 mr-2">
+                                        <button type="button" className="btn border-blue-600 mr-2"
+                                            onClick={() => {
+                                                setShowUpdateBazaar(true);
+                                                setSelectedBazaar(data)
+                                            }}
+                                        >
                                             <i className="fa fa-edit text-blue-600 fa-x px-1">
 
                                             </i>
                                         </button>
+                                        {showUpdateBazaar && <UpdateBazaar closeClick={setShowUpdateBazaar} updateData={selectedBazaar} refreshPage={reloadPage} />}
                                     </td>
                                 </tr>
                             ))}

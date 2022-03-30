@@ -5,30 +5,9 @@ import axios from "axios";
 import { setUser } from "redux/reducers/userReducer";
 
 export const authenticate = (user) => (dispatch) => {
-  //   fetch(`https://aqueous-meadow-07678.herokuapp.com/api/login`, {
-  //     method: "POST",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(user),
-  //   })
-  //     .then((data) => data.json())
-  //     .then((response) => {
-  //       setCookie("token", response.token);
-  //       Router.push("/");
-  //       dispatch({ type: AUTHENTICATE, payload: response.token });
-  //     })
-  //     .catch((err) => console.log(err));
-
   axios
     .post("http://localhost:8181/api/auth/login", user)
     .then((res) => {
-      // localStorage.setItem("token", res.data.token);
-      // localStorage.setItem("username", res.data.username);
-      // localStorage.setItem("id", res.data.id);
-      // localStorage.setItem("roles", res.data.roles);
-
       setCookie("token", res.data.token);
       setCookie("username", res.data.username);
       setCookie("id", res.data.id);

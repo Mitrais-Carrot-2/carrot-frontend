@@ -83,47 +83,6 @@ export default function CreateBazaar(props) {
 
     return (
         <>
-            {/* <Modal
-                size="lg"
-                className="sm:w-full md:w-full lg:w-1/3"
-                toggle={() => setModalCreateBazaar(!modalCreateBazaar)}
-                isOpen={modalCreateBazaar}
-            // closeClick={props.closeClick}
-            >
-                <div className="modal-header">
-                    <h5 className="text-sm modal-title" id="exampleModalLabel">
-                        Bazaar
-                    </h5>
-                    <button
-                        aria-label="Close"
-                        className=" close"
-                        type="button"
-                        onClick={() => setModalCreateBazaar(!modalCreateBazaar)}
-                    >
-                        <span aria-hidden={true}>×</span>
-                    </button>
-                </div>
-                <ModalBody>
-                    {createBazaar()}
-                </ModalBody>
-                <ModalFooter>
-                    <Button
-                        className="text-red-600 border-transparent hover:border-red-600 hover:bg-transparent hover:text-red-600"
-                        type="button"
-                        onClick={() => setModalCreateBazaar(!modalCreateBazaar)}
-                    >
-                        Close
-                    </Button>
-
-                    <Button
-                        className="bg-green-600 border-none hover:bg-green-700"
-                        type="button"
-                        onClick={postBazaar}
-                    >
-                        Create Bazaar
-                    </Button>
-                </ModalFooter>
-            </Modal> */}
             <div id="modal">
                 <Modal
                     title="Create Bazaar"

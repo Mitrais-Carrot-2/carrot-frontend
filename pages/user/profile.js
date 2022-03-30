@@ -5,36 +5,50 @@ import Image from "next/image";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Modal from "@components/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../redux/reducers/userReducer";
+import { headers } from "next.config";
 
 export default function Profile(/* props atau user */) {
-  let username = "Ilham";
-  const [user, setUser] = useState({});
-  const [picture, setPicture] = useState("");
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => (state.user.info ? state.user.info : {}));
+  const picture = user
+    ? "http://localhost:8181/api/user/Image/" + user.username
+    : "/img/defaultImage.png";
   const [supervisorName, setSupervisorName] = useState("");
   const [modalUserInfo, setModalUserInfo] = useState(false);
   const [modalImage, setModalImage] = useState(false);
   const [modalPassword, setModalPassword] = useState(false);
+  const [imageFormData, setImageFormData] = useState(new FormData());
+  const [userFormData, setUserFormData] = useState({});
+  const [passwordFormData, setPasswordFormData] = useState({});
 
   useEffect(() => {
     axios
-      .get("http://localhost:8181/api/user/username/" + username)
+      .get("http://localhost:8181/api/user/" + user.supervisorId)
       .then((res) => {
-        setUser(res.data), setPicture("/img/defaultImage.png");
-        console.log(res.data);
-        axios
-          .get("http://localhost:8181/api/user/" + res.data.supervisorId)
-          .then((res) => {
-            setSupervisorName(res.data.firstName + " " + res.data.lastName);
-            console.log(res.data.firstName + " " + res.data.lastName);
-          });
-        axios
-          .get("http://localhost:8181/api/user/Image/" + username)
-          .then(setPicture("http://localhost:8181/api/user/Image/" + username))
-          .catch((err) => {
-            setPicture("/img/defaultImage.png");
-          });
+        setSupervisorName(res.data.firstName + " " + res.data.lastName);
       });
-  }, [username]);
+    setUserFormData(user);
+  }, [user]);
+
+  function updateImage() {
+    axios
+      .put(
+        "http://localhost:8181/api/user/Image/" + user.username,
+        imageFormData
+      )
+      .then((res) => {
+        console.log(res);
+        setModalImage(false);
+        window.alert("Successfully updated");
+      })
+      .catch((err) => {
+        console.log(err);
+        window.alert("Failed to update");
+      });
+  }
 
   return (
     <div>
@@ -242,6 +256,7 @@ export default function Profile(/* props atau user */) {
           body={profileModal()}
           action="Change User Information"
           closeClick={setModalUserInfo}
+          actionClick={updateUserInformation}
         />
       )}
       {modalImage && (
@@ -250,6 +265,7 @@ export default function Profile(/* props atau user */) {
           body={imageModal()}
           action="Change Profile Picture"
           closeClick={setModalImage}
+          actionClick={updateImage}
         />
       )}
       {modalPassword && (
@@ -258,25 +274,105 @@ export default function Profile(/* props atau user */) {
           body={passwordModal()}
           action="Change Password"
           closeClick={setModalPassword}
+          actionClick={updatePassword}
         />
       )}
     </div>
   );
 
+  function updateUserInformation() {
+    axios
+      .put(
+        "http://localhost:8181/api/user/updateProfile/" + user.username,
+        userFormData
+      )
+      .then((res) => {
+        console.log(res);
+        setModalUserInfo(false);
+        dispatch(setUser(userFormData));
+        window.alert("Successfully updated");
+        setUserFormData({
+          ...userFormData,
+          currentPassword: "",
+        });
+        //restart page
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        window.alert("Failed to update");
+      });
+  }
+
   // change profile info modal
   function profileModal() {
     return (
       <div>
-        <form>
-          <div className="user-details">
-            <label>First name:</label>
-            <input type="text" name="firstName" />
-            <label>Last name:</label>
-            <input type="text" name="lastName" />
-            <label>Address:</label>
-            <input type="text" name="address" />
-          </div>
-        </form>
+        <div className="user-details">
+          <label>Verify your password:</label>
+          <input
+            type="password"
+            name="currentPassword"
+            onChange={(e) =>
+              setUserFormData({
+                ...userFormData,
+                currentPassword: e.target.value,
+              })
+            }
+            placeholder="Current Password"
+            required
+          />
+          <label>First name:</label>
+          <input
+            type="text"
+            name="firstName"
+            defaultValue={userFormData.firstName}
+            onChange={(e) =>
+              setUserFormData({
+                ...userFormData,
+                firstName: e.target.value,
+              })
+            }
+            required
+          />
+          <label>Last name:</label>
+          <input
+            type="text"
+            name="lastName"
+            defaultValue={userFormData.lastName}
+            onChange={(e) =>
+              setUserFormData({
+                ...userFormData,
+                lastName: e.target.value,
+              })
+            }
+            required
+          />
+          <label>Address:</label>
+          <input
+            type="text"
+            name="address"
+            defaultValue={userFormData.address}
+            onChange={(e) =>
+              setUserFormData({
+                ...userFormData,
+                address: e.target.value,
+              })
+            }
+          />
+          <label>phone:</label>
+          <input
+            type="text"
+            name="Phone"
+            defaultValue={userFormData.phone}
+            onChange={(e) =>
+              setUserFormData({
+                ...userFormData,
+                phone: e.target.value,
+              })
+            }
+          />
+        </div>
         <style>{`
           .user-details {
             padding: 20px;
@@ -300,12 +396,16 @@ export default function Profile(/* props atau user */) {
   function imageModal() {
     return (
       <div>
-        <form>
-          <div className="barn-details">
-            <label>Insert image:</label>
-            <input type="file" name="image-file" />
-          </div>
-        </form>
+        <div className="barn-details">
+          <label>Insert image:</label>
+          <input
+            type="file"
+            name="image-file"
+            onChange={(file) => {
+              setImageFormData(file.target.files[0]);
+            }}
+          />
+        </div>
         <style>{`
           .barn-details {
             padding: 20px;
@@ -325,17 +425,63 @@ export default function Profile(/* props atau user */) {
     );
   }
 
+  function updatePassword() {
+    axios
+      .put(
+        "http://localhost:8181/api/user/updatePassword/" + user.username,
+        passwordFormData
+      )
+      .then((res) => {
+        setModalPassword(false);
+
+        axios
+          .get("http://localhost:8181/api/user/username/" + user.username)
+          .then((res2) => {
+            dispatch(setUser(res2.data));
+            console.log(res2.data);
+          });
+
+        window.alert("Successfully updated");
+        setPasswordFormData({});
+        //restart page
+        window.location.reload();
+      })
+      .catch((err) => {
+        window.alert("Wrong Password");
+      });
+  }
+
   function passwordModal() {
     return (
       <div>
-        <form>
-          <div className="password-modal">
-            <label>Old Password:</label>
-            <input type="text" name="oldPassword" />
-            <label>New Password:</label>
-            <input type="text" name="newPassword" />
-          </div>
-        </form>
+        <div className="password-modal">
+          <label>Old Password:</label>
+          <input
+            type="text"
+            name="oldPassword"
+            onChange={(e) =>
+              setPasswordFormData({
+                ...passwordFormData,
+                oldPassword: e.target.value,
+              })
+            }
+            placeholder="Current Password"
+            required
+          />
+          <label>New Password:</label>
+          <input
+            type="text"
+            name="newPassword"
+            onChange={(e) =>
+              setPasswordFormData({
+                ...passwordFormData,
+                newPassword: e.target.value,
+              })
+            }
+            placeholder="New Password"
+            required
+          />
+        </div>
         <style>{`
           .password-modal{
             padding: 20px;

@@ -8,6 +8,7 @@ export default function Distribution(props) {
   const [distributeCarrot, setDistributeCarrot] = useState(false);
   const [managerId, setManagerId] = useState(0);
   const [carrotAmount, setCarrotAmount] = useState(0);
+  const [message, setMessage] = useState("")
   function getTransactionDetail() {
     return (
       <div className="grid grid-cols-2 gap-1">
@@ -25,14 +26,23 @@ export default function Distribution(props) {
           name="carrotAmount"
           onChange={(item) => setCarrotAmount(item.target.value)}
         />
+        <label>Message:</label>
+        <textarea
+            value={message}
+            type="text"
+            name="message"
+            onChange={(item) => setMessage(item.target.value)}
+        />
       </div>
     );
   }
   function sendCarrot() {
     axios
-      .post("http://localhost:8181/api/farmer/transfer", {
-        manager_id: managerId,
-        carrot_amount: carrotAmount,
+      .post("http://localhost:8181/api/farmer/transfer/distribute", {
+        managerId: managerId,
+        barnId: props.barn.id,
+        carrotAmount: carrotAmount,
+        note: message,
       })
       .then((res) => {
         console.log(res);
@@ -42,6 +52,8 @@ export default function Distribution(props) {
         console.log(err);
       });
   }
+  console.log("halo",props.barn);
+  if(Object.keys(props.barn).length){
   return (
     <>
       <h1
@@ -86,7 +98,7 @@ export default function Distribution(props) {
         />
       )}
       <div className="container py-2 bg-white">
-        <BarnHistory />
+        <BarnHistory barnId={props.barn.id} />
       </div>
       <style>
         {`
@@ -97,5 +109,8 @@ export default function Distribution(props) {
             `}
       </style>
     </>
-  );
+  );}
+  else{
+      return(<h1>No Active Barn</h1>)
+  }
 }

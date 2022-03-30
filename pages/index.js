@@ -25,14 +25,6 @@ export default function Home() {
   const router = useRouter();
   const user = useSelector((state) => (state.user.info ? state.user.info : {}));
 
-  //check cookies for token if cookies is not found redirect to sign in page
-  useEffect(() => {
-    if (!jsCookie.get("token")) {
-      router.push("/sign-in");
-    }
-    console.log(user);
-  });
-
   return (
     <>
       <style jsx>{`
