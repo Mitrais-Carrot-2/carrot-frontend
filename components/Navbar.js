@@ -24,13 +24,13 @@ export default function Navbar() {
   const user = useSelector((state) => (state.user.info ? state.user.info : {}));
   const roles = jsCookie.get("roles") ? jsCookie.get("roles").substring(5) : "";
   const picture = user
-    ? "http://localhost:8181/api/user/Image/" + user.username + "?" + new Date()
+    ? "http://localhost:8181/api/user/Image/" + user.username
     : "/img/defaultImage.png";
 
   useEffect(() => {
     // if (cookie.get("username")) {
     //   setUsername(cookie.get("username"));
-      // console.log(username);
+    // console.log(username);
     if (!jsCookie.get("token")) {
       router.push("/sign-in");
     }

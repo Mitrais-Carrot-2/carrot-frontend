@@ -409,7 +409,6 @@ export default function Profile(/* props atau user */) {
               setImageFormData(e.target.files[0]);
             }}
           />
-          <button onClick={() => console.log(imageFormData)}>check</button>
         </div>
         <style>{`
           .barn-details {
