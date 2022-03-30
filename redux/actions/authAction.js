@@ -33,7 +33,7 @@ export const authenticate = (user) => (dispatch) => {
             setCookie("roles", res.data.roles);
 
             Router.push("/");
-            dispatch({ type: AUTHENTICATE, payload: res.data.token });
+            dispatch({ type: AUTHENTICATE, payload: res.data });
         })
         .catch((err) => {
             console.log("Username / Password is incorrect");

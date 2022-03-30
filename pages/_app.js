@@ -4,13 +4,16 @@ import "@styles/custom.css";
 import "@styles/globals.css";
 import "font-awesome/css/font-awesome.css";
 import "@material-tailwind/react/tailwind.css";
-//import popper
+// import { Container } from "reactstrap";
+import { Provider } from 'react-redux';
 import "popper.js";
 
-import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import reducer from "../redux/reducers";
+const store = createStore(reducer, applyMiddleware(thunk));
+
 import { wrapper } from "../redux";
-// import withRedux from "next-redux-wrapper";
-// import { initStore } from "../redux/store";
 
 function MyApp({ Component, pageProps }) {
   // useEffect(() => {
@@ -22,9 +25,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     // <Container>
-      // <Provider store={store}>
+      <Provider store={store}>
         <Component {...pageProps} />
-      // </Provider>
+      </Provider>
     // </Container>
   );
 }

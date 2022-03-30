@@ -1,9 +1,15 @@
 import Head from '@components/Head';
 import Navbar from '@components/Navbar';
 import React from 'react';
-
-export default function Freezer({freezer}) {
-    // console.log(freezer);
+// import { wrapper } from "../../redux";
+// import { getCookie } from 'redux/actions/authAction';
+// import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import { getFreezer } from 'redux/actions/managerAction';
+function Freezer(props) {
+// function Freezer(props) {
+    let freezer = props.freezer;
+    console.log("freezer", freezer);
     return (
         <>
             <div className="sm:columns-6 mt-3">
@@ -65,3 +71,16 @@ export default function Freezer({freezer}) {
         </>
     )
 }
+
+// export const getStaticProps = wrapper.getStaticProps((store) => () => {
+//     store.dispatch(getFreezer(store.getState().authentication.token));
+// })
+
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//       getFreezer: bindActionCreators(getFreezer, dispatch),
+//     }
+//   }
+
+//   export default connect(null, mapDispatchToProps)(Freezer);
+export default Freezer;

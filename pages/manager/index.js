@@ -8,31 +8,23 @@ import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import FormShare from "./formShare";
 import axios from 'axios';
 import { getCookie } from 'redux/actions/authAction';
+import { connect } from 'react-redux';
+import { getFreezer } from 'redux/actions/managerAction';
+import { wrapper } from "../../redux";
+import { bindActionCreators } from 'redux';
 
-export default function Index() {
-    const [freezer, setFreezer] = React.useState([]);
-
-    useEffect(() => {
-        axios.get("http://localhost:8181/api/manager/freezer", {
-            headers: {
-                // Authorization: `Bearer ${localStorage.getItem('token')}`
-                Authorization: `Bearer ${getCookie('token')}`
-            }
-        }).then((res) => {
-                setFreezer(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });    
+const Index = ({getFreezer, freezer, token}) => {
+   useEffect(() => {
+        getFreezer(token);
+        console.log("-------", freezer, token);
     }, []);
 
-    
     return (
         <body>
             <Head />
             <Navbar />
             <div className="container">
-            {/* <div className="container w-5/6 mx-auto"> */}
+                {/* <div className="container w-5/6 mx-auto"> */}
                 <div className="mx-auto font-medium">
                     {/* <a href='#' className="bg-[#ff5722] text-white px-4 py-2.5 rounded-md text-1xl hover:bg-orange-600 transition duration-300">Share Carrot</a>
                     <a href='#' className="text-grey capitalize px-4 py-2.5 rounded-md text-1xl">Bazaar</a> */}
@@ -60,7 +52,7 @@ const Tabs = (props) => {
     const [managerId, setManagerId] = React.useState('');
     // create use effect to get id from local storage
     useEffect(() => {
-        let id = localStorage.getItem('id');
+        let id = getCookie('id');
         setManagerId(id);
         axios.get(`http://localhost:8181/api/manager/${id}/staff/`, {
             headers: {
@@ -71,9 +63,9 @@ const Tabs = (props) => {
             console.log(res.data);
             setStaff(res.data);
         })
-        .catch((err) => {
-            console.log(err);
-        });
+            .catch((err) => {
+                console.log(err);
+            });
     }, []);
 
     const columns = [
@@ -205,10 +197,10 @@ const Tabs = (props) => {
                             <div className="tab-content tab-space">
                                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
                                     <div className="grid place-content-center pt-4">
-                                        <button onClick={() => 
-                                        // openModalShare()
-                                        setModalShareOpen(!modalShareOpen)
-                                    } className='btn bg-[#17a2b8] text-white'>
+                                        <button onClick={() =>
+                                            // openModalShare()
+                                            setModalShareOpen(!modalShareOpen)
+                                        } className='btn bg-[#17a2b8] text-white'>
                                             <i className="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;
                                             Reward Carrot
                                         </button>
@@ -246,7 +238,7 @@ const Tabs = (props) => {
                                                     onClick={() => sendStaff()}
                                                     className="px-4 bg-[#ff5722] border-none hover:bg-[#f2734b]"
                                                     type="button">
-                                                    Reward Now 
+                                                    Reward Now
                                                 </Button>
                                             </ModalFooter>
                                         </Modal>
@@ -273,3 +265,16 @@ const Tabs = (props) => {
         </>
     );
 };
+
+const mapStateToProps = (state) => ({
+    freezer: state.manager.freezer,
+    token: state.authentication.token,
+})
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getFreezer: bindActionCreators(getFreezer, dispatch),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index);
