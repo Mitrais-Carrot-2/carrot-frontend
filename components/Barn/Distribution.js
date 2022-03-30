@@ -96,7 +96,7 @@ export default function Distribution(props) {
         />
       )}
       <div className="container py-2 bg-white">
-        <BarnHistory />
+        <BarnHistory barnId={props.barn.id} />
       </div>
       <style>
         {`
