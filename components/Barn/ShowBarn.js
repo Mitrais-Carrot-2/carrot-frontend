@@ -38,86 +38,81 @@ export default function ShowBarn(props) {
   }
   return (
     <div>
-      <h1>Farmer Dashboard</h1>
-      <div
-      
-        className="bg-white rounded shadow-md p-4 mb-4 overflow-x-scroll"
-      >
+      <h1 className="text-purple-500 text-4xl font-bold lowercase ml-2 mb-2">
+        Farmer Dashboard
+      </h1>
+      <div className="bg-white rounded shadow-md p-4 mb-4 overflow-x-scroll">
         <h2>List of barn</h2>
-      <table
-        className="w-5/6 overflow-x-scroll"
-      >
-        <thead>
-          <tr>
-            <th>#</th>
-            <th
-            // onClick={() => shortByName()}
-            >
-              Barn Name
-            </th>
-            <th
-            // onClick={() => shortByDate()}
-            >
-              Start Periode
-            </th>
-            <th
-            // onClick={() => shortByDate()}
-            >
-              End Periode
-            </th>
-            <th
-              className="w-4"
-            // onClick={() => shortByAmount()}
-            >
-              Carrot Amount
-            </th>
-            <th
-              className="w-5"
-            >Distributed Carrot</th>
-            <th
-            // onClick={() => sortByActive()}
-            >
-              Status
-            </th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        {props.barns
-        .sort((a, b) => a.barnName.localeCompare(b.barnName))
-        .map((barn, index) => {
-          return (
-            <tbody key={barn.id}>
-              <tr>
-                <td>{index + 1}</td>
-                <td>{barn.barnName}</td>
-                <td>{barn.startDate}</td>
-                <td>{barn.endDate}</td>
-                <td>{barn.carrotAmount}</td>
-                <td>{barn.distributedCarrot}</td>
-                <td>{barn.isActive ? "Yes" : "No"}</td>
-                <td>
-                  <button
-                    onClick={() => {
-                      setSelectedBarnId(barn);
-                      setShowBarnInfo(true);
-                    }}
-                  >
-                    Manage
-                  </button>
-                  <button>History</button>
-                </td>
-              </tr>
-            </tbody>
-          );
-        })}
-      </table>
-      <button
-        onClick={() => {
-          setShowCreateBarn(true);
-        }}
-      >
-        Create Barn
-      </button>
+        <table className="w-5/6 overflow-x-scroll">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th
+              // onClick={() => shortByName()}
+              >
+                Barn Name
+              </th>
+              <th
+              // onClick={() => shortByDate()}
+              >
+                Start Periode
+              </th>
+              <th
+              // onClick={() => shortByDate()}
+              >
+                End Periode
+              </th>
+              <th
+                className="w-4"
+                // onClick={() => shortByAmount()}
+              >
+                Carrot Amount
+              </th>
+              <th className="w-5">Distributed Carrot</th>
+              <th
+              // onClick={() => sortByActive()}
+              >
+                Status
+              </th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          {props.barns
+            .sort((a, b) => a.barnName.localeCompare(b.barnName))
+            .map((barn, index) => {
+              return (
+                <tbody key={barn.id}>
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{barn.barnName}</td>
+                    <td>{barn.startDate}</td>
+                    <td>{barn.endDate}</td>
+                    <td>{barn.carrotAmount}</td>
+                    <td>{barn.distributedCarrot}</td>
+                    <td>{barn.isActive ? "Yes" : "No"}</td>
+                    <td>
+                      <button
+                        onClick={() => {
+                          setSelectedBarnId(barn);
+                          setShowBarnInfo(true);
+                        }}
+                      >
+                        Manage
+                      </button>
+                      <button>History</button>
+                    </td>
+                  </tr>
+                </tbody>
+              );
+            })}
+        </table>
+        <button
+          onClick={() => {
+            setShowCreateBarn(true);
+          }}
+        >
+          Create Barn
+        </button>
       </div>
       {showCreateBarn && (
         <CreateBarn closeClick={setShowCreateBarn} refreshPage={relodePage} />
@@ -131,12 +126,7 @@ export default function ShowBarn(props) {
       )}
 
       <style jsx>{`
-        h1 {
-          font-size: 2rem;
-          font-weight: bold;
-          margin-bottom: 1rem;
-          color: purple;
-        }
+        
         table {
           border-collapse: collapse;
           width: 100%;
