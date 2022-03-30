@@ -5,11 +5,14 @@ import Image from "next/image";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Modal from "@components/Modal";
+import { useSelector } from "react-redux";
 
 export default function Profile(/* props atau user */) {
   let username = "Ilham";
-  const [user, setUser] = useState({});
-  const [picture, setPicture] = useState("");
+  const user = useSelector((state) => (state.user.info ? state.user.info : {}));
+  const picture = user
+    ? "http://localhost:8181/api/user/Image/" + user.username
+    : "/img/defaultImage.png";
   const [supervisorName, setSupervisorName] = useState("");
   const [modalUserInfo, setModalUserInfo] = useState(false);
   const [modalImage, setModalImage] = useState(false);
@@ -17,24 +20,11 @@ export default function Profile(/* props atau user */) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8181/api/user/username/" + username)
+      .get("http://localhost:8181/api/user/" + user.supervisorId)
       .then((res) => {
-        setUser(res.data), setPicture("/img/defaultImage.png");
-        console.log(res.data);
-        axios
-          .get("http://localhost:8181/api/user/" + res.data.supervisorId)
-          .then((res) => {
-            setSupervisorName(res.data.firstName + " " + res.data.lastName);
-            console.log(res.data.firstName + " " + res.data.lastName);
-          });
-        axios
-          .get("http://localhost:8181/api/user/Image/" + username)
-          .then(setPicture("http://localhost:8181/api/user/Image/" + username))
-          .catch((err) => {
-            setPicture("/img/defaultImage.png");
-          });
+        setSupervisorName(res.data.firstName + " " + res.data.lastName);
       });
-  }, [username]);
+  }, [user]);
 
   return (
     <div>
