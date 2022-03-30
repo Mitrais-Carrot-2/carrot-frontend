@@ -155,12 +155,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       return { props: {token} };
       // await checkServerSideCookie(context);
     }
-    
-    // return {
-    //   props: {
-    //     token,
-    //   },
-    // };
   }
 );
 
