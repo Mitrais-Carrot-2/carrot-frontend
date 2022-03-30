@@ -21,7 +21,9 @@ export default function BazaarItem() {
     }, [])
     // console.log(bazaar)
 
-
+    function reloadPage() {
+        window.location.reload();
+    }
 
     return (
         <body>
@@ -48,7 +50,7 @@ export default function BazaarItem() {
                                     Create New Item
                                 </button>
                                 {/* {<CreateItem setModalCreateItem(!modalCreateItem) />} */}
-                                {showCreateItem && <CreateItem closeClick={setShowCreateItem} />}
+                                {showCreateItem && <CreateItem closeClick={setShowCreateItem} refreshPage={reloadPage} />}
                                 {/* {showCreateGroup && <CreateGroup closeClick={setShowCreateGroup} />} */}
                             </div>
                         </div>

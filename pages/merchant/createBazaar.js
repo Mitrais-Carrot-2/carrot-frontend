@@ -15,6 +15,10 @@ export default function CreateBazaar(props) {
 
     function postBazaar() {
         axios.post("http://localhost:8181/api/bazaar", bazaar)
+            .then((res) => {
+                props.closeClick();
+                props.refreshPage();
+            })
     }
 
     // function createBazaar() {

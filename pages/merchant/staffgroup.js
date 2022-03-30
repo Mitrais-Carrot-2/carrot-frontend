@@ -43,7 +43,9 @@ export default function StaffGroup() {
         })
     }
 
-
+    function reloadPage() {
+        window.location.reload();
+    }
 
     return (
         <body>
@@ -69,7 +71,7 @@ export default function StaffGroup() {
                                     {" "}
                                     Create New Group
                                 </button>
-                                {showCreateGroup && <CreateGroup closeClick={setShowCreateGroup} />}
+                                {showCreateGroup && <CreateGroup closeClick={setShowCreateGroup} refreshPage={reloadPage} />}
                             </div>
                         </div>
                         <table className="table table-hover mt-3">

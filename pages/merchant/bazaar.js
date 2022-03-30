@@ -34,6 +34,10 @@ export default function Bazaar() {
         })
     }
 
+    function reloadPage() {
+        window.location.reload();
+    }
+
     return (
         <body>
             <Head />
@@ -54,7 +58,7 @@ export default function Bazaar() {
                                     {" "}
                                     Create New Bazaar
                                 </button>
-                                {showCreateBazaar && <CreateBazaar closeClick={setShowCreateBazaar} />}
+                                {showCreateBazaar && <CreateBazaar closeClick={setShowCreateBazaar} refreshPage={reloadPage} />}
                             </div>
                         </div>
                         <table className="table table-hover mt-3">
