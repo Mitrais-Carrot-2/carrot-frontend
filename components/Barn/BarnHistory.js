@@ -8,7 +8,7 @@ export default function BarnHistory(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8181/api/farmer/transfer/"+props.barnId.id)
+      .get("http://localhost:8181/api/farmer/transfer/"+props.barnId)
       .then((res) => setTransfers(res.data));
   }, []);
 

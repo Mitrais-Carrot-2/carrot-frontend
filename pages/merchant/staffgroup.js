@@ -7,44 +7,31 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import CreateGroup from "./createGroup";
+import CreateGroup from "./features/createGroup";
+import UpdateGroup from "./features/updateGroup";
+import AddGroupMember from "./features/addMember";
+import Link from "next/link";
 
-export default function StaffGroup() {
+export default function StaffGroup(props) {
     const router = useRouter();
 
     const url = 'http://localhost:8181/api/bazaar/group'
     const [groups, setGroup] = useState([]);
     const [showCreateGroup, setShowCreateGroup] = useState(false);
+    const [showUpdateGroup, setShowUpdateGroup] = useState(false);
+    const [showMember, setShowMember] = useState(false);
+    const [selectedGroup, setSelectedGroup] = useState({});
 
     useEffect(() => {
         axios.get(url).then(response => setGroup(response.data));
     }, [])
-    // console.log(bazaar)
-
-
-
-    const renderTable = () => {
-        let initId = 0
-        return groups.map((item, index) => {
-            <tr key={index + 1}>
-                <td>{index + 1}</td>
-                <td>{item.name}</td>
-                <td>{item.managerId}</td>
-                <td>{item.allocation}</td>
-                <td>{item.note}</td>
-                <td>
-                    <button type="button" className="btn border-blue-600 mr-2">
-                        <i className="fa fa-edit text-blue-600 fa-x px-1">
-
-                        </i>
-                    </button>
-                </td>
-            </tr>
-        })
-    }
 
     function reloadPage() {
         window.location.reload();
+    }
+
+    function testKlik() {
+        console.log("clicked button " + selectedGroup)
     }
 
     return (
@@ -78,6 +65,7 @@ export default function StaffGroup() {
                             <thead>
                                 <tr>
                                     <th itemScope="col" aria-rowspan={2}>#</th>
+                                    <th itemScope="col" aria-rowspan={2} style={{ display: "none" }}>id</th>
                                     <th itemScope="col" aria-rowspan={2}>Group Name</th>
                                     <th itemScope="col" aria-rowspan={2}>Manager</th>
                                     <th itemScope="col" aria-rowspan={2}>Allocation</th>
@@ -85,30 +73,66 @@ export default function StaffGroup() {
                                     <th itemScope="col" aria-rowspan={2}>Action</th>
                                 </tr>
                             </thead>
-                            {/* <tr>
-                                <td>1</td>
-                                <td>Test Group</td>
-                                <td>2</td>
-                                <td>200</td>
-                                <td>This is a note</td>
-                                <td></td>
-                            </tr> */}
-                            {groups.map((data, index) => (
-                                <tr key={index + 1}>
-                                    <td>{index + 1}</td>
-                                    <td>{data.name}</td>
-                                    <td>{data.managerId}</td>
-                                    <td>{data.allocation}</td>
-                                    <td>{data.note}</td>
-                                    <td>
-                                        <button type="button" className="btn border-blue-600 mr-2">
-                                            <i className="fa fa-edit text-blue-600 fa-x px-1">
+                            {groups
+                                .sort((a, b) => { return a.id - b.id })
+                                .map((data, index) => (
+                                    <tr key={index + 1}>
+                                        <td>{index + 1}</td>
+                                        <td style={{ display: "none" }}>{data.id}</td>
+                                        {console.log("the data id: " + data.id)}
+                                        <td>{data.name}</td>
+                                        <td>{data.managerId}</td>
+                                        <td>{data.allocation}</td>
+                                        <td>{data.note}</td>
+                                        <td>
+                                            <button type="button" className="btn border-blue-600 mr-2 mx-1 my-1"
+                                                onClick={() => {
+                                                    setShowMember(true)
+                                                    setSelectedGroup(data)
+                                                    // console.log("this is onclick data id : " + data.id)
+                                                    // testKlik();
+                                                    router.push({
+                                                        pathname: "/merchant/staffgroup/member",
+                                                        query: { groupId: data.id }
+                                                    },
+                                                    )
+                                                    // props.history.push({
+                                                    //     pathname: '/merchant/staffgroup/member'
+                                                    //     selectedGroup
+                                                    // })
 
-                                            </i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+                                                }}
+                                            >
+                                                {/* <Link
+                                                    href={{
+                                                        pathname: '/staffgroup/member',
+                                                        query: { groupId: selectedGroup.id }
+                                                    }}> */}
+                                                <i className="fa fa-users text-blue-600 fa-x px-1">
+
+                                                </i>
+                                                {/* </Link> */}
+                                            </button>
+                                            <button type="button" className="btn border-blue-600 mr-2 mx-1 my-1"
+                                                onClick={() => {
+                                                    // console.log(data) 
+                                                    setShowUpdateGroup(true);
+                                                    setSelectedGroup(data)
+                                                }}
+                                            >
+
+                                                <i className="fa fa-edit text-blue-600 fa-x px-1">
+
+                                                </i>
+
+
+                                            </button>
+                                            {/* {showMember && <Link />} */}
+                                            {/* {showMember && <AddGroupMember groupData={selectedGroup} />} */}
+                                            {showUpdateGroup && <UpdateGroup closeClick={setShowUpdateGroup} updateData={selectedGroup} refreshPage={reloadPage} />}
+                                        </td>
+                                    </tr>
+                                ))}
                         </table>
                     </div>
                 </section>

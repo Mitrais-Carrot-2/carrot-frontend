@@ -135,7 +135,7 @@ export default function ShowBarn(props) {
       {showBarnHistory && (
         <Modal
           title ={"History of "+selectedBarnId.barnName}
-          body={<BarnHistory barnId={selectedBarnId} closeClick={setShowBarnHistory} />}
+          body={<BarnHistory barnId={selectedBarnId.id} closeClick={setShowBarnHistory} />}
           closeClick={setShowBarnHistory}
           action="OK"
           actionClick={setShowBarnHistory}
