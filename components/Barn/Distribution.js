@@ -52,6 +52,8 @@ export default function Distribution(props) {
         console.log(err);
       });
   }
+  console.log("halo",props.barn);
+  if(Object.keys(props.barn).length){
   return (
     <>
       <h1
@@ -107,5 +109,8 @@ export default function Distribution(props) {
             `}
       </style>
     </>
-  );
+  );}
+  else{
+      return(<h1>No Active Barn</h1>)
+  }
 }

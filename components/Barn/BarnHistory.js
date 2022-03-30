@@ -15,13 +15,17 @@ export default function BarnHistory(props) {
   
   return (
     <>
-      <div>BarnHistory WIP</div>
+    <p className="text-2xl uppercase py-2 text-orange-500">History:</p>
       <table>
         <thead>
           <tr>
             <th>#</th>
-            <th>Shared to</th>
-            <th>Amount</th>
+            <th
+              className="text-center w-40"
+            >Shared to</th>
+            <th
+              className="w-20"
+            >Amount</th>
             <th>Date</th>
             <th>Message</th>
           </tr>
@@ -32,6 +36,25 @@ export default function BarnHistory(props) {
           })}
         </tbody>
       </table>
+      <style jsx>{`
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+          tr {
+            border-bottom: 1px solid #ccc;
+          }
+          th,
+          td {
+            padding: 10px;
+          }
+          th {
+            text-align: center;
+          }
+          td {
+            text-align: center;
+          }
+      `}</style>
     </>
   );
 }
