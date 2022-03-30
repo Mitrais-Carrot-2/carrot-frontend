@@ -18,6 +18,10 @@ export default function CreateItem(props) {
     function postItem() {
         //let id = 53;
         axios.post(`http://localhost:8181/api/bazaar/${bazaarItem.bazaar}/item`, bazaarItem)
+            .then((res) => {
+                props.closeClick();
+                props.refreshPage();
+            })
     }
 
     function addItem() {
