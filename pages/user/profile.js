@@ -6,6 +6,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Modal from "@components/Modal";
 import { useSelector } from "react-redux";
+import { headers } from "next.config";
 
 export default function Profile(/* props atau user */) {
   let username = "Ilham";
@@ -17,6 +18,7 @@ export default function Profile(/* props atau user */) {
   const [modalUserInfo, setModalUserInfo] = useState(false);
   const [modalImage, setModalImage] = useState(false);
   const [modalPassword, setModalPassword] = useState(false);
+  const [formData, setFormData] = useState(new FormData());
 
   useEffect(() => {
     axios
@@ -25,6 +27,18 @@ export default function Profile(/* props atau user */) {
         setSupervisorName(res.data.firstName + " " + res.data.lastName);
       });
   }, [user]);
+
+  function updateImage() {
+    axios
+      .put("http://localhost:8181/api/user/Image/" + user.username, formData)
+      .then((res) => {
+        console.log(res);
+        setModalImage(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <div>
@@ -240,6 +254,7 @@ export default function Profile(/* props atau user */) {
           body={imageModal()}
           action="Change Profile Picture"
           closeClick={setModalImage}
+          actionClick={updateImage}
         />
       )}
       {modalPassword && (
@@ -290,12 +305,16 @@ export default function Profile(/* props atau user */) {
   function imageModal() {
     return (
       <div>
-        <form>
-          <div className="barn-details">
-            <label>Insert image:</label>
-            <input type="file" name="image-file" />
-          </div>
-        </form>
+        <div className="barn-details">
+          <label>Insert image:</label>
+          <input
+            type="file"
+            name="image-file"
+            onChange={(file) => {
+              setFormData(file.target.files[0]);
+            }}
+          />
+        </div>
         <style>{`
           .barn-details {
             padding: 20px;

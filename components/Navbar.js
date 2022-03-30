@@ -32,7 +32,7 @@ export default function Navbar() {
       router.push("/sign-in");
     }
     console.log(user);
-  });
+  }, [router, user]);
 
   const handleLogout = () => {
     cookie.remove("token");
