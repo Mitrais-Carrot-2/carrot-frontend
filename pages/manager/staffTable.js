@@ -3,19 +3,60 @@ import DataTable from 'react-data-table-component';
 import styled from 'styled-components';
 
 export default function StaffTable(props) {
-    // console.log(props.data);
+    // console.log("data",props.data);
+	
+    const columns = [
+        {
+            name: '#',
+            selector: row => row.numrow,
+            maxWidth: '10px',
+            sortable: true,
+        },
+        {
+            name: 'Rewarded To',
+            selector: row => row.rewardedTo,
+            minWidth: '200px',
+            sortable: true
+        },
+        {
+            name: 'JF',
+            selector: row => row.jf,
+            sortable: true
+        },
+        {
+            name: 'Grade',
+            selector: row => row.grade,
+            sortable: true
+        },
+        {
+            name: 'Carrot',
+            selector: row => row.carrot,
+            sortable: true
+        },
+        {
+            name: 'Note',
+            selector: row => row.note,
+            sortable: true
+        },
+        {
+            name: 'Date',
+            selector: row => row.date,
+            sortable: true
+        },
+    ];
+
     let staff = props.data || [];
     const [filterText, setFilterText] = React.useState('');
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
 
 	// // sort staff by name ascending
 	// staff.sort((a, b) => {
-	// 	if (a.name < b.name) {
+	// 	if (a.rewardedTo < b.rewardedTo) {
 	// 		return -1;
 	// 	}	
 
     const sortedStaffs = staff.sort((a, b) => {
-		if (a.name < b.name) {
+		if (a.rewardedTo < b.rewardedTo) {
 			return -1;
 		}
         // return new Date(b.date) - new Date(a.date);
@@ -27,7 +68,7 @@ export default function StaffTable(props) {
     }));
 
 	const filteredItems = numberedStaffs.filter(
-		item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()) 
+		item => item.rewardedTo && item.rewardedTo.toLowerCase().includes(filterText.toLowerCase()) 
             // || item.jf && item.jf.toLowerCase().includes(filterText.toLowerCase()),
 	);
 
@@ -46,7 +87,7 @@ export default function StaffTable(props) {
 
     return (
         <DataTable
-			columns={props.columns}
+			columns={columns}
 			data={filteredItems}
 			pagination
 			paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
