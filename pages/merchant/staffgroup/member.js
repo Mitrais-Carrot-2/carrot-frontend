@@ -116,7 +116,7 @@ export default function StaffGroupMember(props) {
                                     <th itemScope="col" aria-rowspan={2}>JF</th>
                                     <th itemScope="col" aria-rowspan={2}>Grade</th>
                                     <th itemScope="col" aria-rowspan={2}>Office</th>
-                                    <th itemScope="col" aria-rowspan={2}>Action</th>
+                                    {/* <th itemScope="col" aria-rowspan={2}>Action</th> */}
                                 </tr>
                             </thead>
                             {members
@@ -130,7 +130,7 @@ export default function StaffGroupMember(props) {
                                         <td>{data.jf}</td>
                                         <td>{data.grade}</td>
                                         <td>{data.office}</td>
-                                        <td>
+                                        {/* <td>
                                             <button type="button" className="btn border-blue-600 mr-2"
                                                 onClick={() => {
                                                     // console.log(data) 
@@ -141,9 +141,9 @@ export default function StaffGroupMember(props) {
                                                 <i className="fa fa-edit text-blue-600 fa-x px-1">
 
                                                 </i>
-                                            </button>
-                                            {/* {showUpdateGroup && <UpdateGroup closeClick={setShowUpdateGroup} updateData={selectedGroup} refreshPage={reloadPage} />} */}
-                                        </td>
+                                            </button> */}
+                                        {/* {showUpdateGroup && <UpdateGroup closeClick={setShowUpdateGroup} updateData={selectedGroup} refreshPage={reloadPage} />} */}
+                                        {/* </td> */}
                                     </tr>
                                 ))}
                         </table>
