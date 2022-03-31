@@ -15,44 +15,40 @@ import { connect } from 'react-redux';
 import { getFreezer, getStaff } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
 
-const Index = ({ getFreezer, getStaff, freezer, staff, auth, state}) => {
+const Index = ({ getFreezer, getStaff, freezer, staff, auth, state }) => {
     // console.log(state);
     const [freezerHistory, setFreezerHistory] = React.useState([]);
-    const [groups, setGroups] = React.useState([]); 
+    const [groups, setGroups] = React.useState([]);
 
     useEffect(() => {
-        if (true) {
-            getFreezer(auth.token);
-            getStaff(auth.token);
+        getFreezer(auth.token);
+        getStaff(auth.token);
 
-            axios.get('http://localhost:8181/api/manager/freezer/history', {
-                headers: {
-                    Authorization: `Bearer ${auth.token}`
-                }
-            })
-            .then(res => {
-                console.log(res.data);
-                setFreezerHistory(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            
-            axios.get('http://localhost:8181/api/manager/group', {
-                headers: {
-                    Authorization: `Bearer ${auth.token}`
-                }
-            })
-            .then(res => {
-                // console.log("Group", res.data);
-                setGroups(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-        } else {
-            window.location.href = '/sign-in';
-        }
+        axios.get('http://localhost:8181/api/manager/freezer/history', {
+            headers: {
+                Authorization: `Bearer ${auth.token}`
+            }
+        })
+        .then(res => {
+            console.log(res.data);
+            setFreezerHistory(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+
+        axios.get('http://localhost:8181/api/manager/group', {
+            headers: {
+                Authorization: `Bearer ${auth.token}`
+            }
+        })
+        .then(res => {
+            // console.log("Group", res.data);
+            setGroups(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }, []);
 
     return (

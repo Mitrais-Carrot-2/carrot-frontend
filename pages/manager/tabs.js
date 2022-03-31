@@ -162,7 +162,7 @@ const Tabs = ({ staff, freezerHistory, auth, targetStaff, targetGroup, shareToSt
                                         </Modal>
                                     </div>
                                     <div className="mx-auto">
-                                        <StaffTable columns={columnsIndex} data={freezerHistory} />
+                                        <StaffTable type="freezerHistory" columns={columnsIndex} data={freezerHistory} />
                                     </div>
                                 </div>
                                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">

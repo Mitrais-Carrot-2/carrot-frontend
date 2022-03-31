@@ -17,13 +17,20 @@ export default function StaffTable(props) {
 	// 	if (a.name < b.name) {
 	// 		return -1;
 	// 	}	
-	
-    const sortedStaffs = staff.sort((a, b) => {
-		if (a.name < b.name) {
-			return -1;
-		}
-        // return new Date(b.date) - new Date(a.date);
-    });
+	if (props.type === 'freezerHistory') {
+		const sortedStaffs = staff.sort((a, b) => {
+			// compare date by ascending
+			if (a.date > b.date) {
+				return -1;
+			}
+		});
+	} else {
+		const sortedStaffs = staff.sort((a, b) => {
+			if (a.name < b.name) {
+				return -1;
+			}
+		});
+	}
 
     const numberedStaffs = sortedStaffs.map((staff, index) => ({
         ...staff,

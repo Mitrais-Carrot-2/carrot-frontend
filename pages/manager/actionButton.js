@@ -50,20 +50,26 @@ const ActionButton = ({ groupId, groupName, targetGroup, shareToGroup, auth }) =
     ];
 
     const modalListStaff = (id) => {
-        axios.get(`http://localhost:8181/api/manager/group/${id}/staff/`).
-        then(res => {
-            return res.data;
-        }).then((staff) => {
-            // console.log("group member", staff);
-            setStaff(staff);
-            setModalStaffOpen(!modalStaffOpen);
-        });
+        axios.get(`http://localhost:8181/api/manager/group/${id}/staff/`, {
+            headers: {
+                Authorization: `Bearer ${auth.token}`,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true,
+            },
+        })
+            .then(res => {
+                return res.data;
+            }).then((staff) => {
+                // console.log("group member", staff);
+                setStaff(staff);
+                setModalStaffOpen(!modalStaffOpen);
+            });
     }
 
     function showModalGroup() {
         setModalShareOpen(!modalShareOpen);
     }
-    
+
     let sendGroup = () => {
         // console.log("auth token", auth.token);
         // console.log("share to group", targetGroup);
@@ -106,7 +112,7 @@ const ActionButton = ({ groupId, groupName, targetGroup, shareToGroup, auth }) =
                     >
                         Close
                     </Button>
-                    
+
                     {/* <Button
                         className="bg-green-600 border-none hover:bg-green-700"
                         type="button">
