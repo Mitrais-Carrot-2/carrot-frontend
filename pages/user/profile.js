@@ -11,16 +11,15 @@ import { headers } from "next.config";
 
 export default function Profile(/* props atau user */) {
   const dispatch = useDispatch();
-
   const user = useSelector((state) => (state.user.info ? state.user.info : {}));
   const picture = user
-    ? "http://localhost:8181/api/user/Image/" + user.username
+    ? "http://localhost:8181/api/user/Image/" + user.username + "?" + new Date()
     : "/img/defaultImage.png";
   const [supervisorName, setSupervisorName] = useState("");
   const [modalUserInfo, setModalUserInfo] = useState(false);
   const [modalImage, setModalImage] = useState(false);
   const [modalPassword, setModalPassword] = useState(false);
-  const [imageFormData, setImageFormData] = useState(new FormData());
+  const [imageFormData, setImageFormData] = useState({});
   const [userFormData, setUserFormData] = useState({});
   const [passwordFormData, setPasswordFormData] = useState({});
 
@@ -32,23 +31,6 @@ export default function Profile(/* props atau user */) {
       });
     setUserFormData(user);
   }, [user]);
-
-  function updateImage() {
-    axios
-      .put(
-        "http://localhost:8181/api/user/Image/" + user.username,
-        imageFormData
-      )
-      .then((res) => {
-        console.log(res);
-        setModalImage(false);
-        window.alert("Successfully updated");
-      })
-      .catch((err) => {
-        console.log(err);
-        window.alert("Failed to update");
-      });
-  }
 
   return (
     <div>
@@ -392,6 +374,28 @@ export default function Profile(/* props atau user */) {
     );
   }
 
+  function updateImage() {
+    const formData = new FormData();
+    formData.append("file", imageFormData, imageFormData.name);
+    axios
+      .put("http://localhost:8181/api/user/Image/" + user.username, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setModalImage(false);
+        setImageFormData({});
+        window.alert("Successfully updated");
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        window.alert("Failed to update");
+      });
+  }
+
   // change profile image modal
   function imageModal() {
     return (
@@ -401,8 +405,8 @@ export default function Profile(/* props atau user */) {
           <input
             type="file"
             name="image-file"
-            onChange={(file) => {
-              setImageFormData(file.target.files[0]);
+            onChange={(e) => {
+              setImageFormData(e.target.files[0]);
             }}
           />
         </div>

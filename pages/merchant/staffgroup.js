@@ -15,7 +15,7 @@ import Link from "next/link";
 export default function StaffGroup(props) {
     const router = useRouter();
 
-    const url = 'http://localhost:8181/api/bazaar/group'
+    const url = 'http://localhost:8181/api/bazaar/group/'
     const [groups, setGroup] = useState([]);
     const [showCreateGroup, setShowCreateGroup] = useState(false);
     const [showUpdateGroup, setShowUpdateGroup] = useState(false);
@@ -66,9 +66,11 @@ export default function StaffGroup(props) {
                                 <tr>
                                     <th itemScope="col" aria-rowspan={2}>#</th>
                                     <th itemScope="col" aria-rowspan={2} style={{ display: "none" }}>id</th>
+                                    <th itemScope="col" aria-rowspan={2} style={{ display: "none" }}>managerId</th>
                                     <th itemScope="col" aria-rowspan={2}>Group Name</th>
-                                    <th itemScope="col" aria-rowspan={2}>Manager</th>
                                     <th itemScope="col" aria-rowspan={2}>Allocation</th>
+                                    <th itemScope="col" aria-rowspan={2}>Total Member</th>
+                                    <th itemScope="col" aria-rowspan={2}>Total Carrot</th>
                                     <th itemScope="col" aria-rowspan={2}>Note</th>
                                     <th itemScope="col" aria-rowspan={2}>Action</th>
                                 </tr>
@@ -80,9 +82,11 @@ export default function StaffGroup(props) {
                                         <td>{index + 1}</td>
                                         <td style={{ display: "none" }}>{data.id}</td>
                                         {console.log("the data id: " + data.id)}
+                                        <td style={{ display: "none" }}>{data.managerId}</td>
                                         <td>{data.name}</td>
-                                        <td>{data.managerId}</td>
                                         <td>{data.allocation}</td>
+                                        <td>{data.totalMember}</td>
+                                        <td>{data.total}</td>
                                         <td>{data.note}</td>
                                         <td>
                                             <button type="button" className="btn border-blue-600 mr-2 mx-1 my-1"

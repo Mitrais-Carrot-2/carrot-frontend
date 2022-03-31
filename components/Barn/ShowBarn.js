@@ -36,7 +36,7 @@ export default function ShowBarn(props) {
     setBarns(props.barns);
   }
 
-  function relodePage() {
+  function reloadPage() {
     window.location.reload();
   }
   return (
@@ -123,13 +123,13 @@ export default function ShowBarn(props) {
         </button>
       </div>
       {showCreateBarn && (
-        <CreateBarn closeClick={setShowCreateBarn} refreshPage={relodePage} />
+        <CreateBarn closeClick={setShowCreateBarn} reloadPage={reloadPage} />
       )}
       {showBarnInfo && (
         <Barn
           barnId={selectedBarnId}
           closeClick={setShowBarnInfo}
-          refreshPage={relodePage}
+          reloadPage={reloadPage}
         />
       )}
       {showBarnHistory && (

@@ -6,27 +6,30 @@ import React, { useEffect, useState } from "react";
 export default function UpdateGroup(props) {
     console.log(props.updateData)
     const [id, setId] = useState(0)
-    const [group, setGroup] = useState({
-        name: "",
-        allocation: 1,
-        note: "",
-        managerId: 1
-    })
+    const [group, setGroup] = useState({})
     useEffect(() => {
         setGroup({
-            name: props.updateData.name,
-            allocation: props.updateData.allocation,
-            note: props.updateData.note,
-            managerId: props.updateData.managerId
+            ...props.updateData
+            // name: props.updateData.name,
+            // allocation: props.updateData.allocation,
+            // note: props.updateData.note,
+            // managerId: props.updateData.managerId
         })
         setId(props.updateData.id)
     }, [])
     function updatePostGroup() {
         console.log("updating.....")
+        console.log("val group: " + group)
         axios.put(`http://localhost:8181/api/bazaar/group/${id}`, group)
             .then((res) => {
                 props.closeClick();
-                props.refreshPage();
+                // props.refreshPage();
+                window.alert("Updated!");
+
+                window.location.reload();
+            })
+            .catch((err) => {
+                window.alert("Update Error!");
             })
     }
 

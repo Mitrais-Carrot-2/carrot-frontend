@@ -20,11 +20,12 @@ export default function CreateBarn(props) {
     axios.post("http://localhost:8181/api/farmer/barn/", newBarn)
       .then((res) => {
         console.log(res);
+        window.alert("Barn created successfully");
         props.reloadPage();
       })
       .catch((err) => {
         console.log(err);
-        // TODO: Prompt error message
+        window.alert("Barn creation failed");
       });
   }
   function createTable() {
