@@ -46,10 +46,12 @@ export default function Distribution(props) {
       })
       .then((res) => {
         console.log(res);
+        window.alert(`Successfully distributed ${carrotAmount} carrot to ${managerId}`);
         window.location.reload();
       })
       .catch((err) => {
         console.log(err);
+        window.alert(`Failed to distribute carrot, Error: ${err}`);
       });
   }
   console.log("halo",props.barn);
