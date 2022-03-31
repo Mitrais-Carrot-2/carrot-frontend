@@ -20,6 +20,7 @@ export default function UpdateBazaar(props) {
             endDate: props.updateData.endDate,
         })
         setId(props.updateData.id)
+        console.log(id, bazaar)
     }, [])
 
     function updatePostBazaar() {
