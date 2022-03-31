@@ -75,7 +75,8 @@ export default function Bazaar() {
                                         <button type="button" className="btn border-blue-600 mr-2"
                                             onClick={() => {
                                                 setShowUpdateBazaar(true);
-                                                setSelectedBazaar(data)
+                                                setSelectedBazaar(data);
+                                                console.log(selectedBazaar);
                                             }}
                                         >
                                             <i className="fa fa-edit text-blue-600 fa-x px-1">
