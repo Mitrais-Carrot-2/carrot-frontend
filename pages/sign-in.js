@@ -1,46 +1,66 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "@components/Footer";
 import mitraisLogo from "@public/img/mitrais-logo.png";
 import Image from "next/image";
-import axios from "axios";
 
-import {connect} from 'react-redux'
-// import {login} from "../redux/actions/AuthActionCreators";
+import { connect } from "react-redux";
+import {
+  authenticate,
+  checkServerSideCookie,
+} from "../redux/actions/authAction";
+import { wrapper } from "../redux";
+import Router from "next/router";
+import Head from "@components/Head";
+import jsCookie from "js-cookie";
+import { bindActionCreators } from "redux";
 
-export default function signIn() {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+const SignIn = ({ authenticate, token }) => {
   const [error, setError] = React.useState("");
 
   const [loginData, setLoginData] = React.useState({
     username: "",
     password: "",
   });
-  
+
+  useEffect(() => {
+    if (jsCookie.get("token")) {
+      Router.push("/");
+    }
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
   };
 
-  function signIn(){
-    console.log(loginData);
-    axios.post("http://localhost:8181/api/auth/login", loginData)
-      .then((res) => {
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("username", res.data.username);
-        localStorage.setItem("id", res.data.id);
-
-        window.location.href = "/";
-      })
-      .catch((err) => {
-        console.log(err);
+  function signIn() {
+    let status = authenticate(loginData);
+    setTimeout(() => {
+      if (!status) {
         setError("Username / Password is incorrect");
-      });
-  }
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+      }
+    }, 3000);
+    // console.log(loginData);
+    // axios.post("http://localhost:8181/api/auth/login", loginData)
+    //   .then((res) => {
+    //     localStorage.setItem("token", res.data.token);
+    //     localStorage.setItem("username", res.data.username);
+    //     localStorage.setItem("id", res.data.id);
 
+    //     window.location.href = "/";
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setError("Username / Password is incorrect");
+    //   });
+  }
 
   return (
     <>
+      <Head />
       <main>
         <section className="absolute w-full h-full">
           <div
@@ -61,7 +81,7 @@ export default function signIn() {
                       <Image src={mitraisLogo} alt="logo"></Image>
                     </div>
                     <form>
-                      <div className="bg-red-500 text-center text-white my-3">
+                      <div className="bg-red-500 text-center text-white my-3 rounded animate-pulse">
                         {error}
                       </div>
                       <div className="relative w-full mb-3">
@@ -102,9 +122,7 @@ export default function signIn() {
                           type="button"
                           className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
                           style={{ transition: "all .15s ease" }}
-                          onClick={() => 
-                            signIn()
-                          }
+                          onClick={() => signIn()}
                         >
                           Sign In
                         </button>
@@ -120,4 +138,41 @@ export default function signIn() {
       </main>
     </>
   );
+};
+
+// create function to get server side props
+// export const getServerSideProps = async (ctx) => {
+//   const { token } = checkServerSideCookie(ctx);
+//   return { token };
+// };
+
+// export const getServerSideProps = wrapper.getServerSideProps((context) => {
+//   async function fetchData() {
+//     const { token } = checkServerSideCookie(context);
+//     console.log(token);
+//     // const token = context.store.getState().authentication.token;
+//     return { props: { token } };
+//     // await checkServerSideCookie(context);
+//   }
+
+//   // return {
+//   //   props: {
+//   //     token,
+//   //   },
+//   // };
+// });
+
+// export default connect((state) => state, { authenticate })(SignIn);
+// export default SignIn;
+
+const mapStateToProps = (state) => ({
+  token: state.authentication.token,
+})
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      authenticate: bindActionCreators(authenticate, dispatch),
+  }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

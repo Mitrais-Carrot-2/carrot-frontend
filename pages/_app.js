@@ -4,29 +4,23 @@ import "@styles/custom.css";
 import "@styles/globals.css";
 import "font-awesome/css/font-awesome.css";
 import "@material-tailwind/react/tailwind.css";
-//import popper
+import { Provider } from "react-redux";
 import "popper.js";
-
-// import { Provider } from "react-redux";
-// import withRedux from "next-redux-wrapper";
-// import { initStore } from "../redux/store";
+import { store } from "store/store";
+import { wrapper } from "../redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
 function MyApp({ Component, pageProps }) {
-  // useEffect(() => {
-  //   import("jquery/dist/jquery.js");
-  // }, []);
-  // useEffect(() => {
-  //   import("bootstrap/dist/js/bootstrap.js");
-  // }, []);
-
+  const persistor = persistStore(store);
   return (
-    // <Container>
-      // <Provider store={store}>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
         <Component {...pageProps} />
-      // </Provider>
-    // </Container>
+      </PersistGate>
+    </Provider>
   );
 }
 
-export default MyApp;
-// export default wrapper.withRedux(MyApp);
+// export default MyApp;
+export default wrapper.withRedux(MyApp);

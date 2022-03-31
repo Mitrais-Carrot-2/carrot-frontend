@@ -22,7 +22,6 @@ export default function Barn(props) {
         startDate: props.barnId.startDate,
       } 
     );
-    console.log(props.barnId);
   }, []);
 
   function createTable() {
@@ -108,11 +107,12 @@ export default function Barn(props) {
       .put(`http://localhost:8181/api/farmer/barn/${props.barnId.id}`, selectedBarn)
       .then((res) => {
         console.log(res);
-        props.refreshPage();
+        window.alert("Barn updated");
+        props.reloadPage();
       })
       .catch((err) => {
         console.log(err);
-        // TODO: Prompt error message
+        window.alert("Barn update failed");
       }
       );
     

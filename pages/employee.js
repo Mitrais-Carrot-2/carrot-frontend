@@ -9,16 +9,12 @@ import { useRouter } from "next/router";
 import SharingLevelModal from "@components/SharingLevelModal";
 import MiniDashboard from "@components/employee/MiniDashboard";
 import BazaarCard from "@components/employee/BazaarCard";
+import { useEffect } from "react";
+import axios from "axios";
+import BazaarContainer from "@components/employee/BazaarContainer"
 
 export default function Employee() {
   const router = useRouter();
-
-
-  const renderBazaarCards = () => {
-    return props.bazaars.map(bazaar => {
-        return <BazaarItemCard key={bazaar.id} bazaar={bazaar} />
-    })
-}
 
   return (
     <body>
@@ -29,7 +25,7 @@ export default function Employee() {
       </main>
 
       <MiniDashboard/>
-      <BazaarCard/>
+      <BazaarContainer/>
       
       {/* <section className="bazaar-1-item mb-4">
       </section>
@@ -47,5 +43,5 @@ export default function Employee() {
       <StockistRewardModal />
       <Footer />
     </body>
-  );
+  )
 }

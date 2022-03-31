@@ -13,7 +13,11 @@ export default function CreateGroup(props) {
 
     function postGroup() {
         console.log(group)
-        axios.post("http://localhost:8181/api/bazaar/group", group)
+        axios.post("http://localhost:8181/api/bazaar/group/", group)
+            .then((res) => {
+                props.closeClick();
+                props.refreshPage();
+            })
     }
 
     function createGroup() {

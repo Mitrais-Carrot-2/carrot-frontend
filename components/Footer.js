@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="footer text-center">
       <div className="container">
         <span className="text-muted">
-          <small>Copyright &copy; 2018 Mitrais. All rights reserved.</small>
+          <small>Copyright &copy; 2022 Mitrais. All rights reserved.</small>
         </span>
       </div>
     </footer>
