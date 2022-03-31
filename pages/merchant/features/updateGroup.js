@@ -9,7 +9,7 @@ export default function UpdateGroup(props) {
     const [group, setGroup] = useState({})
     useEffect(() => {
         setGroup({
-            ...props.updateData, managerId: 1
+            ...props.updateData
             // name: props.updateData.name,
             // allocation: props.updateData.allocation,
             // note: props.updateData.note,
