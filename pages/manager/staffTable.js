@@ -1,49 +1,12 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
 import styled from 'styled-components';
+import moment from 'moment';
 
 export default function StaffTable(props) {
     // console.log("data",props.data);
 	
-    const columns = [
-        {
-            name: '#',
-            selector: row => row.numrow,
-            maxWidth: '10px',
-            sortable: true,
-        },
-        {
-            name: 'Rewarded To',
-            selector: row => row.rewardedTo,
-            minWidth: '200px',
-            sortable: true
-        },
-        {
-            name: 'JF',
-            selector: row => row.jf,
-            sortable: true
-        },
-        {
-            name: 'Grade',
-            selector: row => row.grade,
-            sortable: true
-        },
-        {
-            name: 'Carrot',
-            selector: row => row.carrot,
-            sortable: true
-        },
-        {
-            name: 'Note',
-            selector: row => row.note,
-            sortable: true
-        },
-        {
-            name: 'Date',
-            selector: row => row.date,
-            sortable: true
-        },
-    ];
+	const columns = props.columns;
 
     let staff = props.data || [];
     const [filterText, setFilterText] = React.useState('');
@@ -51,12 +14,12 @@ export default function StaffTable(props) {
 
 	// // sort staff by name ascending
 	// staff.sort((a, b) => {
-	// 	if (a.rewardedTo < b.rewardedTo) {
+	// 	if (a.name < b.name) {
 	// 		return -1;
 	// 	}	
-
+	
     const sortedStaffs = staff.sort((a, b) => {
-		if (a.rewardedTo < b.rewardedTo) {
+		if (a.name < b.name) {
 			return -1;
 		}
         // return new Date(b.date) - new Date(a.date);
@@ -65,10 +28,11 @@ export default function StaffTable(props) {
     const numberedStaffs = sortedStaffs.map((staff, index) => ({
         ...staff,
         numrow: index + 1,
+		date: moment(staff.date).format('MMMM Do YYYY, h:mm:ss a')
     }));
 
 	const filteredItems = numberedStaffs.filter(
-		item => item.rewardedTo && item.rewardedTo.toLowerCase().includes(filterText.toLowerCase()) 
+		item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()) 
             // || item.jf && item.jf.toLowerCase().includes(filterText.toLowerCase()),
 	);
 

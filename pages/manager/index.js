@@ -15,26 +15,41 @@ import { connect } from 'react-redux';
 import { getFreezer, getStaff } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
 
-const Index = ({ getFreezer, getStaff, freezer, staff, auth }) => {
+const Index = ({ getFreezer, getStaff, freezer, staff, auth, state}) => {
+    // console.log(state);
     const [freezerHistory, setFreezerHistory] = React.useState([]);
+    const [groups, setGroups] = React.useState([]); 
 
     useEffect(() => {
-        if (auth.token) {
+        if (true) {
             getFreezer(auth.token);
-            getStaff(auth.token, auth.id);
+            getStaff(auth.token);
 
             axios.get('http://localhost:8181/api/manager/freezer/history', {
                 headers: {
                     Authorization: `Bearer ${auth.token}`
                 }
             })
-                .then(res => {
-                    console.log(res.data);
-                    setFreezerHistory(res.data);
-                })
-                .catch(err => {
-                    console.log(err);
-                })
+            .then(res => {
+                console.log(res.data);
+                setFreezerHistory(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+            
+            axios.get('http://localhost:8181/api/manager/group', {
+                headers: {
+                    Authorization: `Bearer ${auth.token}`
+                }
+            })
+            .then(res => {
+                // console.log("Group", res.data);
+                setGroups(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
         } else {
             window.location.href = '/sign-in';
         }
@@ -60,7 +75,7 @@ const Index = ({ getFreezer, getStaff, freezer, staff, auth }) => {
                 <div className='container mx-auto px-4 py-2 mt-4 bg-white rounded-lg'>
                     <hr className="box-title-hr mt-4" />
                     <h3 className="pl-0 text-lg text-grey ml-0 font-bold tracking-widest">DISTRIBUTION DETAIL</h3>
-                    <Tabs staff={staff} freezerHistory={freezerHistory} />
+                    <Tabs staff={staff} groups={groups} freezerHistory={freezerHistory} />
                 </div>
             </div>
         </body>
@@ -71,6 +86,7 @@ const mapStateToProps = (state) => ({
     freezer: state.manager.freezer,
     staff: state.manager.staff,
     auth: state.authentication,
+    state: state
 })
 
 const mapDispatchToProps = (dispatch) => {

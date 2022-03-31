@@ -1,21 +1,39 @@
 import React, { useEffect } from 'react';
 import Select from 'react-select';
 import { connect } from 'react-redux';
-import { setShareToStaff, shareToStaff } from 'redux/actions/managerAction';
+import { setShareToStaff, shareToStaff, setShareToGroup, shareToGroup } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
-function FormShare({ setShareToStaff, shareToStaff, staff, receiver, groupName = "Group A", targetStaff, auth }) {
+function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGroup, staff, receiver, groupName = "Group A", groupId, targetStaff, auth }) {
     const [sendToStaff, setSendToStaff] = React.useState({
-        staffId: "",
+        staffId: 0,
         carrotAmount: 0,
         note: "",
     });
+    
+    const [sendToGroup, setSendToGroup] = React.useState({
+        groupId: 0,
+        carrotAmount: 0,
+        note: ""
+    });
+
+    useEffect(() => {
+        setSendToGroup({...sendToGroup, groupId: groupId});
+        // setSendToGroup({
+        //     ...shareToGroup, sendToGroup
+        // });
+    }, []);
 
     useEffect(() => {
         setShareToStaff({
             ...shareToStaff, sendToStaff
         })
-        // console.log(sendToStaff);
     }, [sendToStaff]);
+
+    useEffect(() => {
+        setShareToGroup({
+            ...shareToGroup, sendToGroup
+        });
+    }, [sendToGroup]);
     
     let options = [];
 
@@ -29,24 +47,19 @@ function FormShare({ setShareToStaff, shareToStaff, staff, receiver, groupName =
     }
 
     let staffChange = (selectedOption) => {
-        console.log(`Option selected:`, selectedOption.value);
-        
+        // console.log(`Option selected:`, selectedOption.value);
         setSendToStaff({...sendToStaff, staffId: selectedOption.value});
-        // setShareToStaff({
-        //     ...shareToStaff, sendToStaff
-        // });
-        // console.log(SendToStaff);
-        // console.log(targetStaff);
     }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setSendToStaff({ ...sendToStaff, [name]: value });
-        // setShareToStaff({
-        //     ...shareToStaff, sendToStaff
-        // });
-        // console.log(SendToStaff);
-        // console.log(targetStaff);
+        if (receiver == 'staff') {
+            setSendToStaff({ ...sendToStaff, [name]: value });
+            // console.log("send to staff", sendToStaff);
+        } else {
+            setSendToGroup({ ...sendToGroup, [name]: value });
+            // console.log("send to group", sendToGroup);
+        }
     };
 
     return (
@@ -149,6 +162,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setShareToStaff: bindActionCreators(setShareToStaff, dispatch),
         shareToStaff: bindActionCreators(shareToStaff, dispatch),
+        setShareToGroup: bindActionCreators(setShareToGroup, dispatch),
+        shareToGroup: bindActionCreators(shareToGroup, dispatch),
     }
 }
 

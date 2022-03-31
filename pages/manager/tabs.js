@@ -8,16 +8,61 @@ import StaffTable from './staffTable';
 import StaffGroupTable from './staffGroupTable';
 import Router from 'next/router';
 
-const Tabs = ({ staff, freezerHistory, auth, targetStaff, shareToStaff }) => {
+const Tabs = ({ staff, freezerHistory, auth, targetStaff, targetGroup, shareToStaff, groups }) => {
     const [openTab, setOpenTab] = React.useState(1);
     const [modalShareOpen, setModalShareOpen] = React.useState(false);
 
+    const columnsIndex = [
+        {
+            name: '#',
+            selector: row => row.numrow,
+            maxWidth: '10px',
+            sortable: true,
+        },
+        {
+            name: 'Rewarded To',
+            selector: row => row.name,
+            minWidth: '200px',
+            sortable: true
+        },
+        {
+            name: 'JF',
+            selector: row => row.jf,
+			maxWidth: '10px',
+            sortable: true
+        },
+        {
+            name: 'Grade',
+            selector: row => row.grade,
+			maxWidth: '10px',
+            sortable: true
+        },
+        {
+            name: 'Carrot',
+            selector: row => row.carrot,
+			maxWidth: '10px',
+            sortable: true
+        },
+        {
+            name: 'Note',
+            selector: row => row.note,
+            sortable: true
+        },
+        {
+            name: 'Date',
+            selector: row => row.date,
+			minWidth: '200px',
+            sortable: true
+        },
+    ];
+
     let sendStaff = () => {
-        // console.log(targetStaff);
+        console.log("target staff", targetStaff);
         shareToStaff(auth.token, targetStaff);
         setModalShareOpen(false);
         window.location.href = "/manager";
     }
+
     return (
         <>
             <div className="flex flex-wrap mt-3">
@@ -117,12 +162,12 @@ const Tabs = ({ staff, freezerHistory, auth, targetStaff, shareToStaff }) => {
                                         </Modal>
                                     </div>
                                     <div className="mx-auto">
-                                        <StaffTable data={freezerHistory} />
+                                        <StaffTable columns={columnsIndex} data={freezerHistory} />
                                     </div>
                                 </div>
                                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                                     <div className="mx-auto">
-                                        <StaffGroupTable />
+                                        <StaffGroupTable groups={groups} />
                                     </div>
                                 </div>
                                 {/* <div className={openTab === 3 ? "block" : "hidden"} id="link3">
@@ -143,6 +188,7 @@ const Tabs = ({ staff, freezerHistory, auth, targetStaff, shareToStaff }) => {
 const mapStateToProps = (state) => ({
     auth: state.authentication,
     targetStaff: state.manager.shareToStaff,
+    targetGroup: state.manager.shareToGroup,
 })
 
 const mapDispatchToProps = (dispatch) => {

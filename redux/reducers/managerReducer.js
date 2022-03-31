@@ -1,15 +1,15 @@
-import { MANAGER_GET_FREEZER, MANAGER_GET_FREEZER_ERROR, MANAGER_GET_STAFF, SET_SHARE_TO_STAFF, SHARE_TO_STAFF } from "../actionTypes";
+import { MANAGER_GET_FREEZER, MANAGER_GET_FREEZER_ERROR, MANAGER_GET_STAFF, SET_SHARE_TO_GROUP, SET_SHARE_TO_STAFF, SHARE_TO_GROUP, SHARE_TO_STAFF } from "../actionTypes";
 import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
     freezer: {
-        freezer_id : "",
-        barn_name : "",
-        start_date : "",
-        end_date : "",
-        barn_owner : "",
-        distributed_carrot : "",
-        carrot_amount : ""
+        freezer_id: "",
+        barn_name: "",
+        start_date: "",
+        end_date: "",
+        barn_owner: "",
+        distributed_carrot: "",
+        carrot_amount: ""
     },
     staff: [{
         userId: "",
@@ -21,7 +21,12 @@ const initialState = {
         office: ""
     }],
     shareToStaff: {
-        staffId: "",
+        staffId: 0,
+        carrotAmount: 0,
+        note: ""
+    },
+    shareToGroup: {
+        groupId: 0,
         carrotAmount: 0,
         note: ""
     }
@@ -59,7 +64,19 @@ const managerReducer = (state = initialState, action) => {
         case SHARE_TO_STAFF:
             return {
                 ...state, shareToStaff: {
-                    staffId: "",
+                    staffId: 0,
+                    carrotAmount: 0,
+                    note: ""
+                }
+            };
+        case SET_SHARE_TO_GROUP:
+            return {
+                ...state, shareToGroup: action.payload
+            };
+        case SHARE_TO_GROUP:
+            return {
+                ...state, shareToGroup: {
+                    groupId: 0,
                     carrotAmount: 0,
                     note: ""
                 }
