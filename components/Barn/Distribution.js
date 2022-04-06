@@ -47,7 +47,8 @@ export default function Distribution(props) {
       .then((res) => {
         console.log(res);
         window.alert(`Successfully distributed ${carrotAmount} carrot to ${managerId}`);
-        window.location.reload();
+        //TODO : Add transaction to history
+        // window.location.reload();
       })
       .catch((err) => {
         console.log(err);

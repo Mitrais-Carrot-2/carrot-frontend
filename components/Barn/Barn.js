@@ -107,8 +107,10 @@ export default function Barn(props) {
       .put(`http://localhost:8181/api/farmer/barn/${props.barnId.id}`, selectedBarn)
       .then((res) => {
         console.log(res);
+        //Renew Barn info in List of Barns
+        props.editTable(res.data.t)
         window.alert("Barn updated");
-        props.reloadPage();
+        // props.reloadPage();
       })
       .catch((err) => {
         console.log(err);

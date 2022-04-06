@@ -19,9 +19,11 @@ export default function CreateBarn(props) {
     console.log(newBarn);
     axios.post("http://localhost:8181/api/farmer/barn/", newBarn)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+        //Return Barn info to Show Barn
+        props.updateTable(res.data.t);
         window.alert("Barn created successfully");
-        props.reloadPage();
+        // props.reloadPage();
       })
       .catch((err) => {
         console.log(err);
