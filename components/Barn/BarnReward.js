@@ -39,17 +39,20 @@ export default function BarnReward(props) {
     axios
       .post(`http://localhost:8181/api/admin/barnReward/`, newReward)
       .then((res) => {
-        console.log(res);
+        console.log(res.data.t.id);
         setReward([
           ...reward,
           {
+            id: res.data.t.id,
             barnId: props.id.id,
             rewardDescription: newReward.reward_decription,
             carrotAmount: newReward.carrot_amount,
             givingConditional: newReward.giving_conditional,
           },
         ]);
-      })
+        setNewReward(newReward)
+      }
+      )
       .catch((err) => {
         console.log(err);
       });
@@ -64,6 +67,9 @@ export default function BarnReward(props) {
       giving_conditional: editedValue.givingConditional,
     }
     axios.put(`http://localhost:8181/api/admin/barnReward/${id}`, send)
+    .then((res) => {
+      console.log(res);
+    })
   }
     
 

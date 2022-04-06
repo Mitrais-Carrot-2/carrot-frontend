@@ -38,6 +38,11 @@ export default function CreateItem(props) {
                 props.closeClick();
                 props.refreshPage();
             })
+            .catch(err => {
+                window.alert("Failed")
+                // props.closeClick();
+                // props.refreshPage();
+            })
     }
 
     function addItem() {

@@ -28,8 +28,14 @@ export default function UpdateBazaar(props) {
     function updatePostBazaar() {
         axios.put(`http://localhost:8181/api/bazaar/${props.updateData.id}`, bazaar)
             .then((res) => {
+                window.alert(res.data.message)
                 props.closeClick();
                 props.refreshPage();
+            })
+            .catch(err => {
+                window.alert("Failed: Duplicate data!")
+                // props.closeClick();
+                // props.refreshPage();
             })
     }
 
