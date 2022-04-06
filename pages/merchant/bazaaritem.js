@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import CreateItem from "./features/createItem";
 import UpdateBazaarImage from "./features/addItemPicture";
+import UpdateItem from "./features/updateItem";
 
 export default function BazaarItem() {
     const router = useRouter();
@@ -16,7 +17,10 @@ export default function BazaarItem() {
     const url = 'http://localhost:8181/api/bazaar/item'
     const [bazaarItem, setBazaarItem] = useState([]);
     const [showCreateItem, setShowCreateItem] = useState(false);
+    const [showUpdateItem, setShowUpdateItem] = useState(false);
     const [showUpdateItemImage, setShowUpdateItemImage] = useState(false);
+
+    const [itemDetail, setItemDetail] = useState({});
     const [id, setId] = useState(0);
 
     useEffect(() => {
@@ -80,16 +84,27 @@ export default function BazaarItem() {
                                     <td>{data.quantity}</td>
                                     <td>{data.description}</td>
                                     <td>
-                                        <button type="button" className="btn border-blue-600 mr-2"
+                                        <button type="button" className="btn border-orange-600 mr-2"
                                             onClick={() => {
                                                 setShowUpdateItemImage(true);
                                                 setId(data.id)
+                                            }}
+                                        >
+                                            <i className="fa fa-image text-orange-600 fa-x px-1">
+
+                                            </i>
+                                        </button>
+                                        <button type="button" className="btn border-blue-600 mr-2"
+                                            onClick={() => {
+                                                setShowUpdateItem(true);
+                                                setItemDetail(data);
                                             }}
                                         >
                                             <i className="fa fa-edit text-blue-600 fa-x px-1">
 
                                             </i>
                                         </button>
+                                        {showUpdateItem && <UpdateItem closeClick={setShowUpdateItem} updateData={itemDetail} refreshPage={reloadPage} />}
                                         {showUpdateItemImage && <UpdateBazaarImage closeClick={setShowUpdateItemImage} updateData={id} refreshPage={reloadPage} />}
                                     </td>
                                 </tr>
