@@ -24,9 +24,9 @@ export default function Navbar() {
   const notifRef = useRef();
   const user = useSelector((state) => (state.user.info ? state.user.info : {}));
   const roles = jsCookie.get("roles") ? jsCookie.get("roles").substring(5) : "";
-  const picture = user
-    ? "http://localhost:8181/api/user/Image/" + user.username
-    : "/img/defaultImage.png";
+  const picture = useSelector((state) =>
+    state.user.userImage ? state.user.userImage : "/img/defaultImage.png"
+  );
 
   useEffect(() => {
     // if (cookie.get("username")) {

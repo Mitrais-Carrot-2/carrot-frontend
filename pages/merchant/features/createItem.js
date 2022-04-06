@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Select from "react-select";
 // import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import Modal from "@components/Modal";
 export default function CreateItem(props) {
@@ -15,6 +16,21 @@ export default function CreateItem(props) {
         quantity: 1,
         description: "",
     })
+
+    const [bazaar, setBazaar] = useState([])
+    const url = 'http://localhost:8181/api/bazaar'
+    useEffect(() => {
+        axios.get(url).then(response => setBazaar(response.data));
+    }, [])
+
+    let options = [];
+    options = bazaar.map(s => {
+        return {
+            value: s.id,
+            label: `${s.bazaarName}`
+        }
+    })
+
     function postItem() {
         //let id = 53;
         axios.post(`http://localhost:8181/api/bazaar/${bazaarItem.bazaar}/item`, bazaarItem)
@@ -31,12 +47,18 @@ export default function CreateItem(props) {
                     <h3></h3>
                     <div className="group-details">
                         <label>Bazaar Name:</label>
-                        <input
+                        {/* <input
                             value={bazaarItem.bazaar}
                             type="number"
                             name="bazaarName"
                             onChange={(item) => setBazaarItem({ ...bazaarItem, bazaar: item.target.value })}
 
+                        /> */}
+                        <Select className="my-2"
+                            id='bazaar-id'
+                            name="bazaar-id"
+                            options={options}
+                            onChange={(item) => setBazaarItem({ ...bazaarItem, bazaar: item.value })}
                         />
 
                         <label>Item Name:</label>
