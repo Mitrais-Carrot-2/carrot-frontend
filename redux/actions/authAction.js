@@ -2,7 +2,7 @@ import Router from "next/router";
 import cookie from "js-cookie";
 import { AUTHENTICATE, DEAUTHENTICATE } from "../actionTypes";
 import axios from "axios";
-import { setUser } from "redux/reducers/userReducer";
+import { setUser, setUserImage } from "redux/reducers/userReducer";
 
 export const authenticate = (user) => (dispatch) => {
   axios
@@ -17,7 +17,7 @@ export const authenticate = (user) => (dispatch) => {
         .get("http://localhost:8181/api/user/username/" + res.data.username)
         .then((user) => {
           dispatch(setUser(user.data));
-          console.log(user.data);
+          dispatch(setUserImage());
         });
 
       Router.push("/");
