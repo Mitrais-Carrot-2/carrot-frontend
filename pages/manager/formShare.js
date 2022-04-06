@@ -68,7 +68,7 @@ function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGrou
                 <div className="form-group mb-6">
                     {receiver == 'staff' ?
                         <>
-                            <label for="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Staff</label>
+                            <label htmlFor="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Staff</label>
                             <Select
                                 id='staff-id'
                                 name="staff-id"
@@ -77,7 +77,7 @@ function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGrou
                             />
                         </> :
                         <>
-                            <label for="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Group Name</label>
+                            <label htmlFor="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Group Name</label>
                             <input
                                 name='groupName'
                                 value={groupName}
@@ -103,7 +103,7 @@ function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGrou
                     }
                 </div>
                 <div className="form-group mb-6">
-                    <label for="exampleInputPassword2" className="form-label inline-block mb-2 text-gray-700">Carrot Amount</label>
+                    <label htmlFor="exampleInputPassword2" className="form-label inline-block mb-2 text-gray-700">Carrot Amount</label>
                     <input
                         name='carrotAmount'
                         onChange={handleChange}
@@ -126,7 +126,7 @@ function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGrou
                         placeholder={receiver == 'staff' ? "Carrot Amount" : "Carrot Amount per Staff"} required />
                 </div>
                 <div className="form-group mb-6">
-                    <label for="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Note</label>
+                    <label htmlFor="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Note</label>
                     <textarea
                         name='note'
                         onChange={handleChange}

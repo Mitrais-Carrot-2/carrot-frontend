@@ -12,6 +12,7 @@ import PopoverBody from "@material-tailwind/react/PopoverBody";
 import Button from "@material-tailwind/react/Button";
 import cookie from "js-cookie";
 import { removeUser } from "redux/reducers/userReducer";
+import { removeManager } from "redux/actions/managerAction";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import jsCookie from "js-cookie";
@@ -34,7 +35,7 @@ export default function Navbar() {
     if (!jsCookie.get("token")) {
       router.push("/sign-in");
     }
-    console.log(user);
+    // console.log(user);
   }, [router, user]);
 
   const handleLogout = () => {
@@ -44,6 +45,7 @@ export default function Navbar() {
     cookie.remove("roles");
 
     dispatch(removeUser());
+    dispatch(removeManager());
 
     router.push("/sign-in");
   };

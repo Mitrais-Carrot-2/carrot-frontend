@@ -1,7 +1,10 @@
-import { MANAGER_GET_FREEZER, MANAGER_GET_FREEZER_ERROR, MANAGER_GET_STAFF, SET_SHARE_TO_GROUP, SET_SHARE_TO_STAFF, SHARE_TO_GROUP, SHARE_TO_STAFF } from "../actionTypes";
+import { MANAGER_GET_FREEZER, MANAGER_GET_FREEZER_ERROR, MANAGER_GET_STAFF, SET_SHARE_TO_GROUP, SET_SHARE_TO_STAFF, SHARE_TO_GROUP, SHARE_TO_STAFF, MANAGER_GET_FREEZER_HISTORY, REMOVE_MANAGER } from "../actionTypes";
 import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
+    freezerHistory:{
+
+    },
     freezer: {
         freezer_id: "",
         barn_name: "",
@@ -43,15 +46,10 @@ const managerReducer = (state = initialState, action) => {
         case MANAGER_GET_FREEZER:
             return {
                 ...state, freezer: action.payload
-                // freezer: {
-                //     freezer_id : action.payload.id,
-                //     barn_name : action.payload.barn_name,
-                //     start_date : action.payload.start_date,
-                //     end_date : action.payload.end_date,
-                //     barn_owner : action.payload.barn_owner,
-                //     distributed_carrot : action.payload.distributed_carrot,
-                //     carrot_amount : action.payload.carrot_amount                
-                // }
+            };
+        case MANAGER_GET_FREEZER_HISTORY:
+            return {
+                ...state, freezerHistory: action.payload
             };
         case MANAGER_GET_STAFF:
             return {
@@ -81,6 +79,8 @@ const managerReducer = (state = initialState, action) => {
                     note: ""
                 }
             };
+        case REMOVE_MANAGER:
+            return state = initialState;
         default:
             return state;
     }

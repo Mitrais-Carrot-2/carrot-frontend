@@ -4,52 +4,44 @@ import Head from '@components/Head';
 import Freezer from './freezer';
 import Tabs from './tabs';
 
-import StaffTable from './staffTable';
-import StaffGroupTable from './staffGroupTable';
-import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
-import FormShare from "./formShare";
 import axios from 'axios';
-import { getCookie } from 'redux/actions/authAction';
-import { wrapper } from "../../redux";
-import { connect } from 'react-redux';
-import { getFreezer, getStaff } from 'redux/actions/managerAction';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { getFreezer, getFreezerHistory, getStaff } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
 
-const Index = ({ getFreezer, getStaff, freezer, staff, auth, state }) => {
-    // console.log(state);
-    const [freezerHistory, setFreezerHistory] = React.useState([]);
+const Index = ({ state }) => {
+// const Index = ({ getFreezer, freezer, getFreezerHistory, freezerHistory, getStaff, staff, auth, state }) => {
+    const [freezerHistoryData, setFreezerHistoryData] = React.useState();
     const [groups, setGroups] = React.useState([]);
-
+    
+    const dispatch = useDispatch();
+    const auth = useSelector((state) => (state.authentication ? state.authentication : {}));
+    const manager = useSelector((state) => (state.manager ? state.manager : {}));
+    const freezer = useSelector((state) => (state.manager.freezer ? state.manager.freezer : {}));
+    const staff = useSelector((state) => (state.manager.staff ? state.manager.staff : {}));
+    const freezerHistory = useSelector((state) => (state.manager.freezerHistory ? state.manager.freezerHistory : {}));
+    
     useEffect(() => {
-        getFreezer(auth.token);
-        getStaff(auth.token);
+        getGroup();
+        dispatch(getStaff(auth.token));
+        dispatch(getFreezer(auth.token));
+        dispatch(getFreezerHistory(auth.token));
+    }, []);
 
-        axios.get('http://localhost:8181/api/manager/freezer/history', {
-            headers: {
-                Authorization: `Bearer ${auth.token}`
-            }
-        })
-        .then(res => {
-            console.log(res.data);
-            setFreezerHistory(res.data);
-        })
-        .catch(err => {
-            console.log(err);
-        })
-
+    let getGroup = () => {
         axios.get('http://localhost:8181/api/manager/group', {
             headers: {
                 Authorization: `Bearer ${auth.token}`
             }
         })
         .then(res => {
-            // console.log("Group", res.data);
             setGroups(res.data);
         })
         .catch(err => {
             console.log(err);
         })
-    }, []);
+        // console.log('groups');
+    }
 
     return (
         <body>
@@ -65,13 +57,21 @@ const Index = ({ getFreezer, getStaff, freezer, staff, auth, state }) => {
                 <div className='container mx-auto px-4 py-2 mt-4 bg-white rounded-lg'>
                     <hr className="box-title-hr mt-4" />
                     <h3 className="pl-0 text-lg text-grey ml-0 font-bold tracking-widest">FREEZER DETAIL</h3>
-                    <Freezer freezer={freezer} />
+                    <Freezer 
+                        key={freezer}
+                        freezer={freezer} 
+                    />
                     <br />
                 </div>
                 <div className='container mx-auto px-4 py-2 mt-4 bg-white rounded-lg'>
                     <hr className="box-title-hr mt-4" />
                     <h3 className="pl-0 text-lg text-grey ml-0 font-bold tracking-widest">DISTRIBUTION DETAIL</h3>
-                    <Tabs staff={staff} groups={groups} freezerHistory={freezerHistory} />
+                    <Tabs 
+                        key={freezerHistory}
+                        staff={staff} 
+                        groups={groups} 
+                        freezerHistory={freezerHistory} 
+                    />
                 </div>
             </div>
         </body>
@@ -80,6 +80,7 @@ const Index = ({ getFreezer, getStaff, freezer, staff, auth, state }) => {
 
 const mapStateToProps = (state) => ({
     freezer: state.manager.freezer,
+    freezerHistory: state.manager.freezerHistory,
     staff: state.manager.staff,
     auth: state.authentication,
     state: state
@@ -88,8 +89,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         getFreezer: bindActionCreators(getFreezer, dispatch),
+        getFreezerHistory: bindActionCreators(getFreezerHistory, dispatch),
         getStaff: bindActionCreators(getStaff, dispatch),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+// export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default Index;

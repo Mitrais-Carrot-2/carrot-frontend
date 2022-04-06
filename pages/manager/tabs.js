@@ -1,6 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { shareToStaff } from 'redux/actions/managerAction';
+import React, { useEffect, useState } from 'react';
+import { shareToStaff, getFreezerHistory, getFreezer } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
 import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import FormShare from "./formShare";
@@ -8,9 +7,18 @@ import StaffTable from './staffTable';
 import StaffGroupTable from './staffGroupTable';
 import Router from 'next/router';
 
-const Tabs = ({ staff, freezerHistory, auth, targetStaff, targetGroup, shareToStaff, groups }) => {
+import { connect, useDispatch, useSelector } from 'react-redux';
+
+const Tabs = (props) => {
+// const Tabs = ({ staff, getFreezer, freezer, getFreezerHistory, freezerHistory, auth, targetStaff, shareToStaff, groups }) => {
+    const {groups, staff ,freezerHistory} = props;
     const [openTab, setOpenTab] = React.useState(1);
     const [modalShareOpen, setModalShareOpen] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState('');
+    
+    const dispatch = useDispatch();
+    const auth = useSelector((state) => (state.authentication ? state.authentication : {}));
+    const targetStaff = useSelector((state) => (state.manager.shareToStaff ? state.manager.shareToStaff : []));
 
     const columnsIndex = [
         {
@@ -55,12 +63,20 @@ const Tabs = ({ staff, freezerHistory, auth, targetStaff, targetGroup, shareToSt
             sortable: true
         },
     ];
+    
+    let closeModal = () => {
+        setModalShareOpen(false);
+        setErrorMessage('');
+    };
 
     let sendStaff = () => {
-        console.log("target staff", targetStaff);
-        shareToStaff(auth.token, targetStaff);
-        setModalShareOpen(false);
-        window.location.href = "/manager";
+        if (targetStaff.staffId != 0 && targetStaff.carrotAmount > 0) {
+            dispatch(shareToStaff(auth.token, targetStaff));
+            setModalShareOpen(false);
+            Router.push('/manager');
+        } else {
+            setErrorMessage('Please fill in all the fields');
+        }
     }
 
     return (
@@ -142,13 +158,16 @@ const Tabs = ({ staff, freezerHistory, auth, targetStaff, targetGroup, shareToSt
                                                 </button>
                                             </div>
                                             <ModalBody>
+                                                <div className="w-[94%] mx-auto bg-red-600 text-center text-white my-3 rounded animate-pulse">
+                                                    {errorMessage}
+                                                </div>
                                                 <FormShare staff={staff} receiver='staff' />
                                             </ModalBody>
                                             <ModalFooter>
                                                 <Button
                                                     className="text-red-600 border-transparent hover:border-red-600 hover:bg-transparent hover:text-red-600"
                                                     type="button"
-                                                    onClick={() => setModalShareOpen(!modalShareOpen)}
+                                                    onClick={() => closeModal()}
                                                 >
                                                     Close
                                                 </Button>
@@ -170,11 +189,6 @@ const Tabs = ({ staff, freezerHistory, auth, targetStaff, targetGroup, shareToSt
                                         <StaffGroupTable groups={groups} />
                                     </div>
                                 </div>
-                                {/* <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                                        <div className="mx-auto">
-                                            <StaffGroupTable />
-                                        </div>
-                                    </div> */}
                             </div>
                         </div>
                     </div>
@@ -189,11 +203,16 @@ const mapStateToProps = (state) => ({
     auth: state.authentication,
     targetStaff: state.manager.shareToStaff,
     targetGroup: state.manager.shareToGroup,
+    freezerHistory: state.manager.freezerHistory,
+    freezer: state.manager.freezer,
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
         shareToStaff: bindActionCreators(shareToStaff, dispatch),
+        getFreezerHistory: bindActionCreators(getFreezerHistory, dispatch),
+        getFreezer: bindActionCreators(getFreezer, dispatch),
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Tabs);
+// export default connect(mapStateToProps, mapDispatchToProps)(Tabs);
+export default Tabs;
