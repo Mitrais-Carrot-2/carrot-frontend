@@ -5,7 +5,6 @@ import userReducer from "./userReducer";
 // import fooReducer from "./fooReducer";
 
 const rootReducer = combineReducers({
-  //   foo: fooReducer,
   authentication: authReducer,
   manager: managerReducer,
   user: userReducer,

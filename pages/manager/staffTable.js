@@ -2,13 +2,16 @@ import React from 'react';
 import DataTable from 'react-data-table-component';
 import styled from 'styled-components';
 import moment from 'moment';
-
-export default function StaffTable(props) {
+import { connect } from 'react-redux';
+import { getStaff } from 'redux/actions/managerAction';
+import { bindActionCreators } from 'redux';
+function StaffTable({columns, data, type}) {
     // console.log("data",props.data);
 	
-	const columns = props.columns;
-
-    let staff = props.data || [];
+	// const columns = props.columns;
+	// console.log(props.data);
+    let staff = data.length>0 ? data : [];
+    // let staff = [];
     const [filterText, setFilterText] = React.useState('');
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
 
@@ -17,15 +20,15 @@ export default function StaffTable(props) {
 	// 	if (a.name < b.name) {
 	// 		return -1;
 	// 	}	
-	if (props.type === 'freezerHistory') {
-		const sortedStaffs = staff.sort((a, b) => {
-			// compare date by ascending
+	let sortedStaffs = staff;
+	if (type === 'freezerHistory') {
+		sortedStaffs = staff.sort((a, b) => {
 			if (a.date > b.date) {
 				return -1;
 			}
 		});
 	} else {
-		const sortedStaffs = staff.sort((a, b) => {
+		sortedStaffs = staff.sort((a, b) => {
 			if (a.name < b.name) {
 				return -1;
 			}
@@ -40,7 +43,7 @@ export default function StaffTable(props) {
 
 	const filteredItems = numberedStaffs.filter(
 		item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()) 
-            // || item.jf && item.jf.toLowerCase().includes(filterText.toLowerCase()),
+            || item.note && item.note.toLowerCase().includes(filterText.toLowerCase()),
 	);
 
 	const subHeaderComponentMemo = React.useMemo(() => {
@@ -117,3 +120,17 @@ const ClearButton = styled.button`
 	justify-content: center;
 `;
 
+
+const mapStateToProps = (state) => ({
+    freezer: state.manager.staff,
+    auth: state.authentication,
+    state: state
+})
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getStaff: bindActionCreators(getStaff, dispatch),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(StaffTable);

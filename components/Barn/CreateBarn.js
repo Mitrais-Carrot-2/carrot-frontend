@@ -26,7 +26,7 @@ export default function CreateBarn(props) {
         // props.reloadPage();
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
         window.alert("Barn creation failed");
       });
   }

@@ -1,4 +1,4 @@
-import { MANAGER_GET_FREEZER, MANAGER_GET_FREEZER_ERROR, MANAGER_GET_STAFF, SET_SHARE_TO_STAFF, SHARE_TO_STAFF, SET_SHARE_TO_GROUP, SHARE_TO_GROUP } from "../actionTypes";
+import { MANAGER_GET_FREEZER, MANAGER_GET_FREEZER_ERROR, MANAGER_GET_STAFF, SET_SHARE_TO_STAFF, SHARE_TO_STAFF, SET_SHARE_TO_GROUP, SHARE_TO_GROUP, MANAGER_GET_FREEZER_HISTORY, REMOVE_MANAGER } from "../actionTypes";
 import axios from "axios";
 
 export const getFreezer = (token) => (dispatch) => {
@@ -9,13 +9,28 @@ export const getFreezer = (token) => (dispatch) => {
             "Access-Control-Allow-Credentials": true,
         },
     }).then((res) => {
+        // console.log('freezer dispatch', res.data);
         dispatch({ type: MANAGER_GET_FREEZER, payload: res.data });
-    })
-        .catch((err) => {
-            console.log("FAILED GET FREEZER", err);
-        });
+    }).catch((err) => {
+        console.log("FAILED GET FREEZER", err);
+    });
 }
 
+export const getFreezerHistory = (token) => (dispatch) => {
+    axios.get('http://localhost:8181/api/manager/freezer/history', {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    .then(res => {
+        // console.log(res.data);
+        // console.log('freezer history dispatch');
+        dispatch({ type: MANAGER_GET_FREEZER_HISTORY, payload: res.data });
+    })
+    .catch(err => {
+        console.log("FAILED GET FREEZER HISTORY", err);
+    })
+}
 export const getStaff = (token) => (dispatch) => {
     axios.get(`http://localhost:8181/api/manager/staff/`, {
         headers: {
@@ -51,10 +66,35 @@ export const shareToStaff = (token, req) => (dispatch) => {
             "Content-Type": "application/json",
         },
     }).then((res) => {
-        // console.log("SHARE TO STAFF", res);
-        dispatch({ type: SHARE_TO_STAFF, payload: res.data });        
+        // console.log("SHARE TO STAFF", res.data);
+        dispatch({ type: SHARE_TO_STAFF, payload: res.data });
     }).catch((err) => {
         console.log("SHARE TO STAFF", err.message);
+    }).finally(() => {
+        axios.get(`http://localhost:8181/api/manager/freezer/`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true,
+            },
+        }).then((res) => {
+            // console.log('freezer dispatch', res.data);
+            dispatch({ type: MANAGER_GET_FREEZER, payload: res.data });
+        }).catch((err) => {
+            console.log("FAILED GET FREEZER", err);
+        });
+
+        axios.get('http://localhost:8181/api/manager/freezer/history', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(res => {
+            dispatch({ type: MANAGER_GET_FREEZER_HISTORY, payload: res.data });
+        })
+        .catch(err => {
+            console.log("FAILED GET FREEZER HISTORY", err);
+        })
     });
 }
 
@@ -74,8 +114,24 @@ export const shareToGroup = (token, req) => (dispatch) => {
         },
     }).then((res) => {
         console.log("SHARE TO GROUP", res.data);
-        dispatch({ type: SHARE_TO_GROUP, payload: res.data });        
+        dispatch({ type: SHARE_TO_GROUP, payload: res.data });
     }).catch((err) => {
         console.log("SHARE TO GROUP", err.message);
+    }).finally(() => {
+        axios.get(`http://localhost:8181/api/manager/freezer/`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true,
+            },
+        }).then((res) => {
+            dispatch({ type: MANAGER_GET_FREEZER, payload: res.data });
+        }).catch((err) => {
+            console.log("FAILED GET FREEZER", err);
+        });
     });
+}
+
+export const removeManager = () => (dispatch) => {
+    dispatch({ type: REMOVE_MANAGER });
 }

@@ -4,20 +4,28 @@ import { useEffect } from "react";
 import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import FormShare from "./formShare";
 import StaffTable from "./staffTable";
-import { connect } from 'react-redux';
-import { shareToGroup, setShareToGroup } from 'redux/actions/managerAction';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { shareToGroup, setShareToGroup, getFreezerHistory } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
+import Router from 'next/router';
 
-const ActionButton = ({ groupId, groupName, targetGroup, shareToGroup, auth }) => {
+const ActionButton = (props) => {
+    const { groupId, groupName } = props;
     const [modalStaffOpen, setModalStaffOpen] = React.useState(false);
     const [modalShareOpen, setModalShareOpen] = React.useState(false);
 
-    const [staff, setStaff] = React.useState([]);
-    const [sendToGroup, setSendToGroup] = React.useState({
-        groupId: 0,
-        carrotAmount: 0,
-        note: ""
-    });
+    // const [staff, setStaff] = React.useState([]);
+    // const [sendToGroup, setSendToGroup] = React.useState({
+    //     groupId: 0,
+    //     carrotAmount: 0,
+    //     note: ""
+    // });
+    const [errorMessage, setErrorMessage] = React.useState('');
+    const dispatch = useDispatch();
+    
+    const auth = useSelector((state) => (state.authentication ? state.authentication : {}));
+    const staff = useSelector((state) => (state.manager.staff ? state.manager.staff : {}));
+    const targetGroup = useSelector((state) => (state.manager.shareToGroup ? state.manager.shareToGroup : {}));
 
     const columnsStaff = [
         {
@@ -57,25 +65,33 @@ const ActionButton = ({ groupId, groupName, targetGroup, shareToGroup, auth }) =
                 "Access-Control-Allow-Credentials": true,
             },
         })
-            .then(res => {
-                return res.data;
-            }).then((staff) => {
-                // console.log("group member", staff);
-                setStaff(staff);
-                setModalStaffOpen(!modalStaffOpen);
-            });
+        .then(res => {
+            return res.data;
+        }).then((staff) => {
+            // console.log("group member", staff);
+            setStaff(staff);
+            setModalStaffOpen(!modalStaffOpen);
+        });
     }
 
     function showModalGroup() {
         setModalShareOpen(!modalShareOpen);
     }
 
-    let sendGroup = () => {
-        // console.log("auth token", auth.token);
-        // console.log("share to group", targetGroup);
-        shareToGroup(auth.token, targetGroup);
+    let closeModal = () => {
         setModalShareOpen(false);
-        window.location.href = "/manager";
+        setErrorMessage('');
+    };
+
+    let sendGroup = () => {
+        // console.log(targetGroup);
+        if (targetGroup.carrotAmount > 0) {
+            dispatch(shareToGroup(auth.token, targetGroup));
+            setModalShareOpen(false);
+            Router.push('/manager');
+        } else {
+            setErrorMessage('Please fill in all the fields');
+        }
     }
 
     return (
@@ -123,8 +139,8 @@ const ActionButton = ({ groupId, groupName, targetGroup, shareToGroup, auth }) =
 
             <Modal
                 size="lg"
-                className="sm:w-full md:w-full lg:w-1/3"
-                // style={{ maxWidth: '500px', width: '100%' }}
+                // className="sm:w-full md:w-full lg:w-1/3"
+                style={{ maxWidth: '500px', width: '100%' }}
                 toggle={() => setModalShareOpen(!modalShareOpen)}
                 isOpen={modalShareOpen}
             >
@@ -142,13 +158,16 @@ const ActionButton = ({ groupId, groupName, targetGroup, shareToGroup, auth }) =
                     </button>
                 </div>
                 <ModalBody>
+                    <div className="w-[94%] mx-auto bg-red-600 text-center text-white my-3 rounded animate-pulse">
+                        {errorMessage}
+                    </div>
                     <FormShare receiver='group' groupId={groupId} groupName={groupName} />
                 </ModalBody>
                 <ModalFooter>
                     <Button
                         className="text-red-600 border-transparent hover:border-red-600 hover:bg-transparent hover:text-red-600"
                         type="button"
-                        onClick={() => setModalShareOpen(!modalShareOpen)}
+                        onClick={() => closeModal()}
                     >
                         Close
                     </Button>
@@ -182,4 +201,5 @@ const mapDispatchToProps = (dispatch) => {
         setShareToGroup: bindActionCreators(setShareToGroup, dispatch),
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(ActionButton);
+// export default connect(mapStateToProps, mapDispatchToProps)(ActionButton);
+export default ActionButton;
