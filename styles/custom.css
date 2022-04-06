@@ -270,7 +270,7 @@ table td {
 
 .box-profile {
   border-radius: 5px;
-  min-height: 155px;
+  min-height: 135px;
   background: rgba(76, 212, 196, 1);
   background: -moz-linear-gradient(
     -45deg,
@@ -321,7 +321,7 @@ table td {
   -webkit-box-shadow: 2px 6px 48px 0px rgba(255, 210, 171, 1);
   -moz-box-shadow: 2px 6px 48px 0px rgba(255, 210, 171, 1);
   box-shadow: 2px 6px 48px 0px rgba(255, 210, 171, 1);
-  min-height: 155px;
+  min-height: 135px;
 }
 
 .box-additional {
@@ -362,7 +362,7 @@ table td {
   -webkit-box-shadow: 2px 6px 48px 0px rgba(173, 210, 255, 1);
   -moz-box-shadow: 2px 6px 48px 0px rgba(173, 210, 255, 1);
   box-shadow: 2px 6px 48px 0px rgba(173, 210, 255, 1);
-  min-height: 155px;
+  min-height: 135px;
 }
 
 .btn-outline-white {
