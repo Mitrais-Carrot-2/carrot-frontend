@@ -17,7 +17,7 @@ export default function farmer() {
   const [showDistribution, setShowDistribution] = useState(false);
 
   useEffect(() => {
-    if(!jsCookie.get("token").split(",").includes("ROLE_FARMER")) {
+    if(!jsCookie.get("roles").split(",").includes("ROLE_FARMER")) {
       Router.push("/");
     } else {
       axios
