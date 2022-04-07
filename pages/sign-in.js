@@ -26,6 +26,7 @@ const SignIn = ({ authenticate, auth, error, token }) => {
     if (jsCookie.get("token")) {
       Router.push("/");
     }
+    
     console.log('init sign in page');
   }, []);
 
@@ -97,6 +98,13 @@ const SignIn = ({ authenticate, auth, error, token }) => {
                         </label>
                         <input
                           name="username"
+                          onKeyUp={
+                            (e) => {
+                              if (e.key === "Enter") {
+                                signIn();
+                              }
+                            }
+                          }
                           onChange={handleChange}
                           type="text"
                           className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
@@ -114,6 +122,13 @@ const SignIn = ({ authenticate, auth, error, token }) => {
                         </label>
                         <input
                           name="password"
+                          onKeyUp={
+                            (e) => {
+                              if (e.key === "Enter") {
+                                signIn();
+                              }
+                            }
+                          }
                           onChange={handleChange}
                           type="password"
                           className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"

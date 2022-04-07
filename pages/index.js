@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@styles/Home.module.css";
@@ -27,9 +28,17 @@ export default function Home() {
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useSelector((state) => (state.user.info ? state.user.info : {}));
-  const roles = user.roles;
+  const [onlyStaff, setOnlyStaff] = React.useState(false);
+  // const roles = user.roles;
 
   // console.log(roles);
+  let roles = (jsCookie.get("roles"))?jsCookie.get("roles").split(","):"";
+  useEffect(() => {
+    if (roles.length == 1 && roles[0] == "ROLE_STAFF") {
+      setOnlyStaff(true);
+    }
+    console.log(roles);
+  });
 
   return (
     <>
@@ -60,52 +69,62 @@ export default function Home() {
           </p>
         </main> */}
         <section className="">
-          <div className="container search-box sm:px-4">
-            {/* <div className="flex flex-wrap">
+          {!onlyStaff ?
+            <div className="container search-box border-1 sm:px-4">
+              {/* <div className="flex flex-wrap">
               <div className="md:w-full pr-4 pl-4">
               <h4 className="text-grey-dark">Choose your role:</h4>
               </div>
             </div> */}
-            {/* {roles.length>1 && } */}
-            <div className="flex flex-wrap">
-              <button
-                type="button"
-                onClick={() => router.push("/manager")}
-                className="btn btn-carrot radius-5 bg-[#ff5722]"
-              >
-                {" "}
-                Manager
-              </button>
-              <button
+              <div className="flex flex-wrap">
+                {
+                  roles.includes("ROLE_MANAGER") ?
+                    <button
+                      type="button"
+                      onClick={() => router.push("/manager")}
+                      className="btn btn-carrot radius-5 bg-[#ff5722]"
+                    >
+                      Manager
+                    </button>
+                    : null
+                }
+                {/* <button
                   onClick={() => router.push("/employee")}
                   className="btn btn-carrot radius-5"
                 >
-                  {" "}
                   Employee
-                </button>
-                <button
-                  onClick={() => router.push("/merchant")}
-                  className="btn btn-carrot radius-5"
-                >
-                  {" "}
-                  Merchant
-                </button>
-                <button
-                  onClick={() => router.push("/farmer")}
-                  className="btn btn-carrot radius-5"
-                >
-                  {" "}
-                  Farmer / Stockist
-                </button>
-                <button
-                  onClick={() => router.push("/admin")}
-                  className="btn btn-carrot radius-5"
-                >
-                  {" "}
-                  Administrator
-                </button>
+              </button> */}
+                {
+                  roles.includes("ROLE_MERCHANT") ?
+                    <button
+                      onClick={() => router.push("/merchant")}
+                      className="btn btn-carrot radius-5"
+                    >
+                      Merchant
+                    </button>
+                    : null}
+                {
+                  roles.includes("ROLE_FARMER") ?
+                    <button
+                      onClick={() => router.push("/farmer")}
+                      className="btn btn-carrot radius-5"
+                    >
+                      Farmer
+                    </button>
+                    : null}
+                {
+                  roles.includes("ROLE_ADMIN") ?
+                    <button
+                      onClick={() => router.push("/admin")}
+                      className="btn btn-carrot radius-5"
+                    >
+                      {" "}
+                      Administrator
+                    </button>
+                    : null}
+              </div>
             </div>
-          </div>
+            : null}
           <div className="mt-5">
             <section className="mini-dashboard my-4">
               <h2 className="pl-0 text-grey -mt-3 ml-0">DASHBOARD</h2>
@@ -117,11 +136,11 @@ export default function Home() {
                         <img
                           src="img/user.jpg"
                           alt=""
-                          style={{maxWidth:"80%"}}
+                          style={{ maxWidth: "80%" }}
                           className="w-full max-w-80% mx-6 rounded-full lg:p-1 md:p-8"
                         />
                       </div>
-                      <div className="min-w-[180px] lg:w-2/3 sm:w-auto pb-3 px-3 my-auto pl-3">
+                      <div className="min-w-[180px] lg:w-2/3 sm:w-auto px-3 my-auto pl-3">
                         <h4 className="mb-0 font-bold lg:text-[14px] md:text-[30px] text-white">Henokh Santoso</h4>
                         <p className="text-white lg:text-lg md:text-[20px]">Mitrais Employee</p>
                         {/* <!-- <a href="edit-profile.html" class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded badge-white">Edit Profile</a> --> */}
@@ -135,20 +154,20 @@ export default function Home() {
                         <img
                           src=" img/mc-icon-carrot.png"
                           alt=""
-                          style={{maxWidth:"80%"}}
+                          style={{ maxWidth: "80%" }}
                           className="w-full max-w-80% mx-6 rounded-full lg:p-1 md:p-8"
                         />
                       </div>
                       <div className="md:w-2/3 pr-4 pl-4 my-auto">
-                        <h4 className="mb-0 font-bold lg:text-[14px] md:text-[30px] text-white">
-                          You&apos;ve earned 560 carrots!
+                        <h4 className="mb-0 lg:text-[16px] md:text-[30px] text-white">
+                          You&apos;ve earned <span className="font-bold">560</span> carrots!
                         </h4>
-                        <button className="mt-2 sm:text-2xl hover:text-[#fc4a1a] inline-block p-1 text-center font-semibold lg:text-sm align-baseline leading-none rounded badge-white"
+                        {/* <button className="mt-2 sm:text-2xl hover:text-[#fc4a1a] inline-block p-1 text-center font-semibold lg:text-sm align-baseline leading-none rounded badge-white"
                           data-toggle="modal"
                           data-target="#exampleModal"
                         >
                           Share Carrot
-                        </button>
+                        </button> */}
                       </div>
                     </div>
                   </div>
@@ -159,7 +178,7 @@ export default function Home() {
                         <img
                           src=" img/mc-icon-transaction.png"
                           alt=""
-                          style={{maxWidth:"80%"}}
+                          style={{ maxWidth: "80%" }}
                           className="w-full max-w-80% mx-6 rounded-full lg:p-1 md:p-8"
                         />
                       </div>
@@ -180,7 +199,7 @@ export default function Home() {
           </div>
           <div className="mt-3">
             <section className="bazaar-1-item mb-4">
-              <div className="container mx-auto sm:px-4 search-box pb-4">
+              <div className="container mx-auto search-box p-4">
                 <div className="flex flex-wrap">
                   <div className="md:w-full pr-4 pl-4">
                     <hr className="box-title-hr" />
@@ -216,7 +235,7 @@ export default function Home() {
             </section>
 
             <section className="bazaar-2-items mb-4">
-              <div className="container mx-auto sm:px-4 search-box pb-4">
+              <div className="container mx-auto search-box p-4">
                 <div className="flex flex-wrap ">
                   <div className="md:w-full pr-4 pl-4">
                     <hr className="box-title-hr" />
@@ -281,7 +300,7 @@ export default function Home() {
             </section>
 
             <section className="bazaar-3-items mb-4">
-              <div className="container mx-auto sm:px-4 search-box pb-4">
+              <div className="container mx-auto search-box p-4">
                 <div className="flex flex-wrap content-end">
                   <div className="md:w-full pr-4 pl-4">
                     <hr className="box-title-hr" />
@@ -351,7 +370,7 @@ export default function Home() {
             </section>
 
             <section className="bazaar mb-4 pb-5">
-              <div className="container mx-auto sm:px-4 search-box pb-4">
+              <div className="container mx-auto search-box p-4">
                 <div className="flex flex-wrap content-end">
                   <div className="md:w-full pr-4 pl-4">
                     <hr className="box-title-hr" />

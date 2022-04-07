@@ -7,6 +7,8 @@ import Head from "next/head";
 import { headers } from "next.config";
 import { useState, useEffect } from "react";
 import { Button } from "reactstrap";
+import jsCookie from "js-cookie";
+import Router from "next/router";
 
 export default function farmer() {
   const [barns, setBarns] = useState([]);
@@ -15,9 +17,13 @@ export default function farmer() {
   const [showDistribution, setShowDistribution] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8181/api/farmer/barn/")
-      .then((res) => setBarns(res.data));
+    if(!jsCookie.get("token").split(",").includes("ROLE_FARMER")) {
+      Router.push("/");
+    } else {
+      axios
+        .get("http://localhost:8181/api/farmer/barn/")
+        .then((res) => setBarns(res.data));
+    }
   }, []);
 
   return (
