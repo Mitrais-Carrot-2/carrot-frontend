@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-export default function Merchant() {
+export default function AdminLayout() {
   const router = useRouter();
   return (
     <body>
@@ -17,27 +17,19 @@ export default function Merchant() {
             <div className="flex flex-wrap">
               <div className="text-center md:w-full px-4">
                 <button
-                  onClick={() => router.push("/merchant/bazaar")}
+                  onClick={() => router.push("/admin/new-user")}
                   className="btn btn-carrot radius-5"
                 >
                   {" "}
-                  Bazaar
+                  Create New Staff
                 </button>
 
                 <button
-                  onClick={() => router.push("/merchant/bazaaritem")}
+                  onClick={() => router.push("/admin/edit-user")}
                   className="btn btn-carrot radius-5"
                 >
                   {" "}
-                  Bazaar Item
-                </button>
-
-                <button
-                  onClick={() => router.push("/merchant/staffgroup")}
-                  className="btn btn-carrot radius-5"
-                >
-                  {" "}
-                  Staff Group
+                  Edit Current Staff
                 </button>
               </div>
             </div>
