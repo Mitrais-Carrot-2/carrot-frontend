@@ -14,8 +14,8 @@ import Head from "@components/Head";
 import jsCookie from "js-cookie";
 import { bindActionCreators } from "redux";
 
-const SignIn = ({ authenticate, token }) => {
-  const [error, setError] = React.useState("");
+const SignIn = ({ authenticate, auth, error, token }) => {
+  // const [error, setError] = React.useState("");
 
   const [loginData, setLoginData] = React.useState({
     username: "",
@@ -26,6 +26,7 @@ const SignIn = ({ authenticate, token }) => {
     if (jsCookie.get("token")) {
       Router.push("/");
     }
+    console.log('init sign in page');
   }, []);
 
   const handleChange = (e) => {
@@ -34,15 +35,18 @@ const SignIn = ({ authenticate, token }) => {
   };
 
   function signIn() {
-    let status = authenticate(loginData);
-    setTimeout(() => {
-      if (!status) {
-        setError("Username / Password is incorrect");
-        setTimeout(() => {
-          setError("");
-        }, 5000);
-      }
-    }, 3000);
+    // let status = 
+    authenticate(loginData);
+    // console.log("auth", auth);
+    // setTimeout(() => {
+    //   if (!status) {
+    //     setError("Username / Password is incorrect");
+    //     setTimeout(() => {
+    //       setError("");
+    //     }, 5000);
+    //   }
+    // }, 3000);
+
     // console.log(loginData);
     // axios.post("http://localhost:8181/api/auth/login", loginData)
     //   .then((res) => {
@@ -167,6 +171,8 @@ const SignIn = ({ authenticate, token }) => {
 
 const mapStateToProps = (state) => ({
   token: state.authentication.token,
+  auth: state.authentication,
+  error: state.authentication.error,
 })
 
 const mapDispatchToProps = (dispatch) => {

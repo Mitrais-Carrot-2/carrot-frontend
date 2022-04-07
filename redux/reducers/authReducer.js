@@ -1,4 +1,4 @@
-import { AUTHENTICATE, DEAUTHENTICATE } from "../actionTypes";
+import { AUTHENTICATE, DEAUTHENTICATE, AUTHENTICATE_ERROR } from "../actionTypes";
 import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
@@ -6,6 +6,7 @@ const initialState = {
     id: "",
     username: "",
     roles: [],
+    error: "",
 }
 
 
@@ -19,10 +20,17 @@ const authReducer = (state = initialState, action) => {
     case AUTHENTICATE:
       // return { ...state, token: action.payload };
       return state = action.payload; 
-      break;
     case DEAUTHENTICATE:
-      return state.credential = {} ;
-      break;
+      return state.credential = {};
+    case AUTHENTICATE_ERROR:
+      console.log(action.payload);
+      let error = {
+        error: action.payload
+      };
+      return {
+        ...state,
+        ...error,
+      };
     default:
       return state;
   }

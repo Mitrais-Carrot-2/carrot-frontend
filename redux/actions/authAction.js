@@ -1,6 +1,6 @@
 import Router from "next/router";
 import cookie from "js-cookie";
-import { AUTHENTICATE, DEAUTHENTICATE } from "../actionTypes";
+import { AUTHENTICATE, DEAUTHENTICATE, AUTHENTICATE_ERROR } from "../actionTypes";
 import axios from "axios";
 import { setUser, setUserImage } from "redux/reducers/userReducer";
 
@@ -24,6 +24,7 @@ export const authenticate = (user) => (dispatch) => {
       dispatch({ type: AUTHENTICATE, payload: res.data });
     })
     .catch((err) => {
+      dispatch({ type: AUTHENTICATE_ERROR, payload: "Username / Password is incorrect"});
       console.log("Username / Password is incorrect");
     });
 };
