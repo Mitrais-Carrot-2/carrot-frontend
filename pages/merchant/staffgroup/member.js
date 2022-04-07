@@ -51,7 +51,10 @@ export default function StaffGroupMember(props) {
         window.location.reload();
     }
 
-
+    function handleAddMember() {
+        setId(groupId);
+        axios.get(url).then(response => setMembers(response.data));
+    }
 
     return (
         <body>
@@ -104,7 +107,7 @@ export default function StaffGroupMember(props) {
                                     {" "}
                                     Add New Member
                                 </button>
-                                {showAddMember && <AddGroupMember closeClick={setShowAddMember} refreshPage={reloadPage} groupId={id} />}
+                                {showAddMember && <AddGroupMember closeClick={setShowAddMember} refreshPage={handleAddMember} groupId={id} />}
                             </div>
                         </div>
                         <table className="table table-hover mt-3">
