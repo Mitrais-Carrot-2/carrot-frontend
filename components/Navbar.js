@@ -11,7 +11,7 @@ import PopoverHeader from "@material-tailwind/react/PopoverHeader";
 import PopoverBody from "@material-tailwind/react/PopoverBody";
 import Button from "@material-tailwind/react/Button";
 import cookie from "js-cookie";
-import { removeUser } from "redux/reducers/userReducer";
+import { removeUser, removeUserImage } from "redux/reducers/userReducer";
 import { removeManager } from "redux/actions/managerAction";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -46,6 +46,7 @@ export default function Navbar() {
 
     dispatch(removeUser());
     dispatch(removeManager());
+    dispatch(removeUserImage());
 
     router.push("/sign-in");
   };
@@ -53,6 +54,7 @@ export default function Navbar() {
   return (
     <header className="mb-20 z-10" style={{ borderBottom: "groove" }}>
       <nav
+        id="navbar"
         className="fixed  flex flex-wrap justify-between pt-2 px-4 navbar-expand-md z-10 bg-slate-50"
         style={{ width: "-webkit-fill-available" }}
       >

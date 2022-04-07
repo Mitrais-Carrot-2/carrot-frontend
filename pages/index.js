@@ -80,6 +80,7 @@ export default function Home() {
                 {
                   roles.includes("ROLE_MANAGER") ?
                     <button
+                      id="menu-manager"
                       type="button"
                       onClick={() => router.push("/manager")}
                       className="btn btn-carrot radius-5 bg-[#ff5722]"
@@ -127,7 +128,7 @@ export default function Home() {
             : null}
           <div className="mt-5">
             <section className="mini-dashboard my-4">
-              <h2 className="pl-0 text-grey -mt-3 ml-0">DASHBOARD</h2>
+              <h2 className="pl-0 text-grey -mt-3 ml-0" id="dashboard-title">DASHBOARD</h2>
               <div className="mx-auto ">
                 <div className="flex flex-wrap ">
                   <div className="lg:w-1/3 md:w-full lg:pr-4 mt-3">

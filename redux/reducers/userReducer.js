@@ -21,8 +21,12 @@ export const userSlice = createSlice({
     removeUser: (state) => {
       state.info = {};
     },
+    removeUserImage: (state) => {
+      state.userImage = "";
+    },
   },
 });
 
-export const { setUser, setUserImage, removeUser } = userSlice.actions;
+export const { setUser, setUserImage, removeUser, removeUserImage } =
+  userSlice.actions;
 export default userSlice.reducer;
