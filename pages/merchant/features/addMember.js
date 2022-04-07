@@ -33,7 +33,7 @@ export default function AddGroupMember(props) {
             .then((res) => {
                 window.alert("Staff Added!")
                 props.closeClick();
-                props.refreshPage();
+                props.refreshPage(member);
             })
             .catch(err => {
                 window.alert("Failed: Duplicate data!")
