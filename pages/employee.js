@@ -13,9 +13,9 @@ export default function Employee() {
   const router = useRouter();
 
   return (
-    <body>
-      <Head />
-      <Navbar />
+    <>
+      {/* <Head />
+      <Navbar /> */}
       <main role="main" className="container mx-auto sm:px-4">
         <h2 className="mt-4 pl-0 text-grey ml-0">DASHBOARD</h2>
       </main>
@@ -349,6 +349,6 @@ export default function Employee() {
       <ManagerRewardModal />
       <StockistRewardModal />
       <Footer />
-    </body>
+    </>
   );
 }
