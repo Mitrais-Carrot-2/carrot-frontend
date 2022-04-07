@@ -80,6 +80,7 @@ export default function Home() {
                 {
                   roles.includes("ROLE_MANAGER") ?
                     <button
+                      id="menu-manager"
                       type="button"
                       onClick={() => router.push("/manager")}
                       className="btn btn-carrot radius-5 bg-[#ff5722]"

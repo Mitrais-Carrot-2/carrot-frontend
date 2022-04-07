@@ -51,7 +51,7 @@ export default function StaffGroupTable({groups}) {
             cell: (row) => {
                 return (
                     <Fragment>
-                        <ActionButton groupId={row.id} groupName={row.name} />
+                        <ActionButton groupId={row.id} groupName={row.name} totalMember={row.totalMember} />
                     </Fragment>
                 );
             },
