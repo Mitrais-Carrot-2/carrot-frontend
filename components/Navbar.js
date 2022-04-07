@@ -53,6 +53,7 @@ export default function Navbar() {
   return (
     <header className="mb-20 z-10" style={{ borderBottom: "groove" }}>
       <nav
+        id="navbar"
         className="fixed  flex flex-wrap justify-between pt-2 px-4 navbar-expand-md z-10 bg-slate-50"
         style={{ width: "-webkit-fill-available" }}
       >
