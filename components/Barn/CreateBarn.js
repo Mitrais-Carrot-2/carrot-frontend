@@ -4,6 +4,7 @@ import Modal from "@components/Modal";
 import moment from "moment";
 import { useState } from "react";
 import axios from "axios";
+import { basePath } from 'next.config';
 
 export default function CreateBarn(props) {
   const today = moment().format("YYYY-MM-DD");
