@@ -15,7 +15,7 @@ import Link from "next/link";
 export default function StaffGroup(props) {
     const router = useRouter();
 
-    const url = 'http://localhost:8181/api/bazaar/group/'
+    const url = 'basePath+'bazaar/group/'
     const [groups, setGroup] = useState([]);
     const [showCreateGroup, setShowCreateGroup] = useState(false);
     const [showUpdateGroup, setShowUpdateGroup] = useState(false);

@@ -5,35 +5,46 @@ import Link from "next/link";
 import defaultImage from "@public/img/defaultImage.png";
 
 
-export default function BazaarItemCard(props){
+export default function BazaarItemCard(props) {
     const router = useRouter()
+    const viewDetailsButtonClassOne = "inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded my-2 py-1 px-3 leading-normal no-underline btn-carrot radius-5";
+    const viewDetailsButtonClassMany =  "inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline btn-carrot";
+
+
+    function renderViewDetailsButton(classNames){
+        return(
+            <button
+                onClick={() => {
+                    router.push({
+                        pathname : "/itemDetails/[bazaarId]/[itemId]",
+                        query : {bazaarId: props.bazaar.id, bazaarName:props.bazaar.bazaarName, itemId: props.item.id}
+                    })
+            }}
+                className={classNames}
+            >
+                VIEW DETAILS
+            </button>
+        )
+    }
 
     function renderOneItem(item) {
-        return (    
-            <div>
+        return (
+            <div className="flex flex-wrap">
                 <div className="md:w-1/2 pr-4 pl-4 br-1">
                     <Image
                         className="max-w-full h-auto p-6"
                         alt=""
-                        src={item.image}
-                        // src={defaultImage}
-                        // width={60}
-                        // height={60}
+                        src={defaultImage}
                         objectFit="cover"
                     />
                 </div>
                 <div className="md:w-1/2 pr-4 pl-4 self-center p-12">
-                    <h3>{item.name}</h3>
+                    <h2 className="my-3">{item.name}</h2>
                     <h4>
-                        <strong className="carrot-orange">{item.price} Carrots</strong>
+                        <strong className="carrot-orange mt-2">{item.price} Carrots</strong>
                     </h4>
-                    <p>{item.description}</p>
-                    <Link
-                        href="/bazaarItem"
-                        className="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline btn-carrot radius-5"
-                    >
-                        VIEW DETAILS
-                    </Link>
+                    <p className="my-3">{item.description}</p>
+                    {renderViewDetailsButton(viewDetailsButtonClassOne)}
                 </div>
             </div>
         )
@@ -41,114 +52,68 @@ export default function BazaarItemCard(props){
 
     function renderTwoItems(item) {
         return (
-            <div className="md:w-1/2 pr-4 pl-4 br-1">
-                <div className="text-center">
+            <div className="w-full px-3">
+                <div className="text-center h-auto p-0 bazaar-item items-center mb-2">
                     <Image
-                        className="max-w-full h-auto p-6 bazaar-item mb-3"
                         alt=""
-                        src={item.image}
-                        // src={defaultImage}
-                        // width={60}
-                        // height={60}
+                        src={defaultImage}
+                        // width={300}
+                        height={700}
                         objectFit="cover"
                     />
                 </div>
                 <div className="px-3">
-                    <h3>{item.name}</h3>
+                    <h2 className="my-3">{item.name}</h2>
                     <h4>
                         <strong className="carrot-orange">{item.price} Carrots</strong>
                     </h4>
-                    <p>{item.description}</p>
-                    <Link
-                        href="/bazaarItem"
-                        className="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline btn-carrot radius-5"
-                    >
-                        VIEW DETAILS
-                    </Link>
+                    <p className="my-2">{item.description}</p>
+                    {renderViewDetailsButton(viewDetailsButtonClassOne)}
                 </div>
             </div>
         )
     }
 
-    function renderThreeItems(item) {
+    function renderManyItems(item) {
         return (
-            <div className="md:w-1/3 pr-4 pl-4">
-              <div className="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300">
-                <Image
-                    className="w-full rounded rounded-t"
-                    alt=""
-                    src={item.image}
-                    // src={defaultImage}
-                    // width={60}
-                    // height={60}
-                    objectFit="cover"
-                />
-                <div className="flex-auto p-6">
-                  <h5 className="mb-3">{item.name}</h5>
-                  <p className="mb-0">{item.price} Carrots</p>
+            <div className="w-full px-2 py-2">
+                <div className="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300">
+                    <Image
+                        className="w-full rounded rounded-t"
+                        alt=""
+                        src={defaultImage}
+                        objectFit="cover"
+                    />
+                    <div className="flex-auto p-6 card-body">
+                        <h5 className="card-title">{item.name}</h5>
+                        <p className="card-title-orange">{item.price} Carrots</p>
+                    </div>
+                    {renderViewDetailsButton(viewDetailsButtonClassMany)}
                 </div>
-                <Link
-                    href="/bazaarItem"
-                    className="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline btn-carrot"
-                >
-                  VIEW DETAILS
-                </Link>
-              </div>
             </div>
         )
     }
 
-    function renderManyItems(item){
-        return (
-            <div className="md:w-1/4 pr-4 pl-4">
-            <div className="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300">
-              <Image
-                    className="w-full rounded rounded-t"
-                    alt=""
-                    src={item.image}
-                    // src={defaultImage}
-                    // width={60}
-                    // height={60}
-                    objectFit="cover"
-                />
-              <div className="flex-auto p-6">
-                <h5 className="mb-3">{item.name}</h5>
-                <p className="mb-0">{item.price} Carrots</p>
-              </div>
-              <Link
-                href="/bazaarItem"
-                className="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline btn-carrot"
-              >
-                VIEW DETAILS
-              </Link>
-            </div>
-          </div>
-        )
-    }
-
-    function renderItems(item, numItem){
-        if (numItem === 1){
-            renderOneItem(item)
+    function renderItems(item, numItem) {
+        if (numItem == 1) {
+            return (renderOneItem(item))
         }
-        else if (numItem === 2){
-            renderTwoItems(item)
+        else if (numItem == 2) {
+            return (renderTwoItems(item))
         }
-        else if (numItem === 3){
-            renderThreeItems(item)
-        }
-        else{
-            renderManyItems(item)
+        else {
+            return (renderManyItems(item))
         }
     }
 
-    function handleClick(event){
-        event.preventDeafult()
-        router.push("/bazaarItem")
+    function handleClick(event) {
+        event.preventDefault()
+        router.push("/itemDetails")
     }
 
     return (
-        <div onClick={handleClick}>
+        <>
             {renderItems(props.item, props.numItem)}
-        </div>
+        </>
     )
 } 

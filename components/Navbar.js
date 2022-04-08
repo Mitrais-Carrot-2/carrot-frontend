@@ -11,7 +11,8 @@ import PopoverHeader from "@material-tailwind/react/PopoverHeader";
 import PopoverBody from "@material-tailwind/react/PopoverBody";
 import Button from "@material-tailwind/react/Button";
 import cookie from "js-cookie";
-import { removeUser } from "redux/reducers/userReducer";
+import { removeUser, removeUserImage } from "redux/reducers/userReducer";
+import { removeManager } from "redux/actions/managerAction";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import jsCookie from "js-cookie";
@@ -23,9 +24,9 @@ export default function Navbar() {
   const notifRef = useRef();
   const user = useSelector((state) => (state.user.info ? state.user.info : {}));
   const roles = jsCookie.get("roles") ? jsCookie.get("roles").substring(5) : "";
-  const picture = user
-    ? "http://localhost:8181/api/user/Image/" + user.username
-    : "/img/defaultImage.png";
+  const picture = useSelector((state) =>
+    state.user.userImage ? state.user.userImage : "/img/defaultImage.png"
+  );
 
   useEffect(() => {
     // if (cookie.get("username")) {
@@ -34,7 +35,7 @@ export default function Navbar() {
     if (!jsCookie.get("token")) {
       router.push("/sign-in");
     }
-    console.log(user);
+    // console.log(user);
   }, [router, user]);
 
   const handleLogout = () => {
@@ -44,6 +45,8 @@ export default function Navbar() {
     cookie.remove("roles");
 
     dispatch(removeUser());
+    dispatch(removeManager());
+    dispatch(removeUserImage());
 
     router.push("/sign-in");
   };
@@ -51,6 +54,7 @@ export default function Navbar() {
   return (
     <header className="mb-20 z-10" style={{ borderBottom: "groove" }}>
       <nav
+        id="navbar"
         className="fixed  flex flex-wrap justify-between pt-2 px-4 navbar-expand-md z-10 bg-slate-50"
         style={{ width: "-webkit-fill-available" }}
       >
@@ -69,7 +73,7 @@ export default function Navbar() {
           <Popover placement="bottom" ref={profileButtonRef}>
             <PopoverContainer className="ml-3">
               <PopoverHeader>
-                <div className="flex flex-col items-center mb-4 hover:bg-orange-500 ">
+                <div className="flex flex-col items-center mb-4">
                   <Image
                     className="h-auto w-full mx-auto rounded-full cursor-pointer hover:opacity-70"
                     alt="user-profile"
@@ -89,7 +93,7 @@ export default function Navbar() {
               <PopoverBody>
                 <div
                   onClick={() => router.push("/user/profile")}
-                  className="cursor-pointer hover:bg-orange-500 rounded hover:text-white"
+                  className="cursor-pointer py-1 hover:bg-orange-700 rounded hover:text-white"
                 >
                   <p className="text-center"> Settings</p>
                   {/* kok gak bisa implement checkbox di dalem pop overnya ??!!! naniiii - ilham */}

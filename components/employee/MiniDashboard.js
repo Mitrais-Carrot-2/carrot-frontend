@@ -15,7 +15,8 @@ export default function MiniDashboard(props) {
         <section className="py3">
           <div className="container mx-auto my-4 sm:px-4">
             <div className="flex flex-wrap justify-between text-white">
-              <div className="max-w-[300px] w-[33%] p-4 flex flex-row bg-gradient-to-r from-cyan-500 to-blue-500 rounded ">
+                {/* <div></div> */}
+              <div className="max-w-1/3 w-[33%] p-4 flex flex-row bg-gradient-to-r from-cyan-500 to-blue-500 rounded ">
                 <div>
                   <Image
                     className="h-auto w-full mx-auto rounded-full cursor-pointer hover:opacity-70"
@@ -33,7 +34,7 @@ export default function MiniDashboard(props) {
                   <h4>Mitrais STAFF</h4>
                 </div>
               </div>
-              <div className="max-w-[300px] w-[33%] p-4 flex flex-row bg-gradient-to-r from-orange-700 to-orange-400 rounded">
+              <div className="max-w-1/3 w-[33%] p-4 flex flex-row bg-gradient-to-r from-orange-700 to-orange-400 rounded">
                 <div>
                   <Image
                     className="h-auto w-full mx-auto rounded-full cursor-pointer hover:opacity-70"
@@ -51,7 +52,7 @@ export default function MiniDashboard(props) {
                   </h3>
                 </div>
               </div>
-              <div className="max-w-[300px] w-[33%] p-4 flex flex-row bg-gradient-to-r from-blue-900 to-blue-500 rounded">
+              <div className="max-w-1/3 w-[33%] p-4 flex flex-row bg-gradient-to-r from-blue-900 to-blue-500 rounded">
                 <div>
                   <Image
                     className="h-auto w-full mx-auto rounded-full cursor-pointer hover:opacity-70"

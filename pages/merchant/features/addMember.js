@@ -1,12 +1,26 @@
 import Modal from "@components/Modal";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Select from "react-select";
 
 
 export default function AddGroupMember(props) {
     const [id, setId] = useState(0);
     const [member, setMember] = useState({
         userId: 1,
+    })
+    const [staff, setStaff] = useState([])
+    const url = `${basePath}user/`
+    useEffect(() => {
+        axios.get(url).then(response => setStaff(response.data));
+    }, [])
+
+    let options = [];
+    options = staff.map(s => {
+        return {
+            value: s.id,
+            label: `${s.firstName} ${s.lastName}`
+        }
     })
 
     useEffect(() => {
@@ -15,10 +29,16 @@ export default function AddGroupMember(props) {
 
     function postMember() {
         console.log(member)
-        axios.post(`http://localhost:8181/api/bazaar/group/${id}`, member)
+        axios.post(`${basePath}bazaar/group/${props.groupId}`, member)
             .then((res) => {
+                window.alert("Staff Added!")
                 props.closeClick();
-                props.refreshPage();
+                props.refreshPage(member);
+            })
+            .catch(err => {
+                window.alert("Failed: Duplicate data!")
+                // props.closeClick();
+                // props.refreshPage();
             })
     }
 
@@ -29,11 +49,17 @@ export default function AddGroupMember(props) {
                     <h3></h3>
                     <div className="group-details">
                         <label>Staff name:</label>
-                        <input
+                        {/* <input
                             value={member.userId}
                             type="number"
                             name="memberId"
                             onChange={(item) => setGroup({ ...member, userId: item.target.value })}
+                        /> */}
+                        <Select className="my-2"
+                            id='bazaar-id'
+                            name="bazaar-id"
+                            options={options}
+                            onChange={(item) => setMember({ ...member, userId: item.value })}
                         />
                     </div>
                 </form>

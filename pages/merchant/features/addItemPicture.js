@@ -23,7 +23,7 @@ export default function UpdateBazaarImage(props) {
         const formData = new FormData();
         formData.append("file", imageFormData, imageFormData.name);
         axios
-            .put(`http://localhost:8181/api/bazaar/uploadImage/${props.updateData}`, formData, {
+            .put(`${basePath}bazaar/uploadImage/${props.updateData}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -31,10 +31,11 @@ export default function UpdateBazaarImage(props) {
             .then((res) => {
                 console.log(res);
                 // setModalImage(false);
-                props.closeClick();
+
                 setImageFormData({});
                 window.alert("Successfully updated");
-                window.location.reload();
+                props.closeClick();
+                props.refreshPage();
             })
             .catch((err) => {
                 console.log(err);
@@ -79,7 +80,7 @@ export default function UpdateBazaarImage(props) {
                 title="Upload Item Image"
                 body={updateGroup()}
                 action="Change Item Image"
-                closeClick={setModalImage}
+                closeClick={props.closeClick}
                 actionClick={updateItemImage}
             />
 

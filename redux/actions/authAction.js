@@ -1,31 +1,43 @@
 import Router from "next/router";
 import cookie from "js-cookie";
-import { AUTHENTICATE, DEAUTHENTICATE } from "../actionTypes";
+import { AUTHENTICATE, DEAUTHENTICATE, AUTHENTICATE_ERROR } from "../actionTypes";
 import axios from "axios";
-import { setUser } from "redux/reducers/userReducer";
+import { setUser, setUserImage } from "redux/reducers/userReducer";
 
 export const authenticate = (user) => (dispatch) => {
-  axios
-    .post("http://localhost:8181/api/auth/login", user)
-    .then((res) => {
-      setCookie("token", res.data.token);
-      setCookie("username", res.data.username);
-      setCookie("id", res.data.id);
-      setCookie("roles", res.data.roles);
-
-      axios
-        .get("http://localhost:8181/api/user/username/" + res.data.username)
-        .then((user) => {
-          dispatch(setUser(user.data));
-          console.log(user.data);
-        });
-
-      Router.push("/");
-      dispatch({ type: AUTHENTICATE, payload: res.data });
-    })
-    .catch((err) => {
-      console.log("Username / Password is incorrect");
+  if (user.username === "" && user.password === "") {
+    dispatch({
+      type: AUTHENTICATE_ERROR,
+      payload: "Username and Password is required",
     });
+  } else if (user.username === "") {
+    dispatch({ type: AUTHENTICATE_ERROR, payload: "Username is required" });
+  } else if (user.password === "") {
+    dispatch({ type: AUTHENTICATE_ERROR, payload: "Password is required" });
+  } else {
+    axios
+      .post(basePath+"auth/login", user)
+      .then((res) => {
+        setCookie("token", res.data.token);
+        setCookie("username", res.data.username);
+        setCookie("id", res.data.id);
+        setCookie("roles", res.data.roles);
+
+        axios
+          .get(basePath+"user/username/" + res.data.username)
+          .then((user) => {
+            dispatch(setUser(user.data));
+            dispatch(setUserImage());
+          });
+
+        Router.push("/");
+        dispatch({ type: AUTHENTICATE, payload: res.data });
+      })
+      .catch((err) => {
+        dispatch({ type: AUTHENTICATE_ERROR, payload: "Username / Password is incorrect" });
+        console.log("Username / Password is incorrect");
+      });
+  }
 };
 
 // gets the token from the cookie and saves it in the store

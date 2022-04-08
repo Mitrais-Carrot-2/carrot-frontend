@@ -3,6 +3,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import BarnReward from "./BarnReward";
+import { basePath } from 'next.config';
 
 export default function Barn(props) {
   const [selectedBarn, setSelectedBarn] = useState({
@@ -28,7 +29,9 @@ export default function Barn(props) {
     return (
       <div>
         <form>
-          <h2>Barn Details:</h2>
+          <h2
+          id="barn-info"
+          >Barn Details:</h2>
           <div className="barn-details">
             <label>Barn Name:</label>
             <input
@@ -104,11 +107,13 @@ export default function Barn(props) {
 
   function saveBarn() {
     axios
-      .put(`http://localhost:8181/api/farmer/barn/${props.barnId.id}`, selectedBarn)
+      .put(`${basePath}farmer/barn/${props.barnId.id}`, selectedBarn)
       .then((res) => {
         console.log(res);
+        //Renew Barn info in List of Barns
+        props.editTable(res.data.t)
         window.alert("Barn updated");
-        props.reloadPage();
+        // props.reloadPage();
       })
       .catch((err) => {
         console.log(err);

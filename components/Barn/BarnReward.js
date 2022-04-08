@@ -12,7 +12,7 @@ export default function BarnReward(props) {
   const [editedValue, setEditedValue] = useState({});
   useEffect(() => {
     axios
-      .get(`http://localhost:8181/api/admin/barnReward/${props.id.id}`)
+      .get(`${basePath}admin/barnReward/${props.id.id}`)
       .then((res) => {
         console.log(res);
         setReward(res.data);
@@ -24,7 +24,7 @@ export default function BarnReward(props) {
 
   function deleteReward(id) {
     axios
-      .delete(`http://localhost:8181/api/admin/barnReward/${id}`)
+      .delete(`${basePath}admin/barnReward/${id}`)
       .then((res) => {
         console.log(res);
         const noDeleted = reward.filter((item) => item.id !== id);
@@ -37,19 +37,22 @@ export default function BarnReward(props) {
 
   function appendReward() {
     axios
-      .post(`http://localhost:8181/api/admin/barnReward/`, newReward)
+      .post(`${basePath}admin/barnReward/`, newReward)
       .then((res) => {
-        console.log(res);
+        console.log(res.data.t.id);
         setReward([
           ...reward,
           {
+            id: res.data.t.id,
             barnId: props.id.id,
             rewardDescription: newReward.reward_decription,
             carrotAmount: newReward.carrot_amount,
             givingConditional: newReward.giving_conditional,
           },
         ]);
-      })
+        setNewReward(newReward)
+      }
+      )
       .catch((err) => {
         console.log(err);
       });
@@ -63,7 +66,10 @@ export default function BarnReward(props) {
       carrot_amount: editedValue.carrotAmount,
       giving_conditional: editedValue.givingConditional,
     }
-    axios.put(`http://localhost:8181/api/admin/barnReward/${id}`, send)
+    axios.put(`${basePath}admin/barnReward/${id}`, send)
+    .then((res) => {
+      console.log(res);
+    })
   }
     
 

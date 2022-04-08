@@ -20,28 +20,18 @@ export default function Employee() {
     <body>
       <Head />
       <Navbar />
-      <main role="main" className="container mx-auto sm:px-4">
-        <h2 className="mt-4 pl-0 text-grey ml-0">DASHBOARD</h2>
-      </main>
+      <div className="container">
+        <main role="main" className="container mx-auto sm:px-4">
+          <h2 className="mt-4 pl-0 text-grey ml-0">DASHBOARD</h2>
+        </main>
 
-      <MiniDashboard/>
-      <BazaarContainer/>
-      
-      {/* <section className="bazaar-1-item mb-4">
-      </section>
-
-      <section className="bazaar-2-items mb-4">
-      </section>
-
-      <section className="bazaar-3-items mb-4">
-      </section>
-
-      <section className="bazaar mb-4 pb-5">
-      </section> */}
-      <SharingLevelModal />
-      <ManagerRewardModal />
-      <StockistRewardModal />
-      <Footer />
+        <MiniDashboard/>
+        <BazaarContainer/>
+        <SharingLevelModal />
+        <ManagerRewardModal />
+        <StockistRewardModal />
+        <Footer />
+      </div>
     </body>
   )
 }

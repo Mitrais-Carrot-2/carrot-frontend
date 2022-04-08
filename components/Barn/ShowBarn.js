@@ -3,6 +3,8 @@ import CreateBarn from "./CreateBarn";
 import Barn from "./Barn";
 import BarnHistory from "./BarnHistory";
 import Modal from "@components/Modal";
+import axios from "axios";
+import { basePath } from 'next.config';
 
 export default function ShowBarn(props) {
   const [showCreateBarn, setShowCreateBarn] = useState(false);
@@ -12,36 +14,31 @@ export default function ShowBarn(props) {
   const [barns, setBarns] = useState([]);
 
   useEffect(() => {
-    props.barns.sort((a, b) => a.barnName.localeCompare(b.barnName));
-    // setBarns(props.barns);
+    axios
+      .get(basePath+"farmer/barn/")
+      .then((res) => setBarns(res.data.sort((a, b) => a.barnName.localeCompare(b.barnName))));
   }, []);
 
-  function shortByName() {
-    props.barns.sort((a, b) => a.barnName.localeCompare(b.barnName));
-    setBarns(props.barns);
+  function updateTable(newBarn) {
+    setBarns([...barns, newBarn]);
   }
+  function editTable(selectedBarn){
+    const temp = barns
+    temp.map((item) => {
+      if (item.id === selectedBarn.id) {
+        item.barnName = selectedBarn.barnName;
+        item.carrotAmount = selectedBarn.carrotAmount;
+        item.distributedCarrot = selectedBarn.distributedCarrot;
+        item.isActive = selectedBarn.isActive;
+        item.startDate = selectedBarn.startDate;
+        item.endDate = selectedBarn.endDate;
+      }
+    });
 
-  function shortByAmount() {
-    props.barns.sort((a, b) => a.carrotAmount - b.carrotAmount);
-    setBarns(props.barns);
-  }
-
-  function shortByDate() {
-    props.barns.sort((a, b) => a.startDate.localeCompare(b.startDate));
-    setBarns(props.barns);
-  }
-
-  function sortByActive() {
-    props.barns.sort((a, b) => a.active - b.active);
-    setBarns(props.barns);
-  }
-
-  function reloadPage() {
-    window.location.reload();
   }
   return (
     <div>
-      <h1 className="text-purple-500 text-4xl font-bold lowercase ml-2 mb-2">
+      <h1 id="farmer-dashboard" className="text-purple-500 text-4xl font-bold lowercase ml-2 mb-2">
         Farmer Dashboard
       </h1>
       <div className="bg-white rounded shadow-md p-4 mb-4 overflow-x-scroll">
@@ -50,38 +47,16 @@ export default function ShowBarn(props) {
           <thead>
             <tr>
               <th>#</th>
-              <th
-              // onClick={() => shortByName()}
-              >
-                Barn Name
-              </th>
-              <th
-              // onClick={() => shortByDate()}
-              >
-                Start Periode
-              </th>
-              <th
-              // onClick={() => shortByDate()}
-              >
-                End Periode
-              </th>
-              <th
-                className="w-4"
-                // onClick={() => shortByAmount()}
-              >
-                Carrot Amount
-              </th>
+              <th>Barn Name</th>
+              <th>Start Periode</th>
+              <th>End Periode</th>
+              <th className="w-4">Carrot Amount</th>
               <th className="w-5">Distributed Carrot</th>
-              <th
-              // onClick={() => sortByActive()}
-              >
-                Status
-              </th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
-          {props.barns
-            .sort((a, b) => a.barnName.localeCompare(b.barnName))
+          {barns
             .map((barn, index) => {
               return (
                 <tbody key={barn.id}>
@@ -107,7 +82,9 @@ export default function ShowBarn(props) {
                           setSelectedBarnId(barn);
                           setShowBarnHistory(true);
                         }}
-                      >History</button>
+                      >
+                        History
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -122,29 +99,31 @@ export default function ShowBarn(props) {
           Create Barn
         </button>
       </div>
-      {showCreateBarn && (
-        <CreateBarn closeClick={setShowCreateBarn} reloadPage={reloadPage} />
-      )}
+      {showCreateBarn && <CreateBarn closeClick={setShowCreateBarn} updateTable={updateTable} />}
       {showBarnInfo && (
         <Barn
           barnId={selectedBarnId}
+          editTable={editTable}
           closeClick={setShowBarnInfo}
-          reloadPage={reloadPage}
+          // reloadPage={reloadPage}
         />
       )}
       {showBarnHistory && (
         <Modal
-          title ={"History of "+selectedBarnId.barnName}
-          body={<BarnHistory barnId={selectedBarnId.id} closeClick={setShowBarnHistory} />}
+          title={"History of " + selectedBarnId.barnName}
+          body={
+            <BarnHistory
+              barnId={selectedBarnId.id}
+              closeClick={setShowBarnHistory}
+            />
+          }
           closeClick={setShowBarnHistory}
           action="OK"
           actionClick={setShowBarnHistory}
-          
         />
       )}
 
       <style jsx>{`
-        
         table {
           border-collapse: collapse;
           width: 100%;

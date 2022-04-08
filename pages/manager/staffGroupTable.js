@@ -4,7 +4,7 @@ import { Fragment } from 'react/cjs/react.production.min';
 import styled from 'styled-components';
 import ActionButton from './actionButton';
 
-export default function StaffGroupTable() {
+export default function StaffGroupTable({groups}) {
     const [filterText, setFilterText] = React.useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
 
@@ -33,7 +33,7 @@ export default function StaffGroupTable() {
         },
         {
             name: 'Member',
-            selector: row => row.member,
+            selector: row => row.totalMember,
             sortable: true
         },
         {
@@ -51,7 +51,7 @@ export default function StaffGroupTable() {
             cell: (row) => {
                 return (
                     <Fragment>
-                        <ActionButton id={row.id} />
+                        <ActionButton groupId={row.id} groupName={row.name} totalMember={row.totalMember} />
                     </Fragment>
                 );
             },
@@ -89,7 +89,7 @@ export default function StaffGroupTable() {
         },
     ];
 
-    const sortedStaffs = staffs.sort((a, b) => {
+    const sortedStaffs = groups.sort((a, b) => {
         if (a.name < b.name) {
 			return -1;
 		}

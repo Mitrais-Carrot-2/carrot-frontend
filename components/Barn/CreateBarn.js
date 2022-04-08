@@ -17,14 +17,16 @@ export default function CreateBarn(props) {
 
   function passNewBarnWithApi() {
     console.log(newBarn);
-    axios.post("http://localhost:8181/api/farmer/barn/", newBarn)
+    axios.post(basePath+"farmer/barn/", newBarn)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+        //Return Barn info to Show Barn
+        props.updateTable(res.data.t);
         window.alert("Barn created successfully");
-        props.reloadPage();
+        // props.reloadPage();
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
         window.alert("Barn creation failed");
       });
   }

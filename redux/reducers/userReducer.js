@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import cookie from "js-cookie";
 
 const initialState = {};
 
@@ -9,11 +11,22 @@ export const userSlice = createSlice({
     setUser: (state, action) => {
       state.info = action.payload;
     },
+    setUserImage: (state) => {
+      state.userImage =
+        basePath+"user/Image/" +
+        cookie.get("username") +
+        "?" +
+        new Date();
+    },
     removeUser: (state) => {
       state.info = {};
+    },
+    removeUserImage: (state) => {
+      state.userImage = "";
     },
   },
 });
 
-export const { setUser, removeUser } = userSlice.actions;
+export const { setUser, setUserImage, removeUser, removeUserImage } =
+  userSlice.actions;
 export default userSlice.reducer;

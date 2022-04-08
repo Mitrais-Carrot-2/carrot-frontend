@@ -25,15 +25,15 @@ export default function StaffGroupMember(props) {
         // note: "",
         // managerId: 1
     })
-    const url = `http://localhost:8181/api/bazaar/group/${groupId}`
-    // axios.get(`http://localhost:8181/api/bazaar/group/details/${groupId}`).then(response => setGroup(response.data));
+    const url = `${basePath}bazaar/group/${groupId}`
+    // axios.get(`${basePath}bazaar/group/details/${groupId}`).then(response => setGroup(response.data));
     // console.log(group)
     useEffect(() => {
         // console.log(props.router.query.groupId)
         // console.log("useEffect gid: " + groupId)
         // console.log("usse effect gid: " + groupId)
         setId(groupId);
-        axios.get(`http://localhost:8181/api/bazaar/group/details/${groupId}`).then(response => setGroup(response.data));
+        axios.get(`${basePath}bazaar/group/details/${groupId}`).then(response => setGroup(response.data));
         console.log(group)
         axios.get(url).then(response => setMembers(response.data));
 
@@ -51,7 +51,10 @@ export default function StaffGroupMember(props) {
         window.location.reload();
     }
 
-
+    function handleAddMember() {
+        setId(groupId);
+        axios.get(url).then(response => setMembers(response.data));
+    }
 
     return (
         <body>
@@ -104,7 +107,7 @@ export default function StaffGroupMember(props) {
                                     {" "}
                                     Add New Member
                                 </button>
-                                {showAddMember && <AddGroupMember closeClick={setShowAddMember} refreshPage={reloadPage} groupId={id} />}
+                                {showAddMember && <AddGroupMember closeClick={setShowAddMember} refreshPage={handleAddMember} groupId={id} />}
                             </div>
                         </div>
                         <table className="table table-hover mt-3">
@@ -116,7 +119,7 @@ export default function StaffGroupMember(props) {
                                     <th itemScope="col" aria-rowspan={2}>JF</th>
                                     <th itemScope="col" aria-rowspan={2}>Grade</th>
                                     <th itemScope="col" aria-rowspan={2}>Office</th>
-                                    <th itemScope="col" aria-rowspan={2}>Action</th>
+                                    {/* <th itemScope="col" aria-rowspan={2}>Action</th> */}
                                 </tr>
                             </thead>
                             {members
@@ -130,7 +133,7 @@ export default function StaffGroupMember(props) {
                                         <td>{data.jf}</td>
                                         <td>{data.grade}</td>
                                         <td>{data.office}</td>
-                                        <td>
+                                        {/* <td>
                                             <button type="button" className="btn border-blue-600 mr-2"
                                                 onClick={() => {
                                                     // console.log(data) 
@@ -141,9 +144,9 @@ export default function StaffGroupMember(props) {
                                                 <i className="fa fa-edit text-blue-600 fa-x px-1">
 
                                                 </i>
-                                            </button>
-                                            {/* {showUpdateGroup && <UpdateGroup closeClick={setShowUpdateGroup} updateData={selectedGroup} refreshPage={reloadPage} />} */}
-                                        </td>
+                                            </button> */}
+                                        {/* {showUpdateGroup && <UpdateGroup closeClick={setShowUpdateGroup} updateData={selectedGroup} refreshPage={reloadPage} />} */}
+                                        {/* </td> */}
                                     </tr>
                                 ))}
                         </table>

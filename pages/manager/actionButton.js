@@ -1,82 +1,98 @@
+import axios from "axios";
 import React from "react";
+import { useEffect } from "react";
 import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import FormShare from "./formShare";
 import StaffTable from "./staffTable";
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { shareToGroup, setShareToGroup, getFreezerHistory } from 'redux/actions/managerAction';
+import { bindActionCreators } from 'redux';
+import Router from 'next/router';
+import { basePath } from 'next.config';
 
-export default function ActionButton({ id }) {
+const ActionButton = (props) => {
+    const { groupId, groupName, totalMember } = props;
     const [modalStaffOpen, setModalStaffOpen] = React.useState(false);
     const [modalShareOpen, setModalShareOpen] = React.useState(false);
-    const [groupName, setGroupName] = React.useState("");
 
-    const [columnsStaff, setColumnsStaff] = React.useState([]);
     const [staff, setStaff] = React.useState([]);
+    // const [sendToGroup, setSendToGroup] = React.useState({
+    //     groupId: 0,
+    //     carrotAmount: 0,
+    //     note: ""
+    // });
+    const [errorMessage, setErrorMessage] = React.useState('');
+    const dispatch = useDispatch();
+    
+    const auth = useSelector((state) => (state.authentication ? state.authentication : {}));
+    // const staff = useSelector((state) => (state.manager.staff ? state.manager.staff : {}));
+    const targetGroup = useSelector((state) => (state.manager.shareToGroup ? state.manager.shareToGroup : {}));
+
+    const columnsStaff = [
+        {
+            name: '#',
+            selector: row => row.numrow,
+            maxWidth: '10px',
+            sortable: true,
+        },
+        {
+            name: 'Name',
+            selector: row => row.name,
+            minWidth: '200px',
+            sortable: true
+        },
+        {
+            name: 'JF',
+            selector: row => row.jf,
+            sortable: true
+        },
+        {
+            name: 'Grade',
+            selector: row => row.grade,
+            sortable: true
+        },
+        {
+            name: 'Office',
+            selector: row => row.office,
+            sortable: true
+        }
+    ];
 
     const modalListStaff = (id) => {
-        const columns = [
-            {
-                name: '#',
-                selector: row => row.numrow,
-                maxWidth: '10px',
-                sortable: true,
+        axios.get(`${basePath}manager/group/${id}/staff/`, {
+            headers: {
+                Authorization: `Bearer ${auth.token}`,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true,
             },
-            {
-                name: 'Name',
-                selector: row => row.name,
-                minWidth: '200px',
-                sortable: true
-            },
-            {
-                name: 'JF',
-                selector: row => row.jf,
-                sortable: true
-            },
-            {
-                name: 'Grade',
-                selector: row => row.grade,
-                sortable: true
-            },
-            {
-                name: 'Office',
-                selector: row => row.office,
-                sortable: true
-            }
-        ];
-
-        const staff = [
-            {
-                id: 1,
-                name: 'Leanne Graham',
-                jf: 'SQ',
-                grade: 'TS',
-                office: 'Ohio'
-            },
-            {
-                id: 2,
-                name: 'Ervin Howell',
-                jf: 'SQ',
-                grade: 'TS',
-                office: 'California'
-            },
-            {
-                id: 3,
-                name: 'Clementine Bauch',
-                jf: 'SE',
-                grade: 'TS',
-                office: 'Dallas'
-            },
-        ];
-
-        setColumnsStaff(columns);
-        setStaff(staff);
-
-        setGroupName(id);
-        setModalStaffOpen(!modalStaffOpen);
+        })
+        .then(res => {
+            return res.data;
+        }).then((staff) => {
+            // console.log("group member", staff);
+            setStaff(staff);
+            setModalStaffOpen(!modalStaffOpen);
+        });
     }
-    
-    function shareToGroup(id) {
-        // console.log('share ' + id);
-        setGroupName(id);
+
+    function showModalGroup() {
         setModalShareOpen(!modalShareOpen);
+    }
+
+    let closeModal = () => {
+        setModalShareOpen(false);
+        setErrorMessage('');
+    };
+
+    let sendGroup = () => {
+        // console.log(targetGroup);
+        if (targetGroup.carrotAmount > 0) {
+            dispatch(shareToGroup(auth.token, targetGroup));
+            setModalShareOpen(false);
+            Router.push('/manager');
+        } else {
+            setErrorMessage('Please fill in all the fields');
+        }
     }
 
     return (
@@ -113,7 +129,7 @@ export default function ActionButton({ id }) {
                     >
                         Close
                     </Button>
-                    
+
                     {/* <Button
                         className="bg-green-600 border-none hover:bg-green-700"
                         type="button">
@@ -124,8 +140,8 @@ export default function ActionButton({ id }) {
 
             <Modal
                 size="lg"
-                className="sm:w-full md:w-full lg:w-1/3"
-                // style={{ maxWidth: '500px', width: '100%' }}
+                // className="sm:w-full md:w-full lg:w-1/3"
+                style={{ maxWidth: '500px', width: '100%' }}
                 toggle={() => setModalShareOpen(!modalShareOpen)}
                 isOpen={modalShareOpen}
             >
@@ -143,17 +159,22 @@ export default function ActionButton({ id }) {
                     </button>
                 </div>
                 <ModalBody>
-                    <FormShare action='google.com' receiver='group' groupName={groupName} />
+                    <div className="w-[94%] mx-auto bg-red-600 text-center text-white my-3 rounded animate-pulse">
+                        {errorMessage}
+                    </div>
+                    <FormShare receiver='group' groupId={groupId} groupName={groupName} totalMember={totalMember} />
                 </ModalBody>
                 <ModalFooter>
                     <Button
                         className="text-red-600 border-transparent hover:border-red-600 hover:bg-transparent hover:text-red-600"
                         type="button"
-                        onClick={() => setModalShareOpen(!modalShareOpen)}
+                        onClick={() => closeModal()}
                     >
                         Close
                     </Button>
                     <Button
+                        id="btn_send_reward"
+                        onClick={() => sendGroup()}
                         className="px-4 bg-[#ff5722] border-none hover:bg-[#f2734b]"
                         type="button">
                         Reward Now
@@ -161,20 +182,26 @@ export default function ActionButton({ id }) {
                 </ModalFooter>
             </Modal>
 
-            <button type="button" className="btn border-blue-600 mr-2" onClick={() => {
-                modalListStaff(id)
+            <button id="btn_detail_group" type="button" className="btn border-blue-600 mr-2" onClick={() => {
+                modalListStaff(groupId)
             }}><i className="fa fa-users text-blue-600 fa-x px-1"></i></button>
-            <button type="button" className="btn border-green-600 mr-3" onClick={() => {
-                shareToGroup(id)
+            <button id="btn_share_to_group" type="button" className="btn border-green-600 mr-3" onClick={() => {
+                showModalGroup(groupName)
             }}><i className="fa fa-send text-green-600 fa-x px-1"></i></button>
         </>
     );
 }
 
-// function ModalStaff(modalOpen) {
-//     return (
-//         <>
+const mapStateToProps = (state) => ({
+    auth: state.authentication,
+    targetGroup: state.manager.shareToGroup,
+})
 
-//         </>
-//     );
-// }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        shareToGroup: bindActionCreators(shareToGroup, dispatch),
+        setShareToGroup: bindActionCreators(setShareToGroup, dispatch),
+    }
+}
+// export default connect(mapStateToProps, mapDispatchToProps)(ActionButton);
+export default ActionButton;

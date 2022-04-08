@@ -3,7 +3,7 @@ import Footer from "@components/Footer";
 import mitraisLogo from "@public/img/mitrais-logo.png";
 import Image from "next/image";
 
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import {
   authenticate,
   checkServerSideCookie,
@@ -14,8 +14,9 @@ import Head from "@components/Head";
 import jsCookie from "js-cookie";
 import { bindActionCreators } from "redux";
 
-const SignIn = ({ authenticate, token }) => {
-  const [error, setError] = React.useState("");
+const SignIn = ({ authenticate, auth, error, token }) => {
+  // const [error, setError] = React.useState("");
+  const dispatch = useDispatch();
 
   const [loginData, setLoginData] = React.useState({
     username: "",
@@ -26,6 +27,11 @@ const SignIn = ({ authenticate, token }) => {
     if (jsCookie.get("token")) {
       Router.push("/");
     }
+    dispatch({
+      type: "AUTHENTICATE_ERROR",
+      payload: null,
+    });
+    // console.log('init sign in page');
   }, []);
 
   const handleChange = (e) => {
@@ -34,17 +40,20 @@ const SignIn = ({ authenticate, token }) => {
   };
 
   function signIn() {
-    let status = authenticate(loginData);
-    setTimeout(() => {
-      if (!status) {
-        setError("Username / Password is incorrect");
-        setTimeout(() => {
-          setError("");
-        }, 5000);
-      }
-    }, 3000);
+    // let status = 
+    authenticate(loginData);
+    // console.log("auth", auth);
+    // setTimeout(() => {
+    //   if (!status) {
+    //     setError("Username / Password is incorrect");
+    //     setTimeout(() => {
+    //       setError("");
+    //     }, 5000);
+    //   }
+    // }, 3000);
+
     // console.log(loginData);
-    // axios.post("http://localhost:8181/api/auth/login", loginData)
+    // axios.post(basePath+"auth/login", loginData)
     //   .then((res) => {
     //     localStorage.setItem("token", res.data.token);
     //     localStorage.setItem("username", res.data.username);
@@ -81,7 +90,7 @@ const SignIn = ({ authenticate, token }) => {
                       <Image src={mitraisLogo} alt="logo"></Image>
                     </div>
                     <form>
-                      <div className="bg-red-500 text-center text-white my-3 rounded animate-pulse">
+                      <div id="errorMsg" className="bg-red-500 text-center text-white my-3 rounded animate-pulse">
                         {error}
                       </div>
                       <div className="relative w-full mb-3">
@@ -92,7 +101,15 @@ const SignIn = ({ authenticate, token }) => {
                           Username
                         </label>
                         <input
+                          id="username"
                           name="username"
+                          onKeyUp={
+                            (e) => {
+                              if (e.key === "Enter") {
+                                signIn();
+                              }
+                            }
+                          }
                           onChange={handleChange}
                           type="text"
                           className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
@@ -109,7 +126,15 @@ const SignIn = ({ authenticate, token }) => {
                           Password
                         </label>
                         <input
+                          id="password"
                           name="password"
+                          onKeyUp={
+                            (e) => {
+                              if (e.key === "Enter") {
+                                signIn();
+                              }
+                            }
+                          }
                           onChange={handleChange}
                           type="password"
                           className="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
@@ -120,6 +145,7 @@ const SignIn = ({ authenticate, token }) => {
                       <div className="text-center mt-6">
                         <button
                           type="button"
+                          id="login-button"
                           className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
                           style={{ transition: "all .15s ease" }}
                           onClick={() => signIn()}
@@ -167,6 +193,8 @@ const SignIn = ({ authenticate, token }) => {
 
 const mapStateToProps = (state) => ({
   token: state.authentication.token,
+  auth: state.authentication,
+  error: state.authentication.error,
 })
 
 const mapDispatchToProps = (dispatch) => {

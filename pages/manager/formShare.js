@@ -1,21 +1,39 @@
 import React, { useEffect } from 'react';
 import Select from 'react-select';
 import { connect } from 'react-redux';
-import { setShareToStaff, shareToStaff } from 'redux/actions/managerAction';
+import { setShareToStaff, shareToStaff, setShareToGroup, shareToGroup } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
-function FormShare({ setShareToStaff, shareToStaff, staff, receiver, groupName = "Group A", targetStaff, auth }) {
+function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGroup, staff, receiver, groupName = "Group A", groupId, totalMember, targetStaff, auth }) {
     const [sendToStaff, setSendToStaff] = React.useState({
-        staffId: "",
+        staffId: 0,
         carrotAmount: 0,
         note: "",
     });
+    
+    const [sendToGroup, setSendToGroup] = React.useState({
+        groupId: 0,
+        carrotAmount: 0,
+        note: ""
+    });
+
+    useEffect(() => {
+        setSendToGroup({...sendToGroup, groupId: groupId});
+        // setSendToGroup({
+        //     ...shareToGroup, sendToGroup
+        // });
+    }, []);
 
     useEffect(() => {
         setShareToStaff({
             ...shareToStaff, sendToStaff
         })
-        // console.log(sendToStaff);
     }, [sendToStaff]);
+
+    useEffect(() => {
+        setShareToGroup({
+            ...shareToGroup, sendToGroup
+        });
+    }, [sendToGroup]);
     
     let options = [];
 
@@ -29,24 +47,19 @@ function FormShare({ setShareToStaff, shareToStaff, staff, receiver, groupName =
     }
 
     let staffChange = (selectedOption) => {
-        console.log(`Option selected:`, selectedOption.value);
-        
+        // console.log(`Option selected:`, selectedOption.value);
         setSendToStaff({...sendToStaff, staffId: selectedOption.value});
-        // setShareToStaff({
-        //     ...shareToStaff, sendToStaff
-        // });
-        // console.log(SendToStaff);
-        // console.log(targetStaff);
     }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setSendToStaff({ ...sendToStaff, [name]: value });
-        // setShareToStaff({
-        //     ...shareToStaff, sendToStaff
-        // });
-        // console.log(SendToStaff);
-        // console.log(targetStaff);
+        if (receiver == 'staff') {
+            setSendToStaff({ ...sendToStaff, [name]: value });
+            // console.log("send to staff", sendToStaff);
+        } else {
+            setSendToGroup({ ...sendToGroup, [name]: value });
+            // console.log("send to group", sendToGroup);
+        }
     };
 
     return (
@@ -55,7 +68,7 @@ function FormShare({ setShareToStaff, shareToStaff, staff, receiver, groupName =
                 <div className="form-group mb-6">
                     {receiver == 'staff' ?
                         <>
-                            <label for="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Staff</label>
+                            <label htmlFor="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Staff</label>
                             <Select
                                 id='staff-id'
                                 name="staff-id"
@@ -64,7 +77,9 @@ function FormShare({ setShareToStaff, shareToStaff, staff, receiver, groupName =
                             />
                         </> :
                         <>
-                            <label for="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Group Name</label>
+                            {/* <input type="hidden" value={totalMember} id="total-member" /> */}
+                            <div className="columns-2">
+                            <label htmlFor="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Group Name</label>
                             <input
                                 name='groupName'
                                 value={groupName}
@@ -84,14 +99,39 @@ function FormShare({ setShareToStaff, shareToStaff, staff, receiver, groupName =
                                  transition
                                  ease-in-out
                                  m-0
-                                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputEmail2"
+                                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="group-name"
                                 aria-describedby="emailHelp" placeholder="Group Name" required readOnly />
+
+<label htmlFor="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Total Member</label>
+                            <input
+                                name='totalMember'
+                                value={totalMember}
+                                autoComplete='off'
+                                type="number"
+                                className="form-control
+                                 block
+                                 w-full
+                                 px-3
+                                 py-1.5
+                                 text-base
+                                 font-normal
+                                 text-gray-700
+                                 bg-clip-padding
+                                 border border-solid border-gray-300
+                                 rounded
+                                 transition
+                                 ease-in-out
+                                 m-0
+                                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="total-member"
+                                aria-describedby="emailHelp" placeholder="Group Name" required readOnly />
+                            </div>
                         </>
                     }
                 </div>
                 <div className="form-group mb-6">
-                    <label for="exampleInputPassword2" className="form-label inline-block mb-2 text-gray-700">Carrot Amount</label>
+                    <label htmlFor="exampleInputPassword2" className="form-label inline-block mb-2 text-gray-700">Carrot Amount</label>
                     <input
+                        id="carrot-amount"
                         name='carrotAmount'
                         onChange={handleChange}
                         type="number" 
@@ -109,12 +149,13 @@ function FormShare({ setShareToStaff, shareToStaff, staff, receiver, groupName =
                                 transition
                                 ease-in-out
                                 m-0
-                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputPassword2"
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         placeholder={receiver == 'staff' ? "Carrot Amount" : "Carrot Amount per Staff"} required />
                 </div>
                 <div className="form-group mb-6">
-                    <label for="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Note</label>
+                    <label htmlFor="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Note</label>
                     <textarea
+                        id="note"
                         name='note'
                         onChange={handleChange}
                         rows={3}
@@ -132,7 +173,7 @@ function FormShare({ setShareToStaff, shareToStaff, staff, receiver, groupName =
                                 transition
                                 ease-in-out
                                 m-0
-                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputEmail2"
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         aria-describedby="emailHelp" placeholder="Note" required></textarea>
                 </div>
             </form>
@@ -149,6 +190,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setShareToStaff: bindActionCreators(setShareToStaff, dispatch),
         shareToStaff: bindActionCreators(shareToStaff, dispatch),
+        setShareToGroup: bindActionCreators(setShareToGroup, dispatch),
+        shareToGroup: bindActionCreators(shareToGroup, dispatch),
     }
 }
 

@@ -6,26 +6,29 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Modal from "@components/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../redux/reducers/userReducer";
-import { headers } from "next.config";
+import { setUser, setUserImage } from "../../redux/reducers/userReducer";
 
 export default function Profile(/* props atau user */) {
   const dispatch = useDispatch();
   const user = useSelector((state) => (state.user.info ? state.user.info : {}));
-  const picture = user
-    ? "http://localhost:8181/api/user/Image/" + user.username + "?" + new Date()
-    : "/img/defaultImage.png";
+  const picture = useSelector((state) =>
+    state.user.userImage ? state.user.userImage : "/img/defaultImage.png"
+  );
   const [supervisorName, setSupervisorName] = useState("");
   const [modalUserInfo, setModalUserInfo] = useState(false);
   const [modalImage, setModalImage] = useState(false);
   const [modalPassword, setModalPassword] = useState(false);
   const [imageFormData, setImageFormData] = useState({});
-  const [userFormData, setUserFormData] = useState({});
+  const [userFormData, setUserFormData] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
   const [passwordFormData, setPasswordFormData] = useState({});
 
   useEffect(() => {
     axios
-      .get("http://localhost:8181/api/user/" + user.supervisorId)
+      .get(basePath+"user/" + user.supervisorId)
       .then((res) => {
         setSupervisorName(res.data.firstName + " " + res.data.lastName);
       });
@@ -265,7 +268,7 @@ export default function Profile(/* props atau user */) {
   function updateUserInformation() {
     axios
       .put(
-        "http://localhost:8181/api/user/updateProfile/" + user.username,
+        basePath+"user/updateProfile/" + user.username,
         userFormData
       )
       .then((res) => {
@@ -277,8 +280,6 @@ export default function Profile(/* props atau user */) {
           ...userFormData,
           currentPassword: "",
         });
-        //restart page
-        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -378,7 +379,7 @@ export default function Profile(/* props atau user */) {
     const formData = new FormData();
     formData.append("file", imageFormData, imageFormData.name);
     axios
-      .put("http://localhost:8181/api/user/Image/" + user.username, formData, {
+      .put(basePath+"user/Image/" + user.username, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -388,7 +389,7 @@ export default function Profile(/* props atau user */) {
         setModalImage(false);
         setImageFormData({});
         window.alert("Successfully updated");
-        window.location.reload();
+        dispatch(setUserImage());
       })
       .catch((err) => {
         console.log(err);
@@ -430,29 +431,32 @@ export default function Profile(/* props atau user */) {
   }
 
   function updatePassword() {
-    axios
-      .put(
-        "http://localhost:8181/api/user/updatePassword/" + user.username,
-        passwordFormData
-      )
-      .then((res) => {
-        setModalPassword(false);
+    if (passwordFormData.newPassword === passwordFormData.confirmPassword) {
+      axios
+        .put(
+          basePath+"user/updatePassword/" + user.username,
+          passwordFormData
+        )
+        .then((res) => {
+          setModalPassword(false);
 
-        axios
-          .get("http://localhost:8181/api/user/username/" + user.username)
-          .then((res2) => {
-            dispatch(setUser(res2.data));
-            console.log(res2.data);
-          });
+          axios
+            .get(basePath+"user/username/" + user.username)
+            .then((res2) => {
+              dispatch(setUser(res2.data));
+              console.log(res2.data);
+            });
 
-        window.alert("Successfully updated");
-        setPasswordFormData({});
-        //restart page
-        window.location.reload();
-      })
-      .catch((err) => {
-        window.alert("Wrong Password");
-      });
+          window.alert("Successfully updated");
+          console.log(passwordFormData);
+          setPasswordFormData({});
+        })
+        .catch((err) => {
+          window.alert("Wrong Password");
+        });
+    } else {
+      window.alert("New password does not match");
+    }
   }
 
   function passwordModal() {
@@ -461,7 +465,7 @@ export default function Profile(/* props atau user */) {
         <div className="password-modal">
           <label>Old Password:</label>
           <input
-            type="text"
+            type="password"
             name="oldPassword"
             onChange={(e) =>
               setPasswordFormData({
@@ -474,12 +478,25 @@ export default function Profile(/* props atau user */) {
           />
           <label>New Password:</label>
           <input
-            type="text"
+            type="password"
             name="newPassword"
             onChange={(e) =>
               setPasswordFormData({
                 ...passwordFormData,
                 newPassword: e.target.value,
+              })
+            }
+            placeholder="New Password"
+            required
+          />
+          <label>Re-type New Password:</label>
+          <input
+            type="password"
+            name="newPassword2"
+            onChange={(e) =>
+              setPasswordFormData({
+                ...passwordFormData,
+                confirmPassword: e.target.value,
               })
             }
             placeholder="New Password"

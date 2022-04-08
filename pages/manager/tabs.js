@@ -1,6 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { shareToStaff } from 'redux/actions/managerAction';
+import React, { useEffect, useState } from 'react';
+import { shareToStaff, getFreezerHistory, getFreezer } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
 import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import FormShare from "./formShare";
@@ -8,16 +7,78 @@ import StaffTable from './staffTable';
 import StaffGroupTable from './staffGroupTable';
 import Router from 'next/router';
 
-const Tabs = ({ staff, freezerHistory, auth, targetStaff, shareToStaff }) => {
+import { connect, useDispatch, useSelector } from 'react-redux';
+
+const Tabs = (props) => {
+// const Tabs = ({ staff, getFreezer, freezer, getFreezerHistory, freezerHistory, auth, targetStaff, shareToStaff, groups }) => {
+    const {groups, staff ,freezerHistory} = props;
     const [openTab, setOpenTab] = React.useState(1);
     const [modalShareOpen, setModalShareOpen] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState('');
+    
+    const dispatch = useDispatch();
+    const auth = useSelector((state) => (state.authentication ? state.authentication : {}));
+    const targetStaff = useSelector((state) => (state.manager.shareToStaff ? state.manager.shareToStaff : []));
+
+    const columnsIndex = [
+        {
+            name: '#',
+            selector: row => row.numrow,
+            maxWidth: '10px',
+            sortable: true,
+        },
+        {
+            name: 'Rewarded To',
+            selector: row => row.name,
+            minWidth: '200px',
+            sortable: true
+        },
+        {
+            name: 'JF',
+            selector: row => row.jf,
+			maxWidth: '10px',
+            sortable: true
+        },
+        {
+            name: 'Grade',
+            selector: row => row.grade,
+			maxWidth: '10px',
+            sortable: true
+        },
+        {
+            name: 'Carrot',
+            selector: row => row.carrot,
+			maxWidth: '10px',
+            sortable: true
+        },
+        {
+            name: 'Note',
+            selector: row => row.note,
+            sortable: true
+        },
+        {
+            name: 'Date',
+            selector: row => row.date,
+			minWidth: '200px',
+            sortable: true
+        },
+    ];
+    
+    let closeModal = () => {
+        setModalShareOpen(false);
+        setErrorMessage('');
+    };
 
     let sendStaff = () => {
-        // console.log(targetStaff);
-        shareToStaff(auth.token, targetStaff);
-        setModalShareOpen(false);
-        window.location.href = "/manager";
+        if (targetStaff.staffId != 0 && targetStaff.carrotAmount > 0) {
+            dispatch(shareToStaff(auth.token, targetStaff));
+            setModalShareOpen(false);
+            Router.push('/manager');
+        } else {
+            setErrorMessage('Please fill in all the fields');
+        }
     }
+
     return (
         <>
             <div className="flex flex-wrap mt-3">
@@ -41,6 +102,7 @@ const Tabs = ({ staff, freezerHistory, auth, targetStaff, shareToStaff }) => {
                                 data-toggle="tab"
                                 href="#link1"
                                 role="tablist"
+                                id="tab_staff"
                             >
                                 Staff
                             </a>
@@ -60,6 +122,7 @@ const Tabs = ({ staff, freezerHistory, auth, targetStaff, shareToStaff }) => {
                                 data-toggle="tab"
                                 href="#link2"
                                 role="tablist"
+                                id="tab_group"
                             >
                                 Staff Group
                             </a>
@@ -73,7 +136,9 @@ const Tabs = ({ staff, freezerHistory, auth, targetStaff, shareToStaff }) => {
                                         <button onClick={() =>
                                             // openModalShare()
                                             setModalShareOpen(!modalShareOpen)
-                                        } className='btn bg-[#17a2b8] text-white'>
+                                        }
+                                        id="btn_share_to_staff"
+                                        className='btn bg-[#17a2b8] text-white'>
                                             <i className="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;
                                             Reward Carrot
                                         </button>
@@ -97,17 +162,21 @@ const Tabs = ({ staff, freezerHistory, auth, targetStaff, shareToStaff }) => {
                                                 </button>
                                             </div>
                                             <ModalBody>
+                                                <div className="w-[94%] mx-auto bg-red-600 text-center text-white my-3 rounded animate-pulse">
+                                                    {errorMessage}
+                                                </div>
                                                 <FormShare staff={staff} receiver='staff' />
                                             </ModalBody>
                                             <ModalFooter>
                                                 <Button
                                                     className="text-red-600 border-transparent hover:border-red-600 hover:bg-transparent hover:text-red-600"
                                                     type="button"
-                                                    onClick={() => setModalShareOpen(!modalShareOpen)}
+                                                    onClick={() => closeModal()}
                                                 >
                                                     Close
                                                 </Button>
                                                 <Button
+                                                    id="btn_send_reward"
                                                     onClick={() => sendStaff()}
                                                     className="px-4 bg-[#ff5722] border-none hover:bg-[#f2734b]"
                                                     type="button">
@@ -117,19 +186,14 @@ const Tabs = ({ staff, freezerHistory, auth, targetStaff, shareToStaff }) => {
                                         </Modal>
                                     </div>
                                     <div className="mx-auto">
-                                        <StaffTable data={freezerHistory} />
+                                        <StaffTable type="freezerHistory" columns={columnsIndex} data={freezerHistory} />
                                     </div>
                                 </div>
                                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                                     <div className="mx-auto">
-                                        <StaffGroupTable />
+                                        <StaffGroupTable groups={groups} />
                                     </div>
                                 </div>
-                                {/* <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                                        <div className="mx-auto">
-                                            <StaffGroupTable />
-                                        </div>
-                                    </div> */}
                             </div>
                         </div>
                     </div>
@@ -143,11 +207,17 @@ const Tabs = ({ staff, freezerHistory, auth, targetStaff, shareToStaff }) => {
 const mapStateToProps = (state) => ({
     auth: state.authentication,
     targetStaff: state.manager.shareToStaff,
+    targetGroup: state.manager.shareToGroup,
+    freezerHistory: state.manager.freezerHistory,
+    freezer: state.manager.freezer,
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
         shareToStaff: bindActionCreators(shareToStaff, dispatch),
+        getFreezerHistory: bindActionCreators(getFreezerHistory, dispatch),
+        getFreezer: bindActionCreators(getFreezer, dispatch),
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Tabs);
+// export default connect(mapStateToProps, mapDispatchToProps)(Tabs);
+export default Tabs;

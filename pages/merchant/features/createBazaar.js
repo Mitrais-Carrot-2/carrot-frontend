@@ -14,10 +14,19 @@ export default function CreateBazaar(props) {
 
 
     function postBazaar() {
-        axios.post("http://localhost:8181/api/bazaar", bazaar)
+        axios.post(basePath+"bazaar", bazaar)
             .then((res) => {
-                props.closeClick();
-                props.refreshPage();
+                if (res.data.status) {
+                    window.alert(res.data.message)
+                    props.closeClick();
+                    props.refreshPage();
+                }
+
+            })
+            .catch(err => {
+                window.alert("Failed: Duplicate data!")
+                // props.closeClick();
+                // props.refreshPage();
             })
     }
 

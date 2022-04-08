@@ -5,29 +5,37 @@ import Modal from "@components/Modal";
 
 export default function UpdateBazaar(props) {
     const [modalUpdateBazaar, setModalUpdateBazaar] = useState(false);
+    console.log(props.updateData)
     const [id, setId] = useState(0)
     const [bazaar, setBazaar] = useState({
-        bazaarName: "",
-        startDate: "",
-        endDate: "",
+        // bazaarName: "",
+        // startDate: "",
+        // endDate: "",
 
     })
 
     useEffect(() => {
         setBazaar({
-            bazaarName: props.updateData.bazaarName,
-            startDate: props.updateData.startDate,
-            endDate: props.updateData.endDate,
+            ...props.updateData
+            // bazaarName: props.updateData.bazaarName,
+            // startDate: props.updateData.startDate,
+            // endDate: props.updateData.endDate,
         })
         setId(props.updateData.id)
         console.log(id, bazaar)
     }, [])
 
     function updatePostBazaar() {
-        axios.put(`http://localhost:8181/api/bazaar/${id}`, bazaar)
+        axios.put(`${basePath}bazaar/${props.updateData.id}`, bazaar)
             .then((res) => {
+                window.alert(res.data.message)
                 props.closeClick();
                 props.refreshPage();
+            })
+            .catch(err => {
+                window.alert("Failed: Duplicate data!")
+                // props.closeClick();
+                // props.refreshPage();
             })
     }
 
