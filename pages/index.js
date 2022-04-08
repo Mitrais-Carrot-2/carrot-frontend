@@ -50,7 +50,7 @@ export default function Home() {
           margin-bottom: 10px;
         }
       `}</style>
-      <Employee/>
+      <Employee onlyStaff={onlyStaff} roles={roles} />
     </>
   );
 }
