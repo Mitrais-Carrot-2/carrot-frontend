@@ -23,7 +23,9 @@ export default function Navbar() {
   const profileButtonRef = useRef();
   const notifRef = useRef();
   const user = useSelector((state) => (state.user.info ? state.user.info : {}));
-  const roles = jsCookie.get("roles") ? jsCookie.get("roles").substring(5) : "";
+  // const roles = jsCookie.get("roles") ? jsCookie.get("roles").substring(5) : "";
+  const roles = (jsCookie.get("roles"))?jsCookie.get("roles").split(","):"";
+  roles.forEach((role, i) => {roles[i] = role.substring(5)});
   const picture = useSelector((state) =>
     state.user.userImage ? state.user.userImage : "/img/defaultImage.png"
   );
@@ -88,7 +90,9 @@ export default function Navbar() {
                 <p>
                   {user.jobFamily}, {user.jobGrade}
                 </p>
-                <p>{roles ? roles : ""}</p>
+                <ul className="roles mx-3">
+                  { roles? (roles.map(role => {return <li>{role}</li>})) : ""}
+                </ul>
               </PopoverHeader>
               <PopoverBody>
                 <div

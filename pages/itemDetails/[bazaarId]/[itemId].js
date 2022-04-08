@@ -15,14 +15,7 @@ export default function itemDetails(props){
     const bazaarName = router.query.bazaarName;
     const itemId = router.query.itemId;
 
-    console.log("query = ", router.query)
-    console.log("bazaar id = ", bazaarId);
-    console.log("bazaar name = ", bazaarName);
-    console.log("item id = ", itemId);
-
     const urlItem = `http://localhost:8181/api/bazaar/${bazaarId}/${itemId}`;
-
-    console.log("item = ", item)
 
     useEffect(() => {
         if(!router.isReady) return;

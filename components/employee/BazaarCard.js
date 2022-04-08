@@ -13,9 +13,7 @@ export default function BazaarCard(props) {
     useEffect(() => {
         axios.get(urlItems)
         .then(res => {
-            console.log("items data", res.data) 
             setItems(res.data)
-            console.log("res data length = ", res.data.length)
             setNumItem(res.data.length)
         })
         .catch(err => {console.log(err.message)})

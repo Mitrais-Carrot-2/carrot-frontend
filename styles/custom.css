@@ -671,3 +671,7 @@ a:hover {
 .item-border-odd .w-full:nth-child(even) {
   padding-left: 4px;
 }
+
+ul.roles {
+  list-style-type: square;
+}
