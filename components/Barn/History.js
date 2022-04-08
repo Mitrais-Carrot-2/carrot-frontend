@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { basePath } from 'next.config';
 
 
 export default function History(props) {
@@ -9,7 +10,7 @@ export default function History(props) {
     const [date, setDate] = useState("")
     useEffect(() => {
         axios
-        .get("http://localhost:8181/api/user/" + props.item.receiverId)
+        .get(process.env.NEXT_PUBLIC_API_URL+"user/" + props.item.receiverId)
           .then((res) => {
             setName(res.data.username)
           }

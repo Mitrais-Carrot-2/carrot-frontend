@@ -14,7 +14,7 @@ import UpdateBazaar from "./features/updateBazaar";
 export default function Bazaar() {
     const router = useRouter();
 
-    const url = 'http://localhost:8181/api/bazaar'
+    const url = 'process.env.NEXT_PUBLIC_API_URL+'bazaar'
     const [bazaars, setBazaar] = useState([]);
     const [showCreateBazaar, setShowCreateBazaar] = useState(false);
     const [showUpdateBazaar, setShowUpdateBazaar] = useState(false);

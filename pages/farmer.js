@@ -10,21 +10,27 @@ import { Button } from "reactstrap";
 import jsCookie from "js-cookie";
 import Router from "next/router";
 
-export default function farmer() {
+
+export default function Farmer() {
   const [barns, setBarns] = useState([]);
   const [activeBarn, setActiveBarn] = useState({});
   const [showBarns, setShowBarns] = useState(true);
   const [showDistribution, setShowDistribution] = useState(false);
 
   useEffect(() => {
-    if(!jsCookie.get("roles").split(",").includes("ROLE_FARMER")) {
-      Router.push("/");
-    } else {
+    // if(!jsCookie.get("roles").split(",").includes("ROLE_FARMER")) {
+    //   Router.push("/");
+    // } else {
       axios
-        .get("http://localhost:8181/api/farmer/barn/")
+        .get(process.env.NEXT_PUBLIC_API_URL+"farmer/barn/")
         .then((res) => setBarns(res.data));
-    }
+    // }
   }, []);
+
+  function updateBarns(newBarns){
+    setBarns(newBarns)
+    console.log(newBarns)
+  }
 
   return (
     <body>
@@ -45,11 +51,14 @@ export default function farmer() {
           onClick={() => {
             setShowBarns(false);
             setShowDistribution(true);
-            barns.find((barn) => {
-              if (barn.isActive) {
-                setActiveBarn(barn);
-              }
-            });
+            // barns.find((barn) => {
+            //   if (barn.isActive) {
+            //     setActiveBarn(barn);
+            //   } else{
+            //     setActiveBarn({})
+            //   }
+            // });
+            setActiveBarn(barns.find((barn) => barn.isActive));
           }}
         >
           Distribution
@@ -57,7 +66,7 @@ export default function farmer() {
       </div>
 
       <div className="container">
-        {showBarns && <ShowBarn barns={barns} />}
+        {showBarns && <ShowBarn updateBarns={updateBarns} />}
         {showDistribution && <Distribution barn={activeBarn} />}
       </div>
     </body>

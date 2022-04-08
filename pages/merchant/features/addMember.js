@@ -10,7 +10,7 @@ export default function AddGroupMember(props) {
         userId: 1,
     })
     const [staff, setStaff] = useState([])
-    const url = `http://localhost:8181/api/user/`
+    const url = `${process.env.NEXT_PUBLIC_API_URL}user/`
     useEffect(() => {
         axios.get(url).then(response => setStaff(response.data));
     }, [])
@@ -29,7 +29,7 @@ export default function AddGroupMember(props) {
 
     function postMember() {
         console.log(member)
-        axios.post(`http://localhost:8181/api/bazaar/group/${props.groupId}`, member)
+        axios.post(`${process.env.NEXT_PUBLIC_API_URL}bazaar/group/${props.groupId}`, member)
             .then((res) => {
                 window.alert("Staff Added!")
                 props.closeClick();

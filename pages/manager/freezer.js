@@ -16,7 +16,7 @@ function Freezer(props) {
                         id='barn-name'
                         type="text"
                         className="form-control block"
-                        disabled />
+                        readOnly />
                 </div>
                 <div className="w-full">
                     <label className="form-label inline-block mb-2 text-gray-700">Start Date</label>
@@ -25,7 +25,7 @@ function Freezer(props) {
                         id='period'
                         type="text"
                         className="form-control block"
-                        disabled />
+                        readOnly />
                 </div>
                 <div className="w-full">
                     <label className="form-label inline-block mb-2 text-gray-700">End Date</label>
@@ -34,7 +34,7 @@ function Freezer(props) {
                         id='period'
                         type="text"
                         className="form-control block"
-                        disabled />
+                        readOnly />
                 </div>
                 <div className="w-full">
                     <label className="form-label inline-block mb-2 text-gray-700">Barn Owner</label>
@@ -43,7 +43,7 @@ function Freezer(props) {
                         id='barn-owner'
                         type="text"
                         className="form-control block"
-                        disabled />
+                        readOnly />
                 </div>
                 <div className="w-full">
                     <label className="form-label inline-block mb-2 text-gray-700">Carrot Given</label>
@@ -52,16 +52,16 @@ function Freezer(props) {
                         id='carrot-given'
                         type="number"
                         className="form-control block"
-                        disabled />
+                        readOnly />
                 </div>
                 <div className="w-full">
                     <label className="form-label inline-block mb-2 text-gray-700">Carrot Left</label>
                     <input
-                        value={freezer.carrot_amount}
+                        value={freezer.carrot_amount? freezer.carrot_amount : "null"}
                         id='carrot-left'
                         type="number"
                         className="form-control block"
-                        disabled />
+                        readOnly />
                 </div>
             </div>
         </>

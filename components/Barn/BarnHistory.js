@@ -8,7 +8,7 @@ export default function BarnHistory(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8181/api/farmer/transfer/" + props.barnId)
+      .get(process.env.NEXT_PUBLIC_API_URL + "farmer/transfer/" + props.barnId)
       .then((res) => setTransfers(res.data));
   }, [props.barnId]);
 

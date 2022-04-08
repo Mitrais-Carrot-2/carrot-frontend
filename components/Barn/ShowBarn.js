@@ -5,6 +5,7 @@ import BarnHistory from "./BarnHistory";
 import Modal from "@components/Modal";
 import axios from "axios";
 
+
 export default function ShowBarn(props) {
   const [showCreateBarn, setShowCreateBarn] = useState(false);
   const [showBarnInfo, setShowBarnInfo] = useState(false);
@@ -14,12 +15,17 @@ export default function ShowBarn(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8181/api/farmer/barn/")
+      .get(process.env.NEXT_PUBLIC_API_URL+"farmer/barn/")
       .then((res) => setBarns(res.data.sort((a, b) => a.barnName.localeCompare(b.barnName))));
   }, []);
 
+  useEffect(() => {
+    props.updateBarns(barns)
+  }, [barns])
+
   function updateTable(newBarn) {
     setBarns([...barns, newBarn]);
+    
   }
   function editTable(selectedBarn){
     const temp = barns

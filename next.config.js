@@ -4,6 +4,11 @@ const nextConfig = {
   images: {
     domains: ["localhost"],
   },
+  env: {
+    API_URL: "http://localhost:8181/api/",
+    NEXT_PUBLIC_API_URL: "http://localhost:8181/api/"
+  },
+  // basePath: "http://localhost:8181/api",
 };
 
 module.exports = nextConfig;

@@ -3,11 +3,11 @@ import Navbar from '@components/Navbar';
 import Head from '@components/Head';
 import Freezer from './freezer';
 import Tabs from './tabs';
-
 import axios from 'axios';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { getFreezer, getFreezerHistory, getStaff } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
+
 
 const Index = ({ state }) => {
 // const Index = ({ getFreezer, freezer, getFreezerHistory, freezerHistory, getStaff, staff, auth, state }) => {
@@ -29,7 +29,7 @@ const Index = ({ state }) => {
     }, []);
 
     let getGroup = () => {
-        axios.get('http://localhost:8181/api/manager/group', {
+        axios.get(process.env.NEXT_PUBLIC_API_URL+'manager/group', {
             headers: {
                 Authorization: `Bearer ${auth.token}`
             }
@@ -40,12 +40,11 @@ const Index = ({ state }) => {
         .catch(err => {
             console.log(err);
         })
-        // console.log('groups');
     }
 
     return (
         <body>
-            <Head />
+            <Head title="Manager" />
             <Navbar />
             <div className="container">
                 {/* <div className="container w-5/6 mx-auto"> */}
