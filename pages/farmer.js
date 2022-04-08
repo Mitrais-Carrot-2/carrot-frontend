@@ -11,7 +11,7 @@ import jsCookie from "js-cookie";
 import Router from "next/router";
 
 
-export default function farmer() {
+export default function Farmer() {
   const [barns, setBarns] = useState([]);
   const [activeBarn, setActiveBarn] = useState({});
   const [showBarns, setShowBarns] = useState(true);

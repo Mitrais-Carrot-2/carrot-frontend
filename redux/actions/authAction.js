@@ -3,6 +3,7 @@ import cookie from "js-cookie";
 import { AUTHENTICATE, DEAUTHENTICATE, AUTHENTICATE_ERROR } from "../actionTypes";
 import axios from "axios";
 import { setUser, setUserImage } from "redux/reducers/userReducer";
+import { basePath } from 'next.config';
 
 
 export const authenticate = (user) => (dispatch) => {

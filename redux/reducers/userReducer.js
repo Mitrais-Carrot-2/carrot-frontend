@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import cookie from "js-cookie";
+import { basePath } from 'next.config';
 
 
 const initialState = {};
