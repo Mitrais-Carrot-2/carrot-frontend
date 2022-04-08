@@ -1,7 +1,7 @@
 import Modal from "@components/Modal";
 import axios from "axios";
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import Select from "react-select";
 
 export default function CreateGroup(props) {
     const [group, setGroup] = useState({
@@ -9,6 +9,20 @@ export default function CreateGroup(props) {
         allocation: 1,
         note: "",
         managerId: 1
+    })
+
+    const [manager, setManager] = useState([])
+    const url = `http://localhost:8181/api/farmer/transfer/manager`
+    useEffect(() => {
+        axios.get(url).then(response => setManager(response.data));
+    }, [])
+
+    let options = [];
+    options = manager.map(s => {
+        return {
+            value: s.userId,
+            label: `${s.firstName} ${s.lastName}`
+        }
     })
 
     function postGroup() {
@@ -51,12 +65,18 @@ export default function CreateGroup(props) {
                         />
 
                         <label>Manager:</label>
-                        <input
+                        <Select className="my-2"
+                            id='manager-id'
+                            name="manager-id"
+                            options={options}
+                            onChange={(item) => setGroup({ ...group, managerId: item.value })}
+                        />
+                        {/* <input
                             value={group.managerId}
                             type="number"
                             name="groupManager"
                             onChange={(item) => setGroup({ ...group, managerId: item.target.value })}
-                        />
+                        /> */}
                     </div>
                 </form>
                 <style jsx>{`

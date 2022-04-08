@@ -33,6 +33,14 @@ export default function Merchant() {
                 </button>
 
                 <button
+                  onClick={() => router.push("/merchant/exchange")}
+                  className="btn btn-carrot radius-5"
+                >
+                  {" "}
+                  Exchange
+                </button>
+
+                <button
                   onClick={() => router.push("/merchant/staffgroup")}
                   className="btn btn-carrot radius-5"
                 >
