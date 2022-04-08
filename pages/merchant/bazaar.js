@@ -14,7 +14,7 @@ import UpdateBazaar from "./features/updateBazaar";
 export default function Bazaar() {
     const router = useRouter();
 
-    const url = 'process.env.NEXT_PUBLIC_API_URL+'bazaar'
+    const url = process.env.NEXT_PUBLIC_API_URL + 'bazaar'
     const [bazaars, setBazaar] = useState([]);
     const [showCreateBazaar, setShowCreateBazaar] = useState(false);
     const [showUpdateBazaar, setShowUpdateBazaar] = useState(false);
@@ -24,6 +24,8 @@ export default function Bazaar() {
         axios.get(url).then(response => setBazaar(response.data));
     }, [])
     // console.log(bazaar)
+
+
 
 
     function reloadPage() {
