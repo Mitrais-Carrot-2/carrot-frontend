@@ -12,7 +12,6 @@ export default function BazaarContainer(props) {
         axios.get(urlBazaar)
         .then(res => {
             setBazaars(res.data)
-            console.log("bazaar data = " , res.data)
         })
     }, [])
 
