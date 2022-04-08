@@ -1,9 +1,15 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
+import EditUser from "./EditUser";
+import CreateUser from "./CreateUser";
 
 export default function AdminLayout() {
   const router = useRouter();
+  const [showCreateUser, setShowCreateUser] = useState(false);
+  const [showUpdateUser, setShowUpdateUser] = useState(false);
+
   return (
-    <body>
+    <body className="pb-4">
       <style jsx>{`
         .btn {
           margin-left: 10px;
@@ -17,15 +23,19 @@ export default function AdminLayout() {
             <div className="flex flex-wrap">
               <div className="text-center md:w-full px-4">
                 <button
-                  onClick={() => router.push("/admin/new-user")}
+                  onClick={() => {
+                    setShowCreateUser(true), setShowUpdateUser(false);
+                  }}
                   className="btn btn-carrot radius-5"
                 >
                   {" "}
-                  Create New Staff
+                  Create New User
                 </button>
 
                 <button
-                  onClick={() => router.push("/admin/edit-user")}
+                  onClick={() => {
+                    setShowCreateUser(false), setShowUpdateUser(true);
+                  }}
                   className="btn btn-carrot radius-5"
                 >
                   {" "}
@@ -35,6 +45,10 @@ export default function AdminLayout() {
             </div>
           </div>
         </section>
+      </div>
+      <div className="container">
+        {showCreateUser && <CreateUser />}
+        {showUpdateUser && <EditUser />}
       </div>
     </body>
   );
