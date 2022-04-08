@@ -106,6 +106,7 @@ export default function Home() {
                 {
                   roles.includes("ROLE_FARMER") ?
                     <button
+                      id="to-farmer-dashboard"
                       onClick={() => router.push("/farmer")}
                       className="btn btn-carrot radius-5"
                     >
