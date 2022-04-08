@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import Modal from "@components/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, setUserImage } from "../../redux/reducers/userReducer";
+import { basePath } from 'next.config';
 
 export default function Profile(/* props atau user */) {
   const dispatch = useDispatch();
