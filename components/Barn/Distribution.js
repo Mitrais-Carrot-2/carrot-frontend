@@ -15,10 +15,8 @@ export default function Distribution(props) {
   const [newTransfer, setNewTransfer] = useState([]);
   const [manager, setManager] = useState([]);
 
-  const url = `http://localhost:8181/api/farmer/transfer/manager`;
-
   useEffect(() => {
-    axios.get(url).then((response) => setManager(response.data));
+    axios.get(process.env.NEXT_PUBLIC_API_URL+"farmer/transfer/manager").then((response) => setManager(response.data));
   }, []);
 
   let options = [];
@@ -94,66 +92,70 @@ export default function Distribution(props) {
         window.alert(`Failed to distribute carrot, Error: ${err}`);
       });
   }
-  if (Object.keys(props.barn).length) {
-    return (
-      <>
-        <h1 className="text-purple-500 text-4xl font-bold lowercase ml-2 mb-2">
-          Distribution
-        </h1>
-        <div className="container py-2 bg-white">
-          <p className="text-2xl uppercase py-2 text-orange-500">
-            Distribution Details:
-          </p>
-          <table className="w-2/10 overflow-x-scroll">
-            <tr>
-              <th>Barn Name</th>
-              <td>{props.barn.barnName}</td>
-            </tr>
-            <tr>
-              <th>Harvested Carrot</th>
-              <td>{props.barn.carrotAmount + props.barn.distributedCarrot}</td>
-            </tr>
-            <tr>
-              <th>Distributed Carrot</th>
-              <td>{props.barn.distributedCarrot}</td>
-            </tr>
-            <tr>
-              <th>Remaining Carrot</th>
-              <td>{props.barn.carrotAmount}</td>
-            </tr>
-          </table>
-        </div>
-        <div className="container my-3 p-3 bg-white text-center">
-          <Button
-            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => setDistributeCarrot(true)}
-          >
-            Distribute Carrot
-          </Button>
-        </div>
-        {distributeCarrot && (
-          <Modal
-            title="Distribution Detail"
-            body={getTransactionDetail()}
-            closeClick={setDistributeCarrot}
-            action="Send Carrot"
-            actionClick={sendCarrot}
-          />
-        )}
-        <div className="container py-2 bg-white">
-          <BarnHistory barnId={props.barn.id} newTransfer={newTransfer} />
-        </div>
-        <style>
-          {`
-            th {
-                cursor: pointer;
-                padding-right: 10px;
-            }
-            `}
-        </style>
-      </>
-    );
-  } else {
-    return <h1>No Active Barn</h1>;
+  function showPage(){
+    if (props.barn) {
+      return (
+        <>
+          <h1 className="text-purple-500 text-4xl font-bold lowercase ml-2 mb-2">
+            Distribution
+          </h1>
+          <div className="container py-2 bg-white">
+            <p className="text-2xl uppercase py-2 text-orange-500">
+              Distribution Details:
+            </p>
+            <table className="w-2/10 overflow-x-scroll">
+              <tr>
+                <th>Barn Name</th>
+                <td>{props.barn.barnName}</td>
+              </tr>
+              <tr>
+                <th>Harvested Carrot</th>
+                <td>{props.barn.carrotAmount + props.barn.distributedCarrot}</td>
+              </tr>
+              <tr>
+                <th>Distributed Carrot</th>
+                <td>{props.barn.distributedCarrot}</td>
+              </tr>
+              <tr>
+                <th>Remaining Carrot</th>
+                <td>{props.barn.carrotAmount}</td>
+              </tr>
+            </table>
+          </div>
+          <div className="container my-3 p-3 bg-white text-center">
+            <Button
+              className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => setDistributeCarrot(true)}
+            >
+              Distribute Carrot
+            </Button>
+          </div>
+          {distributeCarrot && (
+            <Modal
+              title="Distribution Detail"
+              body={getTransactionDetail()}
+              closeClick={setDistributeCarrot}
+              action="Send Carrot"
+              actionClick={sendCarrot}
+            />
+          )}
+          <div className="container py-2 bg-white">
+            <BarnHistory barnId={props.barn.id} newTransfer={newTransfer} />
+          </div>
+          <style>
+            {`
+              th {
+                  cursor: pointer;
+                  padding-right: 10px;
+              }
+              `}
+          </style>
+        </>
+      );
+    } else {
+      return <h1>No Active Barn</h1>;
+    }
   }
+
+  return <>{showPage()}</>;
 }

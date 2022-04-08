@@ -19,8 +19,13 @@ export default function ShowBarn(props) {
       .then((res) => setBarns(res.data.sort((a, b) => a.barnName.localeCompare(b.barnName))));
   }, []);
 
+  useEffect(() => {
+    props.updateBarns(barns)
+  }, [barns])
+
   function updateTable(newBarn) {
     setBarns([...barns, newBarn]);
+    
   }
   function editTable(selectedBarn){
     const temp = barns
