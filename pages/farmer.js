@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { Button } from "reactstrap";
 import jsCookie from "js-cookie";
 import Router from "next/router";
-import { basePath } from 'next.config';
+
 
 export default function farmer() {
   const [barns, setBarns] = useState([]);
@@ -22,7 +22,7 @@ export default function farmer() {
     //   Router.push("/");
     // } else {
       axios
-        .get(basePath+"farmer/barn/")
+        .get(process.env.NEXT_PUBLIC_API_URL+"farmer/barn/")
         .then((res) => setBarns(res.data));
     // }
   }, []);

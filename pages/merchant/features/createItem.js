@@ -18,7 +18,7 @@ export default function CreateItem(props) {
     })
 
     const [bazaar, setBazaar] = useState([])
-    const url = 'basePath+'bazaar'
+    const url = 'process.env.NEXT_PUBLIC_API_URL+'bazaar'
     useEffect(() => {
         axios.get(url).then(response => setBazaar(response.data));
     }, [])
@@ -33,7 +33,7 @@ export default function CreateItem(props) {
 
     function postItem() {
         //let id = 53;
-        axios.post(`${basePath}bazaar/${bazaarItem.bazaar}/item`, bazaarItem)
+        axios.post(`${process.env.NEXT_PUBLIC_API_URL}bazaar/${bazaarItem.bazaar}/item`, bazaarItem)
             .then((res) => {
                 props.closeClick();
                 props.refreshPage();

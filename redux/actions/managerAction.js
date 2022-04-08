@@ -3,7 +3,7 @@ import axios from "axios";
 import { basePath } from "next.config";
 
 export const getFreezer = (token) => (dispatch) => {
-    axios.get(`${basePath}manager/freezer/`, {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}manager/freezer/`, {
         headers: {
             Authorization: `Bearer ${token}`,
             "Access-Control-Allow-Origin": "*",
@@ -18,7 +18,7 @@ export const getFreezer = (token) => (dispatch) => {
 }
 
 export const getFreezerHistory = (token) => (dispatch) => {
-    axios.get(basePath+'manager/freezer/history', {
+    axios.get(process.env.NEXT_PUBLIC_API_URL+'manager/freezer/history', {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -33,7 +33,7 @@ export const getFreezerHistory = (token) => (dispatch) => {
     })
 }
 export const getStaff = (token) => (dispatch) => {
-    axios.get(`${basePath}manager/staff/`, {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}manager/staff/`, {
         headers: {
             Authorization: `Bearer ${token}`,
             "Access-Control-Allow-Origin": "*",
@@ -59,7 +59,7 @@ export const setShareToStaff = (staff) => (dispatch) => {
 export const shareToStaff = (token, req) => (dispatch) => {
     // console.log("SHARE TO STAFF", req);
 
-    axios.post(`${basePath}manager/transfer/staff/`, req, {
+    axios.post(`${process.env.NEXT_PUBLIC_API_URL}manager/transfer/staff/`, req, {
         headers: {
             Authorization: `Bearer ${token}`,
             "Access-Control-Allow-Origin": "*",
@@ -84,7 +84,7 @@ export const setShareToGroup = (group) => (dispatch) => {
 export const shareToGroup = (token, req) => (dispatch) => {
     // console.log("SHARE TO GROUP", req);
 
-    axios.post(`${basePath}manager/transfer/group/`, req, {
+    axios.post(`${process.env.NEXT_PUBLIC_API_URL}manager/transfer/group/`, req, {
         headers: {
             Authorization: `Bearer ${token}`,
             "Access-Control-Allow-Origin": "*",
@@ -92,7 +92,7 @@ export const shareToGroup = (token, req) => (dispatch) => {
             "Content-Type": "application/json",
         },
     }).then((res) => {
-        console.log("SHARE TO GROUP", res.data);
+        // console.log("SHARE TO GROUP", res.data);
         dispatch({ type: SHARE_TO_GROUP, payload: res.data });
     }).catch((err) => {
         console.log("SHARE TO GROUP", err.message);

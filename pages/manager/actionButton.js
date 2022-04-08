@@ -8,7 +8,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { shareToGroup, setShareToGroup, getFreezerHistory } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
 import Router from 'next/router';
-import { basePath } from 'next.config';
+
 
 const ActionButton = (props) => {
     const { groupId, groupName, totalMember } = props;
@@ -59,7 +59,7 @@ const ActionButton = (props) => {
     ];
 
     const modalListStaff = (id) => {
-        axios.get(`${basePath}manager/group/${id}/staff/`, {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}manager/group/${id}/staff/`, {
             headers: {
                 Authorization: `Bearer ${auth.token}`,
                 "Access-Control-Allow-Origin": "*",

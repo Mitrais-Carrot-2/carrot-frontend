@@ -25,15 +25,15 @@ export default function StaffGroupMember(props) {
         // note: "",
         // managerId: 1
     })
-    const url = `${basePath}bazaar/group/${groupId}`
-    // axios.get(`${basePath}bazaar/group/details/${groupId}`).then(response => setGroup(response.data));
+    const url = `${process.env.NEXT_PUBLIC_API_URL}bazaar/group/${groupId}`
+    // axios.get(`${process.env.NEXT_PUBLIC_API_URL}bazaar/group/details/${groupId}`).then(response => setGroup(response.data));
     // console.log(group)
     useEffect(() => {
         // console.log(props.router.query.groupId)
         // console.log("useEffect gid: " + groupId)
         // console.log("usse effect gid: " + groupId)
         setId(groupId);
-        axios.get(`${basePath}bazaar/group/details/${groupId}`).then(response => setGroup(response.data));
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}bazaar/group/details/${groupId}`).then(response => setGroup(response.data));
         console.log(group)
         axios.get(url).then(response => setMembers(response.data));
 

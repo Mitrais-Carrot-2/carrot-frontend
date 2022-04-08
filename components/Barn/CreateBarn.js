@@ -17,7 +17,7 @@ export default function CreateBarn(props) {
 
   function passNewBarnWithApi() {
     console.log(newBarn);
-    axios.post(basePath+"farmer/barn/", newBarn)
+    axios.post(process.env.NEXT_PUBLIC_API_URL+"farmer/barn/", newBarn)
       .then((res) => {
         console.log(res.data);
         //Return Barn info to Show Barn
