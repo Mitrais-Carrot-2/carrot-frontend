@@ -5,6 +5,7 @@ import axios from "axios";
 import { setUser, setUserImage } from "redux/reducers/userReducer";
 import { basePath } from 'next.config';
 
+
 export const authenticate = (user) => (dispatch) => {
   if (user.username === "" && user.password === "") {
     dispatch({
@@ -17,7 +18,7 @@ export const authenticate = (user) => (dispatch) => {
     dispatch({ type: AUTHENTICATE_ERROR, payload: "Password is required" });
   } else {
     axios
-      .post(basePath+"auth/login", user)
+      .post(process.env.NEXT_PUBLIC_API_URL+"auth/login", user)
       .then((res) => {
         setCookie("token", res.data.token);
         setCookie("username", res.data.username);
@@ -25,7 +26,7 @@ export const authenticate = (user) => (dispatch) => {
         setCookie("roles", res.data.roles);
 
         axios
-          .get(basePath+"user/username/" + res.data.username)
+          .get(process.env.NEXT_PUBLIC_API_URL+"user/username/" + res.data.username)
           .then((user) => {
             dispatch(setUser(user.data));
             dispatch(setUserImage());

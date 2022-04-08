@@ -26,7 +26,7 @@ export default function UpdateBazaar(props) {
     }, [])
 
     function updatePostBazaar() {
-        axios.put(`${basePath}bazaar/${props.updateData.id}`, bazaar)
+        axios.put(`${process.env.NEXT_PUBLIC_API_URL}bazaar/${props.updateData.id}`, bazaar)
             .then((res) => {
                 window.alert(res.data.message)
                 props.closeClick();

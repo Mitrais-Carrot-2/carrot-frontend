@@ -7,7 +7,7 @@ import axios from 'axios';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { getFreezer, getFreezerHistory, getStaff } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
-import { basePath } from 'next.config';
+
 
 const Index = ({ state }) => {
 // const Index = ({ getFreezer, freezer, getFreezerHistory, freezerHistory, getStaff, staff, auth, state }) => {
@@ -29,7 +29,7 @@ const Index = ({ state }) => {
     }, []);
 
     let getGroup = () => {
-        axios.get(basePath+'manager/group', {
+        axios.get(process.env.NEXT_PUBLIC_API_URL+'manager/group', {
             headers: {
                 Authorization: `Bearer ${auth.token}`
             }
