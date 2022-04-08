@@ -38,7 +38,7 @@ export default function Distribution(props) {
   }
   function sendCarrot() {
     axios
-      .post("http://localhost:8181/api/farmer/transfer/distribute", {
+      .post(basePath+"farmer/transfer/distribute", {
         managerId: managerId,
         barnId: props.barn.id,
         carrotAmount: carrotAmount,

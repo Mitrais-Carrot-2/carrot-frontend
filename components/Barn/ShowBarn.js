@@ -4,6 +4,7 @@ import Barn from "./Barn";
 import BarnHistory from "./BarnHistory";
 import Modal from "@components/Modal";
 import axios from "axios";
+import { basePath } from 'next.config';
 
 export default function ShowBarn(props) {
   const [showCreateBarn, setShowCreateBarn] = useState(false);
@@ -14,7 +15,7 @@ export default function ShowBarn(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8181/api/farmer/barn/")
+      .get(basePath+"farmer/barn/")
       .then((res) => setBarns(res.data.sort((a, b) => a.barnName.localeCompare(b.barnName))));
   }, []);
 

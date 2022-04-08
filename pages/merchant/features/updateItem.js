@@ -25,7 +25,7 @@ export default function UpdateItem(props) {
     function updatePostGroup() {
         console.log("updating.....")
         console.log("val item: " + itemDetail)
-        axios.put(`http://localhost:8181/api/bazaar/item/${id}`, itemDetail)
+        axios.put(`${basePath}bazaar/item/${id}`, itemDetail)
             .then((res) => {
                 window.alert(res.data.message);
                 props.closeClick();

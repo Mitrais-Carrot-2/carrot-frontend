@@ -14,7 +14,7 @@ export default function CreateBazaar(props) {
 
 
     function postBazaar() {
-        axios.post("http://localhost:8181/api/bazaar", bazaar)
+        axios.post(basePath+"bazaar", bazaar)
             .then((res) => {
                 if (res.data.status) {
                     window.alert(res.data.message)

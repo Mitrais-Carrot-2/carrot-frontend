@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { Button } from "reactstrap";
 import jsCookie from "js-cookie";
 import Router from "next/router";
+import { basePath } from 'next.config';
 
 export default function farmer() {
   const [barns, setBarns] = useState([]);
@@ -17,13 +18,13 @@ export default function farmer() {
   const [showDistribution, setShowDistribution] = useState(false);
 
   useEffect(() => {
-    if(!jsCookie.get("roles").split(",").includes("ROLE_FARMER")) {
-      Router.push("/");
-    } else {
+    // if(!jsCookie.get("roles").split(",").includes("ROLE_FARMER")) {
+    //   Router.push("/");
+    // } else {
       axios
-        .get("http://localhost:8181/api/farmer/barn/")
+        .get(basePath+"farmer/barn/")
         .then((res) => setBarns(res.data));
-    }
+    // }
   }, []);
 
   return (

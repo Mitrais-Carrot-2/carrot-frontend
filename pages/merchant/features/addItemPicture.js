@@ -23,7 +23,7 @@ export default function UpdateBazaarImage(props) {
         const formData = new FormData();
         formData.append("file", imageFormData, imageFormData.name);
         axios
-            .put(`http://localhost:8181/api/bazaar/uploadImage/${props.updateData}`, formData, {
+            .put(`${basePath}bazaar/uploadImage/${props.updateData}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

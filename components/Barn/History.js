@@ -9,7 +9,7 @@ export default function History(props) {
     const [date, setDate] = useState("")
     useEffect(() => {
         axios
-        .get("http://localhost:8181/api/user/" + props.item.receiverId)
+        .get(basePath+"user/" + props.item.receiverId)
           .then((res) => {
             setName(res.data.username)
           }
