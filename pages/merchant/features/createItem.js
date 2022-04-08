@@ -18,7 +18,7 @@ export default function CreateItem(props) {
     })
 
     const [bazaar, setBazaar] = useState([])
-    const url = 'process.env.NEXT_PUBLIC_API_URL+'bazaar'
+    const url = process.env.NEXT_PUBLIC_API_URL + 'bazaar'
     useEffect(() => {
         axios.get(url).then(response => setBazaar(response.data));
     }, [])

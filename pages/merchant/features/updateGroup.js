@@ -1,7 +1,7 @@
 import Modal from "@components/Modal";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import Select from "react-select";
 
 export default function UpdateGroup(props) {
     console.log(props.updateData)
@@ -32,6 +32,20 @@ export default function UpdateGroup(props) {
                 window.alert("Update Error!");
             })
     }
+
+    const [manager, setManager] = useState([])
+    const url = process.env.NEXT_PUBLIC_API_URL + `farmer/transfer/manager`
+    useEffect(() => {
+        axios.get(url).then(response => setManager(response.data));
+    }, [])
+
+    let options = [];
+    options = manager.map(s => {
+        return {
+            value: s.userId,
+            label: `${s.firstName} ${s.lastName}`
+        }
+    })
 
     function updateGroup() {
         return (
@@ -64,11 +78,12 @@ export default function UpdateGroup(props) {
                         />
 
                         <label>Manager:</label>
-                        <input
+                        <Select className="my-2"
                             value={group.managerId}
-                            type="number"
-                            name="groupManager"
-                            onChange={(item) => setGroup({ ...group, managerId: item.target.value })}
+                            id='manager-id'
+                            name="manager-id"
+                            options={options}
+                            onChange={(item) => setGroup({ ...group, managerId: item.value })}
                         />
                     </div>
                 </form>
