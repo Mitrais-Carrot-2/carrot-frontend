@@ -15,10 +15,8 @@ export default function Distribution(props) {
   const [newTransfer, setNewTransfer] = useState([]);
   const [manager, setManager] = useState([]);
 
-  const url = `http://localhost:8181/api/farmer/transfer/manager`;
-
   useEffect(() => {
-    axios.get(url).then((response) => setManager(response.data));
+    axios.get(process.env.NEXT_PUBLIC_API_URL+"farmer/transfer/manager").then((response) => setManager(response.data));
   }, []);
 
   let options = [];
