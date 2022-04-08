@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import Router from 'next/router';
 
 const ActionButton = (props) => {
-    const { groupId, groupName } = props;
+    const { groupId, groupName, totalMember } = props;
     const [modalStaffOpen, setModalStaffOpen] = React.useState(false);
     const [modalShareOpen, setModalShareOpen] = React.useState(false);
 
@@ -161,7 +161,7 @@ const ActionButton = (props) => {
                     <div className="w-[94%] mx-auto bg-red-600 text-center text-white my-3 rounded animate-pulse">
                         {errorMessage}
                     </div>
-                    <FormShare receiver='group' groupId={groupId} groupName={groupName} />
+                    <FormShare receiver='group' groupId={groupId} groupName={groupName} totalMember={totalMember} />
                 </ModalBody>
                 <ModalFooter>
                     <Button
@@ -172,6 +172,7 @@ const ActionButton = (props) => {
                         Close
                     </Button>
                     <Button
+                        id="btn_send_reward"
                         onClick={() => sendGroup()}
                         className="px-4 bg-[#ff5722] border-none hover:bg-[#f2734b]"
                         type="button">
@@ -180,10 +181,10 @@ const ActionButton = (props) => {
                 </ModalFooter>
             </Modal>
 
-            <button type="button" className="btn border-blue-600 mr-2" onClick={() => {
+            <button id="btn_detail_group" type="button" className="btn border-blue-600 mr-2" onClick={() => {
                 modalListStaff(groupId)
             }}><i className="fa fa-users text-blue-600 fa-x px-1"></i></button>
-            <button type="button" className="btn border-green-600 mr-3" onClick={() => {
+            <button id="btn_share_to_group" type="button" className="btn border-green-600 mr-3" onClick={() => {
                 showModalGroup(groupName)
             }}><i className="fa fa-send text-green-600 fa-x px-1"></i></button>
         </>

@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { connect } from 'react-redux';
 import { setShareToStaff, shareToStaff, setShareToGroup, shareToGroup } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
-function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGroup, staff, receiver, groupName = "Group A", groupId, targetStaff, auth }) {
+function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGroup, staff, receiver, groupName = "Group A", groupId, totalMember, targetStaff, auth }) {
     const [sendToStaff, setSendToStaff] = React.useState({
         staffId: 0,
         carrotAmount: 0,
@@ -77,6 +77,8 @@ function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGrou
                             />
                         </> :
                         <>
+                            {/* <input type="hidden" value={totalMember} id="total-member" /> */}
+                            <div className="columns-2">
                             <label htmlFor="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Group Name</label>
                             <input
                                 name='groupName'
@@ -97,14 +99,39 @@ function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGrou
                                  transition
                                  ease-in-out
                                  m-0
-                                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputEmail2"
+                                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="group-name"
                                 aria-describedby="emailHelp" placeholder="Group Name" required readOnly />
+
+<label htmlFor="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Total Member</label>
+                            <input
+                                name='totalMember'
+                                value={totalMember}
+                                autoComplete='off'
+                                type="number"
+                                className="form-control
+                                 block
+                                 w-full
+                                 px-3
+                                 py-1.5
+                                 text-base
+                                 font-normal
+                                 text-gray-700
+                                 bg-clip-padding
+                                 border border-solid border-gray-300
+                                 rounded
+                                 transition
+                                 ease-in-out
+                                 m-0
+                                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="total-member"
+                                aria-describedby="emailHelp" placeholder="Group Name" required readOnly />
+                            </div>
                         </>
                     }
                 </div>
                 <div className="form-group mb-6">
                     <label htmlFor="exampleInputPassword2" className="form-label inline-block mb-2 text-gray-700">Carrot Amount</label>
                     <input
+                        id="carrot-amount"
                         name='carrotAmount'
                         onChange={handleChange}
                         type="number" 
@@ -122,12 +149,13 @@ function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGrou
                                 transition
                                 ease-in-out
                                 m-0
-                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputPassword2"
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         placeholder={receiver == 'staff' ? "Carrot Amount" : "Carrot Amount per Staff"} required />
                 </div>
                 <div className="form-group mb-6">
                     <label htmlFor="exampleInputEmail2" className="form-label inline-block mb-2 text-gray-700">Note</label>
                     <textarea
+                        id="note"
                         name='note'
                         onChange={handleChange}
                         rows={3}
@@ -145,7 +173,7 @@ function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGrou
                                 transition
                                 ease-in-out
                                 m-0
-                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputEmail2"
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         aria-describedby="emailHelp" placeholder="Note" required></textarea>
                 </div>
             </form>

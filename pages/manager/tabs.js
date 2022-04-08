@@ -102,6 +102,7 @@ const Tabs = (props) => {
                                 data-toggle="tab"
                                 href="#link1"
                                 role="tablist"
+                                id="tab_staff"
                             >
                                 Staff
                             </a>
@@ -121,6 +122,7 @@ const Tabs = (props) => {
                                 data-toggle="tab"
                                 href="#link2"
                                 role="tablist"
+                                id="tab_group"
                             >
                                 Staff Group
                             </a>
@@ -134,7 +136,9 @@ const Tabs = (props) => {
                                         <button onClick={() =>
                                             // openModalShare()
                                             setModalShareOpen(!modalShareOpen)
-                                        } className='btn bg-[#17a2b8] text-white'>
+                                        }
+                                        id="btn_share_to_staff"
+                                        className='btn bg-[#17a2b8] text-white'>
                                             <i className="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;
                                             Reward Carrot
                                         </button>
@@ -172,6 +176,7 @@ const Tabs = (props) => {
                                                     Close
                                                 </Button>
                                                 <Button
+                                                    id="btn_send_reward"
                                                     onClick={() => sendStaff()}
                                                     className="px-4 bg-[#ff5722] border-none hover:bg-[#f2734b]"
                                                     type="button">
