@@ -47,7 +47,7 @@ export default function itemDetails(props){
                 <main role="main" class="container">
                     <h2 className="my-4 pl-0 text-grey ml-0">
                         <span className="back-button mr-3">
-                            <Link href="/employee">
+                            <Link href="/">
                                 <Image src={backImage} alt="" class="back" />
                             </Link>
                         </span> 
@@ -83,11 +83,12 @@ export default function itemDetails(props){
     }
 
     return (
-        <div className="container">         
-
-            {/* <div className="md:w-1/2 pr-4 pl-4 self-center p-12"> */}
-                {item? renderItemDetails(item) : null}
-            {/* </div> */}
-        </div>
+        <body>
+            <div className="container">         
+                {/* <div className="md:w-1/2 pr-4 pl-4 self-center p-12"> */}
+                    {item? renderItemDetails(item) : null}
+                {/* </div> */}
+            </div>
+        </body>
     )
 }

@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { connect } from 'react-redux';
 import { setShareToStaff, shareToStaff, setShareToGroup, shareToGroup } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
+
 function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGroup, staff, receiver, groupName = "Group A", groupId, totalMember, targetStaff, auth }) {
     const [sendToStaff, setSendToStaff] = React.useState({
         staffId: 0,

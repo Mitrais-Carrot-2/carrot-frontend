@@ -14,6 +14,7 @@ import Head from "@components/Head";
 import jsCookie from "js-cookie";
 import { bindActionCreators } from "redux";
 
+
 const SignIn = ({ authenticate, auth, error, token }) => {
   // const [error, setError] = React.useState("");
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const SignIn = ({ authenticate, auth, error, token }) => {
   });
 
   useEffect(() => {
+    console.log("BASE PATH", process.env.NEXT_PUBLIC_API_URL);
     if (jsCookie.get("token")) {
       Router.push("/");
     }
@@ -53,7 +55,7 @@ const SignIn = ({ authenticate, auth, error, token }) => {
     // }, 3000);
 
     // console.log(loginData);
-    // axios.post(basePath+"auth/login", loginData)
+    // axios.post(process.env.NEXT_PUBLIC_API_URL+"auth/login", loginData)
     //   .then((res) => {
     //     localStorage.setItem("token", res.data.token);
     //     localStorage.setItem("username", res.data.username);
@@ -69,7 +71,7 @@ const SignIn = ({ authenticate, auth, error, token }) => {
 
   return (
     <>
-      <Head />
+      <Head title="Sign In" />
       <main>
         <section className="absolute w-full h-full">
           <div

@@ -10,7 +10,7 @@ export default function History(props) {
     const [date, setDate] = useState("")
     useEffect(() => {
         axios
-        .get(basePath+"user/" + props.item.receiverId)
+        .get(process.env.NEXT_PUBLIC_API_URL+"user/" + props.item.receiverId)
           .then((res) => {
             setName(res.data.username)
           }

@@ -64,7 +64,8 @@ export default function Distribution(props) {
   }
   function sendCarrot() {
     axios
-      .post(basePath + "farmer/transfer/distribute", {
+      .post(process.env.NEXT_PUBLIC_API_URL+"farmer/transfer/distribute", {
+      // .post(basePath + "farmer/transfer/distribute", {
         managerId: managerId,
         barnId: props.barn.id,
         carrotAmount: carrotAmount,
