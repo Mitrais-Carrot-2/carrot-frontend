@@ -8,7 +8,8 @@ export default function Distribution(props) {
   const [distributeCarrot, setDistributeCarrot] = useState(false);
   const [managerId, setManagerId] = useState(0);
   const [carrotAmount, setCarrotAmount] = useState(0);
-  const [message, setMessage] = useState("")
+  const [message, setMessage] = useState("");
+  const [newTransfer, setNewTransfer] = useState([]);
   function getTransactionDetail() {
     return (
       <div className="grid grid-cols-2 gap-1">
@@ -47,15 +48,21 @@ export default function Distribution(props) {
       .then((res) => {
         console.log(res);
         window.alert(`Successfully distributed ${carrotAmount} carrot to ${managerId}`);
-        //TODO : Add transaction to history
-        // window.location.reload();
+        setNewTransfer([...newTransfer, {
+          id: res.data.transferId,
+          carrotAmount: res.data.carrotAmount,
+          receiverId: res.data.receiverId,
+          shareAt: res.data.shareAt,
+          note: res.data.note,
+        }]);
+        props.barn.carrotAmount -= res.data.carrotAmount;
+        props.barn.distributedCarrot += res.data.carrotAmount;
       })
       .catch((err) => {
         console.log(err);
         window.alert(`Failed to distribute carrot, Error: ${err}`);
       });
   }
-  console.log("halo",props.barn);
   if(Object.keys(props.barn).length){
   return (
     <>
@@ -101,7 +108,7 @@ export default function Distribution(props) {
         />
       )}
       <div className="container py-2 bg-white">
-        <BarnHistory barnId={props.barn.id} />
+        <BarnHistory barnId={props.barn.id} newTransfer={newTransfer} />
       </div>
       <style>
         {`

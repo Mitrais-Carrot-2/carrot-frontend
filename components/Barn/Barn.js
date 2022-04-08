@@ -29,7 +29,9 @@ export default function Barn(props) {
     return (
       <div>
         <form>
-          <h2>Barn Details:</h2>
+          <h2
+          id="barn-info"
+          >Barn Details:</h2>
           <div className="barn-details">
             <label>Barn Name:</label>
             <input

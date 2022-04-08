@@ -38,7 +38,7 @@ export default function ShowBarn(props) {
   }
   return (
     <div>
-      <h1 className="text-purple-500 text-4xl font-bold lowercase ml-2 mb-2">
+      <h1 id="farmer-dashboard" className="text-purple-500 text-4xl font-bold lowercase ml-2 mb-2">
         Farmer Dashboard
       </h1>
       <div className="bg-white rounded shadow-md p-4 mb-4 overflow-x-scroll">

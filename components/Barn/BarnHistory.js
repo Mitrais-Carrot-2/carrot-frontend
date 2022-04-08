@@ -13,6 +13,21 @@ export default function BarnHistory(props) {
       .then((res) => setTransfers(res.data));
   }, []);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:8181/api/farmer/transfer/"+props.barnId)
+      .then((res) => setTransfers(res.data));
+  }, [props.newTransfer]);
+
+
+  function updateTable() {
+    setTransfers([
+      ...transfers,
+      props.newTransfer
+    ])
+  }
+  
+
   
   return (
     <>
