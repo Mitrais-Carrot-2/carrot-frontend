@@ -28,7 +28,7 @@ export default function Profile(/* props atau user */) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8181/api/user/" + user.supervisorId)
+      .get(basePath+"user/" + user.supervisorId)
       .then((res) => {
         setSupervisorName(res.data.firstName + " " + res.data.lastName);
       });
@@ -268,7 +268,7 @@ export default function Profile(/* props atau user */) {
   function updateUserInformation() {
     axios
       .put(
-        "http://localhost:8181/api/user/updateProfile/" + user.username,
+        basePath+"user/updateProfile/" + user.username,
         userFormData
       )
       .then((res) => {
@@ -379,7 +379,7 @@ export default function Profile(/* props atau user */) {
     const formData = new FormData();
     formData.append("file", imageFormData, imageFormData.name);
     axios
-      .put("http://localhost:8181/api/user/Image/" + user.username, formData, {
+      .put(basePath+"user/Image/" + user.username, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -434,14 +434,14 @@ export default function Profile(/* props atau user */) {
     if (passwordFormData.newPassword === passwordFormData.confirmPassword) {
       axios
         .put(
-          "http://localhost:8181/api/user/updatePassword/" + user.username,
+          basePath+"user/updatePassword/" + user.username,
           passwordFormData
         )
         .then((res) => {
           setModalPassword(false);
 
           axios
-            .get("http://localhost:8181/api/user/username/" + user.username)
+            .get(basePath+"user/username/" + user.username)
             .then((res2) => {
               dispatch(setUser(res2.data));
               console.log(res2.data);

@@ -1,5 +1,6 @@
 import React from "react";
-import Head from "next/head";
+// import Head from "next/head";
+import Head from '@components/Head';
 import Image from "next/image";
 import styles from "@styles/Home.module.css";
 import Navbar from "@components/Navbar";
@@ -37,7 +38,7 @@ export default function Home() {
     if (roles.length == 1 && roles[0] == "ROLE_STAFF") {
       setOnlyStaff(true);
     }
-    console.log(roles);
+    // console.log(roles);
   });
 
   return (
@@ -49,14 +50,7 @@ export default function Home() {
           margin-bottom: 10px;
         }
       `}</style>
-      <Head>
-        <title>Mitrais Carrot</title>
-        <meta
-          name="description"
-          content="Mitrais Carrot is a system used for administrative task of all company trainings."
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Head title="Dashboard" />
       <Navbar />
       <div className="w-5/6 mx-auto">
         {/* <main role="main" className="container mx-auto sm:px-4">
@@ -107,6 +101,7 @@ export default function Home() {
                 {
                   roles.includes("ROLE_FARMER") ?
                     <button
+                      id="to-farmer-dashboard"
                       onClick={() => router.push("/farmer")}
                       className="btn btn-carrot radius-5"
                     >

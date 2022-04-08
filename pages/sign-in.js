@@ -31,7 +31,7 @@ const SignIn = ({ authenticate, auth, error, token }) => {
       type: "AUTHENTICATE_ERROR",
       payload: null,
     });
-    console.log('init sign in page');
+    // console.log('init sign in page');
   }, []);
 
   const handleChange = (e) => {
@@ -53,7 +53,7 @@ const SignIn = ({ authenticate, auth, error, token }) => {
     // }, 3000);
 
     // console.log(loginData);
-    // axios.post("http://localhost:8181/api/auth/login", loginData)
+    // axios.post(basePath+"auth/login", loginData)
     //   .then((res) => {
     //     localStorage.setItem("token", res.data.token);
     //     localStorage.setItem("username", res.data.username);
@@ -144,7 +144,6 @@ const SignIn = ({ authenticate, auth, error, token }) => {
                       </div>
                       <div className="text-center mt-6">
                         <button
-                          id="btnSignIn"
                           type="button"
                           id="login-button"
                           className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"

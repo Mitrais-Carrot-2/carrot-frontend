@@ -4,6 +4,7 @@ import Modal from "@components/Modal";
 import moment from "moment";
 import { useState } from "react";
 import axios from "axios";
+import { basePath } from 'next.config';
 
 export default function CreateBarn(props) {
   const today = moment().format("YYYY-MM-DD");
@@ -17,7 +18,7 @@ export default function CreateBarn(props) {
 
   function passNewBarnWithApi() {
     console.log(newBarn);
-    axios.post("http://localhost:8181/api/farmer/barn/", newBarn)
+    axios.post(basePath+"farmer/barn/", newBarn)
       .then((res) => {
         console.log(res.data);
         //Return Barn info to Show Barn

@@ -14,7 +14,7 @@ import UpdateItem from "./features/updateItem";
 export default function BazaarItem() {
     const router = useRouter();
 
-    const url = 'http://localhost:8181/api/bazaar/item'
+    const url = 'basePath+'bazaar/item'
     const [bazaarItem, setBazaarItem] = useState([]);
     const [showCreateItem, setShowCreateItem] = useState(false);
     const [showUpdateItem, setShowUpdateItem] = useState(false);

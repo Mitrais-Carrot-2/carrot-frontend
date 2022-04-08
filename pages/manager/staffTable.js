@@ -133,4 +133,5 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(StaffTable);
+// export default connect(mapStateToProps, mapDispatchToProps)(StaffTable);
+export default StaffTable;

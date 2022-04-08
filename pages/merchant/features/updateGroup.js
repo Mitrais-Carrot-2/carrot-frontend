@@ -20,7 +20,7 @@ export default function UpdateGroup(props) {
     function updatePostGroup() {
         console.log("updating.....")
         console.log("val group: " + group)
-        axios.put(`http://localhost:8181/api/bazaar/group/${id}`, group)
+        axios.put(`${basePath}bazaar/group/${id}`, group)
             .then((res) => {
                 props.closeClick();
                 // props.refreshPage();

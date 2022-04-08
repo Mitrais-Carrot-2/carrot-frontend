@@ -8,13 +8,14 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { shareToGroup, setShareToGroup, getFreezerHistory } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
 import Router from 'next/router';
+import { basePath } from 'next.config';
 
 const ActionButton = (props) => {
     const { groupId, groupName, totalMember } = props;
     const [modalStaffOpen, setModalStaffOpen] = React.useState(false);
     const [modalShareOpen, setModalShareOpen] = React.useState(false);
 
-    // const [staff, setStaff] = React.useState([]);
+    const [staff, setStaff] = React.useState([]);
     // const [sendToGroup, setSendToGroup] = React.useState({
     //     groupId: 0,
     //     carrotAmount: 0,
@@ -24,7 +25,7 @@ const ActionButton = (props) => {
     const dispatch = useDispatch();
     
     const auth = useSelector((state) => (state.authentication ? state.authentication : {}));
-    const staff = useSelector((state) => (state.manager.staff ? state.manager.staff : {}));
+    // const staff = useSelector((state) => (state.manager.staff ? state.manager.staff : {}));
     const targetGroup = useSelector((state) => (state.manager.shareToGroup ? state.manager.shareToGroup : {}));
 
     const columnsStaff = [
@@ -58,7 +59,7 @@ const ActionButton = (props) => {
     ];
 
     const modalListStaff = (id) => {
-        axios.get(`http://localhost:8181/api/manager/group/${id}/staff/`, {
+        axios.get(`${basePath}manager/group/${id}/staff/`, {
             headers: {
                 Authorization: `Bearer ${auth.token}`,
                 "Access-Control-Allow-Origin": "*",

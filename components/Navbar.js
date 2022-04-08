@@ -73,7 +73,7 @@ export default function Navbar() {
           <Popover placement="bottom" ref={profileButtonRef}>
             <PopoverContainer className="ml-3">
               <PopoverHeader>
-                <div className="flex flex-col items-center mb-4 hover:bg-orange-500 ">
+                <div className="flex flex-col items-center mb-4">
                   <Image
                     className="h-auto w-full mx-auto rounded-full cursor-pointer hover:opacity-70"
                     alt="user-profile"
@@ -93,7 +93,7 @@ export default function Navbar() {
               <PopoverBody>
                 <div
                   onClick={() => router.push("/user/profile")}
-                  className="cursor-pointer hover:bg-orange-500 rounded hover:text-white"
+                  className="cursor-pointer py-1 hover:bg-orange-700 rounded hover:text-white"
                 >
                   <p className="text-center"> Settings</p>
                   {/* kok gak bisa implement checkbox di dalem pop overnya ??!!! naniiii - ilham */}
