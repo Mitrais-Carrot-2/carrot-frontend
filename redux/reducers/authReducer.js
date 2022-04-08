@@ -23,7 +23,7 @@ const authReducer = (state = initialState, action) => {
     case DEAUTHENTICATE:
       return state.credential = {};
     case AUTHENTICATE_ERROR:
-      console.log(action.payload);
+      // console.log(action.payload);
       let error = {
         error: action.payload
       };

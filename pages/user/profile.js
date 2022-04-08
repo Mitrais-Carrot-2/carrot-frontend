@@ -29,7 +29,7 @@ export default function Profile(/* props atau user */) {
 
   useEffect(() => {
     axios
-      .get(basePath+"user/" + user.supervisorId)
+      .get(process.env.NEXT_PUBLIC_API_URL+"user/" + user.supervisorId)
       .then((res) => {
         setSupervisorName(res.data.firstName + " " + res.data.lastName);
       });
@@ -269,7 +269,7 @@ export default function Profile(/* props atau user */) {
   function updateUserInformation() {
     axios
       .put(
-        basePath+"user/updateProfile/" + user.username,
+        process.env.NEXT_PUBLIC_API_URL+"user/updateProfile/" + user.username,
         userFormData
       )
       .then((res) => {
@@ -380,7 +380,7 @@ export default function Profile(/* props atau user */) {
     const formData = new FormData();
     formData.append("file", imageFormData, imageFormData.name);
     axios
-      .put(basePath+"user/Image/" + user.username, formData, {
+      .put(process.env.NEXT_PUBLIC_API_URL+"user/Image/" + user.username, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -435,14 +435,14 @@ export default function Profile(/* props atau user */) {
     if (passwordFormData.newPassword === passwordFormData.confirmPassword) {
       axios
         .put(
-          basePath+"user/updatePassword/" + user.username,
+          process.env.NEXT_PUBLIC_API_URL+"user/updatePassword/" + user.username,
           passwordFormData
         )
         .then((res) => {
           setModalPassword(false);
 
           axios
-            .get(basePath+"user/username/" + user.username)
+            .get(process.env.NEXT_PUBLIC_API_URL+"user/username/" + user.username)
             .then((res2) => {
               dispatch(setUser(res2.data));
               console.log(res2.data);

@@ -2,14 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import History from "./History";
-import { basePath } from 'next.config';
+
 
 export default function BarnHistory(props) {
   const [transfers, setTransfers] = useState([])
 
   useEffect(() => {
     axios
-      .get(basePath+"farmer/transfer/"+props.barnId)
+      .get(process.env.NEXT_PUBLIC_API_URL+"farmer/transfer/"+props.barnId)
       .then((res) => setTransfers(res.data));
   }, []);
 

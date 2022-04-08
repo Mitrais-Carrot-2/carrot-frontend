@@ -13,7 +13,7 @@ export default function BarnReward(props) {
   const [editedValue, setEditedValue] = useState({});
   useEffect(() => {
     axios
-      .get(`${basePath}admin/barnReward/${props.id.id}`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${props.id.id}`)
       .then((res) => {
         console.log(res);
         setReward(res.data);
@@ -25,7 +25,7 @@ export default function BarnReward(props) {
 
   function deleteReward(id) {
     axios
-      .delete(`${basePath}admin/barnReward/${id}`)
+      .delete(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${id}`)
       .then((res) => {
         console.log(res);
         const noDeleted = reward.filter((item) => item.id !== id);
@@ -38,7 +38,7 @@ export default function BarnReward(props) {
 
   function appendReward() {
     axios
-      .post(`${basePath}admin/barnReward/`, newReward)
+      .post(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/`, newReward)
       .then((res) => {
         console.log(res.data.t.id);
         setReward([
@@ -67,7 +67,7 @@ export default function BarnReward(props) {
       carrot_amount: editedValue.carrotAmount,
       giving_conditional: editedValue.givingConditional,
     }
-    axios.put(`${basePath}admin/barnReward/${id}`, send)
+    axios.put(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${id}`, send)
     .then((res) => {
       console.log(res);
     })

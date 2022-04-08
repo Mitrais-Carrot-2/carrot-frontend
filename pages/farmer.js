@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { Button } from "reactstrap";
 import jsCookie from "js-cookie";
 import Router from "next/router";
-import { basePath } from 'next.config';
+
 
 export default function Farmer() {
   const [barns, setBarns] = useState([]);
@@ -22,10 +22,15 @@ export default function Farmer() {
     //   Router.push("/");
     // } else {
       axios
-        .get(basePath+"farmer/barn/")
+        .get(process.env.NEXT_PUBLIC_API_URL+"farmer/barn/")
         .then((res) => setBarns(res.data));
     // }
   }, []);
+
+  function updateBarns(newBarns){
+    setBarns(newBarns)
+    console.log(newBarns)
+  }
 
   return (
     <body>
@@ -46,11 +51,14 @@ export default function Farmer() {
           onClick={() => {
             setShowBarns(false);
             setShowDistribution(true);
-            barns.find((barn) => {
-              if (barn.isActive) {
-                setActiveBarn(barn);
-              }
-            });
+            // barns.find((barn) => {
+            //   if (barn.isActive) {
+            //     setActiveBarn(barn);
+            //   } else{
+            //     setActiveBarn({})
+            //   }
+            // });
+            setActiveBarn(barns.find((barn) => barn.isActive));
           }}
         >
           Distribution
@@ -58,7 +66,7 @@ export default function Farmer() {
       </div>
 
       <div className="container">
-        {showBarns && <ShowBarn barns={barns} />}
+        {showBarns && <ShowBarn updateBarns={updateBarns} />}
         {showDistribution && <Distribution barn={activeBarn} />}
       </div>
     </body>
