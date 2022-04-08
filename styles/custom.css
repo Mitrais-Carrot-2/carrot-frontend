@@ -28,6 +28,7 @@ h2 {
   font-size: 1.8rem !important;
 }
 
+
 /* Custom page CSS
   -------------------------------------------------- */
 
@@ -35,7 +36,7 @@ h2 {
 
 body > .container {
   padding: 10px 0 0 0 !important;
-  width: 83.333333%;
+  width: 75%;
   margin: 0 auto;
 }
 /* .container {
@@ -233,6 +234,12 @@ table td {
 .card-title {
   font-size: 13px;
   font-weight: bold;
+}
+
+.card-title-orange {
+  font-size: 13px;
+  font-weight: bold;
+  color: #ff5722;
 }
 
 .card-body p {
@@ -654,4 +661,13 @@ a:hover {
 
 .modal-content {
   padding: 0 !important;
+}
+
+.item-border-odd .w-full:nth-child(odd) {
+  border-right: 1px solid rgb(211, 211, 211);
+  padding-right: 16px;
+}
+
+.item-border-odd .w-full:nth-child(even) {
+  padding-left: 4px;
 }
