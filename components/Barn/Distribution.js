@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Button } from "reactstrap";
 import BarnHistory from "./BarnHistory";
 import axios from "axios";
+import { basePath } from 'next.config';
 
 export default function Distribution(props) {
   const [distributeCarrot, setDistributeCarrot] = useState(false);

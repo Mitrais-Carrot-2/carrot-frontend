@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios, { Axios } from "axios";
+import { basePath } from 'next.config';
 
 import Reward from "./Reward";
 
