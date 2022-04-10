@@ -3,13 +3,13 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
-import defaultImage from "@public/img/defaultImage.png";
 import backImage from "@public/img/back.png";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import BuyItemModal from "@components/employee/BuyItemModal";
 import { Modal, ModalHeader, ModalBody, ModalFooter} from "reactstrap";
 import checkGreen from "@public/img/checkGreen.png";
+import Navbar from "@components/Navbar";
 
 export default function itemDetails(props){
     const router = useRouter()
@@ -93,14 +93,14 @@ export default function itemDetails(props){
     function renderItemDetails(item){    
         return (
             <>
-                <main role="main" className="container">
-                    <h2 className="my-4 pl-0 text-grey ml-0">
-                        <span className="back-button mr-3">
+                <main role="main">
+                    <h2 className="mb-4 text-grey back">
+                        <span className="back-button mr-6">
                             <Link href="/">
                                 <Image src={backImage} alt="" className="back" />
                             </Link>
-                        </span> 
-                        {item.name}
+                        </span>                         
+                        BAZAAR
                     </h2>
                 </main>
                 <section className="bazaar-1-item mb-4">
@@ -152,6 +152,7 @@ export default function itemDetails(props){
 
     return (
         <body>
+            <Navbar />
             <div className="container">         
                 {item? renderItemDetails(item) : null}
                 {item? <BuyItemModal show={showBuyModal} toggle={toggleBuyModal} object={item} action={requestBuy} /> : null}

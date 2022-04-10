@@ -21,7 +21,7 @@ import { createWrapper } from "next-redux-wrapper";
 import jsCookie from "js-cookie";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Employee from "@components/employee/Employee";
+import Employee from "./employee";
 import ManagerRewardModal from "@components/ManagerRewardModal";
 import StockistRewardModal from "@components/StockistRewardModal";
 

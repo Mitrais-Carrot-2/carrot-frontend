@@ -29,7 +29,12 @@ h2 {
 }
 
 .mini-card h3 {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.mini-card h4 {
+  font-size: 1rem;
   margin-bottom: 5px;
 }
 
@@ -39,7 +44,7 @@ h2 {
 /* Not required for template or sticky footer method. */
 
 body > .container {
-  padding: 10px 0 0 0 !important;
+  padding: 0px 0 0 0 !important;
   width: 75%;
   margin: 0 auto;
 }
@@ -149,8 +154,8 @@ table td {
   border-color: #33a968;
 }
 
-/* .btn-primary:not(:disabled):not(.disabled).active,
-.btn-primary:not(:disabled):not(.disabled):active, */
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
 .show > .btn-primary.dropdown-toggle {
   background-color: #1e7846;
   border-color: #1e7846;
@@ -291,6 +296,21 @@ table td {
   cursor: not-allowed;
 }
 
+.btn-outline-white {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-outline-white:hover {
+  background-color: #fff;
+  border: 2px solid #fff;
+  color: #333;
+}
+
 .text-grey {
   color: #838e9b;
   text-transform: uppercase;
@@ -300,113 +320,76 @@ table td {
   max-height: 80px;
 }
 
-.box-profile {
-  border-radius: 5px;
-  min-height: 135px;
-  background: rgba(76, 212, 196, 1);
-  background: -moz-linear-gradient(
-    -45deg,
-    rgba(76, 212, 196, 1) 0%,
-    rgba(17, 155, 210, 1) 100%
-  );
-  background: -webkit-gradient(
-    left to top,
-    right to bottom,
-    color-stop(0%, rgba(76, 212, 196, 1)),
-    color-stop(100%, rgba(17, 155, 210, 1))
-  );
-  background: -webkit-linear-gradient(
-    -45deg,
-    rgba(76, 212, 196, 1) 0%,
-    rgba(17, 155, 210, 1) 100%
-  );
-  background: -o-linear-gradient(
-    -45deg,
-    rgba(76, 212, 196, 1) 0%,
-    rgba(17, 155, 210, 1) 100%
-  );
-  background: -ms-linear-gradient(
-    -45deg,
-    rgba(76, 212, 196, 1) 0%,
-    rgba(17, 155, 210, 1) 100%
-  );
-  background: linear-gradient(
-    135deg,
-    rgba(76, 212, 196, 1) 0%,
-    rgba(17, 155, 210, 1) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4cd4c4', endColorstr='#119bd2', GradientType=1);
+.mini-card-profile {
+  background: #1FA1CF;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom right, #54cfc5, #1FA1CF);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom right,#54cfc5, #1FA1CF);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-box-shadow: 2px 6px 48px 0px rgba(0, 139, 194, 0.29);
   -moz-box-shadow: 2px 6px 48px 0px rgba(0, 139, 194, 0.29);
   box-shadow: 2px 6px 48px 0px rgba(0, 139, 194, 0.29);
 }
 
-.box-carrot {
-  background: #fc4a1a;
+.mini-card-basket {
+  background: #FB4E1B;
   /* fallback for old browsers */
-  background: -webkit-linear-gradient(to to top left, #f7b733, #fc4a1a);
+  background: -webkit-linear-gradient(to bottom right, #FB4E1B, #F5AB37);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to to top left, #f7b733, #fc4a1a);
+  background: linear-gradient(to bottom right, #FB4E1B, #F5AB37);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  border-radius: 5px;
-  min-height: 125px;
   -webkit-box-shadow: 2px 6px 48px 0px rgba(255, 210, 171, 1);
   -moz-box-shadow: 2px 6px 48px 0px rgba(255, 210, 171, 1);
   box-shadow: 2px 6px 48px 0px rgba(255, 210, 171, 1);
-  min-height: 135px;
 }
 
-.box-additional {
-  background: rgba(85, 6, 204, 1);
-  background: -moz-linear-gradient(
-    -45deg,
-    rgba(85, 6, 204, 1) 0%,
-    rgba(10, 128, 255, 1) 100%
-  );
-  background: -webkit-gradient(
-    left to top,
-    right to bottom,
-    color-stop(0%, rgba(85, 6, 204, 1)),
-    color-stop(100%, rgba(10, 128, 255, 1))
-  );
-  background: -webkit-linear-gradient(
-    -45deg,
-    rgba(85, 6, 204, 1) 0%,
-    rgba(10, 128, 255, 1) 100%
-  );
-  background: -o-linear-gradient(
-    -45deg,
-    rgba(85, 6, 204, 1) 0%,
-    rgba(10, 128, 255, 1) 100%
-  );
-  background: -ms-linear-gradient(
-    -45deg,
-    rgba(85, 6, 204, 1) 0%,
-    rgba(10, 128, 255, 1) 100%
-  );
-  background: linear-gradient(
-    135deg,
-    rgba(85, 6, 204, 1) 0%,
-    rgba(10, 128, 255, 1) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5506cc', endColorstr='#0a80ff', GradientType=1);
-  border-radius: 5px;
+.mini-card-history {
+  background: #530BCE;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom right, #530BCE, #1077FB);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom right, #530BCE, #1077FB);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-box-shadow: 2px 6px 48px 0px rgba(173, 210, 255, 1);
   -moz-box-shadow: 2px 6px 48px 0px rgba(173, 210, 255, 1);
   box-shadow: 2px 6px 48px 0px rgba(173, 210, 255, 1);
-  min-height: 135px;
 }
 
-.btn-outline-white {
-  background-color: transparent;
-  border: 2px solid #fff;
-  color: #fff;
+.mini-card-reward {
+  background: #5900b9;
+  /* Old Browsers */
+  background: -webkit-linear-gradient(to bottom right, #5900b9, #3885bd);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom right, #5900b9, #3885bd);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-box-shadow: 4px 5px 35px 0px rgba(121, 42, 199, 0.32);
+  -moz-box-shadow: 4px 5px 35px 0px rgba(121, 42, 199, 0.32);
+  box-shadow: 4px 5px 35px 0px rgba(121, 42, 199, 0.32);
 }
 
-.btn-outline-white:hover {
-  background-color: #fff;
-  border: 2px solid #fff;
-  color: #333;
+.mini-card-shared {
+  background: #130765;
+  /* Old Browsers */
+  background: -webkit-linear-gradient(to bottom right, #130765, #01b1e7);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom right, #130765, #01b1e7);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-box-shadow: 4px 5px 35px 0px rgba(78, 116, 212, 1);
+  -moz-box-shadow: 4px 5px 35px 0px rgba(78, 116, 212, 1);
+  box-shadow: 4px 5px 35px 0px rgba(78, 116, 212, 1);
+}
+
+.mini-card-bazaar {
+  background: #02a4d6;
+  /* Old Browsers */
+  background: -webkit-linear-gradient(to bottom right, #02a4d6, #8000ff);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom right, #02a4d6, #8000ff);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-box-shadow: 4px 5px 35px 0px rgba(158, 195, 235, 1);
+  -moz-box-shadow: 4px 5px 35px 0px rgba(158, 195, 235, 1);
+  box-shadow: 4px 5px 35px 0px rgba(158, 195, 235, 1);
 }
 
 a:not([href]):not([tabindex]) {
@@ -456,60 +439,6 @@ a:not([href]):not([tabindex]) {
 .carrot-orange {
   color: #ff5722;
   font-size: 18px;
-}
-
-.box-reward {
-  background: #5900b9;
-  /* Old Browsers */
-  background: -webkit-linear-gradient(to to bottom left, #5900b9, #3885bd);
-  /*Safari 5.1-6*/
-  background: -o-linear-gradient(to to bottom left, #5900b9, #3885bd);
-  /*Opera 11.1-12*/
-  background: -moz-linear-gradient(to to bottom left, #5900b9, #3885bd);
-  /*Fx 3.6-15*/
-  background: linear-gradient(to to bottom left, #5900b9, #3885bd);
-  /*Standard*/
-  min-height: 155px;
-  border-radius: 5px;
-  -webkit-box-shadow: 4px 5px 35px 0px rgba(121, 42, 199, 0.32);
-  -moz-box-shadow: 4px 5px 35px 0px rgba(121, 42, 199, 0.32);
-  box-shadow: 4px 5px 35px 0px rgba(121, 42, 199, 0.32);
-}
-
-.box-shared {
-  background: #130765;
-  /* Old Browsers */
-  background: -webkit-linear-gradient(to bottom left, #130765, #01b1e7);
-  /*Safari 5.1-6*/
-  background: -o-linear-gradient(to bottom left, #130765, #01b1e7);
-  /*Opera 11.1-12*/
-  background: -moz-linear-gradient(to bottom left, #130765, #01b1e7);
-  /*Fx 3.6-15*/
-  background: linear-gradient(to bottom left, #130765, #01b1e7);
-  /*Standard*/
-  min-height: 155px;
-  border-radius: 5px;
-  -webkit-box-shadow: 4px 5px 35px 0px rgba(78, 116, 212, 1);
-  -moz-box-shadow: 4px 5px 35px 0px rgba(78, 116, 212, 1);
-  box-shadow: 4px 5px 35px 0px rgba(78, 116, 212, 1);
-}
-
-.box-bazaar {
-  background: #02a4d6;
-  /* Old Browsers */
-  background: -webkit-linear-gradient(to top left, #02a4d6, #8000ff);
-  /*Safari 5.1-6*/
-  background: -o-linear-gradient(to top left, #02a4d6, #8000ff);
-  /*Opera 11.1-12*/
-  background: -moz-linear-gradient(to top left, #02a4d6, #8000ff);
-  /*Fx 3.6-15*/
-  background: linear-gradient(to top left, #02a4d6, #8000ff);
-  /*Standard*/
-  min-height: 155px;
-  border-radius: 5px;
-  -webkit-box-shadow: 4px 5px 35px 0px rgba(158, 195, 235, 1);
-  -moz-box-shadow: 4px 5px 35px 0px rgba(158, 195, 235, 1);
-  box-shadow: 4px 5px 35px 0px rgba(158, 195, 235, 1);
 }
 
 .sub-title {

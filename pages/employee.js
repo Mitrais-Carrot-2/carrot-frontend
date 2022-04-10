@@ -7,7 +7,7 @@ import StockistRewardModal from "@components/StockistRewardModal";
 import ManagerRewardModal from "@components/ManagerRewardModal";
 import { useRouter } from "next/router";
 import SharingLevelModal from "@components/SharingLevelModal";
-import MiniDashboard from "@components/employee/MiniDashboard";
+import MiniProfileCards from "@components/employee/MiniProfileCards";
 import BazaarCard from "@components/employee/BazaarCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -34,7 +34,7 @@ export default function Employee(props) {
     return (
       <>
         {!props.onlyStaff ?
-          <div className="container search-box border-1 sm:px-4">
+          <div>
             <div className="flex flex-wrap">
               {roles.map(role => {
                   if (role != "STAFF") {
@@ -67,10 +67,10 @@ export default function Employee(props) {
       <Navbar />
       <div className="container">
         {renderRoles(props.roles)}
-        <main role="main" className="container mx-auto sm:px-4">
-          <h2 className="mt-4 pl-0 text-grey ml-0">DASHBOARD</h2>
+        <main role="main" className="mx-auto mb-3">
+          <h2 className="mt-4 pl-0 text-grey ml-2">DASHBOARD</h2>
         </main>
-        <MiniDashboard basket={basket} user={user}/>
+        <MiniProfileCards basket={basket} user={user}/>
         <BazaarContainer basket={basket} />
         {/* <SharingLevelModal />
         <ManagerRewardModal />
