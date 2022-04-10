@@ -46,7 +46,7 @@ export default function BazaarItemCard(props) {
     function renderOneItem(item) {
         return (
             <div className="flex flex-wrap items-center">
-                <div className="md:w-1/2 pr-4 pl-4 br-1 flex justify-center">
+                <div className="md:w-1/2 pr-4 pl-4 pt-3 br-1 flex justify-center">
                     <Image
                         className="max-w-full h-auto p-6"
                         alt=""
@@ -56,7 +56,7 @@ export default function BazaarItemCard(props) {
                         height={300}
                     />
                 </div>
-                <div className="md:w-1/2 p-3 self-center">
+                <div className="md:w-1/2 px-10 self-center">
                     <h2 className="my-3">{item.name}</h2>
                     <h4>
                         <strong className="carrot-orange mt-2">{item.price} Carrots</strong>
