@@ -28,6 +28,10 @@ h2 {
   font-size: 1.8rem !important;
 }
 
+.mini-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+}
 
 /* Custom page CSS
   -------------------------------------------------- */
@@ -123,20 +127,30 @@ table td {
   letter-spacing: 1px;
 }
 
-.btn-primary {
-  background-color: #4bbc7e;
-  border-color: #4bbc7e;
+.btn-info {
+  -webkit-box-shadow: -2px 6px 33px -8px rgba(23, 162, 184, 1);
+  -moz-box-shadow: -2px 6px 33px -8px rgba(23, 162, 184, 1);
+  box-shadow: -2px 6px 33px -8px rgba(23, 162, 184, 1);
 }
 
+.btn-success,
+.btn-primary {
+  background-color:  #4bbc7e;
+  border-color: #4bbc7e;
+  -webkit-box-shadow: -2px 6px 33px -8px rgba(75, 188, 126, 1);
+  -moz-box-shadow: -2px 6px 33px -8px rgba(75, 188, 126, 1);
+  box-shadow: -2px 6px 33px -8px rgba(75, 188, 126, 1);
+}
+
+
 .btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active {
+.btn-primary:focus{
   background-color: #33a968;
   border-color: #33a968;
 }
 
-.btn-primary:not(:disabled):not(.disabled).active,
-.btn-primary:not(:disabled):not(.disabled):active,
+/* .btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active, */
 .show > .btn-primary.dropdown-toggle {
   background-color: #1e7846;
   border-color: #1e7846;
@@ -220,7 +234,8 @@ table td {
 }
 
 .modal-content {
-  padding: 1.5rem;
+  /* padding: 1.5rem; */
+  padding: 0 !important;
 }
 
 .modal-title {
@@ -251,7 +266,7 @@ table td {
 .btn-carrot {
   background-color: #ff5722;
   color: #fff;
-  border-radius: 0 0 5px 5px;
+  border-radius: 5px 5px 5px 5px;
   border: 1px solid #ff5722;
   -webkit-box-shadow: -2px 6px 33px -8px rgba(255, 87, 34, 1);
   -moz-box-shadow: -2px 6px 33px -8px rgba(255, 87, 34, 1);
@@ -264,6 +279,16 @@ table td {
   transition: 0.3s all ease;
   border-color: #ff7043;
   color: #fff;
+}
+
+.btn-carrot:disabled {
+  background-color: #d8d8d8;
+  border: 1px solid #d8d8d8;
+  -webkit-box-shadow:  0px 0px;
+  -moz-box-shadow: 0px 0px;
+  box-shadow: 0px 0px;
+  color: #999;
+  cursor: not-allowed;
 }
 
 .text-grey {
@@ -585,19 +610,6 @@ a:not([href]):not([tabindex]) {
   margin-right: 10px;
 }
 
-.btn-info {
-  -webkit-box-shadow: -2px 6px 33px -8px rgba(23, 162, 184, 1);
-  -moz-box-shadow: -2px 6px 33px -8px rgba(23, 162, 184, 1);
-  box-shadow: -2px 6px 33px -8px rgba(23, 162, 184, 1);
-}
-
-.btn-success,
-.btn-primary {
-  -webkit-box-shadow: -2px 6px 33px -8px rgba(75, 188, 126, 1);
-  -moz-box-shadow: -2px 6px 33px -8px rgba(75, 188, 126, 1);
-  box-shadow: -2px 6px 33px -8px rgba(75, 188, 126, 1);
-}
-
 .table-image {
   max-width: 60px;
 }
@@ -628,9 +640,11 @@ a:not([href]):not([tabindex]) {
 
 .box-title-hr {
   border-top: 3px solid #ff5722;
+  opacity: 100%;
   width: 30px;
   margin-left: 0;
   margin-bottom: 0px;
+  color: #ff5722;
 }
 
 a:hover {
@@ -657,10 +671,6 @@ a:hover {
 
 .rdt_TableBody .rdt_TableRow:nth-child(even):hover {
   background-color: #f1f1f1;
-}
-
-.modal-content {
-  padding: 0 !important;
 }
 
 .item-border-odd .w-full:nth-child(odd) {

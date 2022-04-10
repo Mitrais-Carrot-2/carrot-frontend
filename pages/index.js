@@ -21,7 +21,7 @@ import { createWrapper } from "next-redux-wrapper";
 import jsCookie from "js-cookie";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Employee from "./employee";
+import Employee from "@components/employee/Employee";
 import ManagerRewardModal from "@components/ManagerRewardModal";
 import StockistRewardModal from "@components/StockistRewardModal";
 
@@ -34,12 +34,26 @@ export default function Home() {
 
   // console.log(roles);
   let roles = (jsCookie.get("roles"))?jsCookie.get("roles").split(","):"";
+  
+  // if (roles) roles.forEach((role, i) => {roles[i] = role.substring(5)});
+  // else console.log("Sign Up First")
+
   useEffect(() => {
-    if (roles.length == 1 && roles[0] == "ROLE_STAFF") {
+    if (roles) roles.forEach((role, i) => {roles[i] = role.substring(5)})
+
+    if (roles.length == 1 && roles[0] == "STAFF") {
       setOnlyStaff(true);
     }
     // console.log(roles);
   });
+
+  function checkRoles(){
+    if (roles) return <Employee onlyStaff={onlyStaff} roles={roles} />;
+    else {
+      router.push("/sign-in");
+      return "";
+    }
+  }
 
   return (
     <>
@@ -50,7 +64,9 @@ export default function Home() {
           margin-bottom: 10px;
         }
       `}</style>
-      <Employee onlyStaff={onlyStaff} roles={roles} />
+      <Head />
+      {checkRoles()}
+      
     </>
   );
 }

@@ -27,6 +27,8 @@ export default function Profile(/* props atau user */) {
   });
   const [passwordFormData, setPasswordFormData] = useState({});
 
+  console.log("picture = ", picture)
+
   useEffect(() => {
     axios
       .get(process.env.NEXT_PUBLIC_API_URL+"user/" + user.supervisorId)

@@ -3,13 +3,29 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 import defaultImage from "@public/img/defaultImage.png";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 
 export default function BazaarItemCard(props) {
     const router = useRouter()
-    const viewDetailsButtonClassOne = "inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded my-2 py-1 px-3 leading-normal no-underline btn-carrot radius-5";
-    const viewDetailsButtonClassMany =  "inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline btn-carrot";
+    const [image, setImage] = useState(defaultImage)
+    const viewDetailsButtonClassOne = "btn btn-carrot"
+    const viewDetailsButtonClassMany = "btn btn-carrot rounded-t-none"
 
+    const urlImage = `${process.env.NEXT_PUBLIC_API_URL}bazaar/getImage/${props.item.id}`
+
+    useEffect(() => {
+        axios.get(urlImage)
+        .then(res => {
+            setImage(urlImage)
+        })
+        .catch(err => {
+            if (err.response.status == 404)
+                console.log("item ", props.item.id, " image not found")
+            else console.log(err.message)
+        })
+    })
 
     function renderViewDetailsButton(classNames){
         return(
@@ -17,7 +33,7 @@ export default function BazaarItemCard(props) {
                 onClick={() => {
                     router.push({
                         pathname : "/itemDetails/[bazaarId]/[itemId]",
-                        query : {bazaarId: props.bazaar.id, bazaarName:props.bazaar.bazaarName, itemId: props.item.id}
+                        query : {bazaarId: props.item.bazaar.id, bazaarName:props.item.bazaar.bazaarName, itemId: props.item.id, carrot:props.basket.carrotAmount, image:image}
                     })
             }}
                 className={classNames}
@@ -29,16 +45,18 @@ export default function BazaarItemCard(props) {
 
     function renderOneItem(item) {
         return (
-            <div className="flex flex-wrap">
-                <div className="md:w-1/2 pr-4 pl-4 br-1">
+            <div className="flex flex-wrap items-center">
+                <div className="md:w-1/2 pr-4 pl-4 br-1 flex justify-center">
                     <Image
                         className="max-w-full h-auto p-6"
                         alt=""
-                        src={defaultImage}
+                        src={image}
                         objectFit="cover"
+                        width={500}
+                        height={300}
                     />
                 </div>
-                <div className="md:w-1/2 pr-4 pl-4 self-center p-12">
+                <div className="md:w-1/2 p-3 self-center">
                     <h2 className="my-3">{item.name}</h2>
                     <h4>
                         <strong className="carrot-orange mt-2">{item.price} Carrots</strong>
@@ -52,22 +70,22 @@ export default function BazaarItemCard(props) {
 
     function renderTwoItems(item) {
         return (
-            <div className="w-full px-3">
-                <div className="text-center h-auto p-0 bazaar-item items-center mb-2">
+            <div className="w-full p-3">
+                <div className="text-center h-auto p-0 bazaar-item items-center mb-2 flex justify-center">
                     <Image
                         alt=""
-                        src={defaultImage}
-                        // width={300}
-                        height={700}
+                        src={image}
+                        width={500}
+                        height={250}
                         objectFit="cover"
                     />
                 </div>
-                <div className="px-3">
+                <div className="x-3 mb-3">
                     <h2 className="my-3">{item.name}</h2>
                     <h4>
                         <strong className="carrot-orange">{item.price} Carrots</strong>
                     </h4>
-                    <p className="my-2">{item.description}</p>
+                    <p className="my-3">{item.description}</p>
                     {renderViewDetailsButton(viewDetailsButtonClassOne)}
                 </div>
             </div>
@@ -77,11 +95,13 @@ export default function BazaarItemCard(props) {
     function renderManyItems(item) {
         return (
             <div className="w-full px-2 py-2">
-                <div className="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300">
+                <div className="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 card justify-center">
                     <Image
                         className="w-full rounded rounded-t"
                         alt=""
-                        src={defaultImage}
+                        src={image}
+                        width={250}
+                        height={250}
                         objectFit="cover"
                     />
                     <div className="flex-auto p-6 card-body">

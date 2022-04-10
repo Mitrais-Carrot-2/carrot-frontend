@@ -1,4 +1,4 @@
-import "bootstrap/dist/css/bootstrap.css";
+import 'bootstrap/dist/css/bootstrap.css';
 import React, { useEffect } from "react";
 import "@styles/custom.css";
 import "@styles/globals.css";
