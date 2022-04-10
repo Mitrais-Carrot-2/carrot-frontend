@@ -45,7 +45,7 @@ export default function BazaarItemCard(props) {
 
     function renderOneItem(item) {
         return (
-            <div className="flex flex-wrap items-center">
+            <div className="flex flex-wrap items-center mb-3">
                 <div className="md:w-1/2 pr-4 pl-4 pt-3 br-1 flex justify-center">
                     <Image
                         className="max-w-full h-auto p-6"
