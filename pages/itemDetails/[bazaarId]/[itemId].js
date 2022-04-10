@@ -106,7 +106,7 @@ export default function itemDetails(props){
                 <section className="bazaar-1-item mb-4">
                     <div className="container search-box py-4">
                         <div className="row d-flex items-center">
-                            <div className="col-md-12">
+                            <div className="col-md-12 mb-3">
                                 <hr className="box-title-hr"/>
                                 <h4 className="mt-2 box-title">{bazaarName}</h4>
                             </div>
@@ -120,7 +120,7 @@ export default function itemDetails(props){
                                     height={500} 
                                 />
                             </div>
-                            <div className="col-md-6 align-self-center p-4">
+                            <div className="col-md-6 align-self-center px-10">
                                 <h2 className="my-3">{item.name}</h2>
                                 <h4><strong className="carrot-orange my-3">{item.price} Carrots</strong></h4>
                                 <p className="my-3">{item.description}</p>
