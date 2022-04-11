@@ -48,7 +48,8 @@ export default function TransferHistory() {
             selector: row => row.note,
             sortable: true,
             width: "400px",
-            wrap:true
+            wrap:true,
+            headerClassName:"flex justify-center"
 
         },
         {
