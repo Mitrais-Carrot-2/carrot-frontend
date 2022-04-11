@@ -6,7 +6,6 @@ import defaultProduct from "@public/img/default-product.png";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-
 export default function BazaarItemCard(props) {
     const router = useRouter()
     const [image, setImage] = useState(defaultProduct)
@@ -21,8 +20,10 @@ export default function BazaarItemCard(props) {
             setImage(urlImage)
         )
         .catch(err => {
-            if (err.response.status == 404)
-                console.log("item ", props.item.id, " image not found")
+            if (err.response.status == 404){
+                // console.log("item ", props.item.id, " image not found")
+                setImage(defaultProduct)
+            }
             else console.log(err.message)
         })
     }, [])
