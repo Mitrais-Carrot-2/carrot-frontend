@@ -8,22 +8,21 @@ export default function BazaarCard(props) {
     const [numItem, setNumItem] = useState()
 
 
-    const urlItems = `http://localhost:8181/api/bazaar/${props.bazaar.id}/items`
+    const urlItems = `${process.env.NEXT_PUBLIC_API_URL}bazaar/${props.bazaar.id}/items`
 
     useEffect(() => {
         axios.get(urlItems)
         .then(res => {
-            console.log("items data", res.data) 
             setItems(res.data)
-            console.log("res data length = ", res.data.length)
             setNumItem(res.data.length)
         })
         .catch(err => {console.log(err.message)})
     }, [])
 
+
     const renderBazaarItems = () => {
         return items.map(item => {
-            return <BazaarItemCard key={item.id} bazaar={props.bazaar} item={item} numItem={numItem} />
+            return <BazaarItemCard key={item.id} item={item} numItem={numItem} basket={props.basket} />
         })
     }
 
@@ -47,12 +46,12 @@ export default function BazaarCard(props) {
         return (
             <div className="bazaar-2-items mb-4">
                 <div className="container mx-auto sm:px-4 search-box py-4">
-                <div className="flex flex-wrap justify-center">
+                <div className="flex flex-wrap justify-stretch">
                     <div className="md:w-full pr-4 pl-4">
                         <hr className="box-title-hr" />
                         <h4 className="my-2 box-title">{props.bazaar.bazaarName}</h4>
                     </div>
-                    <div className="grid grid-cols-2 gap-0">
+                    <div className="grid grid-cols-2 gap-0 w-full">
                         {renderBazaarItems()}
                     </div>
                 </div>
@@ -87,7 +86,7 @@ export default function BazaarCard(props) {
             return (bazaarTwoItems())
         }
         else if (numItem == 3){
-            return (bazaarManyItems("columns-3"))
+            return (bazaarManyItems("grid grid-cols-3 gap-2"))
         }
         else{
             return (bazaarManyItems("grid grid-cols-4 gap-2"))

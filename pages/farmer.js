@@ -27,6 +27,11 @@ export default function Farmer() {
     // }
   }, []);
 
+  function updateBarns(newBarns){
+    setBarns(newBarns)
+    console.log(newBarns)
+  }
+
   return (
     <body>
       <Navbar />
@@ -46,11 +51,14 @@ export default function Farmer() {
           onClick={() => {
             setShowBarns(false);
             setShowDistribution(true);
-            barns.find((barn) => {
-              if (barn.isActive) {
-                setActiveBarn(barn);
-              }
-            });
+            // barns.find((barn) => {
+            //   if (barn.isActive) {
+            //     setActiveBarn(barn);
+            //   } else{
+            //     setActiveBarn({})
+            //   }
+            // });
+            setActiveBarn(barns.find((barn) => barn.isActive));
           }}
         >
           Distribution
@@ -58,7 +66,7 @@ export default function Farmer() {
       </div>
 
       <div className="container">
-        {showBarns && <ShowBarn barns={barns} />}
+        {showBarns && <ShowBarn updateBarns={updateBarns} />}
         {showDistribution && <Distribution barn={activeBarn} />}
       </div>
     </body>

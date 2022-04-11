@@ -7,75 +7,54 @@ import StockistRewardModal from "@components/StockistRewardModal";
 import ManagerRewardModal from "@components/ManagerRewardModal";
 import { useRouter } from "next/router";
 import SharingLevelModal from "@components/SharingLevelModal";
-import MiniDashboard from "@components/employee/MiniDashboard";
+import MiniProfileCards from "@components/employee/MiniProfileCards";
 import BazaarCard from "@components/employee/BazaarCard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import BazaarContainer from "@components/employee/BazaarContainer"
+import { useSelector } from "react-redux";
+
 
 export default function Employee(props) {
   const router = useRouter();
+
+  const [basket, setBasket] = useState();
+  const user = useSelector((state) => (state.user.info ? state.user.info : {}));
+
+  const urlUser = process.env.NEXT_PUBLIC_API_URL + "basket/" + user.id;
+
+  useEffect(() => {
+    axios.get(urlUser)
+      .then(res => {
+        setBasket(res.data.basket)
+      })
+      .catch(err => {console.log(err.message)})
+  }, [])
 
   function renderRoles(roles){
     return (
       <>
         {!props.onlyStaff ?
-          <div className="container search-box border-1 sm:px-4">
-            {/* <div className="flex flex-wrap">
-            <div className="md:w-full pr-4 pl-4">
-            <h4 className="text-grey-dark">Choose your role:</h4>
-            </div>
-          </div> */}
+          <div>
             <div className="flex flex-wrap">
-              {
-                roles.includes("ROLE_MANAGER") ?
-                  <button
-                    id="menu-manager"
-                    type="button"
-                    onClick={() => router.push("/manager")}
-                    className="btn btn-carrot radius-5 bg-[#ff5722] mx-2"
-                  >
-                    Manager
-                  </button>
-                  : null
-              }
-              {/* <button
-                onClick={() => router.push("/employee")}
-                className="btn btn-carrot radius-5"
-              >
-                Employee
-            </button> */}
-              {
-                roles.includes("ROLE_MERCHANT") ?
-                  <button
-                    onClick={() => router.push("/merchant")}
-                    className="btn btn-carrot radius-5 mx-2"
-                  >
-                    Merchant
-                  </button>
-                  : null
-              }
-              {
-                roles.includes("ROLE_FARMER") ?
-                  <button
-                    id="to-farmer-dashboard"
-                    onClick={() => router.push("/farmer")}
-                    className="btn btn-carrot radius-5 mx-2"
-                  >
-                    Farmer
-                  </button>
-                  : null
-              }
-              {
-                roles.includes("ROLE_ADMIN") ?
-                  <button
-                    onClick={() => router.push("/admin")}
-                    className="btn btn-carrot radius-5 mx-2"
-                  >
-                    {" "}
-                    Administrator
-                  </button>
-                  : null
+              {roles.map(role => {
+                  if (role != "STAFF") {
+                    let roleTxt = "";
+                    if (role == "ADMIN") roleTxt = "ADMINISTRATOR"
+                    else roleTxt = role
+                    return (
+                      <button
+                      onClick={() => router.push("/"+role.toLowerCase())}
+                      className="btn btn-carrot radius-5 mx-2"
+                      >
+                        {roleTxt}
+                      </button>
+                    )
+                  }
+                  else {
+                    return ("")
+                  }
+                })
               }
             </div>
           </div>
@@ -86,18 +65,17 @@ export default function Employee(props) {
 
   return (
     <body>
-      <Head />
       <Navbar />
       <div className="container">
         {renderRoles(props.roles)}
-        <main role="main" className="container mx-auto sm:px-4">
-          <h2 className="mt-4 pl-0 text-grey ml-0">DASHBOARD</h2>
+        <main role="main" className="mx-auto mb-3">
+          <h2 className="mt-4 pl-0 text-grey ml-2">DASHBOARD</h2>
         </main>
-        <MiniDashboard/>
-        <BazaarContainer/>
-        <SharingLevelModal />
+        <MiniProfileCards basket={basket} user={user}/>
+        <BazaarContainer basket={basket} />
+        {/* <SharingLevelModal />
         <ManagerRewardModal />
-        <StockistRewardModal />
+        <StockistRewardModal /> */}
       </div>
       <Footer />
     </body>

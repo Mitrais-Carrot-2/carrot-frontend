@@ -6,20 +6,24 @@ import { useState, useEffect } from "react";
 export default function BazaarContainer(props) { 
     const [bazaars, setBazaars] = useState([])
 
-    const urlBazaar = 'http://localhost:8181/api/bazaar'
+    const urlBazaar = `${process.env.NEXT_PUBLIC_API_URL}bazaar`
 
     useEffect(() => {
         axios.get(urlBazaar)
         .then(res => {
             setBazaars(res.data)
-            console.log("bazaar data = " , res.data)
         })
+        .catch(err => {console.log(err.message)})
     }, [])
 
     const renderBazaarCards = () => {
-        return bazaars.map(bazaar => {
-            return <BazaarCard key={bazaar.id} bazaar={bazaar} />
-        })
+        if (props.basket){
+            return bazaars.map(bazaar => {
+                // console.log("basket bazaar container = ", props.basket)
+
+                return <BazaarCard key={bazaar.id} bazaar={bazaar} basket={props.basket} />
+            })
+        }
     }
 
     return (

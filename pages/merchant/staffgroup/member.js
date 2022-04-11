@@ -84,7 +84,7 @@ export default function StaffGroupMember(props) {
                                 <td style={{ display: "none" }}>{id}</td>
                                 {console.log("the data id: " + id)}
                                 <td>{group.name}</td>
-                                <td>{group.managerId}</td>
+                                <td>{group.managerName}</td>
                                 <td>{group.allocation}</td>
                                 <td>{group.note}</td>
                             </tr>
