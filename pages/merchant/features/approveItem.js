@@ -12,7 +12,7 @@ export default function ApproveItem(props) {
     }, [])
 
     function putApproveItem() {
-        axios.put(`http://localhost:8181/api/exchange?Exchange%20ID=${id}&Status=APPROVED`)
+        axios.put(`http://localhost:8181/api/exchange?exchangeId=${id}&status=APPROVED`)
             .then((res) => {
                 window.alert("Success!")
                 props.closeClick();
