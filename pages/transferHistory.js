@@ -13,38 +13,51 @@ import { useSelector } from "react-redux";
 
 export default function TransferHistory() {
     const router = useRouter();
-    const [dataRaw, setDataRaw] = useState([]);
     const [dataTransfer, setDataTransfer] = useState([]);
+
     const basket = {carrotAmount: router.query.carrotAmount,
                     shareCarrot: router.query.shareCarrot,
                     rewardCarrot: router.query.rewardCarrot,
                     bazaarCarrot: router.query.bazaarCarrot,
                     };
-
     const columnsTransfer = [
         {
             name: "#",
-            selector: row => row.num
+            selector: row => row.num,
+            sortable: true
         },
         {
             name: "To/From",
-            selector: row => row.user
+            selector: row => row.user,
+            sortable: true,
+            width: "200px",
+            wrap:true
         },
         {
             name: "Type",
-            selector: row => row.type
-        },
-        {
-            name: "Note",
-            selector: row => row.note
+            selector: row => row.type,
+            sortable: true
         },
         {
             name: "Carrot",
-            selector: row => row.carrotAmount
+            selector: row => row.carrotAmount,
+            sortable: true,
+        },
+        {
+            name: "Note",
+            selector: row => row.note,
+            sortable: true,
+            width: "400px",
+            wrap:true
+
         },
         {
             name: "Date",
-            selector: row => row.shareAt
+            selector: row => row.shareAt,
+            sortable: true,
+            width: "300px",
+            wrap:true
+
         }
     ];
 
@@ -54,53 +67,40 @@ export default function TransferHistory() {
 
     useEffect(() => {
         axios.get(urlTransfer)
-        .then(res => generateDataTransfer(res.data))
+        .then(res => {
+            res.data.forEach((data, i) => {       
+                console.log("res data ", i, " = ", data)
+
+                setDataTransfer(dataTransfer => 
+                    [...dataTransfer, { 
+                                    num: i+1,
+                                    user: data.username,
+                                    type: data.type.substring(5), 
+                                    note: data.note, 
+                                    carrotAmount: data.carrotAmount,
+                                    shareAt: data.shareAt
+                                    }]
+                    
+                    )
+            })
+        })
         .catch(err => console.log(err.message))
     }, [])
 
-    function generateDataTransfer(d){
-        if (d) {
-            console.log("data raw = ", dataRaw)
-            const tempData = {
-                user: "",
-                type: "",
-                note: "",
-                carrotAmount: "",
-                shareAt: ""
-            }
-            const tempData2 = []
-            
-            d.forEach(data => {       
-                console.log("res data = ", data)
 
-                if (data.senderId != user.id){
-                    tempData.user = data.senderName;
-                }
-                else if (data.receiverId != user.id){
-                    tempData.user = data.receiverName;
-                }
-                tempData.type = data.type.substring(5);
-                tempData.note = data.note;
-                tempData.carrotAmount = data.carrotAmount;
-                tempData.shareAt = data.shareAt;
-                console.log("temp data = ", tempData)
-                // tempData2.push(tempData)
-            })
-            console.log("temp data 2 = ", tempData2);
-            return tempData2;
-        }
-    }
+    console.log("data transfer = ", dataTransfer)
 
     function renderTransferTable(){
-        // setDataTransfer(generateDataTransfer())
-
         if (dataTransfer){       
-            console.log("data transfer = ", dataTransfer)
-
             return (
                 <DataTable
                     columns={columnsTransfer}
                     data={dataTransfer}
+                    pagination
+                    // paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
+                    subHeader
+                    // subHeaderComponent={subHeaderComponentMemo}
+                    persistTableHead
                 />
             )
         }

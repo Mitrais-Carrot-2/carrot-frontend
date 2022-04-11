@@ -28,6 +28,7 @@ export default function Employee(props) {
       .then(res => {
         setBasket(res.data.basket)
       })
+      .catch(err => {console.log(err.message)})
   }, [])
 
   function renderRoles(roles){

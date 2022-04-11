@@ -13,6 +13,7 @@ export default function BazaarContainer(props) {
         .then(res => {
             setBazaars(res.data)
         })
+        .catch(err => {console.log(err.message)})
     }, [])
 
     const renderBazaarCards = () => {
