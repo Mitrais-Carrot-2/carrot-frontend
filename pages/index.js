@@ -44,7 +44,6 @@ export default function Home() {
     if (roles.length == 1 && roles[0] == "STAFF") {
       setOnlyStaff(true);
     }
-    // console.log(roles);
   });
 
   function checkRoles(){
