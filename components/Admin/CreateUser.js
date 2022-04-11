@@ -6,6 +6,17 @@ export default function CreateUser() {
   const [userFormData, setUserFormData] = useState({});
   const [manager, setManager] = useState([]);
   const [jobGrades, setJobGrades] = useState([]);
+  const roleInput = [];
+  const gender = [
+    {
+      value: "Male",
+      label: "Male",
+    },
+    {
+      value: "Female",
+      label: "Female",
+    },
+  ];
   const roles = [
     {
       value: "FARMER",
@@ -118,7 +129,7 @@ export default function CreateUser() {
         <div className="user-details">
           <label>Username:</label>
           <input
-            type="password"
+            type="text"
             name="username"
             onChange={(e) =>
               setUserFormData({
@@ -132,7 +143,7 @@ export default function CreateUser() {
 
           <label>Email:</label>
           <input
-            type="password"
+            type="text"
             name="email"
             onChange={(e) =>
               setUserFormData({
@@ -183,17 +194,19 @@ export default function CreateUser() {
             required
           />
           <label>Gender:</label>
-          <input
-            type="text"
+          <Select
             name="gender"
+            className="mb-2"
+            options={gender}
             onChange={(e) =>
               setUserFormData({
                 ...userFormData,
-                gender: e.target.value,
+                gender: e.value,
               })
             }
             placeholder="Gender"
           />
+
           <label>Address:</label>
           <input
             type="text"
@@ -296,13 +309,32 @@ export default function CreateUser() {
             name="roles"
             isMulti
             options={roles}
-            onChange={(e) =>
+            onChange={(e) => {
+              e.map((i) => {
+                roleInput.push(i.value);
+              });
               setUserFormData({
                 ...userFormData,
-                role: e.value,
-              })
-            }
+                role: roleInput,
+              });
+            }}
           />
+
+          {/* submit button that uses createUser() */}
+          <button
+            className="btn btn-primary bg-black"
+            onClick={() => console.log(userFormData)}
+          >
+            check user form
+          </button>
+
+          <button
+            className="btn btn-primary bg-black"
+            onClick={() => createUser()}
+            type="submit"
+          >
+            Create User
+          </button>
         </div>
         <style>{`
           .user-details {
