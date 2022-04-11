@@ -254,7 +254,7 @@ export default function CreateUser() {
             onChange={(e) =>
               setUserFormData({
                 ...userFormData,
-                supervisorId: e.target.value,
+                supervisorId: e.value,
               })
             }
           />
