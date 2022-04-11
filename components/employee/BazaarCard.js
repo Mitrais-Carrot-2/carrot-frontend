@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BazaarItemCard from "./BazaarItemCard"
 import axios from "axios";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 
 export default function BazaarCard(props) {
     const [items, setItems] = useState([])
