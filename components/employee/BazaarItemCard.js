@@ -25,7 +25,7 @@ export default function BazaarItemCard(props) {
                 console.log("item ", props.item.id, " image not found")
             else console.log(err.message)
         })
-    })
+    }, [])
 
     function renderViewDetailsButton(classNames){
         return(
