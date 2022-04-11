@@ -2,12 +2,12 @@ import React from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-import defaultProduct from "@public/img/default-product.png";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function BazaarItemCard(props) {
     const router = useRouter()
+    const defaultProduct = "/../public/img/default-product.png";
     const [image, setImage] = useState(defaultProduct)
     const viewDetailsButtonClassOne = "btn btn-carrot"
     const viewDetailsButtonClassMany = "btn btn-carrot rounded-t-none"
@@ -21,7 +21,6 @@ export default function BazaarItemCard(props) {
         )
         .catch(err => {
             if (err.response.status == 404){
-                // console.log("item ", props.item.id, " image not found")
                 setImage(defaultProduct)
             }
             else console.log(err.message)
@@ -32,6 +31,7 @@ export default function BazaarItemCard(props) {
         return(
             <button
                 onClick={() => {
+                    console.log("image = ", image)
                     router.push({
                         pathname : "/itemDetails/[bazaarId]/[itemId]",
                         query : {bazaarId: props.item.bazaar.id, bazaarName:props.item.bazaar.bazaarName, itemId: props.item.id, carrot:props.basket.carrotAmount, image:image}

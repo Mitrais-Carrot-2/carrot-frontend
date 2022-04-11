@@ -34,8 +34,6 @@ export default function itemDetails(props){
     useEffect(() => {
         if(!router.isReady) return;
 
-        console.log(urlItem)
-
         axios.get(urlItem)
         .then(res => {
             setItem(res.data)
@@ -43,7 +41,6 @@ export default function itemDetails(props){
         })
         .catch(err => {console.log(err.message)})
 
-        if(!image) image = defaultProduct;
 
     }, [router.isReady])
 
