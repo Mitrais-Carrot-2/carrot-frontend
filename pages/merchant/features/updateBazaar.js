@@ -39,16 +39,6 @@ export default function UpdateBazaar(props) {
             })
     }
 
-    // function createBazaar() {
-    //     return (
-    //         <>
-    //             <form>
-
-    //             </form>
-    //         </>
-    //     )
-    // }
-
     function updateBazaar() {
         return (
             <>

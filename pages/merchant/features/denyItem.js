@@ -12,7 +12,7 @@ export default function DenyItem(props) {
     }, [])
 
     function putDenyItem() {
-        axios.put(`http://localhost:8181/api/exchange?Exchange%20ID=${id}&Status=DENIED`)
+        axios.put(`http://localhost:8181/api/exchange?exchangeId=${id}&status=DENIED`)
             .then((res) => {
                 window.alert("Success!")
                 props.closeClick();
