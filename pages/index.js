@@ -30,25 +30,20 @@ export default function Home() {
   const router = useRouter();
   const user = useSelector((state) => (state.user.info ? state.user.info : {}));
   const [onlyStaff, setOnlyStaff] = React.useState(false);
-  // const roles = user.roles;
-
-  // console.log(roles);
   let roles = (jsCookie.get("roles"))?jsCookie.get("roles").split(","):"";
+  const [rolesList, setRolesList] = React.useState(roles);
   
-  // if (roles) roles.forEach((role, i) => {roles[i] = role.substring(5)});
-  // else console.log("Sign Up First")
-
   useEffect(() => {
-    if (roles) roles.forEach((role, i) => {roles[i] = role.substring(5)})
-
+    if (roles) roles.map((role, i) => {roles[i] = role.substring(5)})
+    
     if (roles.length == 1 && roles[0] == "STAFF") {
       setOnlyStaff(true);
     }
-    // console.log(roles);
-  });
+    setRolesList(roles);
+  }), [];
 
   function checkRoles(){
-    if (roles) return <Employee onlyStaff={onlyStaff} roles={roles} />;
+    if (rolesList) {return <Employee onlyStaff={onlyStaff} roles={rolesList} />}
     else {
       router.push("/sign-in");
       return "";

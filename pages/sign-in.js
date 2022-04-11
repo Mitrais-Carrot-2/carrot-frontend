@@ -25,7 +25,7 @@ const SignIn = ({ authenticate, auth, error, token }) => {
   });
 
   useEffect(() => {
-    console.log("BASE PATH", process.env.NEXT_PUBLIC_API_URL);
+    // console.log("BASE PATH", process.env.NEXT_PUBLIC_API_URL);
     if (jsCookie.get("token")) {
       Router.push("/");
     }
