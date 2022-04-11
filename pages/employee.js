@@ -60,6 +60,7 @@ export default function Employee(props) {
                   else roleTxt = role
                   return (
                     <button
+                      id={`btn-${roleTxt.toLowerCase()}`}
                       onClick={() => router.push("/" + role.toLowerCase())}
                       className="btn btn-carrot radius-5 mx-2"
                     >
