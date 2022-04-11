@@ -66,29 +66,32 @@ export default function Bazaar() {
                                     <th itemScope="col" aria-rowspan={2}>Action</th>
                                 </tr>
                             </thead>
-                            {bazaars.map((data, index) => (
-                                <tr key={index + 1}>
-                                    <td>{index + 1}</td>
-                                    <td style={{ display: "none" }}>{data.id}</td>
-                                    <td>{data.bazaarName}</td>
-                                    <td>{data.startDate}</td>
-                                    <td>{data.endDate}</td>
-                                    <td>
-                                        <button type="button" className="btn border-blue-600 mr-2"
-                                            onClick={() => {
-                                                setShowUpdateBazaar(true);
-                                                setSelectedBazaar(data);
-                                                console.log(selectedBazaar);
-                                            }}
-                                        >
-                                            <i className="fa fa-edit text-blue-600 fa-x px-1">
+                            <tbody>
+                                {bazaars.map((data, index) => (
+                                    <tr key={index + 1}>
+                                        <td>{index + 1}</td>
+                                        <td style={{ display: "none" }}>{data.id}</td>
+                                        <td>{data.bazaarName}</td>
+                                        <td>{data.startDate}</td>
+                                        <td>{data.endDate}</td>
+                                        <td>
+                                            <button type="button" className="btn border-blue-600 mr-2"
+                                                onClick={() => {
+                                                    setShowUpdateBazaar(true);
+                                                    setSelectedBazaar(data);
+                                                    console.log(selectedBazaar);
+                                                }}
+                                            >
+                                                <i className="fa fa-edit text-blue-600 fa-x px-1">
 
-                                            </i>
-                                        </button>
-                                        {showUpdateBazaar && <UpdateBazaar closeClick={setShowUpdateBazaar} updateData={selectedBazaar} refreshPage={reloadPage} />}
-                                    </td>
-                                </tr>
-                            ))}
+                                                </i>
+                                            </button>
+                                            {showUpdateBazaar && <UpdateBazaar closeClick={setShowUpdateBazaar} updateData={selectedBazaar} refreshPage={reloadPage} />}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+
                         </table>
                     </div>
                 </section>
