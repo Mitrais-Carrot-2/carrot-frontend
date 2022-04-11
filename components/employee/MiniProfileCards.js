@@ -27,7 +27,7 @@ export default function MiniProfileCards(props) {
   }
 
   function basketCardBody() {
-    console.log("basket = ", props.basket)
+    // console.log("basket = ", props.basket)
 
     return (
       <>
