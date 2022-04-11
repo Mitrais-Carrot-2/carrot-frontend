@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import BazaarContainer from "@components/employee/BazaarContainer"
 import { useSelector } from "react-redux";
+import jsCookie from "js-cookie";
 
 
 export default function Employee(props) {
@@ -23,7 +24,15 @@ export default function Employee(props) {
 
   const urlUser = process.env.NEXT_PUBLIC_API_URL + "basket/" + user.id;
 
+  let onlyStaff = false;
+  let roles = (jsCookie.get("roles"))? jsCookie.get("roles").split(","):"";
+  if (roles) roles.map((role, i) => {roles[i] = role.substring(5)})
+  if (roles.length == 1 && roles[0] == "STAFF") {
+    onlyStaff = true;
+  }
+
   useEffect(() => {
+    // console.log("roles", roles);
     axios.get(urlUser)
       .then(res => {
         setBasket(res.data.basket)
@@ -31,13 +40,13 @@ export default function Employee(props) {
       .catch(err => {console.log(err.message)})
   }, [])
 
-  function renderRoles(roles){
+  function renderRoles(){
     return (
       <>
-        {!props.onlyStaff ?
+        {!onlyStaff ?
           <div>
             <div className="flex flex-wrap">
-              {roles.map(role => {
+              {(roles)?roles.map(role => {
                   if (role != "STAFF") {
                     let roleTxt = "";
                     if (role == "ADMIN") roleTxt = "ADMINISTRATOR"
@@ -55,7 +64,7 @@ export default function Employee(props) {
                     return ("")
                   }
                 })
-              }
+              : ""}
             </div>
           </div>
           : null}
@@ -67,7 +76,32 @@ export default function Employee(props) {
     <body>
       <Navbar />
       <div className="container">
-        {renderRoles(props.roles)}
+        {/* {renderRoles(props.roles)} */}
+        {!onlyStaff ?
+          <div>
+            <div className="flex flex-wrap">
+              {(roles)? roles.map(role => {
+                  if (role != "STAFF") {
+                    let roleTxt = "";
+                    if (role == "ADMIN") roleTxt = "ADMINISTRATOR"
+                    else roleTxt = role
+                    return (
+                      <button
+                      onClick={() => router.push("/"+role.toLowerCase())}
+                      className="btn btn-carrot radius-5 mx-2"
+                      >
+                        {roleTxt}
+                      </button>
+                    )
+                  }
+                  else {
+                    return ("")
+                  }
+                })
+              :""}
+            </div>
+          </div>
+          : null}
         <main role="main" className="mx-auto mb-3">
           <h2 className="mt-4 pl-0 text-grey ml-2">DASHBOARD</h2>
         </main>
