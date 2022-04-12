@@ -49,6 +49,7 @@ export default function UpdateBazaarImage(props) {
                 <div className="barn-details">
                     <label>Insert image:</label>
                     <input
+                        id="item-image-input"
                         type="file"
                         name="image-file"
                         onChange={(e) => {

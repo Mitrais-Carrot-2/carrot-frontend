@@ -45,6 +45,7 @@ export default function UpdateItem(props) {
                     <div className="group-details">
                         <label>Item Name:</label>
                         <input
+                            id="item-name-input"
                             value={itemDetail.name}
                             type="text"
                             name="itemName"
@@ -54,6 +55,7 @@ export default function UpdateItem(props) {
 
                         <label>Item Price:</label>
                         <input
+                            id="item-price-input"
                             value={itemDetail.price}
                             type="number"
                             name="itemPrice"
@@ -63,6 +65,7 @@ export default function UpdateItem(props) {
 
                         <label>Item Quantity:</label>
                         <input
+                            id="item-qty-input"
                             value={itemDetail.quantity}
                             type="number"
                             name="itemQuantity"
@@ -72,6 +75,7 @@ export default function UpdateItem(props) {
 
                         <label>Item Description:</label>
                         <input
+                            id="item-desc-input"
                             value={itemDetail.description}
                             type="text"
                             name="itemDescription"
@@ -100,9 +104,9 @@ export default function UpdateItem(props) {
     return (
         <>
             <Modal
-                title="Update Group"
+                title="Update Item"
                 body={updateItem()}
-                action="Update Group"
+                action="Update Item"
                 closeClick={props.closeClick}
                 actionClick={updatePostGroup}
             />
