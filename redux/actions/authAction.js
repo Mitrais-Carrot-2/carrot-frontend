@@ -6,7 +6,11 @@ import {
   AUTHENTICATE_ERROR,
 } from "../actionTypes";
 import axios from "axios";
-import { setUser, setUserImage } from "redux/reducers/userReducer";
+import {
+  setUser,
+  setUserImage,
+  setStaticImage,
+} from "redux/reducers/userReducer";
 import { basePath } from "next.config";
 
 export const authenticate = (user) => (dispatch) => {
@@ -36,8 +40,11 @@ export const authenticate = (user) => (dispatch) => {
           )
           .then((user) => {
             dispatch(setUser(user.data));
-            if (user.data.image) {
+            console.log(user.data);
+            if (user.data.imageSize) {
               dispatch(setUserImage());
+            } else {
+              dispatch(setStaticImage());
             }
           });
 

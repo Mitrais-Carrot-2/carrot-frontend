@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import cookie from "js-cookie";
-import { basePath } from 'next.config';
-
+import { basePath } from "next.config";
 
 const initialState = {};
 
@@ -15,10 +14,14 @@ export const userSlice = createSlice({
     },
     setUserImage: (state) => {
       state.userImage =
-        process.env.NEXT_PUBLIC_API_URL+"user/Image/" +
+        process.env.NEXT_PUBLIC_API_URL +
+        "user/Image/" +
         cookie.get("username") +
         "?" +
         new Date();
+    },
+    setStaticImage: (state) => {
+      state.userImage = null;
     },
     removeUser: (state) => {
       state.info = {};
@@ -29,5 +32,11 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, setUserImage, removeUser, removeUserImage } = userSlice.actions;
+export const {
+  setUser,
+  setUserImage,
+  removeUser,
+  removeUserImage,
+  setStaticImage,
+} = userSlice.actions;
 export default userSlice.reducer;
