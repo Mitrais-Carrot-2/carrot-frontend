@@ -321,12 +321,12 @@ export default function CreateUser() {
           />
 
           {/* submit button that uses createUser() */}
-          <button
+          {/* <button
             className="btn btn-primary bg-black"
             onClick={() => console.log(userFormData)}
           >
             check user form
-          </button>
+          </button> */}
 
           <button
             className="btn btn-primary bg-black"
