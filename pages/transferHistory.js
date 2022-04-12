@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Navbar from "@components/Navbar";
+import Footer from "@components/Footer";
 import MiniBasketCards from "@components/employee/MiniBasketCards";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -14,12 +15,40 @@ import { useSelector } from "react-redux";
 export default function TransferHistory() {
     const router = useRouter();
     const [dataTransfer, setDataTransfer] = useState([]);
+    const [searchInput, setSearchInput] = useState(""); 
 
     const basket = {carrotAmount: router.query.carrotAmount,
                     shareCarrot: router.query.shareCarrot,
                     rewardCarrot: router.query.rewardCarrot,
                     bazaarCarrot: router.query.bazaarCarrot,
                     };
+
+    const user = useSelector((state) => (state.user.info ? state.user.info : {}));
+
+    const urlTransfer = `${process.env.NEXT_PUBLIC_API_URL}transfer/${user.id}`;
+
+    useEffect(() => {
+        axios.get(urlTransfer)
+        .then(res => {
+            res.data.forEach((data, i) => {       
+                // console.log("res data ", i, " = ", data)
+
+                setDataTransfer(dataTransfer => 
+                    [...dataTransfer, { 
+                                    num: i+1,
+                                    user: data.username,
+                                    type: data.type.substring(5), 
+                                    note: data.note, 
+                                    carrotAmount: data.carrotAmount,
+                                    shareAt: data.shareAt.substring(0,19).replace("T", " ")
+                                    }]
+                    
+                    )
+            })
+        })
+        .catch(err => console.log(err.message))
+    }, [])
+
     const columnsTransfer = [
         {
             name: "#",
@@ -67,32 +96,6 @@ export default function TransferHistory() {
         }
     ];
 
-    const user = useSelector((state) => (state.user.info ? state.user.info : {}));
-
-    const urlTransfer = `${process.env.NEXT_PUBLIC_API_URL}transfer/${user.id}`;
-
-    useEffect(() => {
-        axios.get(urlTransfer)
-        .then(res => {
-            res.data.forEach((data, i) => {       
-                console.log("res data ", i, " = ", data)
-
-                setDataTransfer(dataTransfer => 
-                    [...dataTransfer, { 
-                                    num: i+1,
-                                    user: data.username,
-                                    type: data.type.substring(5), 
-                                    note: data.note, 
-                                    carrotAmount: data.carrotAmount,
-                                    shareAt: data.shareAt.substring(0,19).replace("T", " ")
-                                    }]
-                    
-                    )
-            })
-        })
-        .catch(err => console.log(err.message))
-    }, [])
-
     const customStyles = {
         cells: {
             style: {
@@ -100,20 +103,34 @@ export default function TransferHistory() {
             }
         }
     }
+	const filteredTransferHistory = dataTransfer.filter(
+		data => data.username && data.username.toLowerCase().includes(searchInput.toLowerCase()) 
+            || data.note && data.note.toLowerCase().includes(searchInput.toLowerCase())
+            || data.type && data.type.toLowerCase().includes(searchInput.toLowerCase())
+	);
 
     function renderTransferTable(){
         if (dataTransfer){       
             return (
-                <DataTable
-                    columns={columnsTransfer}
-                    data={dataTransfer}
-                    pagination
-                    // paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
-                    subHeader
-                    // subHeaderComponent={subHeaderComponentMemo}
-                    persistTableHead
-                    customStyles={customStyles}
-                />
+                <>
+                    <div className="flex justify-end items-center my-2">
+                        <p className="text-[13px]">Search:</p>
+                        <input 
+                            className="search-input ml-3"
+                            value={searchInput}
+                            onChange={e => setSearchInput(e.target.value)}
+                         />
+                    </div>
+                    <div>
+                        <DataTable
+                            columns={columnsTransfer}
+                            data={filteredTransferHistory}
+                            pagination
+                            persistTableHead
+                            customStyles={customStyles}
+                        />
+                    </div>
+                </>
             )
         }
         return null;
@@ -134,13 +151,14 @@ export default function TransferHistory() {
                         HOME
                     </h2>
                 </main>
-                <div className="container">
+                <div>
                     <MiniBasketCards basket={basket} />
                 </div>
-                <div className="search-box">
+                <div className="search-box mb-4">
                     {renderTransferTable()}
                 </div>
             </div>
+            <Footer />
         </body>
     )
 }

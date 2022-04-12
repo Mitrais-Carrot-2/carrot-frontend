@@ -10,7 +10,7 @@ import BuyItemModal from "@components/employee/BuyItemModal";
 import { Modal, ModalHeader, ModalBody, ModalFooter} from "reactstrap";
 import checkGreen from "@public/img/checkGreen.png";
 import Navbar from "@components/Navbar";
-import defaultProduct from "@public/img/default-product.png";
+import Footer from "@components/Footer";
 
 
 export default function itemDetails(props){
@@ -23,8 +23,6 @@ export default function itemDetails(props){
     const itemId = router.query.itemId;
     const carrot = router.query.carrot;
     const image = router.query.image;
-
-    console.log("image = ", image)
 
     const user = useSelector((state) => (state.user.info ? state.user.info : {}));
         
@@ -161,6 +159,7 @@ export default function itemDetails(props){
                 {item? <BuyItemModal show={showBuyModal} toggle={toggleBuyModal} object={item} action={requestBuy} /> : null}
                 {buyRequestModal()}
             </div>
+            <Footer />
         </body>
     )
 }
