@@ -19,6 +19,7 @@ const Tabs = (props) => {
     const dispatch = useDispatch();
     const auth = useSelector((state) => (state.authentication ? state.authentication : {}));
     const targetStaff = useSelector((state) => (state.manager.shareToStaff ? state.manager.shareToStaff : []));
+    const freezer = useSelector((state) => (state.manager.freezer ? state.manager.freezer : {}));
 
     const columnsIndex = [
         {
@@ -71,11 +72,15 @@ const Tabs = (props) => {
 
     let sendStaff = () => {
         if (targetStaff.staffId != 0 && targetStaff.carrotAmount > 0) {
-            dispatch(shareToStaff(auth.token, targetStaff));
-            setModalShareOpen(false);
-            Router.push('/manager');
+            if(freezer.carrot_amount >= targetStaff.carrotAmount){
+                dispatch(shareToStaff(auth.token, targetStaff));
+                setModalShareOpen(false);
+                Router.push('/manager');
+            } else {
+                setErrorMessage('Not enough Carrot Left!');
+            }
         } else {
-            setErrorMessage('Please fill in all the fields');
+            setErrorMessage('Please fill in all the fields!');
         }
     }
 
@@ -162,7 +167,7 @@ const Tabs = (props) => {
                                                 </button>
                                             </div>
                                             <ModalBody>
-                                                <div className="w-[94%] mx-auto bg-red-600 text-center text-white my-3 rounded animate-pulse">
+                                                <div id="error-label" className="w-[94%] mx-auto bg-red-600 text-center text-white my-3 rounded animate-pulse">
                                                     {errorMessage}
                                                 </div>
                                                 <FormShare staff={staff} receiver='staff' />

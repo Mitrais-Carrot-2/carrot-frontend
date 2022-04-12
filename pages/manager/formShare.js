@@ -18,7 +18,7 @@ function FormShare({ setShareToStaff, shareToStaff, setShareToGroup, shareToGrou
     });
 
     useEffect(() => {
-        setSendToGroup({...sendToGroup, groupId: groupId});
+        setSendToGroup({...sendToGroup, groupId: groupId, totalMember: totalMember});
         // setSendToGroup({
         //     ...shareToGroup, sendToGroup
         // });

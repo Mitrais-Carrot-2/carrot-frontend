@@ -92,6 +92,7 @@ export default function Employee(props) {
                   else roleTxt = role
                   return (
                     <button
+                      id={`btn-${roleTxt.toLowerCase()}`}
                       onClick={() => router.push("/" + role.toLowerCase())}
                       className="btn btn-carrot radius-5 mx-2"
                     >
@@ -108,7 +109,7 @@ export default function Employee(props) {
           </div>
           : null}
         <main role="main" className="mx-auto mb-3">
-          <h2 className="mt-4 pl-0 text-grey ml-2">DASHBOARD</h2>
+          <h2 id="dashboard-title" className="mt-4 pl-0 text-grey ml-2">DASHBOARD</h2>
         </main>
         <MiniProfileCards basket={basket} user={user} />
         <BazaarContainer basket={basket} />
