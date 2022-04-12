@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "@components/Modal";
+import Select from "react-select";
 
 export default function EditUser() {
   const url = process.env.NEXT_PUBLIC_API_URL + "user/";
   const [userFormData, setUserFormData] = useState({});
   const [userList, setUserList] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [jobGrades, setJobGrades] = useState([]);
 
   useEffect(() => {
     fetchList();
@@ -19,6 +21,58 @@ export default function EditUser() {
       console.log(res.data);
     });
   }
+
+  const offices = [
+    { value: "BALI", label: "Bali" },
+    { value: "YOGYAKARTA", label: "Yogyakarta" },
+    { value: "JAKARTA", label: "Jakarta" },
+    { value: "SURABAYA", label: "Surabaya" },
+    { value: "BANDUNG", label: "Bandung" },
+  ];
+
+  const jobFamilies = [
+    { value: "SE", label: "Software Engineer" },
+    { value: "QA", label: "Quality Assurance" },
+    { value: "CON", label: "Consultant" },
+    { value: "DSG", label: "Graphics Designer" },
+  ];
+
+  function handleJobFamily(value) {
+    if (value === "SE") {
+      setJobGrades([
+        { value: "JP", label: "Junior Programmer" },
+        { value: "PG", label: "Programmer" },
+        { value: "AP", label: "Analyst Programmer" },
+        { value: "AN", label: "Analyst" },
+      ]);
+    }
+    if (value === "QA") {
+      setJobGrades([
+        { value: "JT", label: "Junior Tester" },
+        { value: "TS", label: "Tester" },
+        { value: "ST", label: "Senior Tester" },
+        { value: "TA", label: "Test Architect" },
+      ]);
+    }
+    if (value === "CON") {
+      setJobGrades([
+        { value: "JC", label: "Junior Consultant" },
+        { value: "CON", label: "Consultant" },
+        { value: "SC", label: "Senior Consultant" },
+        { value: "LC", label: "Lead Consultant" },
+      ]);
+    }
+    if (value === "DSG") {
+      setJobGrades([
+        { value: "JD", label: "Junior Designer" },
+        { value: "DS", label: "Designer" },
+        { value: "SD", label: "Senior Designer" },
+        { value: "DD", label: "Design Director" },
+      ]);
+    }
+  }
+
+  let options = [];
 
   return (
     <section>
@@ -81,7 +135,7 @@ export default function EditUser() {
                     </button>
                     {showModal && (
                       <Modal
-                        title="Edit User"
+                        title={"Edit " + userFormData.username}
                         body={editModal()}
                         action="Edit User Information"
                         closeClick={setShowModal}
@@ -147,6 +201,18 @@ export default function EditUser() {
             }
             required
           />
+          <label>Email:</label>
+          <input
+            type="text"
+            name="email"
+            defaultValue={userFormData.email}
+            onChange={(e) =>
+              setUserFormData({
+                ...userFormData,
+                email: e.target.value,
+              })
+            }
+          />
           <label>Address:</label>
           <input
             type="text"
@@ -159,6 +225,7 @@ export default function EditUser() {
               })
             }
           />
+
           <label>phone:</label>
           <input
             type="text"
@@ -168,6 +235,63 @@ export default function EditUser() {
               setUserFormData({
                 ...userFormData,
                 phone: e.target.value,
+              })
+            }
+          />
+
+          <label>Manager / Supervisor:</label>
+          <Select
+            className="mb-2"
+            id="manager-id"
+            name="supervisorId"
+            options={options}
+            onChange={(e) =>
+              setUserFormData({
+                ...userFormData,
+                supervisorId: e.value,
+              })
+            }
+          />
+
+          <label>Job Family:</label>
+          <Select
+            name="jobFamily"
+            className="mb-2"
+            options={jobFamilies}
+            onChange={(e) => (
+              setUserFormData({
+                ...userFormData,
+                jobFamily: e.value,
+              }),
+              handleJobFamily(e.value)
+            )}
+            placeholder="Job Family"
+          />
+
+          <label>Job Grade:</label>
+          <Select
+            name="jobGrade"
+            className="mb-2"
+            options={jobGrades}
+            onChange={(e) =>
+              setUserFormData({
+                ...userFormData,
+                jobGrade: e.value,
+              })
+            }
+            placeholder="Job Grade"
+          />
+
+          <label>Office:</label>
+          <Select
+            className="mb-2"
+            id="office"
+            options={offices}
+            name="office"
+            onChange={(e) =>
+              setUserFormData({
+                ...userFormData,
+                office: e.value,
               })
             }
           />
