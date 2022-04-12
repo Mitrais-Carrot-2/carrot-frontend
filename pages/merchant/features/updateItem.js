@@ -12,6 +12,7 @@ export default function UpdateItem(props) {
         quantity: 1,
         description: "",
     })
+    const [showModal, setShowModal] = useState()
     useEffect(() => {
         setItemDetail({
             // ...props.updateData
@@ -22,7 +23,7 @@ export default function UpdateItem(props) {
         })
         setId(props.updateData.id)
     }, [])
-    function updatePostGroup() {
+    function updatePostItem() {
         console.log("updating.....")
         console.log("val item: " + itemDetail)
         axios.put(`${process.env.NEXT_PUBLIC_API_URL}bazaar/item/${id}`, itemDetail)
@@ -97,14 +98,15 @@ export default function UpdateItem(props) {
             </>
         )
     }
+
     return (
         <>
             <Modal
-                title="Update Group"
+                title="Update Item"
                 body={updateItem()}
-                action="Update Group"
+                action="Update Item"
                 closeClick={props.closeClick}
-                actionClick={updatePostGroup}
+                actionClick={updatePostItem}
             />
 
         </>

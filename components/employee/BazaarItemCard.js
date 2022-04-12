@@ -36,8 +36,9 @@ export default function BazaarItemCard(props) {
                         pathname : "/itemDetails/[bazaarId]/[itemId]",
                         query : {bazaarId: props.item.bazaar.id, bazaarName:props.item.bazaar.bazaarName, itemId: props.item.id, carrot:props.basket.carrotAmount, image:image}
                     })
-            }}
+                }}
                 className={classNames}
+                id={props.index}
             >
                 VIEW DETAILS
             </button>
@@ -109,7 +110,7 @@ export default function BazaarItemCard(props) {
                         <h5 className="card-title truncate">{item.name}</h5>
                         <p className="card-title-orange">{item.price} Carrots</p>
                     </div>
-                    {renderViewDetailsButton(viewDetailsButtonClassMany)}
+                    {renderViewDetailsButton(viewDetailsButtonClassMany, props.index)}
                 </div>
             </div>
         )

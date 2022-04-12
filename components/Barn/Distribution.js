@@ -97,15 +97,15 @@ export default function Distribution(props) {
     if (props.barn) {
       return (
         <>
-          <h1 className="text-purple-500 text-4xl font-bold lowercase ml-2 mb-2">
+          {/* <h1 className="text-purple-500 text-4xl font-bold lowercase ml-2 mb-2"> */}
+          <h2 id="farmer-dashboard" className="text-grey ml-4 mb-2">
             Distribution
-          </h1>
-          <div className="container py-2 bg-white">
-            <p className="text-2xl uppercase py-2 text-orange-500">
-              Distribution Details:
-            </p>
+          </h2>
+          <div className="search-box py-2">
+            <hr className="box-title-hr mt-3" />
+            <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">Distribution Details:</h4>
             <table 
-            className="w-2/10 overflow-x-scroll">
+            className="w-2/10 overflow-x-scroll mb-2">
               <tr>
                 <th>Barn Name</th>
                 <td>{props.barn.barnName}</td>
@@ -124,13 +124,14 @@ export default function Distribution(props) {
               </tr>
             </table>
           </div>
-          <div className="container my-3 p-3 bg-white text-center">
-            <Button
-              className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+          <div className="search-box my-3 text-center">
+            <button
+              // className="btn bg-orange-500 hover:bg-orange-700 text-white py-2 px-4 rounded"
+              className="btn btn-info text-white py-2 px-4 rounded"
               onClick={() => setDistributeCarrot(true)}
             >
               Distribute Carrot
-            </Button>
+            </button>
           </div>
           {distributeCarrot && (
             <Modal
@@ -141,7 +142,7 @@ export default function Distribution(props) {
               actionClick={sendCarrot}
             />
           )}
-          <div className="container py-2 bg-white">
+          <div className="search-box">
             <BarnHistory barnId={props.barn.id} newTransfer={newTransfer} />
           </div>
           <style>

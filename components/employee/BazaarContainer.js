@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 export default function BazaarContainer(props) { 
     const [bazaars, setBazaars] = useState([])
+    const [itemIndex, setitemIndex] = useState(0)
 
     const urlBazaar = `${process.env.NEXT_PUBLIC_API_URL}bazaar`
 
@@ -16,12 +17,16 @@ export default function BazaarContainer(props) {
         .catch(err => {console.log(err.message)})
     }, [])
 
-    const renderBazaarCards = () => {
+    function incrementItemIndex(){
+        setitemIndex(itemIndex + 1)
+    }
+
+    // console.log("item index = ", itemIndex)
+
+    function renderBazaarCards() {
         if (props.basket){
             return bazaars.map(bazaar => {
-                // console.log("basket bazaar container = ", props.basket)
-
-                return <BazaarCard key={bazaar.id} bazaar={bazaar} basket={props.basket} />
+                return <BazaarCard bazaar={bazaar} basket={props.basket} index={itemIndex} incrementIndex={incrementItemIndex}/>
             })
         }
     }

@@ -14,20 +14,23 @@ export default function BazaarCard(props) {
         .then(res => {
             setItems(res.data)
             setNumItem(res.data.length)
+            // res.data.forEach((item) => {
+            //     console.log("index = ", props.index)
+            //     props.incrementIndex()
+            // })
         })
         .catch(err => {console.log(err.message)})
     }, [])
 
-
     const renderBazaarItems = () => {
         return items.map(item => {
-            return <BazaarItemCard key={item.id} item={item} numItem={numItem} basket={props.basket} />
+            return <BazaarItemCard item={item} numItem={numItem} basket={props.basket} index={props.index}/>
         })
     }
 
     function bazaarOneItem() {
         return (
-            <div className="mb-4">
+            <div className="mb-4" id="bazaar-1-item">
                 <div className="mx-auto sm:px-4 search-box py-4">
                     <div className="flex flex-wrap">
                         <div className="md:w-full pr-4 pl-4">
@@ -43,7 +46,7 @@ export default function BazaarCard(props) {
 
     function bazaarTwoItems() {
         return (
-            <div className="mb-4">
+            <div className="mb-4" id="bazaar-2-item">
                 <div className="mx-auto sm:px-4 search-box pt-4">
                     <div className="flex flex-wrap justify-stretch">
                         <div className="md:w-full pr-4 pl-4">
@@ -61,7 +64,7 @@ export default function BazaarCard(props) {
 
     function bazaarManyItems(columnMode) {
         return (
-            <div className="mb-4">
+            <div className="mb-4" id="bazaar-many-items">
                 <div className="mx-auto sm:px-4 search-box py-4">
                 <div className="flex flex-wrap content-end">
                     <div className="md:w-full pr-4 pl-4">
