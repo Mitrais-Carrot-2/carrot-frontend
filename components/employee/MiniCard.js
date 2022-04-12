@@ -9,12 +9,13 @@ export default function MiniCard(props) {
         <div className={"w-full p-4 flex flex-row items-center rounded " + props.cardType} >
             <div className="my-2">
                 <Image
-                    className="h-auto w-full rounded-full cursor-pointer hover:opacity-70"
+                    className={"h-auto w-full rounded-full " + props.imgClass}
                     alt="user-profile"
                     src={props.image}
                     width={imgWidth}
                     height={imgHeight}
                     objectFit="cover"
+                    onClick={props.clickAction}
                 />
             </div>
         <div className="ml-8">
