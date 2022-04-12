@@ -1,4 +1,4 @@
-import { MANAGER_GET_FREEZER, MANAGER_GET_FREEZER_ERROR, MANAGER_GET_STAFF, SET_SHARE_TO_STAFF, SHARE_TO_STAFF, SET_SHARE_TO_GROUP, SHARE_TO_GROUP, MANAGER_GET_FREEZER_HISTORY, REMOVE_MANAGER } from "../actionTypes";
+import { MANAGER_GET_FREEZER, MANAGER_GET_FREEZER_ERROR, MANAGER_GET_STAFF, SET_SHARE_TO_STAFF, SHARE_TO_STAFF, SET_SHARE_TO_GROUP, SHARE_TO_GROUP, MANAGER_GET_FREEZER_HISTORY, SHARE_TO_STAFF_SUCCESS, SHARE_TO_GROUP_SUCCESS, REMOVE_MANAGER } from "../actionTypes";
 import axios from "axios";
 import { basePath } from "next.config";
 
@@ -74,6 +74,7 @@ export const shareToStaff = (token, req) => (dispatch) => {
     }).finally(() => {
         dispatch(getFreezer(token));
         dispatch(getFreezerHistory(token));
+        dispatch({ type: SHARE_TO_STAFF_SUCCESS, payload: `Transfer to Staff Success!` });
     });
 }
 
@@ -98,6 +99,7 @@ export const shareToGroup = (token, req) => (dispatch) => {
         console.log("SHARE TO GROUP", err.message);
     }).finally(() => {
         dispatch(getFreezer(token));
+        dispatch({ type: SHARE_TO_GROUP_SUCCESS, payload: `Transfer to Group Success!` });
         // dispatch(getFreezerHistory(token));
     });
 }

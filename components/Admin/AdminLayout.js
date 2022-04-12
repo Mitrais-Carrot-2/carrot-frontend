@@ -1,10 +1,8 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
 import EditUser from "./EditUser";
 import CreateUser from "./CreateUser";
 
 export default function AdminLayout() {
-  const router = useRouter();
   const [showCreateUser, setShowCreateUser] = useState(false);
   const [showUpdateUser, setShowUpdateUser] = useState(false);
 

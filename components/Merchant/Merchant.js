@@ -11,7 +11,7 @@ export default function Merchant() {
           margin-bottom: 10px;
         }
       `}</style>
-      <div className="container">
+      <div className="container" id="merchant-container">
         <section className="features py-3">
           <div className="container mx-auto sm: px-4 search-box py-3">
             <div className="flex flex-wrap">

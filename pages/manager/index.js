@@ -20,12 +20,16 @@ const Index = ({ state }) => {
     const freezer = useSelector((state) => (state.manager.freezer ? state.manager.freezer : {}));
     const staff = useSelector((state) => (state.manager.staff ? state.manager.staff : {}));
     const freezerHistory = useSelector((state) => (state.manager.freezerHistory ? state.manager.freezerHistory : {}));
+    const message = useSelector((state) => (state.manager.message ? state.manager.message : ""));
     
+    // console.log("manager", manager);
+
     useEffect(() => {
         getGroup();
         dispatch(getStaff(auth.token));
         dispatch(getFreezer(auth.token));
         dispatch(getFreezerHistory(auth.token));
+        dispatch({type: "SHARE_TO_STAFF_SUCCESS", payload: null});
     }, []);
 
     let getGroup = () => {
@@ -52,6 +56,9 @@ const Index = ({ state }) => {
                     {/* <a href='#' className="bg-[#ff5722] text-white px-4 py-2.5 rounded-md text-1xl hover:bg-orange-600 transition duration-300">Share Carrot</a>
                     <a href='#' className="text-grey capitalize px-4 py-2.5 rounded-md text-1xl">Bazaar</a> */}
                     <h1 id="freezer-title" className="pl-0 text-3xl text-grey ml-0 font-medium tracking-widest">MANAGER FREEZER</h1>
+                </div>
+                <div id="success-label" className="mx-auto bg-green-600 text-center text-white my-3 rounded animate-pulse">
+                    {message}
                 </div>
                 <div className='container mx-auto px-4 py-2 mt-4 bg-white rounded-lg'>
                     <hr className="box-title-hr mt-4" />
