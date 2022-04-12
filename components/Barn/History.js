@@ -12,7 +12,7 @@ export default function History(props) {
         axios
         .get(process.env.NEXT_PUBLIC_API_URL+"user/" + props.item.receiverId)
           .then((res) => {
-            setName(res.data.username)
+            setName(res.data.firstName+" "+res.data.lastName)
           }
           )
         setDate(moment(props.item.shareAt).format("DD/MM/YYYY HH:mm"))
