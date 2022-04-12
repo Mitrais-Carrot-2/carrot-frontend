@@ -41,6 +41,7 @@ export default function Merchant() {
                 </button>
 
                 <button
+                  id="staff-group-button"
                   onClick={() => router.push("/merchant/staffgroup")}
                   className="btn btn-carrot radius-5"
                 >

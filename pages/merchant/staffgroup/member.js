@@ -98,6 +98,7 @@ export default function StaffGroupMember(props) {
                             <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Member List</h2>
                             <div className="col-md-6">
                                 <button
+                                    id="add-member-button"
                                     className="col-sm-6 btn btn-info mt-4 pull-right radius-5"
                                     onClick={() => {
                                         setShowAddMember(true);
@@ -122,6 +123,7 @@ export default function StaffGroupMember(props) {
                                     {/* <th itemScope="col" aria-rowspan={2}>Action</th> */}
                                 </tr>
                             </thead>
+                            <tbody id="member-row">
                             {members
                                 .sort((a, b) => { return a.id - b.id })
                                 .map((data, index) => (
@@ -149,6 +151,7 @@ export default function StaffGroupMember(props) {
                                         {/* </td> */}
                                     </tr>
                                 ))}
+                            </tbody>
                         </table>
                     </div>
                 </section>
