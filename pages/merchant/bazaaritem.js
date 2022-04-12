@@ -109,13 +109,13 @@ export default function BazaarItem() {
 
                                                 </i>
                                             </button>
-                                            {showUpdateItem && <UpdateItem closeClick={setShowUpdateItem} updateData={itemDetail} refreshPage={reloadPage} />}
-                                            {showUpdateItemImage && <UpdateBazaarImage closeClick={setShowUpdateItemImage} updateData={id} refreshPage={reloadPage} />}
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
+                        {showUpdateItem && <UpdateItem closeClick={setShowUpdateItem} updateData={itemDetail} refreshPage={reloadPage} />}
+                        {showUpdateItemImage && <UpdateBazaarImage closeClick={setShowUpdateItemImage} updateData={id} refreshPage={reloadPage} />} 
                     </div>
                 </section>
 
