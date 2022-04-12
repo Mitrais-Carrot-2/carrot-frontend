@@ -74,41 +74,43 @@ export default function BazaarItem() {
                                     <th itemScope="col" aria-rowspan={2}>Action</th>
                                 </tr>
                             </thead>
-                            {bazaarItem.map((data, index) => (
-                                <tr key={index + 1}>
-                                    <td>{index + 1}</td>
-                                    <td style={{ display: "none" }}>{data.id}</td>
-                                    <td>{data.bazaar.bazaarName}</td>
-                                    <td>{data.name}</td>
-                                    <td>{data.price}</td>
-                                    <td>{data.quantity}</td>
-                                    <td>{data.description}</td>
-                                    <td>
-                                        <button type="button" className="btn border-orange-600 mr-2"
-                                            onClick={() => {
-                                                setShowUpdateItemImage(true);
-                                                setId(data.id)
-                                            }}
-                                        >
-                                            <i className="fa fa-image text-orange-600 fa-x px-1">
+                            <tbody>
+                                {bazaarItem.map((data, index) => (
+                                    <tr key={index + 1}>
+                                        <td>{index + 1}</td>
+                                        <td style={{ display: "none" }}>{data.id}</td>
+                                        <td>{data.bazaar.bazaarName}</td>
+                                        <td>{data.name}</td>
+                                        <td>{data.price}</td>
+                                        <td>{data.quantity}</td>
+                                        <td>{data.description}</td>
+                                        <td>
+                                            <button type="button" className="btn border-orange-600 mr-2"
+                                                onClick={() => {
+                                                    setShowUpdateItemImage(true);
+                                                    setId(data.id)
+                                                }}
+                                            >
+                                                <i className="fa fa-image text-orange-600 fa-x px-1">
 
-                                            </i>
-                                        </button>
-                                        <button type="button" className="btn border-blue-600 mr-2"
-                                            onClick={() => {
-                                                setShowUpdateItem(true);
-                                                setItemDetail(data);
-                                            }}
-                                        >
-                                            <i className="fa fa-edit text-blue-600 fa-x px-1">
+                                                </i>
+                                            </button>
+                                            <button type="button" className="btn border-blue-600 mr-2"
+                                                onClick={() => {
+                                                    setShowUpdateItem(true);
+                                                    setItemDetail(data);
+                                                }}
+                                            >
+                                                <i className="fa fa-edit text-blue-600 fa-x px-1">
 
-                                            </i>
-                                        </button>
-                                        {showUpdateItem && <UpdateItem closeClick={setShowUpdateItem} updateData={itemDetail} refreshPage={reloadPage} />}
-                                        {showUpdateItemImage && <UpdateBazaarImage closeClick={setShowUpdateItemImage} updateData={id} refreshPage={reloadPage} />}
-                                    </td>
-                                </tr>
-                            ))}
+                                                </i>
+                                            </button>
+                                            {showUpdateItem && <UpdateItem closeClick={setShowUpdateItem} updateData={itemDetail} refreshPage={reloadPage} />}
+                                            {showUpdateItemImage && <UpdateBazaarImage closeClick={setShowUpdateItemImage} updateData={id} refreshPage={reloadPage} />}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
                         </table>
                     </div>
                 </section>
