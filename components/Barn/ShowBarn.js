@@ -48,7 +48,7 @@ export default function ShowBarn(props) {
       </h1>
       <div className="bg-white rounded shadow-md p-4 mb-4 overflow-x-scroll">
         <h2>List of barn</h2>
-        <table className="w-5/6 overflow-x-scroll">
+        <table id="list-of-barns" className="w-5/6 overflow-x-scroll">
           <thead>
             <tr>
               <th>#</th>
@@ -97,6 +97,7 @@ export default function ShowBarn(props) {
             })}
         </table>
         <button
+        id="btn-create-barn"
           onClick={() => {
             setShowCreateBarn(true);
           }}
