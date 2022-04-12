@@ -53,13 +53,14 @@ export default function Employee(props) {
         {!onlyStaff ?
           <div>
             <div className="flex flex-wrap">
-              {(roles) ? roles.map(role => {
+              {(roles) ? roles.map((role, i) => {
                 if (role != "STAFF") {
                   let roleTxt = "";
                   if (role == "ADMIN") roleTxt = "ADMINISTRATOR"
                   else roleTxt = role
                   return (
                     <button
+                      key={i}
                       id={`btn-${roleTxt.toLowerCase()}`}
                       onClick={() => router.push("/" + role.toLowerCase())}
                       className="btn btn-carrot radius-5 mx-2"

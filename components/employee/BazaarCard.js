@@ -14,17 +14,15 @@ export default function BazaarCard(props) {
         .then(res => {
             setItems(res.data)
             setNumItem(res.data.length)
-            // res.data.forEach((item) => {
-            //     console.log("index = ", props.index)
-            //     props.incrementIndex()
-            // })
         })
         .catch(err => {console.log(err.message)})
+        console.log(props.bazaar.bazaarName, " start index = ", props.startIndex)
+
     }, [])
 
     const renderBazaarItems = () => {
-        return items.map(item => {
-            return <BazaarItemCard item={item} numItem={numItem} basket={props.basket} index={props.index}/>
+        return items.map((item, i) => {
+            return <BazaarItemCard key={item.id} item={item} numItem={numItem} basket={props.basket} index={props.startIndex + i + 1}/>
         })
     }
 

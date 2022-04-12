@@ -25,6 +25,8 @@ export default function BazaarItemCard(props) {
             }
             else console.log(err.message)
         })
+        console.log(props.item.bazaar.bazaarName, " item ", props.item.name, " index = ", props.index)
+
     }, [])
 
     function renderViewDetailsButton(classNames){
@@ -38,7 +40,7 @@ export default function BazaarItemCard(props) {
                     })
                 }}
                 className={classNames}
-                id={props.index}
+                id={"btn-item-" + props.index}
             >
                 VIEW DETAILS
             </button>
@@ -110,7 +112,7 @@ export default function BazaarItemCard(props) {
                         <h5 className="card-title truncate">{item.name}</h5>
                         <p className="card-title-orange">{item.price} Carrots</p>
                     </div>
-                    {renderViewDetailsButton(viewDetailsButtonClassMany, props.index)}
+                    {renderViewDetailsButton(viewDetailsButtonClassMany)}
                 </div>
             </div>
         )
