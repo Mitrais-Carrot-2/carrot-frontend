@@ -40,7 +40,7 @@ export default function itemDetails(props){
         .catch(err => {console.log(err.message)})
 
 
-    }, [router.isReady])
+    }, [router.isReady, showBuyRequestModal])
 
     const toggleBuyModal = () => {setShowBuyModal(!showBuyModal)};
     const toggleBuyRequestModal = () => {setShowBuyRequestModal(!showBuyRequestModal)};
