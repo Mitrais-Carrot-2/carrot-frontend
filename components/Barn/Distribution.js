@@ -43,6 +43,7 @@ export default function Distribution(props) {
             setManagerName(item.label);
           }}
         />
+        <input type="hidden" name="manager-name" value={managerName} />
         <label>Carrot Amount:</label>
         <input
           value={carrotAmount}
@@ -103,7 +104,8 @@ export default function Distribution(props) {
             <p className="text-2xl uppercase py-2 text-orange-500">
               Distribution Details:
             </p>
-            <table className="w-2/10 overflow-x-scroll">
+            <table 
+            className="w-2/10 overflow-x-scroll">
               <tr>
                 <th>Barn Name</th>
                 <td>{props.barn.barnName}</td>
