@@ -8,7 +8,11 @@ export default function EditUser() {
   const [userFormData, setUserFormData] = useState({});
   const [userList, setUserList] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [manager, setManager] = useState([]);
+  const [jobFamily, setJobFamily] = useState([]);
+  const [jobGrade, setJobGrade] = useState([]);
   const [jobGrades, setJobGrades] = useState([]);
+  const [office, setOffice] = useState([]);
 
   useEffect(() => {
     fetchList();
@@ -127,6 +131,10 @@ export default function EditUser() {
                       className="btn border-blue-600 mr-2"
                       onClick={() => {
                         setUserFormData(user);
+                        setManager(user.supervisorId);
+                        setJobFamily(user.jobFamily);
+                        setJobGrade(user.jobGrade);
+                        setOffice(user.office);
                         setShowModal(true);
                         console.log(userFormData);
                       }}
@@ -155,7 +163,7 @@ export default function EditUser() {
     axios
       .put(
         process.env.NEXT_PUBLIC_API_URL +
-          "user/updateProfile/" +
+          "admin/editStaff/" +
           userFormData.username,
         userFormData
       )
@@ -245,6 +253,7 @@ export default function EditUser() {
             id="manager-id"
             name="supervisorId"
             options={options}
+            defaultValue={{ value: manager, label: manager }}
             onChange={(e) =>
               setUserFormData({
                 ...userFormData,
@@ -258,6 +267,7 @@ export default function EditUser() {
             name="jobFamily"
             className="mb-2"
             options={jobFamilies}
+            defaultValue={{ value: jobFamily, label: jobFamily }}
             onChange={(e) => (
               setUserFormData({
                 ...userFormData,
@@ -273,6 +283,7 @@ export default function EditUser() {
             name="jobGrade"
             className="mb-2"
             options={jobGrades}
+            defaultValue={{ label: jobGrade, value: jobGrade }}
             onChange={(e) =>
               setUserFormData({
                 ...userFormData,
@@ -287,6 +298,7 @@ export default function EditUser() {
             className="mb-2"
             id="office"
             options={offices}
+            defaultValue={{ label: office, value: office }}
             name="office"
             onChange={(e) =>
               setUserFormData({
