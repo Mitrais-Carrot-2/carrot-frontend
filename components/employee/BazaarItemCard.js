@@ -127,11 +127,6 @@ export default function BazaarItemCard(props) {
         }
     }
 
-    function handleClick(event) {
-        event.preventDefault()
-        router.push("/itemDetails")
-    }
-
     return (
         <>
             {renderItems(props.item, props.numItem)}

@@ -32,7 +32,7 @@ export default function MiniProfileCards(props) {
     return (
       <>
         <h3>My {date.getFullYear()} Basket:</h3>
-        <h3>{props.basket ? props.basket.carrotAmount : ""}</h3>
+        <h3>{props.basket ? props.basket.carrotAmount : ""} Carrots</h3>
       </>
     )
   }
@@ -61,7 +61,12 @@ export default function MiniProfileCards(props) {
     <section>
       <div className="mx-auto my-4">
         <div className="grid grid-cols-3 gap-3 text-white mini-card">
-          <MiniCard cardType="mini-card-profile" image={profilePicture} body={profileCardBody()} />
+          <MiniCard cardType="mini-card-profile" 
+                    image={profilePicture} 
+                    body={profileCardBody()} 
+                    imgClass="cursor-pointer hover:opacity-70"
+                    clickAction={()=>router.push("/user/profile")} 
+          />
           <MiniCard cardType="mini-card-basket" image={carrotIcon} body={basketCardBody()} />
           <MiniCard cardType="mini-card-history" image={carrotIconTwo} body={historyCardBody()} />
         </div>

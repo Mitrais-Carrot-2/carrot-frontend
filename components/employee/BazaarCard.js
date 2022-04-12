@@ -7,7 +7,6 @@ export default function BazaarCard(props) {
     const [items, setItems] = useState([])
     const [numItem, setNumItem] = useState()
 
-
     const urlItems = `${process.env.NEXT_PUBLIC_API_URL}bazaar/${props.bazaar.id}/items`
 
     useEffect(() => {
