@@ -44,7 +44,7 @@ h2 {
 /* Not required for template or sticky footer method. */
 
 body > .container {
-  padding: 0px 0 0 0 !important;
+  padding: 0 0 10px 0 !important;
   width: 75%;
   margin: 0 auto;
 }
@@ -432,10 +432,6 @@ a:not([href]):not([tabindex]) {
   border-radius: 5px;
 }
 
-.bazaar-item {
-  height: 300px;
-}
-
 .carrot-orange {
   color: #ff5722;
   font-size: 18px;
@@ -602,15 +598,22 @@ a:hover {
   background-color: #f1f1f1;
 }
 
-.item-border-odd .w-full:nth-child(odd) {
+.bazaar-item-border .bazaar-2-items:nth-child(odd) {
   border-right: 1px solid rgb(211, 211, 211);
-  padding-right: 16px;
-}
-
-.item-border-odd .w-full:nth-child(even) {
-  padding-left: 4px;
 }
 
 ul.roles {
   list-style-type: square;
+}
+
+.search-input {
+	height: 32px;
+	width: 200px;
+	border-radius: 5px;
+	border: 1px solid #e5e5e5;
+	padding: 0 32px 0 16px;
+}
+
+.search-input:hover {
+  cursor: pointer;
 }

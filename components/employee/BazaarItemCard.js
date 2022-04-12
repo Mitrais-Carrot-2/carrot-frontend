@@ -54,15 +54,15 @@ export default function BazaarItemCard(props) {
                         src={image}
                         objectFit="cover"
                         width={500}
-                        height={300}
+                        height={350}
                     />
                 </div>
-                <div className="md:w-1/2 px-10 self-center">
+                <div className="md:w-1/2 px-10 self-center ">
                     <h2 className="my-3">{item.name}</h2>
                     <h4>
                         <strong className="carrot-orange mt-2">{item.price} Carrots</strong>
                     </h4>
-                    <p className="my-3">{item.description}</p>
+                    <p className="mt-3 mb-4">{item.description}</p>
                     {renderViewDetailsButton(viewDetailsButtonClassOne)}
                 </div>
             </div>
@@ -71,8 +71,8 @@ export default function BazaarItemCard(props) {
 
     function renderTwoItems(item) {
         return (
-            <div className="w-full p-3">
-                <div className="text-center h-auto p-0 bazaar-item items-center mb-2 flex justify-center">
+            <div className="w-full p-4 bazaar-2-items">
+                <div className="text-center h-auto p-0 items-center mb-2 flex justify-center">
                     <Image
                         alt=""
                         src={image}
@@ -81,8 +81,8 @@ export default function BazaarItemCard(props) {
                         objectFit="cover"
                     />
                 </div>
-                <div className="x-3 mb-3">
-                    <h2 className="my-3">{item.name}</h2>
+                <div>
+                    <h2 className="mt-4 mb-3">{item.name}</h2>
                     <h4>
                         <strong className="carrot-orange">{item.price} Carrots</strong>
                     </h4>
@@ -106,7 +106,7 @@ export default function BazaarItemCard(props) {
                         objectFit="cover"
                     />
                     <div className="flex-auto p-6 card-body">
-                        <h5 className="card-title">{item.name}</h5>
+                        <h5 className="card-title truncate">{item.name}</h5>
                         <p className="card-title-orange">{item.price} Carrots</p>
                     </div>
                     {renderViewDetailsButton(viewDetailsButtonClassMany)}

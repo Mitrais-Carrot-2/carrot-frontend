@@ -27,6 +27,7 @@ const ActionButton = (props) => {
     const auth = useSelector((state) => (state.authentication ? state.authentication : {}));
     // const staff = useSelector((state) => (state.manager.staff ? state.manager.staff : {}));
     const targetGroup = useSelector((state) => (state.manager.shareToGroup ? state.manager.shareToGroup : {}));
+    const freezer = useSelector((state) => (state.manager.freezer ? state.manager.freezer : {}));
 
     const columnsStaff = [
         {
@@ -86,12 +87,17 @@ const ActionButton = (props) => {
 
     let sendGroup = () => {
         // console.log(targetGroup);
+        // alert(targetGroup.carrotAmount*targetGroup.totalMember);
         if (targetGroup.carrotAmount > 0) {
-            dispatch(shareToGroup(auth.token, targetGroup));
-            setModalShareOpen(false);
-            Router.push('/manager');
+            if(freezer.carrot_amount >= targetGroup.carrotAmount*targetGroup.totalMember) {
+                dispatch(shareToGroup(auth.token, targetGroup));
+                setModalShareOpen(false);
+                Router.push('/manager');
+            } else {
+                setErrorMessage('Not enough Carrot Left!');
+            }
         } else {
-            setErrorMessage('Please fill in all the fields');
+            setErrorMessage('Please fill in all the fields!');
         }
     }
 
@@ -118,7 +124,7 @@ const ActionButton = (props) => {
                 </div>
                 <ModalBody>
                     <hr className="box-title-hr my-1" />
-                    <h1><span className="font-bold">Group Name:</span> {groupName} </h1>
+                    <h1><span className="font-bold" id="group-name-label">Group Name:</span> {groupName} </h1>
                     <StaffTable columns={columnsStaff} data={staff} />
                 </ModalBody>
                 <ModalFooter>
@@ -159,7 +165,7 @@ const ActionButton = (props) => {
                     </button>
                 </div>
                 <ModalBody>
-                    <div className="w-[94%] mx-auto bg-red-600 text-center text-white my-3 rounded animate-pulse">
+                    <div id="error-label" className="w-[94%] mx-auto bg-red-600 text-center text-white my-3 rounded animate-pulse">
                         {errorMessage}
                     </div>
                     <FormShare receiver='group' groupId={groupId} groupName={groupName} totalMember={totalMember} />

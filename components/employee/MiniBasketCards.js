@@ -35,7 +35,7 @@ export default function MiniBasketCards(props) {
       <div className="mx-auto my-4">
         <div className="grid grid-cols-3 gap-3 text-white mini-card">
           <MiniCard cardType="mini-card-reward" image={carrotIcon} body={carrotCardBody("reward", props.basket.rewardCarrot)} />
-          <MiniCard cardType="mini-card-shared" image={carrotIcon} body={carrotCardBody("shared", props.basket.shareCarrot)} />
+          <MiniCard cardType="mini-card-shared" image={carrotIcon} body={carrotCardBody("share", props.basket.shareCarrot)} />
           <MiniCard cardType="mini-card-bazaar" image={carrotIcon} body={carrotCardBody("bazaar", props.basket.bazaarCarrot)} />
         </div>
       </div>

@@ -28,15 +28,15 @@ export default function BazaarCard(props) {
 
     function bazaarOneItem() {
         return (
-            <div className="bazaar-1-item mb-4">
-                <div className="container mx-auto sm:px-4 search-box py-4">
-                <div className="flex flex-wrap">
-                    <div className="md:w-full pr-4 pl-4">
-                        <hr className="box-title-hr" />
-                        <h4 className="my-2 box-title">{props.bazaar.bazaarName}</h4>
+            <div className="mb-4">
+                <div className="mx-auto sm:px-4 search-box py-4">
+                    <div className="flex flex-wrap">
+                        <div className="md:w-full pr-4 pl-4">
+                            <hr className="box-title-hr" />
+                            <h4 className="my-2 box-title">{props.bazaar.bazaarName}</h4>
+                        </div>
+                        {renderBazaarItems()}
                     </div>
-                    {renderBazaarItems()}
-                </div>
                 </div>
             </div>
         )
@@ -44,17 +44,17 @@ export default function BazaarCard(props) {
 
     function bazaarTwoItems() {
         return (
-            <div className="bazaar-2-items mb-4">
-                <div className="container mx-auto sm:px-4 search-box py-4">
-                <div className="flex flex-wrap justify-stretch">
-                    <div className="md:w-full pr-4 pl-4">
-                        <hr className="box-title-hr" />
-                        <h4 className="my-2 box-title">{props.bazaar.bazaarName}</h4>
+            <div className="mb-4">
+                <div className="mx-auto sm:px-4 search-box pt-4">
+                    <div className="flex flex-wrap justify-stretch">
+                        <div className="md:w-full pr-4 pl-4">
+                            <hr className="box-title-hr" />
+                            <h4 className="my-2 box-title">{props.bazaar.bazaarName}</h4>
+                        </div>
+                        <div className="grid grid-cols-2 gap-0 w-full bazaar-item-border">
+                            {renderBazaarItems()}
+                        </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-0 w-full">
-                        {renderBazaarItems()}
-                    </div>
-                </div>
                 </div>
             </div>
         )
@@ -62,8 +62,8 @@ export default function BazaarCard(props) {
 
     function bazaarManyItems(columnMode) {
         return (
-            <div className="bazaar mb-4">
-                <div className="container mx-auto sm:px-4 search-box py-4">
+            <div className="mb-4">
+                <div className="mx-auto sm:px-4 search-box py-4">
                 <div className="flex flex-wrap content-end">
                     <div className="md:w-full pr-4 pl-4">
                         <hr className="box-title-hr" />

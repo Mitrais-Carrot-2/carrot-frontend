@@ -1,4 +1,4 @@
-import { MANAGER_GET_FREEZER, MANAGER_GET_FREEZER_ERROR, MANAGER_GET_STAFF, SET_SHARE_TO_GROUP, SET_SHARE_TO_STAFF, SHARE_TO_GROUP, SHARE_TO_STAFF, MANAGER_GET_FREEZER_HISTORY, REMOVE_MANAGER } from "../actionTypes";
+import { MANAGER_GET_FREEZER, MANAGER_GET_FREEZER_ERROR, MANAGER_GET_STAFF, SET_SHARE_TO_GROUP, SET_SHARE_TO_STAFF, SHARE_TO_GROUP, SHARE_TO_STAFF, MANAGER_GET_FREEZER_HISTORY, REMOVE_MANAGER, SHARE_TO_STAFF_SUCCESS, SHARE_TO_GROUP_SUCCESS } from "../actionTypes";
 import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
@@ -35,6 +35,7 @@ const initialState = {
     }
 };
 
+let message = {};
 const managerReducer = (state = initialState, action) => {
     switch (action.type) {
         case HYDRATE:
@@ -78,6 +79,20 @@ const managerReducer = (state = initialState, action) => {
                     carrotAmount: 0,
                     note: ""
                 }
+            };
+        case SHARE_TO_STAFF_SUCCESS:
+            message = {
+                message: action.payload
+            }
+            return {
+                ...state, ...message
+            };
+        case SHARE_TO_GROUP_SUCCESS:
+            message = {
+                message: action.payload
+            }
+            return {
+                ...state, ...message
             };
         case REMOVE_MANAGER:
             return state = initialState;
