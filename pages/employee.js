@@ -45,38 +45,6 @@ export default function Employee(props) {
     }
   }, [user.id])
 
-  function renderRoles() {
-    return (
-      <>
-        {!onlyStaff ?
-          <div>
-            <div className="flex flex-wrap">
-              {(roles) ? roles.map(role => {
-                if (role != "STAFF") {
-                  let roleTxt = "";
-                  if (role == "ADMIN") roleTxt = "ADMINISTRATOR"
-                  else roleTxt = role
-                  return (
-                    <button
-                      onClick={() => router.push("/" + role.toLowerCase())}
-                      className="btn btn-carrot radius-5 mx-2"
-                    >
-                      {roleTxt}
-                    </button>
-                  )
-                }
-                else {
-                  return ("")
-                }
-              })
-                : ""}
-            </div>
-          </div>
-          : null}
-      </>
-    )
-  }
-
   return (
     <body>
       <Navbar />

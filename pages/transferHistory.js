@@ -24,24 +24,28 @@ export default function TransferHistory() {
         {
             name: "#",
             selector: row => row.num,
-            sortable: true
+            sortable: true,
+            width: "60px",
         },
         {
             name: "To/From",
             selector: row => row.user,
             sortable: true,
             width: "200px",
-            wrap:true
+            wrap: true,
+            // center: true,
         },
         {
             name: "Type",
             selector: row => row.type,
-            sortable: true
+            sortable: true,
+            // center: true,
         },
         {
             name: "Carrot",
             selector: row => row.carrotAmount,
             sortable: true,
+            // center: true,
         },
         {
             name: "Note",
@@ -49,15 +53,16 @@ export default function TransferHistory() {
             sortable: true,
             width: "400px",
             wrap:true,
-            headerClassName:"flex justify-center"
+            // center: true,
 
         },
         {
             name: "Date",
             selector: row => row.shareAt,
             sortable: true,
-            width: "300px",
-            wrap:true
+            width: "200px",
+            wrap:true,
+            // center: true,
 
         }
     ];
@@ -79,7 +84,7 @@ export default function TransferHistory() {
                                     type: data.type.substring(5), 
                                     note: data.note, 
                                     carrotAmount: data.carrotAmount,
-                                    shareAt: data.shareAt
+                                    shareAt: data.shareAt.substring(0,19).replace("T", " ")
                                     }]
                     
                     )
@@ -88,8 +93,13 @@ export default function TransferHistory() {
         .catch(err => console.log(err.message))
     }, [])
 
-
-    console.log("data transfer = ", dataTransfer)
+    const customStyles = {
+        cells: {
+            style: {
+                textAlign: "center",
+            }
+        }
+    }
 
     function renderTransferTable(){
         if (dataTransfer){       
@@ -102,11 +112,13 @@ export default function TransferHistory() {
                     subHeader
                     // subHeaderComponent={subHeaderComponentMemo}
                     persistTableHead
+                    customStyles={customStyles}
                 />
             )
         }
         return null;
     }
+
 
     return (
         <body>

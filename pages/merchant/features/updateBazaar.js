@@ -47,6 +47,7 @@ export default function UpdateBazaar(props) {
                     <div className="bazaar-details">
                         <label>Bazaar Name:</label>
                         <input
+                            id="bazaar-name-input"
                             value={bazaar.bazaarName}
                             type="text"
                             name="bazaarName"
@@ -55,6 +56,7 @@ export default function UpdateBazaar(props) {
 
                         <label>Start Date:</label>
                         <input
+                            id="start-bazaar-input"
                             value={bazaar.startDate}
                             type="date"
                             name="startDate"
@@ -63,6 +65,7 @@ export default function UpdateBazaar(props) {
 
                         <label>End Date:</label>
                         <input
+                            id="end-bazaar-input"
                             value={bazaar.endDate}
                             type="date"
                             name="endDate"

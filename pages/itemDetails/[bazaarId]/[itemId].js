@@ -10,6 +10,8 @@ import BuyItemModal from "@components/employee/BuyItemModal";
 import { Modal, ModalHeader, ModalBody, ModalFooter} from "reactstrap";
 import checkGreen from "@public/img/checkGreen.png";
 import Navbar from "@components/Navbar";
+import defaultProduct from "@public/img/default-product.png";
+
 
 export default function itemDetails(props){
     const router = useRouter()
@@ -22,6 +24,8 @@ export default function itemDetails(props){
     const carrot = router.query.carrot;
     const image = router.query.image;
 
+    console.log("image = ", image)
+
     const user = useSelector((state) => (state.user.info ? state.user.info : {}));
         
     const urlItem = `${process.env.NEXT_PUBLIC_API_URL}bazaar/${bazaarId}/${itemId}`;
@@ -30,14 +34,13 @@ export default function itemDetails(props){
     useEffect(() => {
         if(!router.isReady) return;
 
-        console.log(urlItem)
-
         axios.get(urlItem)
         .then(res => {
             setItem(res.data)
             return res;
         })
         .catch(err => {console.log(err.message)})
+
 
     }, [router.isReady])
 
