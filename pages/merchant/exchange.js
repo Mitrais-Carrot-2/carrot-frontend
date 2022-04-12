@@ -70,58 +70,60 @@ export default function Exchange() {
                                     <th itemScope="col" aria-rowspan={2}>Active</th>
                                 </tr>
                             </thead>
-                            {exchange.map((data, index) => (
-                                <tr key={index + 1}>
-                                    <td>{index + 1}</td>
-                                    <td style={{ display: "none" }}>{data.id}</td>
-                                    <td>{data.buyer}</td>
-                                    <td>{data.exchangeDate}</td>
-                                    <td>{data.item}</td>
-                                    <td>{data.price}</td>
-                                    {data.status == "REQUESTED" ?
-                                        <>
-                                            <td>
-                                                <button type="button" className="btn border-green-600 mr-2"
-                                                    onClick={() => {
-                                                        setShowApproveItem(true);
-                                                        setSelectedId(data.id);
-                                                        console.log(setSelectedId);
-                                                    }}
-                                                >
-                                                    <i className="fa fa-check-square text-green-600 fa-x px-1">
+                            <tbody>
+                                {exchange.map((data, index) => (
+                                    <tr key={index + 1}>
+                                        <td>{index + 1}</td>
+                                        <td style={{ display: "none" }}>{data.id}</td>
+                                        <td>{data.buyer}</td>
+                                        <td>{data.exchangeDate}</td>
+                                        <td>{data.item}</td>
+                                        <td>{data.price}</td>
+                                        {data.status == "REQUESTED" ?
+                                            <>
+                                                <td>
+                                                    <button type="button" className="btn border-green-600 mr-2"
+                                                        onClick={() => {
+                                                            setShowApproveItem(true);
+                                                            setSelectedId(data.id);
+                                                            console.log(setSelectedId);
+                                                        }}
+                                                    >
+                                                        <i className="fa fa-check-square text-green-600 fa-x px-1">
 
-                                                    </i>
-                                                </button>
+                                                        </i>
+                                                    </button>
 
-                                                <button type="button" className="btn border-red-600 mr-2"
-                                                    onClick={() => {
-                                                        setShowDenyItem(true);
-                                                        setSelectedId(data.id);
-                                                        console.log(selectedId);
-                                                    }}
-                                                >
-                                                    <i className="fa fa-window-close-o text-red-600 fa-x px-1">
+                                                    <button type="button" className="btn border-red-600 mr-2"
+                                                        onClick={() => {
+                                                            setShowDenyItem(true);
+                                                            setSelectedId(data.id);
+                                                            console.log(selectedId);
+                                                        }}
+                                                    >
+                                                        <i className="fa fa-window-close-o text-red-600 fa-x px-1">
 
-                                                    </i>
-                                                </button>
-                                            </td>
-                                            {showApproveItem && <ApproveItem closeClick={setShowApproveItem} updateData={selectedId} refreshPage={reloadPage} />}
-                                            {showDenyItem && <DenyItem closeClick={setShowDenyItem} updateData={selectedId} refreshPage={reloadPage} />}
-                                        </>
+                                                        </i>
+                                                    </button>
+                                                </td>
+                                                {showApproveItem && <ApproveItem closeClick={setShowApproveItem} updateData={selectedId} refreshPage={reloadPage} />}
+                                                {showDenyItem && <DenyItem closeClick={setShowDenyItem} updateData={selectedId} refreshPage={reloadPage} />}
+                                            </>
 
-                                        :
+                                            :
 
-                                        <>
-                                            <td>
-                                                {data.status}
-                                            </td>
-                                        </>}
-                                    <td>{data.active}</td>
+                                            <>
+                                                <td>
+                                                    {data.status}
+                                                </td>
+                                            </>}
+                                        <td>{data.active}</td>
 
-                                    {showUpdateBazaar && <UpdateBazaar closeClick={setShowUpdateBazaar} updateData={selectedBazaar} refreshPage={reloadPage} />}
+                                        {showUpdateBazaar && <UpdateBazaar closeClick={setShowUpdateBazaar} updateData={selectedBazaar} refreshPage={reloadPage} />}
 
-                                </tr>
-                            ))}
+                                    </tr>
+                                ))}
+                            </tbody>
                         </table>
                     </div>
                 </section>

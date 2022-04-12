@@ -15,7 +15,7 @@ export default function Modal(props) {
             onClick={e => e.stopPropagation()}>
             {/*header*/}
             <div className="flex items-start justify-between pt-5 pb-4 mb-2 border-b border-solid border-blueGray-200 rounded-t">
-              <h3 className="text-3xl font-semibold">{props.title}</h3>
+              <h3 id="modal-title" className="text-3xl font-semibold">{props.title}</h3>
               <button
                 className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                 onClick={() => props.closeClick(false)}
@@ -35,6 +35,7 @@ export default function Modal(props) {
                 Close
               </Button>
               <Button
+                id="modal-save-button"
                 className="bg-green-600 border-none hover:bg-green-700 mx-1"
                 type="button"
                 onClick={() => props.actionClick()}

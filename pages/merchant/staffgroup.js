@@ -53,7 +53,8 @@ export default function StaffGroup(props) {
                             </div>              
                             <div className="col-md-6">
                                 <button
-                                    className="col-sm-6 btn btn-info mt-0 pull-right radius-5"
+                                    id="create-group-button"
+                                    className="col-sm-6 btn btn-info mt-4 pull-right radius-5"
                                     onClick={() => {
                                         setShowCreateGroup(true);
                                     }}
