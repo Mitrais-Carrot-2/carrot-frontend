@@ -55,6 +55,7 @@ export default function BarnReward(props) {
       }
       )
       .catch((err) => {
+        window.alert("Reward creation failed");
         console.log(err);
       });
     setNewReward({ barn_id: props.id.id });
