@@ -9,6 +9,7 @@ export default function EditUser() {
   const [userList, setUserList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [manager, setManager] = useState([]);
+  const [allManager, setAllManager] = useState([]);
   const [jobFamily, setJobFamily] = useState([]);
   const [jobGrade, setJobGrade] = useState([]);
   const [jobGrades, setJobGrades] = useState([]);
@@ -17,6 +18,7 @@ export default function EditUser() {
   useEffect(() => {
     fetchList();
     //eslint-disable-next-line
+    fetchManager();
   }, []);
 
   function fetchList() {
@@ -24,6 +26,12 @@ export default function EditUser() {
       setUserList(res.data);
       console.log(res.data);
     });
+  }
+
+  function fetchManager() {
+    const urlManager = `http://localhost:8181/api/farmer/transfer/manager`;
+
+    axios.get(urlManager).then((response) => setAllManager(response.data));
   }
 
   const offices = [
@@ -77,6 +85,14 @@ export default function EditUser() {
   }
 
   let options = [];
+
+  options = allManager.map((s) => {
+    return {
+      value: s.userId,
+
+      label: `${s.userId}: ${s.firstName} ${s.lastName}`,
+    };
+  });
 
   return (
     <section>
@@ -136,7 +152,7 @@ export default function EditUser() {
                         setJobGrade(user.jobGrade);
                         setOffice(user.office);
                         setShowModal(true);
-                        console.log(userFormData);
+                        console.log(allManager);
                       }}
                     >
                       <i className="fa fa-edit text-blue-600 fa-x px-1"></i>
