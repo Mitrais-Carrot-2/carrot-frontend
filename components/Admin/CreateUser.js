@@ -103,7 +103,13 @@ export default function CreateUser() {
     };
   });
 
+  options.push({
+    value: "0",
+    label: "No Supervisor",
+  });
+
   function createUser() {
+    console.log();
     axios
       .post("http://localhost:8181/api/admin/signup", userFormData)
       .then((res) => {

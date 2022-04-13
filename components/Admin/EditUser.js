@@ -90,8 +90,13 @@ export default function EditUser() {
     return {
       value: s.userId,
 
-      label: `${s.userId}: ${s.firstName} ${s.lastName}`,
+      label: `${s.userId}: ${s.username} - ${s.firstName} ${s.lastName}`,
     };
+  });
+
+  options.push({
+    value: "0",
+    label: "No Supervisor",
   });
 
   return (
@@ -105,6 +110,9 @@ export default function EditUser() {
             <tr>
               <th itemScope="col" aria-rowspan={2}>
                 #
+              </th>
+              <th itemScope="col" aria-rowspan={2}>
+                ID
               </th>
               <th itemScope="col" aria-rowspan={2}>
                 Username
@@ -130,11 +138,21 @@ export default function EditUser() {
             {userList.map((user, index) => {
               return (
                 <tr key={index}>
-                  <td>{index}</td>
+                  <td>{index + 1}</td>
+                  <td>{user.id}</td>
                   <td>{user.username}</td>
                   <td>{user.firstName + " " + user.lastName}</td>
                   <td>{user.jobFamily + ", " + user.jobGrade}</td>
-                  <td>{user.supervisorId}</td>
+                  <td>
+                    {allManager.map((item) => {
+                      if (item.userId === user.supervisorId) {
+                        return item.username;
+                      } else {
+                        return "No Manager";
+                      }
+                    })}
+                  </td>
+                  {/* <td>{user.supervisorId}</td> */}
                   <td>
                     {user.roles.map((role, index) => (
                       <li key={index}>{role.name.substring(5)}</li>
