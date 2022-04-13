@@ -24,7 +24,8 @@ export default function BarnHistory(props) {
 
   return (
     <>
-      <p className="text-2xl uppercase py-2 text-orange-500">History:</p>
+      <hr className="box-title-hr mt-3" />
+      <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">History</h4>
       <table>
         <thead>
           <tr>

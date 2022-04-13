@@ -44,9 +44,13 @@ export default function StaffGroup(props) {
                     <div className="row d-flex px-10">
                         <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-2">Staff Group Dashboard</h2>
                     </div>
-                    <div className="container mx-auto sm: px-4 search-box py-3">
-                        <div className="row d-flex px-4">
-                            <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Group List</h2>
+                    <div className="mx-auto sm: px-4 search-box py-3">
+                        {/* <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Group List</h2> */}
+                        <div className="row d-flex px-4 items-center">
+                            <div className="col-md-6">
+                                <hr className="box-title-hr mt-3" />
+                                <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">Group List</h4>
+                            </div>              
                             <div className="col-md-6">
                                 <button
                                     id="create-group-button"

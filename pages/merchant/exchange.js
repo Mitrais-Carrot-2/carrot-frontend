@@ -47,11 +47,15 @@ export default function Exchange() {
             <div className="container">
                 <section className="bazaar-table">
                     <div className="row d-flex px-10">
-                        <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-2">Exchange Dashboard</h2>
+                        <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-3">Exchange Dashboard</h2>
                     </div>
                     <div className="container mx-auto sm: px-4 search-box py-3">
                         <div className="row d-flex px-4">
-                            <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Exchange List</h2>
+                            {/* <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Exchange List</h2> */}
+                            <div className="col-md-6">
+                                <hr className="box-title-hr mt-3" />
+                                <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">Exchange List</h4>
+                            </div>              
                         </div>
                         <table className="text-center table table-hover mt-3">
                             <thead>
@@ -66,58 +70,60 @@ export default function Exchange() {
                                     <th itemScope="col" aria-rowspan={2}>Active</th>
                                 </tr>
                             </thead>
-                            {exchange.map((data, index) => (
-                                <tr key={index + 1}>
-                                    <td>{index + 1}</td>
-                                    <td style={{ display: "none" }}>{data.id}</td>
-                                    <td>{data.buyer}</td>
-                                    <td>{data.exchangeDate}</td>
-                                    <td>{data.item}</td>
-                                    <td>{data.price}</td>
-                                    {data.status == "REQUESTED" ?
-                                        <>
-                                            <td>
-                                                <button type="button" className="btn border-green-600 mr-2"
-                                                    onClick={() => {
-                                                        setShowApproveItem(true);
-                                                        setSelectedId(data.id);
-                                                        console.log(setSelectedId);
-                                                    }}
-                                                >
-                                                    <i className="fa fa-check-square text-green-600 fa-x px-1">
+                            <tbody>
+                                {exchange.map((data, index) => (
+                                    <tr key={index + 1}>
+                                        <td>{index + 1}</td>
+                                        <td style={{ display: "none" }}>{data.id}</td>
+                                        <td>{data.buyer}</td>
+                                        <td>{data.exchangeDate}</td>
+                                        <td>{data.item}</td>
+                                        <td>{data.price}</td>
+                                        {data.status == "REQUESTED" ?
+                                            <>
+                                                <td>
+                                                    <button type="button" className="btn border-green-600 mr-2"
+                                                        onClick={() => {
+                                                            setShowApproveItem(true);
+                                                            setSelectedId(data.id);
+                                                            console.log(setSelectedId);
+                                                        }}
+                                                    >
+                                                        <i className="fa fa-check-square text-green-600 fa-x px-1">
 
-                                                    </i>
-                                                </button>
+                                                        </i>
+                                                    </button>
 
-                                                <button type="button" className="btn border-red-600 mr-2"
-                                                    onClick={() => {
-                                                        setShowDenyItem(true);
-                                                        setSelectedId(data.id);
-                                                        console.log(selectedId);
-                                                    }}
-                                                >
-                                                    <i className="fa fa-window-close-o text-red-600 fa-x px-1">
+                                                    <button type="button" className="btn border-red-600 mr-2"
+                                                        onClick={() => {
+                                                            setShowDenyItem(true);
+                                                            setSelectedId(data.id);
+                                                            console.log(selectedId);
+                                                        }}
+                                                    >
+                                                        <i className="fa fa-window-close-o text-red-600 fa-x px-1">
 
-                                                    </i>
-                                                </button>
-                                            </td>
-                                            {showApproveItem && <ApproveItem closeClick={setShowApproveItem} updateData={selectedId} refreshPage={reloadPage} />}
-                                            {showDenyItem && <DenyItem closeClick={setShowDenyItem} updateData={selectedId} refreshPage={reloadPage} />}
-                                        </>
+                                                        </i>
+                                                    </button>
+                                                </td>
+                                                {showApproveItem && <ApproveItem closeClick={setShowApproveItem} updateData={selectedId} refreshPage={reloadPage} />}
+                                                {showDenyItem && <DenyItem closeClick={setShowDenyItem} updateData={selectedId} refreshPage={reloadPage} />}
+                                            </>
 
-                                        :
+                                            :
 
-                                        <>
-                                            <td>
-                                                {data.status}
-                                            </td>
-                                        </>}
-                                    <td>{data.active}</td>
+                                            <>
+                                                <td>
+                                                    {data.status}
+                                                </td>
+                                            </>}
+                                        <td>{data.active}</td>
 
-                                    {showUpdateBazaar && <UpdateBazaar closeClick={setShowUpdateBazaar} updateData={selectedBazaar} refreshPage={reloadPage} />}
+                                        {showUpdateBazaar && <UpdateBazaar closeClick={setShowUpdateBazaar} updateData={selectedBazaar} refreshPage={reloadPage} />}
 
-                                </tr>
-                            ))}
+                                    </tr>
+                                ))}
+                            </tbody>
                         </table>
                     </div>
                 </section>

@@ -35,39 +35,41 @@ export default function Farmer() {
   return (
     <body>
       <Navbar />
-      <div className="container text-center bg-white overflow-x-auto overflow-y-auto h-auto py-20 ">
-        <Button
-          className="btn bg-orange-600 mb-2"
-          onClick={() => {
-            setShowBarns(true);
-            setShowDistribution(false);
-          }}
-        >
-          {" "}
-          Dashboard{" "}
-        </Button>
-        <Button
-          className="btn bg-orange-600 ml-2 mb-2"
-          onClick={() => {
-            setShowBarns(false);
-            setShowDistribution(true);
-            // barns.find((barn) => {
-            //   if (barn.isActive) {
-            //     setActiveBarn(barn);
-            //   } else{
-            //     setActiveBarn({})
-            //   }
-            // });
-            setActiveBarn(barns.find((barn) => barn.isActive));
-          }}
-        >
-          Distribution
-        </Button>
-      </div>
-
       <div className="container">
-        {showBarns && <ShowBarn updateBarns={updateBarns} />}
-        {showDistribution && <Distribution barn={activeBarn} />}
+        <div className="search-box text-center overflow-x-auto overflow-y-auto mb-10">
+          <button
+            className="btn btn-carrot my-2"
+            onClick={() => {
+              setShowBarns(true);
+              setShowDistribution(false);
+            }}
+          >
+            {" "}
+            Dashboard{" "}
+          </button>
+          <button
+            className="btn btn-carrot ml-2 my-2"
+            onClick={() => {
+              setShowBarns(false);
+              setShowDistribution(true);
+              // barns.find((barn) => {
+              //   if (barn.isActive) {
+              //     setActiveBarn(barn);
+              //   } else{
+              //     setActiveBarn({})
+              //   }
+              // });
+              setActiveBarn(barns.find((barn) => barn.isActive));
+            }}
+          >
+            Distribution
+          </button>
+        </div>
+
+        <div>
+          {showBarns && <ShowBarn updateBarns={updateBarns} />}
+          {showDistribution && <Distribution barn={activeBarn} />}
+        </div>
       </div>
     </body>
   );

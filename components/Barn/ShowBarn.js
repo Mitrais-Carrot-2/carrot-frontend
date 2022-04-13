@@ -43,11 +43,13 @@ export default function ShowBarn(props) {
   }
   return (
     <div>
-      <h1 id="farmer-dashboard" className="text-purple-500 text-4xl font-bold lowercase ml-2 mb-2">
+      {/* <h1 id="farmer-dashboard" className="text-purple-500 text-4xl font-bold lowercase ml-2 mb-2"> */}
+      <h2 id="farmer-dashboard" className="text-grey ml-4 mb-2">
         Farmer Dashboard
-      </h1>
+      </h2>
       <div className="bg-white rounded shadow-md p-4 mb-4 overflow-x-scroll">
-        <h2>List of barn</h2>
+        <hr className="box-title-hr" />
+        <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">Barn List</h4>
         <table id="list-of-barns" className="w-5/6 overflow-x-scroll">
           <thead>
             <tr>
@@ -75,7 +77,8 @@ export default function ShowBarn(props) {
                     <td>{barn.isActive ? "Yes" : "No"}</td>
                     <td>
                       <button
-                        onClick={() => {
+                          className="btn btn-info"
+                          onClick={() => {
                           setSelectedBarnId(barn);
                           setShowBarnInfo(true);
                         }}
@@ -83,7 +86,8 @@ export default function ShowBarn(props) {
                         Manage
                       </button>
                       <button
-                        onClick={() => {
+                          className="btn btn-info"
+                          onClick={() => {
                           setSelectedBarnId(barn);
                           setShowBarnHistory(true);
                         }}
@@ -97,7 +101,8 @@ export default function ShowBarn(props) {
             })}
         </table>
         <button
-        id="btn-create-barn"
+          id="btn-create-barn"
+          className="btn btn-info"
           onClick={() => {
             setShowCreateBarn(true);
           }}

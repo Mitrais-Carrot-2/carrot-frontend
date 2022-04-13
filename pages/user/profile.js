@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import Modal from "@components/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, setUserImage } from "../../redux/reducers/userReducer";
-import { basePath } from 'next.config';
+import { basePath } from "next.config";
 
 export default function Profile(/* props atau user */) {
   const dispatch = useDispatch();
@@ -27,11 +27,11 @@ export default function Profile(/* props atau user */) {
   });
   const [passwordFormData, setPasswordFormData] = useState({});
 
-  console.log("picture = ", picture)
+  console.log("picture = ", picture);
 
   useEffect(() => {
     axios
-      .get(process.env.NEXT_PUBLIC_API_URL+"user/" + user.supervisorId)
+      .get(process.env.NEXT_PUBLIC_API_URL + "user/" + user.supervisorId)
       .then((res) => {
         setSupervisorName(res.data.firstName + " " + res.data.lastName);
       });
@@ -216,7 +216,7 @@ export default function Profile(/* props atau user */) {
                     style={{ transition: "all .15s ease" }}
                     onClick={() => setModalUserInfo(true)}
                   >
-                    Update Profiles
+                    Update Profile
                   </button>
                 </div>
                 <div className="text-center m-2">
@@ -271,7 +271,7 @@ export default function Profile(/* props atau user */) {
   function updateUserInformation() {
     axios
       .put(
-        process.env.NEXT_PUBLIC_API_URL+"user/updateProfile/" + user.username,
+        process.env.NEXT_PUBLIC_API_URL + "user/updateProfile/" + user.username,
         userFormData
       )
       .then((res) => {
@@ -382,11 +382,15 @@ export default function Profile(/* props atau user */) {
     const formData = new FormData();
     formData.append("file", imageFormData, imageFormData.name);
     axios
-      .put(process.env.NEXT_PUBLIC_API_URL+"user/Image/" + user.username, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .put(
+        process.env.NEXT_PUBLIC_API_URL + "user/Image/" + user.username,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
         setModalImage(false);
@@ -437,14 +441,18 @@ export default function Profile(/* props atau user */) {
     if (passwordFormData.newPassword === passwordFormData.confirmPassword) {
       axios
         .put(
-          process.env.NEXT_PUBLIC_API_URL+"user/updatePassword/" + user.username,
+          process.env.NEXT_PUBLIC_API_URL +
+            "user/updatePassword/" +
+            user.username,
           passwordFormData
         )
         .then((res) => {
           setModalPassword(false);
 
           axios
-            .get(process.env.NEXT_PUBLIC_API_URL+"user/username/" + user.username)
+            .get(
+              process.env.NEXT_PUBLIC_API_URL + "user/username/" + user.username
+            )
             .then((res2) => {
               dispatch(setUser(res2.data));
               console.log(res2.data);

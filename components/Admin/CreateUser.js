@@ -99,11 +99,17 @@ export default function CreateUser() {
     return {
       value: s.userId,
 
-      label: `${s.firstName} ${s.lastName}`,
+      label: `${s.userId}: ${s.firstName} ${s.lastName}`,
     };
   });
 
+  options.push({
+    value: "0",
+    label: "No Supervisor",
+  });
+
   function createUser() {
+    console.log();
     axios
       .post("http://localhost:8181/api/admin/signup", userFormData)
       .then((res) => {
@@ -321,12 +327,12 @@ export default function CreateUser() {
           />
 
           {/* submit button that uses createUser() */}
-          <button
+          {/* <button
             className="btn btn-primary bg-black"
             onClick={() => console.log(userFormData)}
           >
             check user form
-          </button>
+          </button> */}
 
           <button
             className="btn btn-primary bg-black"

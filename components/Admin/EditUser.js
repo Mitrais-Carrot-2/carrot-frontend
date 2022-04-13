@@ -1,16 +1,24 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "@components/Modal";
+import Select from "react-select";
 
 export default function EditUser() {
   const url = process.env.NEXT_PUBLIC_API_URL + "user/";
   const [userFormData, setUserFormData] = useState({});
   const [userList, setUserList] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [manager, setManager] = useState([]);
+  const [allManager, setAllManager] = useState([]);
+  const [jobFamily, setJobFamily] = useState([]);
+  const [jobGrade, setJobGrade] = useState([]);
+  const [jobGrades, setJobGrades] = useState([]);
+  const [office, setOffice] = useState([]);
 
   useEffect(() => {
     fetchList();
     //eslint-disable-next-line
+    fetchManager();
   }, []);
 
   function fetchList() {
@@ -19,6 +27,77 @@ export default function EditUser() {
       console.log(res.data);
     });
   }
+
+  function fetchManager() {
+    const urlManager = `http://localhost:8181/api/farmer/transfer/manager`;
+
+    axios.get(urlManager).then((response) => setAllManager(response.data));
+  }
+
+  const offices = [
+    { value: "BALI", label: "Bali" },
+    { value: "YOGYAKARTA", label: "Yogyakarta" },
+    { value: "JAKARTA", label: "Jakarta" },
+    { value: "SURABAYA", label: "Surabaya" },
+    { value: "BANDUNG", label: "Bandung" },
+  ];
+
+  const jobFamilies = [
+    { value: "SE", label: "Software Engineer" },
+    { value: "QA", label: "Quality Assurance" },
+    { value: "CON", label: "Consultant" },
+    { value: "DSG", label: "Graphics Designer" },
+  ];
+
+  function handleJobFamily(value) {
+    if (value === "SE") {
+      setJobGrades([
+        { value: "JP", label: "Junior Programmer" },
+        { value: "PG", label: "Programmer" },
+        { value: "AP", label: "Analyst Programmer" },
+        { value: "AN", label: "Analyst" },
+      ]);
+    }
+    if (value === "QA") {
+      setJobGrades([
+        { value: "JT", label: "Junior Tester" },
+        { value: "TS", label: "Tester" },
+        { value: "ST", label: "Senior Tester" },
+        { value: "TA", label: "Test Architect" },
+      ]);
+    }
+    if (value === "CON") {
+      setJobGrades([
+        { value: "JC", label: "Junior Consultant" },
+        { value: "CON", label: "Consultant" },
+        { value: "SC", label: "Senior Consultant" },
+        { value: "LC", label: "Lead Consultant" },
+      ]);
+    }
+    if (value === "DSG") {
+      setJobGrades([
+        { value: "JD", label: "Junior Designer" },
+        { value: "DS", label: "Designer" },
+        { value: "SD", label: "Senior Designer" },
+        { value: "DD", label: "Design Director" },
+      ]);
+    }
+  }
+
+  let options = [];
+
+  options = allManager.map((s) => {
+    return {
+      value: s.userId,
+
+      label: `${s.userId}: ${s.username} - ${s.firstName} ${s.lastName}`,
+    };
+  });
+
+  options.push({
+    value: "0",
+    label: "No Supervisor",
+  });
 
   return (
     <section>
@@ -31,6 +110,9 @@ export default function EditUser() {
             <tr>
               <th itemScope="col" aria-rowspan={2}>
                 #
+              </th>
+              <th itemScope="col" aria-rowspan={2}>
+                ID
               </th>
               <th itemScope="col" aria-rowspan={2}>
                 Username
@@ -56,11 +138,21 @@ export default function EditUser() {
             {userList.map((user, index) => {
               return (
                 <tr key={index}>
-                  <td>{index}</td>
+                  <td>{index + 1}</td>
+                  <td>{user.id}</td>
                   <td>{user.username}</td>
                   <td>{user.firstName + " " + user.lastName}</td>
                   <td>{user.jobFamily + ", " + user.jobGrade}</td>
-                  <td>{user.supervisorId}</td>
+                  <td>
+                    {allManager.map((item) => {
+                      if (item.userId === user.supervisorId) {
+                        return item.username;
+                      } else {
+                        return "No Manager";
+                      }
+                    })}
+                  </td>
+                  {/* <td>{user.supervisorId}</td> */}
                   <td>
                     {user.roles.map((role, index) => (
                       <li key={index}>{role.name.substring(5)}</li>
@@ -73,15 +165,19 @@ export default function EditUser() {
                       className="btn border-blue-600 mr-2"
                       onClick={() => {
                         setUserFormData(user);
+                        setManager(user.supervisorId);
+                        setJobFamily(user.jobFamily);
+                        setJobGrade(user.jobGrade);
+                        setOffice(user.office);
                         setShowModal(true);
-                        console.log(userFormData);
+                        console.log(allManager);
                       }}
                     >
                       <i className="fa fa-edit text-blue-600 fa-x px-1"></i>
                     </button>
                     {showModal && (
                       <Modal
-                        title="Edit User"
+                        title={"Edit " + userFormData.username}
                         body={editModal()}
                         action="Edit User Information"
                         closeClick={setShowModal}
@@ -101,7 +197,7 @@ export default function EditUser() {
     axios
       .put(
         process.env.NEXT_PUBLIC_API_URL +
-          "user/updateProfile/" +
+          "admin/editStaff/" +
           userFormData.username,
         userFormData
       )
@@ -147,6 +243,18 @@ export default function EditUser() {
             }
             required
           />
+          <label>Email:</label>
+          <input
+            type="text"
+            name="email"
+            defaultValue={userFormData.email}
+            onChange={(e) =>
+              setUserFormData({
+                ...userFormData,
+                email: e.target.value,
+              })
+            }
+          />
           <label>Address:</label>
           <input
             type="text"
@@ -159,6 +267,7 @@ export default function EditUser() {
               })
             }
           />
+
           <label>phone:</label>
           <input
             type="text"
@@ -168,6 +277,67 @@ export default function EditUser() {
               setUserFormData({
                 ...userFormData,
                 phone: e.target.value,
+              })
+            }
+          />
+
+          <label>Manager / Supervisor:</label>
+          <Select
+            className="mb-2"
+            id="manager-id"
+            name="supervisorId"
+            options={options}
+            defaultValue={{ value: manager, label: manager }}
+            onChange={(e) =>
+              setUserFormData({
+                ...userFormData,
+                supervisorId: e.value,
+              })
+            }
+          />
+
+          <label>Job Family:</label>
+          <Select
+            name="jobFamily"
+            className="mb-2"
+            options={jobFamilies}
+            defaultValue={{ value: jobFamily, label: jobFamily }}
+            onChange={(e) => (
+              setUserFormData({
+                ...userFormData,
+                jobFamily: e.value,
+              }),
+              handleJobFamily(e.value)
+            )}
+            placeholder="Job Family"
+          />
+
+          <label>Job Grade:</label>
+          <Select
+            name="jobGrade"
+            className="mb-2"
+            options={jobGrades}
+            defaultValue={{ label: jobGrade, value: jobGrade }}
+            onChange={(e) =>
+              setUserFormData({
+                ...userFormData,
+                jobGrade: e.value,
+              })
+            }
+            placeholder="Job Grade"
+          />
+
+          <label>Office:</label>
+          <Select
+            className="mb-2"
+            id="office"
+            options={offices}
+            defaultValue={{ label: office, value: office }}
+            name="office"
+            onChange={(e) =>
+              setUserFormData({
+                ...userFormData,
+                office: e.value,
               })
             }
           />
