@@ -55,6 +55,7 @@ export default function UpdateGroup(props) {
                     <div className="group-details">
                         <label>Group Name:</label>
                         <input
+                            id="group-name-input"
                             value={group.name}
                             type="text"
                             name="groupName"
@@ -63,6 +64,7 @@ export default function UpdateGroup(props) {
 
                         <label>Group Notes:</label>
                         <input
+                            id="group-notes-input"
                             value={group.note}
                             type="text"
                             name="groupNote"
@@ -71,20 +73,22 @@ export default function UpdateGroup(props) {
 
                         <label>Carrot Allocation:</label>
                         <input
+                            id="group-carrot-input"
                             value={group.allocation}
                             type="number"
                             name="groupAllocation"
-                            onChange={(item) => setGroup({ ...group, allocation: item.target.value })}
+                            onChange={(item) => setGroup({ ...group, allocation: item.target.value, managerId: 1 })}
                         />
 
-                        <label>Manager:</label>
+                        {/* <label>Manager:</label>
                         <Select className="my-2"
                             value={group.managerId}
                             id='manager-id'
                             name="manager-id"
                             options={options}
                             onChange={(item) => setGroup({ ...group, managerId: item.value })}
-                        />
+                        /> */}
+                        {/* {setGroup({ ...group, managerId: 1 })} */}
                     </div>
                 </form>
                 <style jsx>{`
