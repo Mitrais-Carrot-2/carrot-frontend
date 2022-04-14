@@ -23,9 +23,14 @@ export default function Navbar() {
   const profileButtonRef = useRef();
   const notifRef = useRef();
   const user = useSelector((state) => (state.user.info ? state.user.info : {}));
-  const roles = jsCookie.get("roles") ? jsCookie.get("roles").split(",").map(function(item){
-      return item.substring(5);
-  }) : "";
+  const roles = jsCookie.get("roles")
+    ? jsCookie
+        .get("roles")
+        .split(",")
+        .map(function (item) {
+          return item.substring(5);
+        })
+    : "";
   const picture = useSelector((state) =>
     state.user.userImage ? state.user.userImage : "/img/defaultImage.png"
   );
@@ -60,7 +65,7 @@ export default function Navbar() {
         className="fixed  flex flex-wrap justify-between pt-2 px-4 navbar-expand-md z-10 bg-slate-50"
         style={{ width: "-webkit-fill-available" }}
       >
-        <div className="justify-start h-9 w-9">
+        <div id="navbar-image" className="justify-start h-9 w-9">
           {/* profile image on click going to user/profile */}
           <a ref={profileButtonRef}>
             <Image

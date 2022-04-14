@@ -7,13 +7,15 @@ import axios from 'axios';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { getFreezer, getFreezerHistory, getStaff } from 'redux/actions/managerAction';
 import { bindActionCreators } from 'redux';
+import jsCookie from 'js-cookie';
+import Router from 'next/router';
 
 
 const Index = ({ state }) => {
-// const Index = ({ getFreezer, freezer, getFreezerHistory, freezerHistory, getStaff, staff, auth, state }) => {
+    // const Index = ({ getFreezer, freezer, getFreezerHistory, freezerHistory, getStaff, staff, auth, state }) => {
     const [freezerHistoryData, setFreezerHistoryData] = React.useState();
     const [groups, setGroups] = React.useState([]);
-    
+
     const dispatch = useDispatch();
     const auth = useSelector((state) => (state.authentication ? state.authentication : {}));
     const manager = useSelector((state) => (state.manager ? state.manager : {}));
@@ -21,29 +23,33 @@ const Index = ({ state }) => {
     const staff = useSelector((state) => (state.manager.staff ? state.manager.staff : {}));
     const freezerHistory = useSelector((state) => (state.manager.freezerHistory ? state.manager.freezerHistory : {}));
     const message = useSelector((state) => (state.manager.message ? state.manager.message : ""));
-    
+
     // console.log("manager", manager);
 
     useEffect(() => {
-        getGroup();
-        dispatch(getStaff(auth.token));
-        dispatch(getFreezer(auth.token));
-        dispatch(getFreezerHistory(auth.token));
-        dispatch({type: "SHARE_TO_STAFF_SUCCESS", payload: null});
+        if (!jsCookie.get("roles").split(",").includes("ROLE_MANAGER")) {
+            Router.push("/");
+        } else {
+            getGroup();
+            dispatch(getStaff(auth.token));
+            dispatch(getFreezer(auth.token));
+            dispatch(getFreezerHistory(auth.token));
+            dispatch({ type: "SHARE_TO_STAFF_SUCCESS", payload: null });
+        }
     }, []);
 
     let getGroup = () => {
-        axios.get(process.env.NEXT_PUBLIC_API_URL+'manager/group', {
+        axios.get(process.env.NEXT_PUBLIC_API_URL + 'manager/group', {
             headers: {
                 Authorization: `Bearer ${auth.token}`
             }
         })
-        .then(res => {
-            setGroups(res.data);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+            .then(res => {
+                setGroups(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     return (
@@ -63,20 +69,20 @@ const Index = ({ state }) => {
                 <div className='container mx-auto px-4 py-2 mt-4 bg-white rounded-lg'>
                     <hr className="box-title-hr mt-4" />
                     <h3 className="pl-0 text-lg text-grey ml-0 font-bold tracking-widest">FREEZER DETAIL</h3>
-                    <Freezer 
+                    <Freezer
                         key={freezer}
-                        freezer={freezer} 
+                        freezer={freezer}
                     />
                     <br />
                 </div>
                 <div className='container mx-auto px-4 py-2 mt-4 bg-white rounded-lg'>
                     <hr className="box-title-hr mt-4" />
                     <h3 className="pl-0 text-lg text-grey ml-0 font-bold tracking-widest">DISTRIBUTION DETAIL</h3>
-                    <Tabs 
+                    <Tabs
                         key={freezerHistory}
-                        staff={staff} 
-                        groups={groups} 
-                        freezerHistory={freezerHistory} 
+                        staff={staff}
+                        groups={groups}
+                        freezerHistory={freezerHistory}
                     />
                 </div>
             </div>
