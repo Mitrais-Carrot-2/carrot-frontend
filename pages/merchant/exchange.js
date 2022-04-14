@@ -36,7 +36,9 @@ export default function Exchange() {
 
 
     function reloadPage() {
-        window.location.reload();
+        axios.get(url).then(response =>
+            setExchange(response.data)
+        );
     }
 
     return (

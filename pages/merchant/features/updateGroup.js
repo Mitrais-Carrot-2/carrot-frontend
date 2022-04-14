@@ -22,11 +22,9 @@ export default function UpdateGroup(props) {
         console.log("val group: " + group)
         axios.put(`${process.env.NEXT_PUBLIC_API_URL}bazaar/group/${id}`, group)
             .then((res) => {
+                window.alert(res.data.message)
                 props.closeClick();
-                // props.refreshPage();
-                window.alert("Updated!");
-
-                window.location.reload();
+                props.refreshPage();
             })
             .catch((err) => {
                 // console.log(err.response)

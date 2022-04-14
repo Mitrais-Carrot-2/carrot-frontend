@@ -37,8 +37,6 @@ export default function AddGroupMember(props) {
             })
             .catch(err => {
                 window.alert("Failed: Duplicate data!")
-                // props.closeClick();
-                // props.refreshPage();
             })
     }
 

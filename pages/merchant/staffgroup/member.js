@@ -51,7 +51,7 @@ export default function StaffGroupMember(props) {
         window.location.reload();
     }
 
-    function handleAddMember() {
+    function handleAddMember(member) {
         setId(groupId);
         axios.get(url).then(response => setMembers(response.data));
     }

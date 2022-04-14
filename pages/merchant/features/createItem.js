@@ -35,6 +35,7 @@ export default function CreateItem(props) {
         //let id = 53;
         axios.post(`${process.env.NEXT_PUBLIC_API_URL}bazaar/${bazaarItem.bazaar}/item`, bazaarItem)
             .then((res) => {
+                window.alert(res.data.message)
                 props.closeClick();
                 props.refreshPage();
             })
