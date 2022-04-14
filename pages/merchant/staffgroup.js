@@ -27,7 +27,8 @@ export default function StaffGroup(props) {
     }, [])
 
     function reloadPage() {
-        window.location.reload();
+        axios.get(url).then(response => setGroup(response.data));
+        // window.location.reload();
     }
 
     function testKlik() {

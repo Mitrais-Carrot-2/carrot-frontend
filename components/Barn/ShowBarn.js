@@ -4,6 +4,7 @@ import Barn from "./Barn";
 import BarnHistory from "./BarnHistory";
 import Modal from "@components/Modal";
 import axios from "axios";
+import jsCookie from "js-cookie";
 
 
 export default function ShowBarn(props) {
@@ -15,7 +16,14 @@ export default function ShowBarn(props) {
 
   useEffect(() => {
     axios
-      .get(process.env.NEXT_PUBLIC_API_URL+"farmer/barn/")
+      .get(process.env.NEXT_PUBLIC_API_URL+"farmer/barn/", {
+        headers: {
+            Authorization: `Bearer ${jsCookie.get("token")}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            "Content-Type": "application/json",
+        },
+    })
       .then((res) => setBarns(res.data.sort((a, b) => a.barnName.localeCompare(b.barnName))));
   }, []);
 

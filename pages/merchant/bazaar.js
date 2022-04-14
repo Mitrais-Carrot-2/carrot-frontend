@@ -27,7 +27,7 @@ export default function Bazaar() {
   // console.log(bazaar)
 
   function reloadPage() {
-    window.location.reload();
+    axios.get(url).then((response) => setBazaar(response.data));
   }
 
   return (

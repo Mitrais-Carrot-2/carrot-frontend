@@ -3,6 +3,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import BarnReward from "./BarnReward";
+import jsCookie from "js-cookie";
 
 
 export default function Barn(props) {
@@ -107,7 +108,14 @@ export default function Barn(props) {
 
   function saveBarn() {
     axios
-      .put(`${process.env.NEXT_PUBLIC_API_URL}farmer/barn/${props.barnId.id}`, selectedBarn)
+      .put(`${process.env.NEXT_PUBLIC_API_URL}farmer/barn/${props.barnId.id}`, selectedBarn, {
+        headers: {
+            Authorization: `Bearer ${jsCookie.get("token")}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            "Content-Type": "application/json",
+        },
+    })
       .then((res) => {
         console.log(res);
         //Renew Barn info in List of Barns
