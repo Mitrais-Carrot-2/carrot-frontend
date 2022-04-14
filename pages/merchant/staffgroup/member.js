@@ -66,12 +66,12 @@ export default function StaffGroupMember(props) {
                     <div className="row d-flex px-10">
                         <h2 className="col-md-6 pl-0 text-grey ml-0 mb-2">Group Details</h2>
                     </div>
-                    <div className="container mx-auto sm: px-4 search-box py-3">
-                        <table className="table table-hover mt-3">
+                    <div className="container mx-auto sm: px-4 search-box py-3 overflow-x-auto">
+                        <table className="text-center table table-hover mt-3">
                             <thead>
                                 <tr>
-                                    <th itemScope="col" aria-rowspan={2}>#</th>
-                                    <th itemScope="col" aria-rowspan={2} style={{ display: "none" }}>id</th>
+
+
                                     <th itemScope="col" aria-rowspan={2}>Group Name</th>
                                     <th itemScope="col" aria-rowspan={2}>Manager</th>
                                     <th itemScope="col" aria-rowspan={2}>Allocation</th>
@@ -80,9 +80,7 @@ export default function StaffGroupMember(props) {
                             </thead>
 
                             <tr>
-                                <td></td>
-                                <td style={{ display: "none" }}>{id}</td>
-                                {console.log("the data id: " + id)}
+
                                 <td>{group.name}</td>
                                 <td>{group.managerName}</td>
                                 <td>{group.allocation}</td>
@@ -93,13 +91,13 @@ export default function StaffGroupMember(props) {
                     <div className="row d-flex px-10">
                         <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-2">Group Member Dashboard</h2>
                     </div>
-                    <div className="container mx-auto sm: px-4 search-box py-3">
+                    <div className="container mx-auto sm: px-4 search-box py-3 overflow-x-auto">
                         <div className="row d-flex px-4">
                             <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Member List</h2>
                             <div className="col-md-6">
                                 <button
                                     id="add-member-button"
-                                    className="col-sm-6 btn btn-info mt-4 pull-right radius-5"
+                                    className="col-sm-6 btn bg-[#17a2b8] text-white mt-4 pull-right radius-5"
                                     onClick={() => {
                                         setShowAddMember(true);
                                     }}
@@ -111,7 +109,7 @@ export default function StaffGroupMember(props) {
                                 {showAddMember && <AddGroupMember closeClick={setShowAddMember} refreshPage={handleAddMember} groupId={id} />}
                             </div>
                         </div>
-                        <table className="table table-hover mt-3">
+                        <table className="text-center table table-hover mt-3">
                             <thead>
                                 <tr>
                                     <th itemScope="col" aria-rowspan={2}>#</th>
@@ -124,18 +122,18 @@ export default function StaffGroupMember(props) {
                                 </tr>
                             </thead>
                             <tbody id="member-row">
-                            {members
-                                .sort((a, b) => { return a.id - b.id })
-                                .map((data, index) => (
-                                    <tr key={index + 1}>
-                                        <td>{index + 1}</td>
-                                        <td style={{ display: "none" }}>{data.id}</td>
-                                        {console.log("the data id: " + data.id)}
-                                        <td>{data.name}</td>
-                                        <td>{data.jf}</td>
-                                        <td>{data.grade}</td>
-                                        <td>{data.office}</td>
-                                        {/* <td>
+                                {members
+                                    .sort((a, b) => { return a.id - b.id })
+                                    .map((data, index) => (
+                                        <tr key={index + 1}>
+                                            <td>{index + 1}</td>
+                                            <td style={{ display: "none" }}>{data.id}</td>
+                                            {console.log("the data id: " + data.id)}
+                                            <td>{data.name}</td>
+                                            <td>{data.jf}</td>
+                                            <td>{data.grade}</td>
+                                            <td>{data.office}</td>
+                                            {/* <td>
                                             <button type="button" className="btn border-blue-600 mr-2"
                                                 onClick={() => {
                                                     // console.log(data) 
@@ -147,10 +145,10 @@ export default function StaffGroupMember(props) {
 
                                                 </i>
                                             </button> */}
-                                        {/* {showUpdateGroup && <UpdateGroup closeClick={setShowUpdateGroup} updateData={selectedGroup} refreshPage={reloadPage} />} */}
-                                        {/* </td> */}
-                                    </tr>
-                                ))}
+                                            {/* {showUpdateGroup && <UpdateGroup closeClick={setShowUpdateGroup} updateData={selectedGroup} refreshPage={reloadPage} />} */}
+                                            {/* </td> */}
+                                        </tr>
+                                    ))}
                             </tbody>
                         </table>
                     </div>
