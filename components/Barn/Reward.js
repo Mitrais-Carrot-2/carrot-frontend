@@ -68,7 +68,6 @@ export default function Reward(props) {
                         name={"edit" + props.index}
                         onClick={() => {
                             setIsEdited? props.editReward(editedValue) : null
-                            console.log(editedValue);
                           document
                             .querySelectorAll(`input[name="input${props.index}"]`)
                             .forEach((input) => {

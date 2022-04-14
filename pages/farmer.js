@@ -29,7 +29,6 @@ export default function Farmer() {
 
   function updateBarns(newBarns){
     setBarns(newBarns)
-    console.log(newBarns)
   }
 
   return (

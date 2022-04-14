@@ -40,7 +40,6 @@ export default function BarnReward(props) {
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/`, newReward)
       .then((res) => {
-        console.log(res.data.t.id);
         setReward([
           ...reward,
           {
