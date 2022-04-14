@@ -39,9 +39,12 @@ export default function CreateItem(props) {
                 props.refreshPage();
             })
             .catch(err => {
-                window.alert("Failed")
-                // props.closeClick();
-                // props.refreshPage();
+                console.log(err.response)
+                if (!err.response.data.status) {
+                    window.alert(err.response.data.message)
+                } else {
+                    window.alert("Failed: Manager Not Selected!")
+                }
             })
     }
 

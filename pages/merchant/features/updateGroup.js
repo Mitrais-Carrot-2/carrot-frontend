@@ -29,7 +29,12 @@ export default function UpdateGroup(props) {
                 window.location.reload();
             })
             .catch((err) => {
-                window.alert("Update Error!");
+                // console.log(err.response)
+                if (!err.response.data.status) {
+                    window.alert(err.response.data.message)
+                } else {
+                    window.alert("Failed: Duplicate data!")
+                }
             })
     }
 
@@ -52,7 +57,7 @@ export default function UpdateGroup(props) {
             <>
                 <form>
                     <h3></h3>
-                    <div className="group-details">
+                    <div className="group-details text-left">
                         <label>Group Name:</label>
                         <input
                             id="group-name-input"

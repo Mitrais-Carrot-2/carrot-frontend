@@ -33,9 +33,12 @@ export default function CreateGroup(props) {
                 props.refreshPage();
             })
             .catch(err => {
-                window.alert("Failed: Duplicate data!")
-                // props.closeClick();
-                // props.refreshPage();
+                // console.log(err.response)
+                if (!err.response.data.status) {
+                    window.alert(err.response.data.message)
+                } else {
+                    window.alert("Failed: Duplicate data!")
+                }
             })
     }
 

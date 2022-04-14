@@ -14,7 +14,7 @@ export default function CreateBazaar(props) {
 
 
     function postBazaar() {
-        axios.post(process.env.NEXT_PUBLIC_API_URL+"bazaar", bazaar)
+        axios.post(process.env.NEXT_PUBLIC_API_URL + "bazaar", bazaar)
             .then((res) => {
                 if (res.data.status) {
                     window.alert(res.data.message)
@@ -24,9 +24,12 @@ export default function CreateBazaar(props) {
 
             })
             .catch(err => {
-                window.alert("Failed: Duplicate data!")
-                // props.closeClick();
-                // props.refreshPage();
+                // console.log(err.response)
+                if (!err.response.data.status) {
+                    window.alert(err.response.data.message)
+                } else {
+                    window.alert("Failed: Duplicate data!")
+                }
             })
     }
 
