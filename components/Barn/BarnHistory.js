@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import History from "./History";
+import jsCookie from "js-cookie";
 
 export default function BarnHistory(props) {
   const [transfers, setTransfers] = useState([]);
@@ -12,11 +13,17 @@ export default function BarnHistory(props) {
     fetchManager();
   }, []);
 
-  useEffect(() => {}, [props.barnId]);
 
   useEffect(() => {
     axios
-      .get(process.env.NEXT_PUBLIC_API_URL + "farmer/transfer/" + props.barnId)
+      .get(process.env.NEXT_PUBLIC_API_URL + "farmer/transfer/" + props.barnId, {
+        headers: {
+            Authorization: `Bearer ${jsCookie.get("token")}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            "Content-Type": "application/json",
+        },
+    })
       .then((res) => setTransfers(res.data));
   }, [props.newTransfer]);
 

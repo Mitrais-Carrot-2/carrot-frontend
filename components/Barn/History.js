@@ -1,8 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import moment from "moment";
-import { basePath } from "next.config";
 
 export default function History(props) {
   const [name, setName] = useState("");
