@@ -1,10 +1,8 @@
 //create navbar component in react
 import Image from "next/image";
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import mitraisLogo from "@public/img/mitrais-logo.png";
-import defaultImage from "@public/img/defaultImage.png";
 import { useRouter } from "next/router";
-import { BsFillBellFill } from "react-icons/bs";
 import Popover from "@material-tailwind/react/Popover";
 import PopoverContainer from "@material-tailwind/react/PopoverContainer";
 import PopoverHeader from "@material-tailwind/react/PopoverHeader";
