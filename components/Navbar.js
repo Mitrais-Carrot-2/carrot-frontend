@@ -16,6 +16,7 @@ import { removeManager } from "redux/actions/managerAction";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import jsCookie from "js-cookie";
+import { VscBell, VscBellDot } from "react-icons/vsc";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -130,11 +131,19 @@ export default function Navbar() {
         </div>
         <div className="justify-end h-9 w-9">
           <a className="cursor-pointer" ref={notifRef}>
-            <BsFillBellFill
-              className="mt-1 hover:opacity-80"
-              size={25}
-              color="grey"
-            />
+            {notifications.length > 0 ? (
+              <VscBellDot
+                className="mt-1 hover:opacity-80"
+                size={25}
+                color="grey"
+              />
+            ) : (
+              <VscBell
+                className="mt-1 hover:opacity-80"
+                size={25}
+                color="grey"
+              />
+            )}
           </a>
           <Popover placement="bottom" ref={notifRef}>
             <PopoverContainer className="mr-3 text-right">
