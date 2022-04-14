@@ -26,6 +26,12 @@ export const userSlice = createSlice({
     removeUser: (state) => {
       state.info = {};
     },
+    setNotification: (state, action) => {
+      state.notif = action.payload;
+    },
+    nullNotification: (state) => {
+      state.notif = null;
+    },
     removeUserImage: (state) => {
       state.userImage = "";
     },
@@ -38,5 +44,7 @@ export const {
   removeUser,
   removeUserImage,
   setStaticImage,
+  setNotification,
+  nullNotification,
 } = userSlice.actions;
 export default userSlice.reducer;

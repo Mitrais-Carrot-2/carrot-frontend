@@ -10,6 +10,8 @@ import {
   setUser,
   setUserImage,
   setStaticImage,
+  setNotification,
+  nullNotification,
 } from "redux/reducers/userReducer";
 import { basePath } from "next.config";
 
@@ -46,6 +48,15 @@ export const authenticate = (user) => (dispatch) => {
             } else {
               dispatch(setStaticImage());
             }
+          });
+        axios
+          .get(process.env.NEXT_PUBLIC_API_URL + "notification/" + res.data.id)
+          .then((notif) => {
+            dispatch(setNotification(notif.data));
+            console.log(notif.data);
+          })
+          .catch((err) => {
+            dispatch(nullNotification());
           });
 
         Router.push("/");

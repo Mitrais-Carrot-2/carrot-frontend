@@ -21,6 +21,9 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const router = useRouter();
   const profileButtonRef = useRef();
+  const notifications = useSelector((state) =>
+    state.user.notif ? state.user.notif : []
+  );
   const notifRef = useRef();
   const user = useSelector((state) => (state.user.info ? state.user.info : {}));
   const roles = jsCookie.get("roles")
@@ -136,9 +139,24 @@ export default function Navbar() {
           <Popover placement="bottom" ref={notifRef}>
             <PopoverContainer className="mr-3 text-right">
               <PopoverHeader>notifications</PopoverHeader>
-              <PopoverBody>notification 1 </PopoverBody>
+              {notifications.length > 0 ? (
+                notifications.map((notif) => {
+                  return (
+                    <PopoverBody key={notif.id}>
+                      <div className="flex flex-col items-center">
+                        <p className="text-center">{notif.message}</p>
+                      </div>
+                    </PopoverBody>
+                  );
+                })
+              ) : (
+                <PopoverBody>
+                  <p className="text-center">No new notifications</p>
+                </PopoverBody>
+              )}
+              {/* <PopoverBody>notification 1 </PopoverBody>
               <PopoverBody>notification 2 </PopoverBody>
-              <PopoverBody>notification 3 </PopoverBody>
+              <PopoverBody>notification 3 </PopoverBody> */}
             </PopoverContainer>
           </Popover>
         </div>
