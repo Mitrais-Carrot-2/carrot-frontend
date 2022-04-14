@@ -55,7 +55,7 @@ export default function Exchange() {
                             <div className="col-md-6">
                                 <hr className="box-title-hr mt-3" />
                                 <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">Exchange List</h4>
-                            </div>              
+                            </div>
                         </div>
                         <table className="text-center table table-hover mt-3">
                             <thead>
@@ -67,7 +67,7 @@ export default function Exchange() {
                                     <th itemScope="col" aria-rowspan={2}>Item</th>
                                     <th itemScope="col" aria-rowspan={2}>Price</th>
                                     <th itemScope="col" aria-rowspan={2}>Status</th>
-                                    <th itemScope="col" aria-rowspan={2}>Active</th>
+                                    {/* <th itemScope="col" aria-rowspan={2}>Active</th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -117,7 +117,7 @@ export default function Exchange() {
                                                     {data.status}
                                                 </td>
                                             </>}
-                                        <td>{data.active}</td>
+                                        {/* <td>{data.active}</td> */}
 
                                         {showUpdateBazaar && <UpdateBazaar closeClick={setShowUpdateBazaar} updateData={selectedBazaar} refreshPage={reloadPage} />}
 
