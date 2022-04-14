@@ -42,7 +42,7 @@ export default function StaffGroup(props) {
             <div className="container">
                 <section className="group-table">
                     <div className="row d-flex px-10">
-                        <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-2">Staff Group Dashboard</h2>
+                        <h2 className="col-md-6 pl-0 text-grey ml-0 mb-2">Staff Group Dashboard</h2>
                     </div>
                     <div className="mx-auto sm: px-4 search-box py-3">
                         {/* <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Group List</h2> */}

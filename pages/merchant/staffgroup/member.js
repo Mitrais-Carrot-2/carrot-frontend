@@ -64,7 +64,7 @@ export default function StaffGroupMember(props) {
             <div className="container">
                 <section className="group-table">
                     <div className="row d-flex px-10">
-                        <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-2">Group Details</h2>
+                        <h2 className="col-md-6 pl-0 text-grey ml-0 mb-2">Group Details</h2>
                     </div>
                     <div className="container mx-auto sm: px-4 search-box py-3">
                         <table className="table table-hover mt-3">

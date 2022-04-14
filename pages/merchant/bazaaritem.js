@@ -40,7 +40,7 @@ export default function BazaarItem() {
             <div className="container">
                 <section className="group-table">
                     <div className="row d-flex px-10">
-                        <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-3">Bazaar Item Dashboard</h2>
+                        <h2 className="col-md-6 pl-0 text-grey ml-0 mb-3">Bazaar Item Dashboard</h2>
                     </div>
                     <div className="mx-auto sm: px-4 search-box py-3">
                         {/* <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Item List</h2> */}
@@ -48,7 +48,7 @@ export default function BazaarItem() {
                             <div className="col-md-6">
                                 <hr className="box-title-hr mt-3" />
                                 <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">Item List</h4>
-                            </div>              
+                            </div>
                             <div className="col-md-6">
                                 <button
                                     className="col-sm-6 btn btn-info mt-0 pull-right radius-5"
@@ -115,7 +115,7 @@ export default function BazaarItem() {
                             </tbody>
                         </table>
                         {showUpdateItem && <UpdateItem closeClick={setShowUpdateItem} updateData={itemDetail} refreshPage={reloadPage} />}
-                        {showUpdateItemImage && <UpdateBazaarImage closeClick={setShowUpdateItemImage} updateData={id} refreshPage={reloadPage} />} 
+                        {showUpdateItemImage && <UpdateBazaarImage closeClick={setShowUpdateItemImage} updateData={id} refreshPage={reloadPage} />}
                     </div>
                 </section>
 

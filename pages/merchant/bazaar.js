@@ -38,7 +38,7 @@ export default function Bazaar() {
       <div className="container">
         <section className="bazaar-table">
           <div className="row d-flex px-10">
-            <h2 className="col-md-6 mt-4 pl-0 text-grey mb-3">
+            <h2 className="col-md-6 pl-0 text-grey mb-3">
               Bazaar Dashboard
             </h2>
           </div>
@@ -48,7 +48,7 @@ export default function Bazaar() {
               <div className="col-md-6">
                 <hr className="box-title-hr mt-3" />
                 <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">Bazaar List</h4>
-              </div>              
+              </div>
               <div className="col-md-6">
                 <button
                   className="col-sm-6 btn btn-info mt-0 pull-right radius-5"
@@ -120,12 +120,12 @@ export default function Bazaar() {
               </tbody>
             </table>
             {showUpdateBazaar && (
-                        <UpdateBazaar
-                          closeClick={setShowUpdateBazaar}
-                          updateData={selectedBazaar}
-                          refreshPage={reloadPage}
-                        />
-                      )}
+              <UpdateBazaar
+                closeClick={setShowUpdateBazaar}
+                updateData={selectedBazaar}
+                refreshPage={reloadPage}
+              />
+            )}
           </div>
         </section>
       </div>
