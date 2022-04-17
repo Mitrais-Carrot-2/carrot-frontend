@@ -4,8 +4,7 @@ import Modal from "@components/Modal";
 import moment from "moment";
 import { useState } from "react";
 import axios from "axios";
-import { basePath } from 'next.config';
-
+import jsCookie from "js-cookie";
 export default function CreateBarn(props) {
   const today = moment().format("YYYY-MM-DD");
   const nextYear = moment().add(1, "year").format("YYYY-MM-DD");
@@ -17,8 +16,14 @@ export default function CreateBarn(props) {
   });
 
   function passNewBarnWithApi() {
-    console.log(newBarn);
-    axios.post(process.env.NEXT_PUBLIC_API_URL+"farmer/barn/", newBarn)
+    axios.post(process.env.NEXT_PUBLIC_API_URL+"farmer/barn/", newBarn, {
+      headers: {
+          Authorization: `Bearer ${jsCookie.get("token")}`,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+      },
+  })
       .then((res) => {
         console.log(res.data);
         //Return Barn info to Show Barn

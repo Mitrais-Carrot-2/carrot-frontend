@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios, { Axios } from "axios";
-import { basePath } from 'next.config';
+import axios from "axios";
+import jsCookie from "js-cookie";
 
 import Reward from "./Reward";
 
@@ -13,7 +13,14 @@ export default function BarnReward(props) {
   const [editedValue, setEditedValue] = useState({});
   useEffect(() => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${props.id.id}`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${props.id.id}`, {
+        headers: {
+            Authorization: `Bearer ${jsCookie.get("token")}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            "Content-Type": "application/json",
+        },
+    })
       .then((res) => {
         console.log(res);
         setReward(res.data);
@@ -25,7 +32,14 @@ export default function BarnReward(props) {
 
   function deleteReward(id) {
     axios
-      .delete(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${id}`)
+      .delete(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${id}`, {
+        headers: {
+            Authorization: `Bearer ${jsCookie.get("token")}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            "Content-Type": "application/json",
+        },
+    })
       .then((res) => {
         console.log(res);
         const noDeleted = reward.filter((item) => item.id !== id);
@@ -38,9 +52,15 @@ export default function BarnReward(props) {
 
   function appendReward() {
     axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/`, newReward)
+      .post(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/`, newReward, {
+        headers: {
+            Authorization: `Bearer ${jsCookie.get("token")}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            "Content-Type": "application/json",
+        },
+    })
       .then((res) => {
-        console.log(res.data.t.id);
         setReward([
           ...reward,
           {
@@ -68,7 +88,14 @@ export default function BarnReward(props) {
       carrot_amount: editedValue.carrotAmount,
       giving_conditional: editedValue.givingConditional,
     }
-    axios.put(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${id}`, send)
+    axios.put(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${id}`, send, {
+      headers: {
+          Authorization: `Bearer ${jsCookie.get("token")}`,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+      },
+  })
     .then((res) => {
       console.log(res);
     })

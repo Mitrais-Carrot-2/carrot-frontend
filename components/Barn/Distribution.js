@@ -1,10 +1,9 @@
 import Modal from "@components/Modal";
 import React, { useEffect, useState } from "react";
-import { Button } from "reactstrap";
 import BarnHistory from "./BarnHistory";
 import axios from "axios";
 import Select from "react-select";
-import { basePath } from "next.config";
+import jsCookie from "js-cookie";
 
 export default function Distribution(props) {
   const [distributeCarrot, setDistributeCarrot] = useState(false);
@@ -16,7 +15,14 @@ export default function Distribution(props) {
   const [manager, setManager] = useState([]);
 
   useEffect(() => {
-    axios.get(process.env.NEXT_PUBLIC_API_URL+"farmer/transfer/manager").then((response) => setManager(response.data));
+    axios.get(process.env.NEXT_PUBLIC_API_URL+"farmer/transfer/manager", {
+      headers: {
+          Authorization: `Bearer ${jsCookie.get("token")}`,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+      },
+  }).then((response) => setManager(response.data));
   }, []);
 
   let options = [];
@@ -64,12 +70,18 @@ export default function Distribution(props) {
   function sendCarrot() {
     axios
       .post(process.env.NEXT_PUBLIC_API_URL+"farmer/transfer/distribute", {
-      // .post(basePath + "farmer/transfer/distribute", {
         managerId: managerId,
         barnId: props.barn.id,
         carrotAmount: carrotAmount,
         note: message,
-      })
+      }, {
+        headers: {
+            Authorization: `Bearer ${jsCookie.get("token")}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            "Content-Type": "application/json",
+        },
+    })
       .then((res) => {
         console.log(res);
         window.alert(
