@@ -41,15 +41,17 @@ const Index = ({ state }) => {
     let getGroup = () => {
         axios.get(process.env.NEXT_PUBLIC_API_URL + 'manager/group', {
             headers: {
-                Authorization: `Bearer ${auth.token}`
+                Authorization: `Bearer ${auth.token}`,        
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": true,
             }
         })
-            .then(res => {
-                setGroups(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        .then(res => {
+            setGroups(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 
     return (
