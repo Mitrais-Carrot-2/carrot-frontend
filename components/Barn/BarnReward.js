@@ -212,8 +212,9 @@ export default function BarnReward(props) {
                     onChange={(e) => {
                       setNewReward({
                         ...newReward,
-                        giving_conditional: e,
+                        giving_conditional: e.value,
                       });
+                      console.log(newReward)
                     }}
                   />
                 </td>
