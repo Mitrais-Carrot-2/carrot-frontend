@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "reactstrap";
 
+
 export default function Reward(props) {
   const [isEdited, setIsEdited] = useState(false);
   const [editedValue, setEditedValue] = useState({});
+
+  let options = [];
+  options = props.rewardsList.map((s) => {
+    return {
+      value: s,
+      label: s,
+    };
+  });
 
   useEffect(() => {
     setEditedValue(props.reward);

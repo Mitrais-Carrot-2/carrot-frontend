@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import jsCookie from "js-cookie";
-
+import Select from "react-select";
 import Reward from "./Reward";
 
 export default function BarnReward(props) {
@@ -9,8 +9,17 @@ export default function BarnReward(props) {
   const [newReward, setNewReward] = useState({
     barn_id: props.id.id,
   });
+  const [rewardsList, setRewardsList] = useState([])
 
   const [editedValue, setEditedValue] = useState({});
+  let options = [];
+  options = rewardsList.map((s) => {
+    return {
+      value: s,
+      label: s,
+    };
+  });
+
   useEffect(() => {
     axios
       .get(
@@ -31,6 +40,29 @@ export default function BarnReward(props) {
       .catch((err) => {
         console.log(err);
       });
+
+      axios
+      .get(
+        `${process.env.NEXT_PUBLIC_API_URL}admin/reawardType`,
+        {
+          headers: {
+            Authorization: `Bearer ${jsCookie.get("token")}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log("Reward= ",res.data);
+        setRewardsList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      }
+    );
+
+
   }, []);
 
   function deleteReward(id) {
@@ -125,6 +157,7 @@ export default function BarnReward(props) {
                     <Reward
                       index={index}
                       reward={item}
+                      rewardsList={rewardsList}
                       deleteReward={deleteReward}
                       editReward={editReward}
                     />
@@ -171,14 +204,15 @@ export default function BarnReward(props) {
                   />
                 </td>
                 <td>
-                  <input
+                  <Select
                     className="active"
                     type="text"
                     name="givingConditional"
+                    options={options}
                     onChange={(e) => {
                       setNewReward({
                         ...newReward,
-                        giving_conditional: e.target.value,
+                        giving_conditional: e,
                       });
                     }}
                   />
