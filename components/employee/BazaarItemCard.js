@@ -61,7 +61,7 @@ export default function BazaarItemCard(props) {
                     />
                 </div>
                 <div className="md:w-1/2 px-10 self-center ">
-                    <h2 className="my-3">{item.name}</h2>
+                    <h2 id={"item-name-" + props.index} className="my-3">{item.name}</h2>
                     <h4>
                         <strong className="carrot-orange mt-2">{item.price} Carrots</strong>
                     </h4>
@@ -85,7 +85,7 @@ export default function BazaarItemCard(props) {
                     />
                 </div>
                 <div>
-                    <h2 className="mt-4 mb-3">{item.name}</h2>
+                    <h2 id={"item-name-" + props.index} className="mt-4 mb-3">{item.name}</h2>
                     <h4>
                         <strong className="carrot-orange">{item.price} Carrots</strong>
                     </h4>
@@ -109,7 +109,7 @@ export default function BazaarItemCard(props) {
                         objectFit="cover"
                     />
                     <div className="flex-auto p-6 card-body">
-                        <h5 className="card-title truncate">{item.name}</h5>
+                        <h5 id={"item-name-" + props.index} className="card-title truncate">{item.name}</h5>
                         <p className="card-title-orange">{item.price} Carrots</p>
                     </div>
                     {renderViewDetailsButton(viewDetailsButtonClassMany)}

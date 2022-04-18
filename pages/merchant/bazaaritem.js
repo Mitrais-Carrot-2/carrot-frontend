@@ -6,6 +6,7 @@ import Merchant from "@components/Merchant/Merchant";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useRef } from "react";
 import axios from "axios";
 import CreateItem from "./features/createItem";
 import UpdateBazaarImage from "./features/addItemPicture";
@@ -23,6 +24,8 @@ export default function BazaarItem() {
     const [itemDetail, setItemDetail] = useState({});
     const [id, setId] = useState(0);
 
+    const lastDataId = useRef("");
+
     useEffect(() => {
         axios.get(url).then(response => setBazaarItem(response.data));
     }, [])
@@ -32,6 +35,7 @@ export default function BazaarItem() {
         // window.location.reload();
         axios.get(url).then(response => setBazaarItem(response.data));
     }
+
 
     return (
         <body>
@@ -80,39 +84,46 @@ export default function BazaarItem() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {bazaarItem.map((data, index) => (
-                                    <tr key={index + 1} className="odd:bg-white even:bg-slate-100">
-                                        <td>{index + 1}</td>
-                                        <td style={{ display: "none" }}>{data.id}</td>
-                                        <td>{data.bazaar.bazaarName}</td>
-                                        <td>{data.name}</td>
-                                        <td>{data.price}</td>
-                                        <td>{data.quantity}</td>
-                                        <td>{data.description}</td>
-                                        <td>
-                                            <button type="button" className="btn border-orange-600 mr-2"
-                                                onClick={() => {
-                                                    setShowUpdateItemImage(true);
-                                                    setId(data.id)
-                                                }}
-                                            >
-                                                <i className="fa fa-image text-orange-600 fa-x px-1">
+                                {bazaarItem.map((data, index) => {
+                                    if(index+1 == bazaarItem.length) {
+                                        console.log("end of table")
+                                        lastDataId.current = "last-data"
+                                        console.log("id last = ", lastDataId.current)
+                                    }
+                                    return ( 
+                                        <tr id={lastDataId.current} key={index + 1}>
+                                            <td>{index + 1}</td>
+                                            <td style={{ display: "none" }}>{data.id}</td>
+                                            <td>{data.bazaar.bazaarName}</td>
+                                            <td>{data.name}</td>
+                                            <td>{data.price}</td>
+                                            <td>{data.quantity}</td>
+                                            <td>{data.description}</td>
+                                            <td>
+                                                <button type="button" className="btn border-orange-600 mr-2"
+                                                    onClick={() => {
+                                                        setShowUpdateItemImage(true);
+                                                        setId(data.id)
+                                                    }}
+                                                >
+                                                    <i className="fa fa-image text-orange-600 fa-x px-1">
 
-                                                </i>
-                                            </button>
-                                            <button type="button" className="btn border-blue-600 mr-2"
-                                                onClick={() => {
-                                                    setShowUpdateItem(true);
-                                                    setItemDetail(data);
-                                                }}
-                                            >
-                                                <i className="fa fa-edit text-blue-600 fa-x px-1">
+                                                    </i>
+                                                </button>
+                                                <button type="button" className="btn border-blue-600 mr-2"
+                                                    onClick={() => {
+                                                        setShowUpdateItem(true);
+                                                        setItemDetail(data);
+                                                    }}
+                                                >
+                                                    <i className="fa fa-edit text-blue-600 fa-x px-1">
 
-                                                </i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
+                                                    </i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
                             </tbody>
                         </table>
                         {showUpdateItem && <UpdateItem closeClick={setShowUpdateItem} updateData={itemDetail} refreshPage={reloadPage} />}

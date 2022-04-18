@@ -51,6 +51,10 @@ export default function CreateUser() {
     { value: "QA", label: "Quality Assurance" },
     { value: "CON", label: "Consultant" },
     { value: "DSG", label: "Graphics Designer" },
+    { value: "MJF", label: "Management Job Family" },
+    { value: "ADM", label: "Admin" },
+    { value: "FA", label: "Finance and Accounting" },
+    { value: "TR", label: "Trainer" },
   ];
   function handleJobFamily(value) {
     if (value === "SE") {
@@ -83,6 +87,38 @@ export default function CreateUser() {
         { value: "DS", label: "Designer" },
         { value: "SD", label: "Senior Designer" },
         { value: "DD", label: "Design Director" },
+      ]);
+    }
+    if (value === "MJF") {
+      setJobGrades([
+        { value: "MG1", label: "Manager I" },
+        { value: "MG2", label: "Manager II" },
+        { value: "MG3", label: "Manager III" },
+        { value: "MG4", label: "Manager IV" },
+      ]);
+    }
+    if (value === "ADM") {
+      setJobGrades([
+        { value: "ADM1", label: "Admin I" },
+        { value: "ADM2", label: "Admin II" },
+        { value: "ADM3", label: "Admin III" },
+        { value: "ADM4", label: "Admin IV" },
+      ]);
+    }
+    if (value === "FA") {
+      setJobGrades([
+        { value: "FA1", label: "Finance I" },
+        { value: "FA2", label: "Finance II" },
+        { value: "FA3", label: "Finance III" },
+        { value: "FA4", label: "Finance IV" },
+      ]);
+    }
+    if (value === "TR") {
+      setJobGrades([
+        { value: "TR1", label: "Trainer I" },
+        { value: "TR2", label: "Trainer II" },
+        { value: "TR3", label: "Trainer III" },
+        { value: "TR4", label: "Trainer IV" },
       ]);
     }
   }

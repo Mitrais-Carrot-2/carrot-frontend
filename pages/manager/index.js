@@ -65,7 +65,7 @@ const Index = ({ state }) => {
                     <a href='#' className="text-grey capitalize px-4 py-2.5 rounded-md text-1xl">Bazaar</a> */}
                     <h1 id="freezer-title" className="pl-0 text-3xl text-grey ml-0 font-medium tracking-widest">MANAGER FREEZER</h1>
                 </div>
-                <div id="success-label" className="mx-auto bg-green-600 text-center text-white my-3 rounded animate-pulse">
+                <div id="success-label" className="mx-auto bg-green-600 text-center text-white my-3 rounded">
                     {message}
                 </div>
                 <div className='container mx-auto px-4 py-2 mt-4 bg-white rounded-lg'>

@@ -32,6 +32,7 @@ export const getFreezerHistory = (token) => (dispatch) => {
         console.log("FAILED GET FREEZER HISTORY", err);
     })
 }
+
 export const getStaff = (token) => (dispatch) => {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}manager/staff/`, {
         headers: {
@@ -41,9 +42,15 @@ export const getStaff = (token) => (dispatch) => {
         },
     }).then((res) => {
         let staff = res.data.sort((a, b) => {
-            if (a.name < b.name) {
+            let nameA = a.firstName+" "+a.lastName;
+            let nameB = b.firstName+" "+b.lastName;
+            if (nameA < nameB) {
                 return -1;
             }
+            if (nameA > nameB) {
+                return 1;
+            }
+            return 0;
         });
         dispatch({ type: MANAGER_GET_STAFF, payload: staff });
     })
