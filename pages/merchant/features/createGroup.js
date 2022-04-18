@@ -27,10 +27,19 @@ export default function CreateGroup(props) {
 
     function postGroup() {
         console.log(group)
-        axios.post(process.env.NEXT_PUBLIC_API_URL+"bazaar/group/", group)
+        axios.post(process.env.NEXT_PUBLIC_API_URL + "bazaar/group/", group)
             .then((res) => {
+                window.alert(res.data.message)
                 props.closeClick();
                 props.refreshPage();
+            })
+            .catch(err => {
+                // console.log(err.response)
+                if (!err.response.data.status) {
+                    window.alert(err.response.data.message)
+                } else {
+                    window.alert("Failed: Duplicate data!")
+                }
             })
     }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios, { Axios } from "axios";
-import { basePath } from 'next.config';
+import axios from "axios";
+import jsCookie from "js-cookie";
 
 import Reward from "./Reward";
 
@@ -9,11 +9,21 @@ export default function BarnReward(props) {
   const [newReward, setNewReward] = useState({
     barn_id: props.id.id,
   });
-  
+
   const [editedValue, setEditedValue] = useState({});
   useEffect(() => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${props.id.id}`)
+      .get(
+        `${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${props.id.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${jsCookie.get("token")}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
         setReward(res.data);
@@ -25,7 +35,14 @@ export default function BarnReward(props) {
 
   function deleteReward(id) {
     axios
-      .delete(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${id}`)
+      .delete(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${id}`, {
+        headers: {
+          Authorization: `Bearer ${jsCookie.get("token")}`,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
         console.log(res);
         const noDeleted = reward.filter((item) => item.id !== id);
@@ -38,9 +55,15 @@ export default function BarnReward(props) {
 
   function appendReward() {
     axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/`, newReward)
+      .post(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/`, newReward, {
+        headers: {
+          Authorization: `Bearer ${jsCookie.get("token")}`,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
-        console.log(res.data.t.id);
         setReward([
           ...reward,
           {
@@ -51,9 +74,8 @@ export default function BarnReward(props) {
             givingConditional: newReward.giving_conditional,
           },
         ]);
-        setNewReward(newReward)
-      }
-      )
+        setNewReward(newReward);
+      })
       .catch((err) => {
         window.alert("Reward creation failed");
         console.log(err);
@@ -63,22 +85,27 @@ export default function BarnReward(props) {
 
   function editReward(editedValue) {
     const id = editedValue.id;
-    const send ={
+    const send = {
       reward_description: editedValue.rewardDescription,
       carrot_amount: editedValue.carrotAmount,
       giving_conditional: editedValue.givingConditional,
-    }
-    axios.put(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${id}`, send)
-    .then((res) => {
-      console.log(res);
-    })
+    };
+    axios
+      .put(`${process.env.NEXT_PUBLIC_API_URL}admin/barnReward/${id}`, send, {
+        headers: {
+          Authorization: `Bearer ${jsCookie.get("token")}`,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      });
   }
-    
 
   return (
-    <div
-      className="overflow-x-scroll"
-    >
+    <div className="overflow-x-scroll">
       <form>
         <div className="form-group">
           <table name="rewardTable">
@@ -94,9 +121,13 @@ export default function BarnReward(props) {
             <tbody>
               {reward.map((item, index) => {
                 return (
-                  
                   <tr key={index}>
-                    <Reward index ={index} reward={item} deleteReward={deleteReward} editReward={editReward}/>
+                    <Reward
+                      index={index}
+                      reward={item}
+                      deleteReward={deleteReward}
+                      editReward={editReward}
+                    />
                   </tr>
                 );
               })}
@@ -168,7 +199,6 @@ export default function BarnReward(props) {
         </div>
       </form>
       <style jsx>{`
-
         form {
           display: flex;
           flex-direction: column;
@@ -201,7 +231,7 @@ export default function BarnReward(props) {
           padding: 10px;
           height: 30px;
         }
-        .non-active{
+        .non-active {
           text-align: center;
         }
       `}</style>

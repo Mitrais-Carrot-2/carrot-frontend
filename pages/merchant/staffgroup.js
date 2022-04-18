@@ -27,7 +27,8 @@ export default function StaffGroup(props) {
     }, [])
 
     function reloadPage() {
-        window.location.reload();
+        axios.get(url).then(response => setGroup(response.data));
+        // window.location.reload();
     }
 
     function testKlik() {
@@ -42,19 +43,19 @@ export default function StaffGroup(props) {
             <div className="container">
                 <section className="group-table">
                     <div className="row d-flex px-10">
-                        <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0 mb-2">Staff Group Dashboard</h2>
+                        <h2 className="col-md-6 pl-0 text-grey ml-0 mb-2">Staff Group Dashboard</h2>
                     </div>
-                    <div className="mx-auto sm: px-4 search-box py-3">
+                    <div className="mx-auto sm: px-4 search-box py-3 overflow-x-auto">
                         {/* <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Group List</h2> */}
                         <div className="row d-flex px-4 items-center">
                             <div className="col-md-6">
                                 <hr className="box-title-hr mt-3" />
                                 <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">Group List</h4>
-                            </div>              
+                            </div>
                             <div className="col-md-6">
                                 <button
                                     id="create-group-button"
-                                    className="col-sm-6 btn btn-info mt-4 pull-right radius-5"
+                                    className="col-sm-6 btn bg-[#17a2b8] text-white mt-4 pull-right radius-5"
                                     onClick={() => {
                                         setShowCreateGroup(true);
                                     }}
@@ -66,7 +67,7 @@ export default function StaffGroup(props) {
                                 {showCreateGroup && <CreateGroup closeClick={setShowCreateGroup} refreshPage={reloadPage} />}
                             </div>
                         </div>
-                        <table className="table table-hover mt-3">
+                        <table className="text-center table table-hover mt-3">
                             <thead>
                                 <tr>
                                     <th itemScope="col" aria-rowspan={2}>#</th>
@@ -80,68 +81,71 @@ export default function StaffGroup(props) {
                                     <th itemScope="col" aria-rowspan={2}>Action</th>
                                 </tr>
                             </thead>
-                            {groups
-                                .sort((a, b) => { return a.id - b.id })
-                                .map((data, index) => (
-                                    <tr key={index + 1}>
-                                        <td>{index + 1}</td>
-                                        <td style={{ display: "none" }}>{data.id}</td>
-                                        {console.log("the data id: " + data.id)}
-                                        <td style={{ display: "none" }}>{data.managerId}</td>
-                                        <td>{data.name}</td>
-                                        <td>{data.allocation}</td>
-                                        <td>{data.totalMember}</td>
-                                        <td>{data.total}</td>
-                                        <td>{data.note}</td>
-                                        <td>
-                                            <button type="button" className="btn border-blue-600 mr-2 mx-1 my-1"
-                                                onClick={() => {
-                                                    setShowMember(true)
-                                                    setSelectedGroup(data)
-                                                    // console.log("this is onclick data id : " + data.id)
-                                                    // testKlik();
-                                                    router.push({
-                                                        pathname: "/merchant/staffgroup/member",
-                                                        query: { groupId: data.id }
-                                                    },
-                                                    )
-                                                    // props.history.push({
-                                                    //     pathname: '/merchant/staffgroup/member'
-                                                    //     selectedGroup
-                                                    // })
+                            <tbody>
+                                {groups
+                                    .sort((a, b) => { return a.id - b.id })
+                                    .map((data, index) => (
+                                        <tr key={index + 1} className="odd:bg-white even:bg-slate-100">
+                                            <td>{index + 1}</td>
+                                            <td style={{ display: "none" }}>{data.id}</td>
+                                            {console.log("the data id: " + data.id)}
+                                            <td style={{ display: "none" }}>{data.managerId}</td>
+                                            <td>{data.name}</td>
+                                            <td>{data.allocation}</td>
+                                            <td>{data.totalMember}</td>
+                                            <td>{data.total}</td>
+                                            <td>{data.note}</td>
+                                            <td>
+                                                <button type="button" className="btn border-blue-600 mr-2 mx-1 my-1"
+                                                    onClick={() => {
+                                                        setShowMember(true)
+                                                        setSelectedGroup(data)
+                                                        // console.log("this is onclick data id : " + data.id)
+                                                        // testKlik();
+                                                        router.push({
+                                                            pathname: "/merchant/staffgroup/member",
+                                                            query: { groupId: data.id }
+                                                        },
+                                                        )
+                                                        // props.history.push({
+                                                        //     pathname: '/merchant/staffgroup/member'
+                                                        //     selectedGroup
+                                                        // })
 
-                                                }}
-                                            >
-                                                {/* <Link
+                                                    }}
+                                                >
+                                                    {/* <Link
                                                     href={{
                                                         pathname: '/staffgroup/member',
                                                         query: { groupId: selectedGroup.id }
                                                     }}> */}
-                                                <i className="fa fa-users text-blue-600 fa-x px-1">
+                                                    <i className="fa fa-users text-blue-600 fa-x px-1">
 
-                                                </i>
-                                                {/* </Link> */}
-                                            </button>
-                                            <button type="button" className="btn border-blue-600 mr-2 mx-1 my-1"
-                                                onClick={() => {
-                                                    // console.log(data) 
-                                                    setShowUpdateGroup(true);
-                                                    setSelectedGroup(data)
-                                                }}
-                                            >
+                                                    </i>
+                                                    {/* </Link> */}
+                                                </button>
+                                                <button type="button" className="btn border-blue-600 mr-2 mx-1 my-1"
+                                                    onClick={() => {
+                                                        // console.log(data) 
+                                                        setShowUpdateGroup(true);
+                                                        setSelectedGroup(data)
+                                                    }}
+                                                >
 
-                                                <i className="fa fa-edit text-blue-600 fa-x px-1">
+                                                    <i className="fa fa-edit text-blue-600 fa-x px-1">
 
-                                                </i>
+                                                    </i>
 
 
-                                            </button>
-                                            {/* {showMember && <Link />} */}
-                                            {/* {showMember && <AddGroupMember groupData={selectedGroup} />} */}
-                                            {showUpdateGroup && <UpdateGroup closeClick={setShowUpdateGroup} updateData={selectedGroup} refreshPage={reloadPage} />}
-                                        </td>
-                                    </tr>
-                                ))}
+                                                </button>
+                                                {/* {showMember && <Link />} */}
+                                                {/* {showMember && <AddGroupMember groupData={selectedGroup} />} */}
+                                                {showUpdateGroup && <UpdateGroup closeClick={setShowUpdateGroup} updateData={selectedGroup} refreshPage={reloadPage} />}
+                                            </td>
+                                        </tr>
+                                    ))}
+                            </tbody>
+
                         </table>
                     </div>
                 </section>

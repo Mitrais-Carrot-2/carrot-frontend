@@ -1,10 +1,8 @@
 //create navbar component in react
 import Image from "next/image";
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import mitraisLogo from "@public/img/mitrais-logo.png";
-import defaultImage from "@public/img/defaultImage.png";
 import { useRouter } from "next/router";
-import { BsFillBellFill } from "react-icons/bs";
 import Popover from "@material-tailwind/react/Popover";
 import PopoverContainer from "@material-tailwind/react/PopoverContainer";
 import PopoverHeader from "@material-tailwind/react/PopoverHeader";
@@ -16,29 +14,103 @@ import { removeManager } from "redux/actions/managerAction";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import jsCookie from "js-cookie";
+import { VscBell, VscBellDot } from "react-icons/vsc";
+import { getNotification, markReadNotification, removeNotifications } from "redux/actions/notificationAction";
+import axios from "axios";
+import moment from "moment";
 
 export default function Navbar() {
   const dispatch = useDispatch();
   const router = useRouter();
   const profileButtonRef = useRef();
   const notifRef = useRef();
+
+  const notification = useSelector((state) => state.notification ? state.notification : []);
+  const [notifications, setNotifications] = useState(notification);
+  // const notifications = useRef(notification);
+  const [notReadNotifications, setNotReadNotifications] = useState(0);
+
   const user = useSelector((state) => (state.user.info ? state.user.info : {}));
-  const roles = jsCookie.get("roles") ? jsCookie.get("roles").split(",").map(function(item){
-      return item.substring(5);
-  }) : "";
+  const roles = jsCookie.get("roles")
+    ? jsCookie
+      .get("roles")
+      .split(",")
+      .map(function (item) {
+        return item.substring(5);
+      })
+    : "";
   const picture = useSelector((state) =>
     state.user.userImage ? state.user.userImage : "/img/defaultImage.png"
   );
+  const auth = useSelector((state) => (state.authentication ? state.authentication : {}));
 
   useEffect(() => {
-    // if (cookie.get("username")) {
-    //   setUsername(cookie.get("username"));
-    // console.log(username);
+    getNotification();
+  }, []);
+
+  useEffect(() => {
     if (!jsCookie.get("token")) {
       router.push("/sign-in");
     }
-    // console.log(user);
+    // getNotification();
   }, [router, user]);
+
+  const getNotification = () => {
+    axios.get(process.env.NEXT_PUBLIC_API_URL + "notification/", {
+      headers: {
+        Authorization: `Bearer ${auth.token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+    }).then(res => {
+      // sort res data by date desc
+      let sortedData = res.data.sort((a, b) => {
+        return moment(b.date).diff(moment(a.date));
+      });
+      // count res data that is not read
+      let count = 0;
+      sortedData.forEach((item) => {
+        if (item.read === false) {
+          count++;
+        }
+      });
+      setNotifications(sortedData);
+      setNotReadNotifications(count);
+    })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  const markRead = (id) => {
+    axios.get(process.env.NEXT_PUBLIC_API_URL + "notification/read/" + id, {
+      headers: {
+        Authorization: `Bearer ${auth.token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+    }).then(res => {
+      getNotification();
+    })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+  
+  const markAllRead = () => {
+    axios.get(process.env.NEXT_PUBLIC_API_URL + "notification/read/all/", {
+      headers: {
+        Authorization: `Bearer ${auth.token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+    }).then(res => {
+      getNotification();
+    })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   const handleLogout = () => {
     cookie.remove("token");
@@ -49,7 +121,7 @@ export default function Navbar() {
     dispatch(removeUser());
     dispatch(removeManager());
     dispatch(removeUserImage());
-
+    dispatch(removeNotifications());
     router.push("/sign-in");
   };
 
@@ -60,7 +132,7 @@ export default function Navbar() {
         className="fixed  flex flex-wrap justify-between pt-2 px-4 navbar-expand-md z-10 bg-slate-50"
         style={{ width: "-webkit-fill-available" }}
       >
-        <div className="justify-start h-9 w-9">
+        <div id="navbar-image" className="justify-start h-9 w-9">
           {/* profile image on click going to user/profile */}
           <a ref={profileButtonRef}>
             <Image
@@ -122,18 +194,63 @@ export default function Navbar() {
         </div>
         <div className="justify-end h-9 w-9">
           <a className="cursor-pointer" ref={notifRef}>
-            <BsFillBellFill
-              className="mt-1 hover:opacity-80"
-              size={25}
-              color="grey"
-            />
+            {notReadNotifications > 0 ? (
+              <>
+                <span className="text-sm bg-orange-500 rounded-full px-1 text-white ml-[16px]">{notReadNotifications}</span>
+                <VscBell
+                  className={"-mt-4 hover:opacity-80"}
+                  size={25}
+                  color="grey"
+                />
+              </>
+            ) : (
+              <VscBell
+                className={"mt-2 hover:opacity-80"}
+                size={25}
+                color="grey"
+              />
+            )}
+
           </a>
           <Popover placement="bottom" ref={notifRef}>
-            <PopoverContainer className="mr-3 text-right">
-              <PopoverHeader>notifications</PopoverHeader>
-              <PopoverBody>notification 1 </PopoverBody>
+            <PopoverContainer className="mr-3 text-left">
+              <PopoverHeader>notifications <hr className="mt-3" /></PopoverHeader>
+              <PopoverBody>
+                {/* {console.log("notifications", notifications)} */}
+
+                {notifications.length !== undefined && notifications.length > 0 ?
+                  <>
+                    <div className="w-[110%] -ml-[12px] overflow-y-auto max-h-[230px]" style={{scrollbarWidth: 'none'}}>
+                    {
+                      notifications.map((notif) => {
+                        return (
+                          <div
+                            onClick={
+                              () => {
+                                markRead(notif.id);
+                              }
+                            }
+                            className="mb-2 px-3 border-l-4 hover:border-orange-500 hover:bg-gray-100 cursor-pointer py-3 flex flex-col">
+                            <h5 className={"text-[12px] " + (!notif.read ? "font-bold" : "")}>{notif.message}</h5>
+                            <p className="text-[9px] text-right">{moment(notif.date).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                          </div>
+                        )
+                      })
+                    }
+                    </div>
+                    <p onClick={
+                      () => {
+                        markAllRead();
+                      }
+                    } className="mt-2 text-right hover:cursor-pointer hover:underline hover:underline-offset-1">Mark all as read</p>
+                  </>
+                  : (
+                    <p className="text-center">No new notifications</p>
+                  )}
+              </PopoverBody>
+              {/* <PopoverBody>notification 1 </PopoverBody>
               <PopoverBody>notification 2 </PopoverBody>
-              <PopoverBody>notification 3 </PopoverBody>
+              <PopoverBody>notification 3 </PopoverBody> */}
             </PopoverContainer>
           </Popover>
         </div>

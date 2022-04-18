@@ -9,6 +9,7 @@ export default function EditUser() {
   const [userList, setUserList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [manager, setManager] = useState([]);
+  const [allManager, setAllManager] = useState([]);
   const [jobFamily, setJobFamily] = useState([]);
   const [jobGrade, setJobGrade] = useState([]);
   const [jobGrades, setJobGrades] = useState([]);
@@ -17,6 +18,7 @@ export default function EditUser() {
   useEffect(() => {
     fetchList();
     //eslint-disable-next-line
+    fetchManager();
   }, []);
 
   function fetchList() {
@@ -24,6 +26,12 @@ export default function EditUser() {
       setUserList(res.data);
       console.log(res.data);
     });
+  }
+
+  function fetchManager() {
+    const urlManager = `http://localhost:8181/api/farmer/transfer/manager`;
+
+    axios.get(urlManager).then((response) => setAllManager(response.data));
   }
 
   const offices = [
@@ -39,6 +47,10 @@ export default function EditUser() {
     { value: "QA", label: "Quality Assurance" },
     { value: "CON", label: "Consultant" },
     { value: "DSG", label: "Graphics Designer" },
+    { value: "MJF", label: "Management Job Family" },
+    { value: "ADM", label: "Admin" },
+    { value: "FA", label: "Finance and Accounting" },
+    { value: "TR", label: "Trainer" },
   ];
 
   function handleJobFamily(value) {
@@ -74,9 +86,54 @@ export default function EditUser() {
         { value: "DD", label: "Design Director" },
       ]);
     }
+    if (value === "MJF") {
+      setJobGrades([
+        { value: "MG1", label: "Manager I" },
+        { value: "MG2", label: "Manager II" },
+        { value: "MG3", label: "Manager III" },
+        { value: "MG4", label: "Manager IV" },
+      ]);
+    }
+    if (value === "ADM") {
+      setJobGrades([
+        { value: "ADM1", label: "Admin I" },
+        { value: "ADM2", label: "Admin II" },
+        { value: "ADM3", label: "Admin III" },
+        { value: "ADM4", label: "Admin IV" },
+      ]);
+    }
+    if (value === "FA") {
+      setJobGrades([
+        { value: "FA1", label: "Finance I" },
+        { value: "FA2", label: "Finance II" },
+        { value: "FA3", label: "Finance III" },
+        { value: "FA4", label: "Finance IV" },
+      ]);
+    }
+    if (value === "TR") {
+      setJobGrades([
+        { value: "TR1", label: "Trainer I" },
+        { value: "TR2", label: "Trainer II" },
+        { value: "TR3", label: "Trainer III" },
+        { value: "TR4", label: "Trainer IV" },
+      ]);
+    }
   }
 
   let options = [];
+
+  options = allManager.map((s) => {
+    return {
+      value: s.userId,
+
+      label: `${s.userId}: ${s.username} - ${s.firstName} ${s.lastName}`,
+    };
+  });
+
+  options.push({
+    value: "0",
+    label: "No Supervisor",
+  });
 
   return (
     <section>
@@ -89,6 +146,9 @@ export default function EditUser() {
             <tr>
               <th itemScope="col" aria-rowspan={2}>
                 #
+              </th>
+              <th itemScope="col" aria-rowspan={2}>
+                ID
               </th>
               <th itemScope="col" aria-rowspan={2}>
                 Username
@@ -114,11 +174,21 @@ export default function EditUser() {
             {userList.map((user, index) => {
               return (
                 <tr key={index}>
-                  <td>{index}</td>
+                  <td>{index + 1}</td>
+                  <td>{user.id}</td>
                   <td>{user.username}</td>
                   <td>{user.firstName + " " + user.lastName}</td>
                   <td>{user.jobFamily + ", " + user.jobGrade}</td>
-                  <td>{user.supervisorId}</td>
+                  <td>
+                    {allManager.map((item) => {
+                      if (item.userId === user.supervisorId) {
+                        return item.username;
+                      } else {
+                        return "No Manager";
+                      }
+                    })}
+                  </td>
+                  {/* <td>{user.supervisorId}</td> */}
                   <td>
                     {user.roles.map((role, index) => (
                       <li key={index}>{role.name.substring(5)}</li>
@@ -136,7 +206,7 @@ export default function EditUser() {
                         setJobGrade(user.jobGrade);
                         setOffice(user.office);
                         setShowModal(true);
-                        console.log(userFormData);
+                        console.log(allManager);
                       }}
                     >
                       <i className="fa fa-edit text-blue-600 fa-x px-1"></i>

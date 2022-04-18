@@ -15,7 +15,7 @@ import jsCookie from "js-cookie";
 import { bindActionCreators } from "redux";
 
 
-const SignIn = ({ authenticate, auth, error, token }) => {
+const SignIn = ({ authenticate, auth, error, token, state }) => {
   // const [error, setError] = React.useState("");
   const dispatch = useDispatch();
 
@@ -25,6 +25,7 @@ const SignIn = ({ authenticate, auth, error, token }) => {
   });
 
   useEffect(() => {
+    console.log("token", state);
     // console.log("BASE PATH", process.env.NEXT_PUBLIC_API_URL);
     if (jsCookie.get("token")) {
       Router.push("/");
@@ -92,7 +93,7 @@ const SignIn = ({ authenticate, auth, error, token }) => {
                       <Image src={mitraisLogo} alt="logo"></Image>
                     </div>
                     <form>
-                      <div id="errorMsg" className="bg-red-500 text-center text-white my-3 rounded animate-pulse">
+                      <div id="errorMsg" className="bg-red-500 text-center text-white my-3 rounded">
                         {error}
                       </div>
                       <div className="relative w-full mb-3">
@@ -197,6 +198,7 @@ const mapStateToProps = (state) => ({
   token: state.authentication.token,
   auth: state.authentication,
   error: state.authentication.error,
+  state: state,
 })
 
 const mapDispatchToProps = (dispatch) => {

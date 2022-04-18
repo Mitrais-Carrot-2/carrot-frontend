@@ -27,7 +27,7 @@ export default function Bazaar() {
   // console.log(bazaar)
 
   function reloadPage() {
-    window.location.reload();
+    axios.get(url).then((response) => setBazaar(response.data));
   }
 
   return (
@@ -38,20 +38,20 @@ export default function Bazaar() {
       <div className="container">
         <section className="bazaar-table">
           <div className="row d-flex px-10">
-            <h2 className="col-md-6 mt-4 pl-0 text-grey mb-3">
+            <h2 className="col-md-6 pl-0 text-grey mb-3">
               Bazaar Dashboard
             </h2>
           </div>
-          <div className="mx-auto sm: px-4 search-box py-3">
+          <div className="mx-auto sm: px-4 search-box py-3 overflow-x-auto">
             {/* <h2 className="col-md-6 mt-4 pl-0 text-grey ml-0">Bazaar List</h2> */}
             <div className="row d-flex px-4 items-center">
               <div className="col-md-6">
                 <hr className="box-title-hr mt-3" />
                 <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">Bazaar List</h4>
-              </div>              
+              </div>
               <div className="col-md-6">
                 <button
-                  className="col-sm-6 btn btn-info mt-0 pull-right radius-5"
+                  className="col-sm-6 btn bg-[#17a2b8] text-white mt-0 pull-right radius-5"
                   onClick={() => {
                     setShowCreateBazaar(true);
                   }}
@@ -96,7 +96,7 @@ export default function Bazaar() {
               </thead>
               <tbody>
                 {bazaars.map((data, index) => (
-                  <tr key={index + 1}>
+                  <tr key={index + 1} className="odd:bg-white even:bg-slate-100">
                     <td>{index + 1}</td>
                     <td style={{ display: "none" }}>{data.id}</td>
                     <td>{data.bazaarName}</td>
@@ -120,12 +120,12 @@ export default function Bazaar() {
               </tbody>
             </table>
             {showUpdateBazaar && (
-                        <UpdateBazaar
-                          closeClick={setShowUpdateBazaar}
-                          updateData={selectedBazaar}
-                          refreshPage={reloadPage}
-                        />
-                      )}
+              <UpdateBazaar
+                closeClick={setShowUpdateBazaar}
+                updateData={selectedBazaar}
+                refreshPage={reloadPage}
+              />
+            )}
           </div>
         </section>
       </div>

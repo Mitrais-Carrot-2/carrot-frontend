@@ -22,14 +22,17 @@ export default function UpdateGroup(props) {
         console.log("val group: " + group)
         axios.put(`${process.env.NEXT_PUBLIC_API_URL}bazaar/group/${id}`, group)
             .then((res) => {
+                window.alert(res.data.message)
                 props.closeClick();
-                // props.refreshPage();
-                window.alert("Updated!");
-
-                window.location.reload();
+                props.refreshPage();
             })
             .catch((err) => {
-                window.alert("Update Error!");
+                // console.log(err.response)
+                if (!err.response.data.status) {
+                    window.alert(err.response.data.message)
+                } else {
+                    window.alert("Failed: Duplicate data!")
+                }
             })
     }
 
@@ -52,9 +55,10 @@ export default function UpdateGroup(props) {
             <>
                 <form>
                     <h3></h3>
-                    <div className="group-details">
+                    <div className="group-details text-left">
                         <label>Group Name:</label>
                         <input
+                            id="group-name-input"
                             value={group.name}
                             type="text"
                             name="groupName"
@@ -63,6 +67,7 @@ export default function UpdateGroup(props) {
 
                         <label>Group Notes:</label>
                         <input
+                            id="group-notes-input"
                             value={group.note}
                             type="text"
                             name="groupNote"
@@ -71,20 +76,22 @@ export default function UpdateGroup(props) {
 
                         <label>Carrot Allocation:</label>
                         <input
+                            id="group-carrot-input"
                             value={group.allocation}
                             type="number"
                             name="groupAllocation"
-                            onChange={(item) => setGroup({ ...group, allocation: item.target.value })}
+                            onChange={(item) => setGroup({ ...group, allocation: item.target.value, managerId: 1 })}
                         />
 
-                        <label>Manager:</label>
+                        {/* <label>Manager:</label>
                         <Select className="my-2"
                             value={group.managerId}
                             id='manager-id'
                             name="manager-id"
                             options={options}
                             onChange={(item) => setGroup({ ...group, managerId: item.value })}
-                        />
+                        /> */}
+                        {/* {setGroup({ ...group, managerId: 1 })} */}
                     </div>
                 </form>
                 <style jsx>{`

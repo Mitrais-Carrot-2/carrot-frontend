@@ -34,7 +34,12 @@ export default function UpdateItem(props) {
                 props.refreshPage();
             })
             .catch((err) => {
-                window.alert("Update Error!");
+                console.log(err.response)
+                if (!err.response.data.status) {
+                    window.alert(err.response.data.message)
+                } else {
+                    window.alert("Failed: Duplicate data!")
+                }
             })
     }
 
