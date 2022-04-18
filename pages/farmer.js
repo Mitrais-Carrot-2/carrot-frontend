@@ -57,13 +57,6 @@ export default function Farmer() {
             onClick={() => {
               setShowBarns(false);
               setShowDistribution(true);
-              // barns.find((barn) => {
-              //   if (barn.isActive) {
-              //     setActiveBarn(barn);
-              //   } else{
-              //     setActiveBarn({})
-              //   }
-              // });
               setActiveBarn(barns.find((barn) => barn.isActive));
             }}
           >
