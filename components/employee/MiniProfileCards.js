@@ -1,6 +1,7 @@
 import React from "react";
 import defaultImage from "@public/img/defaultImage.png";
 import carrotIcon from "@public/img/mc-icon-carrot.png";
+import basketIcon from "@public/img/basket.png";
 import carrotIconTwo from "@public/img/mc-icon-transaction.png";
 import { useSelector } from "react-redux";
 import MiniCard from "./MiniCard";
@@ -67,7 +68,7 @@ export default function MiniProfileCards(props) {
                     imgClass="cursor-pointer hover:opacity-70"
                     clickAction={()=>router.push("/user/profile")} 
           />
-          <MiniCard cardType="mini-card-basket" image={carrotIcon} body={basketCardBody()} />
+          <MiniCard cardType="mini-card-basket" image={basketIcon} body={basketCardBody()} />
           <MiniCard cardType="mini-card-history" image={carrotIconTwo} body={historyCardBody()} />
         </div>
       </div>
