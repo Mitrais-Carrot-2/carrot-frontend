@@ -9,6 +9,7 @@ import { getFreezer, getFreezerHistory, getStaff } from 'redux/actions/managerAc
 import { bindActionCreators } from 'redux';
 import jsCookie from 'js-cookie';
 import Router from 'next/router';
+import Footer from '@components/Footer';
 
 
 const Index = ({ state }) => {
@@ -88,6 +89,7 @@ const Index = ({ state }) => {
                     />
                 </div>
             </div>
+            <Footer />
         </body>
     )
 }
