@@ -220,6 +220,7 @@ export default function Navbar() {
 
                 {notifications.length !== undefined && notifications.length > 0 ?
                   <>
+                    <div className="w-[110%] -ml-[12px] overflow-y-auto max-h-[230px]">
                     {
                       notifications.map((notif) => {
                         return (
@@ -229,18 +230,19 @@ export default function Navbar() {
                                 markRead(notif.id);
                               }
                             }
-                            className="mb-2 px-3 border-l-2 hover:border-orange-500 hover:bg-gray-100 cursor-pointer py-3 flex flex-col">
+                            className="mb-2 px-3 border-l-4 hover:border-orange-500 hover:bg-gray-100 cursor-pointer py-3 flex flex-col">
                             <h5 className={"text-[12px] " + (!notif.read ? "font-bold" : "")}>{notif.message}</h5>
                             <p className="text-[9px] text-right">{moment(notif.date).format('MMMM Do YYYY, h:mm:ss a')}</p>
                           </div>
                         )
                       })
                     }
+                    </div>
                     <p onClick={
                       () => {
                         markAllRead();
                       }
-                    } className="text-right -mt-2 hover:cursor-pointer hover:underline hover:underline-offset-1">Mark All Read</p>
+                    } className="mt-2 text-right hover:cursor-pointer hover:underline hover:underline-offset-1">Mark all as read</p>
                   </>
                   : (
                     <p className="text-center">No new notifications</p>
