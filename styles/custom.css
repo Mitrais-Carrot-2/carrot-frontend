@@ -615,10 +615,6 @@ ul.roles {
   padding: 0 32px 0 16px;
 }
 
-.search-input:hover {
-  cursor: pointer;
-}
-
 /* width */
 ::-webkit-scrollbar {
   width: 7px;
