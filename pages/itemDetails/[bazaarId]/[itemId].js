@@ -62,7 +62,7 @@ export default function itemDetails(props){
             if (carrot > item.price){
                 return (
                     <>   
-                        <p className = "my-3">Available: {item.quantity} {item.quantity > 1? "pcs" : "pc"}</p>
+                        <p id="item-qty" className = "my-3">Available: {item.quantity} {item.quantity > 1? "pcs" : "pc"}</p>
                         <button className="btn btn-carrot" onClick={() => setShowBuyModal(true)}>
                             BUY
                         </button>
@@ -72,7 +72,7 @@ export default function itemDetails(props){
             else {
                 return (
                     <>
-                        <p className = "my-3">Available: {item.quantity} {item.quantity > 1? "pcs" : "pc"}</p>
+                        <p id="item-qty" className = "my-3">Available: {item.quantity} {item.quantity > 1? "pcs" : "pc"}</p>
                         <button className="btn btn-carrot" disabled >
                             BUY
                         </button>
@@ -83,6 +83,7 @@ export default function itemDetails(props){
         }
         return (
             <>
+                <p id="item-qty" className = "my-3">Available: {item.quantity} {item.quantity > 1? "pcs" : "pc"}</p>
                 <button className="btn btn-carrot" disabled>
                     BUY
                 </button>
@@ -98,7 +99,7 @@ export default function itemDetails(props){
                     <h2 className="mb-4 text-grey back">
                         <span className="back-button mr-6">
                             <Link href="/">
-                                <Image src={backImage} alt="" className="back" />
+                                <Image id="back-icon" src={backImage} alt="" className="back" />
                             </Link>
                         </span>                         
                         BAZAAR
@@ -122,7 +123,7 @@ export default function itemDetails(props){
                                 />
                             </div>
                             <div className="col-md-6 align-self-center px-10">
-                                <h2 className="my-3">{item.name}</h2>
+                                <h2 id="item-details-name" className="my-3">{item.name}</h2>
                                 <h4><strong className="carrot-orange my-3">{item.price} Carrots</strong></h4>
                                 <p className="my-3">{item.description}</p>
                                 {checkBasket(item)}
@@ -136,7 +137,7 @@ export default function itemDetails(props){
 
     function buyRequestModal(){
         return (
-            <Modal isOpen={showBuyRequestModal} toggle={toggleBuyRequestModal} centered size="sm">
+            <Modal id="buy-requested-modal" isOpen={showBuyRequestModal} toggle={toggleBuyRequestModal} centered size="sm">
                 <ModalBody>
                     <div className="modal-title flex flex-wrap justify-center items-center">
                         <Image 

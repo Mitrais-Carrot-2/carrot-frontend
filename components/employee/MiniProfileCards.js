@@ -32,7 +32,7 @@ export default function MiniProfileCards(props) {
     return (
       <>
         <h3>My {date.getFullYear()} Basket:</h3>
-        <h3>{props.basket ? props.basket.carrotAmount : ""} Carrots</h3>
+        <h3 id="carrot-amount-dashboard">{props.basket ? props.basket.carrotAmount : ""} Carrots</h3>
       </>
     )
   }

@@ -121,7 +121,7 @@ export default function TransferHistory() {
                             onChange={e => setSearchInput(e.target.value)}
                          />
                     </div>
-                    <div>
+                    <div id = "transfer-table">
                         <DataTable
                             columns={columnsTransfer}
                             data={filteredTransferHistory}
