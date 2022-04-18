@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import BarnReward from "./BarnReward";
 import jsCookie from "js-cookie";
 
-
 export default function Barn(props) {
   const [selectedBarn, setSelectedBarn] = useState({
     barnName: "Barn xxxx",
@@ -15,24 +14,19 @@ export default function Barn(props) {
   });
 
   useEffect(() => {
-    
-    setSelectedBarn(
-      {
-        barnName: props.barnId.barnName,
-        carrotAmount: props.barnId.carrotAmount,
-        endDate: props.barnId.endDate,
-        startDate: props.barnId.startDate,
-      } 
-    );
+    setSelectedBarn({
+      barnName: props.barnId.barnName,
+      carrotAmount: props.barnId.carrotAmount,
+      endDate: props.barnId.endDate,
+      startDate: props.barnId.startDate,
+    });
   }, []);
 
   function createTable() {
     return (
       <div>
         <form>
-          <h2
-          id="barn-info"
-          >Barn Details:</h2>
+          <h2 id="barn-info">Barn Details:</h2>
           <div className="barn-details">
             <label>Barn Name:</label>
             <input
@@ -108,27 +102,28 @@ export default function Barn(props) {
 
   function saveBarn() {
     axios
-      .put(`${process.env.NEXT_PUBLIC_API_URL}farmer/barn/${props.barnId.id}`, selectedBarn, {
-        headers: {
+      .put(
+        `${process.env.NEXT_PUBLIC_API_URL}farmer/barn/${props.barnId.id}`,
+        selectedBarn,
+        {
+          headers: {
             Authorization: `Bearer ${jsCookie.get("token")}`,
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Credentials": true,
             "Content-Type": "application/json",
-        },
-    })
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
         //Renew Barn info in List of Barns
-        props.editTable(res.data.t)
+        props.editTable(res.data.t);
         window.alert("Barn updated");
-        // props.reloadPage();
       })
       .catch((err) => {
         console.log(err);
         window.alert("Barn update failed");
-      }
-      );
-    
+      });
   }
   return (
     <div>

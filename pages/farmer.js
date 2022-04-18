@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import jsCookie from "js-cookie";
 import Router from "next/router";
 
-
 export default function Farmer() {
   const [barns, setBarns] = useState([]);
   const [activeBarn, setActiveBarn] = useState({});
@@ -15,26 +14,28 @@ export default function Farmer() {
   const [showDistribution, setShowDistribution] = useState(false);
 
   useEffect(() => {
-    if(!jsCookie.get("roles").split(",").includes("ROLE_FARMER")) {
+    if (!jsCookie.get("roles").split(",").includes("ROLE_FARMER")) {
       Router.push("/");
     } else {
       console.log("token", jsCookie.get("token"));
       axios
-        .get(process.env.NEXT_PUBLIC_API_URL+"farmer/barn/", {
+        .get(process.env.NEXT_PUBLIC_API_URL + "farmer/barn/", {
           headers: {
-              Authorization: `Bearer ${jsCookie.get("token")}`,
-              "Access-Control-Allow-Origin": "*",
-              "Access-Control-Allow-Credentials": true,
-              "Content-Type": "application/json",
+            Authorization: `Bearer ${jsCookie.get("token")}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            "Content-Type": "application/json",
           },
-      })
-        .then((res) => {setBarns(res.data)
-          console.log("barns", res.data);});
+        })
+        .then((res) => {
+          setBarns(res.data);
+          console.log("barns", res.data);
+        });
     }
   }, []);
 
-  function updateBarns(newBarns){
-    setBarns(newBarns)
+  function updateBarns(newBarns) {
+    setBarns(newBarns);
   }
 
   return (

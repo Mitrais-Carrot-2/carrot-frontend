@@ -15,14 +15,16 @@ export default function Distribution(props) {
   const [manager, setManager] = useState([]);
 
   useEffect(() => {
-    axios.get(process.env.NEXT_PUBLIC_API_URL+"farmer/transfer/manager", {
-      headers: {
+    axios
+      .get(process.env.NEXT_PUBLIC_API_URL + "farmer/transfer/manager", {
+        headers: {
           Authorization: `Bearer ${jsCookie.get("token")}`,
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": true,
           "Content-Type": "application/json",
-      },
-  }).then((response) => setManager(response.data));
+        },
+      })
+      .then((response) => setManager(response.data));
   }, []);
 
   let options = [];
@@ -69,19 +71,23 @@ export default function Distribution(props) {
   }
   function sendCarrot() {
     axios
-      .post(process.env.NEXT_PUBLIC_API_URL+"farmer/transfer/distribute", {
-        managerId: managerId,
-        barnId: props.barn.id,
-        carrotAmount: carrotAmount,
-        note: message,
-      }, {
-        headers: {
+      .post(
+        process.env.NEXT_PUBLIC_API_URL + "farmer/transfer/distribute",
+        {
+          managerId: managerId,
+          barnId: props.barn.id,
+          carrotAmount: carrotAmount,
+          note: message,
+        },
+        {
+          headers: {
             Authorization: `Bearer ${jsCookie.get("token")}`,
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Credentials": true,
             "Content-Type": "application/json",
-        },
-    })
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
         window.alert(
@@ -105,26 +111,28 @@ export default function Distribution(props) {
         window.alert(`Failed to distribute carrot, Error: ${err}`);
       });
   }
-  function showPage(){
+  function showPage() {
     if (props.barn) {
       return (
         <>
-          {/* <h1 className="text-purple-500 text-4xl font-bold lowercase ml-2 mb-2"> */}
           <h2 id="farmer-dashboard" className="text-grey ml-4 mb-2">
             Distribution
           </h2>
           <div className="search-box py-2">
             <hr className="box-title-hr mt-3" />
-            <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">Distribution Details:</h4>
-            <table 
-            className="w-2/10 overflow-x-scroll mb-2">
+            <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">
+              Distribution Details:
+            </h4>
+            <table className="w-2/10 overflow-x-scroll mb-2">
               <tr>
                 <th>Barn Name</th>
                 <td>{props.barn.barnName}</td>
               </tr>
               <tr>
                 <th>Harvested Carrot</th>
-                <td>{props.barn.carrotAmount + props.barn.distributedCarrot}</td>
+                <td>
+                  {props.barn.carrotAmount + props.barn.distributedCarrot}
+                </td>
               </tr>
               <tr>
                 <th>Distributed Carrot</th>
@@ -138,7 +146,6 @@ export default function Distribution(props) {
           </div>
           <div className="search-box my-3 text-center">
             <button
-              // className="btn bg-orange-500 hover:bg-orange-700 text-white py-2 px-4 rounded"
               className="btn btn-info text-white py-2 px-4 rounded"
               onClick={() => setDistributeCarrot(true)}
             >
