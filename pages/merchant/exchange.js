@@ -108,8 +108,6 @@ export default function Exchange() {
                                                         </i>
                                                     </button>
                                                 </td>
-                                                {showApproveItem && <ApproveItem closeClick={setShowApproveItem} updateData={selectedId} refreshPage={reloadPage} />}
-                                                {showDenyItem && <DenyItem closeClick={setShowDenyItem} updateData={selectedId} refreshPage={reloadPage} />}
                                             </>
 
                                             :
@@ -127,6 +125,8 @@ export default function Exchange() {
                                 ))}
                             </tbody>
                         </table>
+                        {showApproveItem && <ApproveItem closeClick={setShowApproveItem} updateData={selectedId} refreshPage={reloadPage} />}
+                        {showDenyItem && <DenyItem closeClick={setShowDenyItem} updateData={selectedId} refreshPage={reloadPage} />}
                     </div>
                 </section>
 
