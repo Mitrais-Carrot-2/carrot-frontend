@@ -5,38 +5,132 @@ import BarnHistory from "./BarnHistory";
 import Modal from "@components/Modal";
 import axios from "axios";
 import jsCookie from "js-cookie";
-
+import DataTable from "react-data-table-component";
+import { Fragment } from "react/cjs/react.production.min";
 
 export default function ShowBarn(props) {
   const [showCreateBarn, setShowCreateBarn] = useState(false);
   const [showBarnInfo, setShowBarnInfo] = useState(false);
   const [showBarnHistory, setShowBarnHistory] = useState(false);
-  const [selectedBarnId, setSelectedBarnId] = useState({});
+  const [selectedBarnId, setSelectedBarnId] = useState(0);
+  const [selectedBarn, setSelectedBarn] = useState({});
   const [barns, setBarns] = useState([]);
+  const [resetPaginationToggle, setResetPaginationToggle] =
+    React.useState(false);
+
+  const columns = [
+    {
+      name: "#",
+      cell: (row, index) => index + 1,
+      maxWidth: "10px",
+    },
+    {
+      name: "id",
+      selector: (row) => row.id,
+      omit: true,
+    },
+    {
+      name: "Barn Name",
+      selector: (row) => row.barnName,
+      minWidth: "50px",
+      sortable: true,
+    },
+    {
+      name: "Start Periode",
+      selector: (row) => row.startDate,
+      sortable: true,
+    },
+    {
+      name: "End Periode",
+      selector: (row) => row.endDate,
+      sortable: true,
+    },
+    {
+      name: "Carrot Amount",
+      selector: (row) => row.carrotAmount,
+      sortable: true,
+    },
+    {
+      name: "Distributed Carrot",
+      selector: (row) => row.distributedCarrot,
+      sortable: true,
+    },
+    {
+      name: "Status",
+      selector: (row) => (row.isActive ? "Active" : "Inactive"),
+      sortable: true,
+    },
+    {
+      name: "Action",
+      minWidth: "250px",
+      cell: (row) => {
+        return (
+          <Fragment>
+            <button
+              className="btn btn-info m-2"
+              onClick={() => {
+                setSelectedBarn({
+                  id: row.id,
+                  barnName: row.barnName,
+                  startDate: row.startDate,
+                  endDate: row.endDate,
+                  carrotAmount: row.carrotAmount,
+                  distributedCarrot: row.distributedCarrot,
+                  isActive: row.isActive,
+                });
+                setShowBarnInfo(true);
+              }}
+            >
+              Manage
+            </button>
+            <button
+              className="btn btn-info m-2"
+              onClick={() => {
+                setSelectedBarn({
+                  id: row.id,
+                  barnName: row.barnName,
+                  startDate: row.startDate,
+                  endDate: row.endDate,
+                  carrotAmount: row.carrotAmount,
+                  distributedCarrot: row.distributedCarrot,
+                  isActive: row.isActive,
+                });
+                setShowBarnHistory(true);
+              }}
+            >
+              History
+            </button>
+          </Fragment>
+        );
+      },
+      button: true,
+    },
+  ];
 
   useEffect(() => {
     axios
-      .get(process.env.NEXT_PUBLIC_API_URL+"farmer/barn/", {
+      .get(process.env.NEXT_PUBLIC_API_URL + "farmer/barn/", {
         headers: {
-            Authorization: `Bearer ${jsCookie.get("token")}`,
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Credentials": true,
-            "Content-Type": "application/json",
+          Authorization: `Bearer ${jsCookie.get("token")}`,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          "Content-Type": "application/json",
         },
-    })
-      .then((res) => setBarns(res.data.sort((a, b) => a.barnName.localeCompare(b.barnName))));
+      })
+      .then((res) =>
+        setBarns(res.data.sort((a, b) => a.barnName.localeCompare(b.barnName)))
+      );
   }, []);
 
   useEffect(() => {
-    props.updateBarns(barns)
-  }, [barns])
+    props.updateBarns(barns);
+  }, [barns]);
 
   function updateTable(newBarn) {
     setBarns([...barns, newBarn]);
-    
   }
-  function editTable(selectedBarn){
-    const temp = barns
+  function editTable(selectedBarn) {
+    const temp = barns;
     temp.map((item) => {
       if (item.id === selectedBarn.id) {
         item.barnName = selectedBarn.barnName;
@@ -47,67 +141,24 @@ export default function ShowBarn(props) {
         item.endDate = selectedBarn.endDate;
       }
     });
-
   }
   return (
     <div>
-      {/* <h1 id="farmer-dashboard" className="text-purple-500 text-4xl font-bold lowercase ml-2 mb-2"> */}
       <h2 id="farmer-dashboard" className="text-grey ml-4 mb-2">
         Farmer Dashboard
       </h2>
       <div className="bg-white rounded shadow-md p-4 mb-4 overflow-x-scroll">
         <hr className="box-title-hr" />
-        <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">Barn List</h4>
-        <table id="list-of-barns" className="w-5/6 overflow-x-scroll">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Barn Name</th>
-              <th>Start Periode</th>
-              <th>End Periode</th>
-              <th className="w-4">Carrot Amount</th>
-              <th className="w-5">Distributed Carrot</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          {barns
-            .map((barn, index) => {
-              return (
-                <tbody key={barn.id}>
-                  <tr>
-                    <td>{index + 1}</td>
-                    <td>{barn.barnName}</td>
-                    <td>{barn.startDate}</td>
-                    <td>{barn.endDate}</td>
-                    <td>{barn.carrotAmount}</td>
-                    <td>{barn.distributedCarrot}</td>
-                    <td>{barn.isActive ? "Yes" : "No"}</td>
-                    <td>
-                      <button
-                          className="btn btn-info"
-                          onClick={() => {
-                          setSelectedBarnId(barn);
-                          setShowBarnInfo(true);
-                        }}
-                      >
-                        Manage
-                      </button>
-                      <button
-                          className="btn btn-info"
-                          onClick={() => {
-                          setSelectedBarnId(barn);
-                          setShowBarnHistory(true);
-                        }}
-                      >
-                        History
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              );
-            })}
-        </table>
+        <h4 className="mt-1 mb-3 text-lg text-grey ml-0 font-bold tracking-widest">
+          Barn List
+        </h4>
+        <DataTable
+          id="list-of-barns"
+          columns={columns}
+          data={barns}
+          pagination
+          paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
+        />
         <button
           id="btn-create-barn"
           className="btn btn-info"
@@ -118,21 +169,22 @@ export default function ShowBarn(props) {
           Create Barn
         </button>
       </div>
-      {showCreateBarn && <CreateBarn closeClick={setShowCreateBarn} updateTable={updateTable} />}
+      {showCreateBarn && (
+        <CreateBarn closeClick={setShowCreateBarn} updateTable={updateTable} />
+      )}
       {showBarnInfo && (
         <Barn
-          barnId={selectedBarnId}
+          barnId={selectedBarn}
           editTable={editTable}
           closeClick={setShowBarnInfo}
-          // reloadPage={reloadPage}
         />
       )}
       {showBarnHistory && (
         <Modal
-          title={"History of " + selectedBarnId.barnName}
+          title={"History of " + selectedBarn.barnName}
           body={
             <BarnHistory
-              barnId={selectedBarnId.id}
+              barnId={selectedBarn.id}
               closeClick={setShowBarnHistory}
             />
           }
@@ -141,45 +193,6 @@ export default function ShowBarn(props) {
           actionClick={setShowBarnHistory}
         />
       )}
-
-      <style jsx>{`
-        table {
-          border-collapse: collapse;
-          width: 100%;
-          margin-top: 20px;
-          margin-bottom: 20px;
-        }
-        th,
-        td {
-          border-collapse: collapse;
-          padding: 5px;
-        }
-        th {
-          text-align: center;
-          border-bottom: 1px solid #ddd;
-          border-top: 1px solid #ddd;
-        }
-        td {
-          text-align: center;
-        }
-        button {
-          background-color: #17a2b8;
-          border: 1px solid #17a2b8;
-          border-radius: 5px;
-          color: white;
-          text-align: center;
-          text-transform: uppercase;
-          border-collapse: collapse;
-          padding: 5px;
-          margin: 2px 2px;
-        }
-        button:hover {
-          background-color: #17a2b8;
-        }
-        span {
-          padding: 5px;
-        }
-      `}</style>
     </div>
   );
 }
