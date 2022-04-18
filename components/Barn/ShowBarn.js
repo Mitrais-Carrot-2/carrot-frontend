@@ -52,9 +52,6 @@ export default function ShowBarn(props) {
     },
     {
         name: 'Distributed Carrot',
-        style: {
-            className: 'text-red-700',
-        },
         selector: row => row.distributedCarrot,
         sortable: true
     },
