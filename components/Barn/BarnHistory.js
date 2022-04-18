@@ -16,22 +16,29 @@ export default function BarnHistory(props) {
     {
         name: '#',
         cell: (row, index) => index+1,
-        maxWidth: '10px',
+        maxWidth: '5px',
     },
     {
         name: 'Shared to',
         selector: row => row.managerName,
-        minWidth: '50px',
+        minWidth: '200px',
         sortable: true
     },
     {
         name: 'Amount',
         selector: row => row.amount,
+        maxWidth: '150px',
         sortable: true
     },
     {
         name: 'Date',
         selector: row => row.sharedAt,
+        sortable: true
+    },
+    {
+        name: 'Type',
+        selector: row => row.type == "TYPE_REWARD" ? "Reward" : "Transfer",
+        maxWidth: '50px',
         sortable: true
     },
     {
@@ -102,6 +109,7 @@ export default function BarnHistory(props) {
             managerName: managerName.current,
             amount: item.carrotAmount,
             sharedAt: date,
+            type: item.type,
             message: item.note,
           });
 
