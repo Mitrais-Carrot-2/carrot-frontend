@@ -93,7 +93,7 @@ const SignIn = ({ authenticate, auth, error, token, state }) => {
                       <Image src={mitraisLogo} alt="logo"></Image>
                     </div>
                     <form>
-                      <div id="errorMsg" className="bg-red-500 text-center text-white my-3 rounded animate-pulse">
+                      <div id="errorMsg" className="bg-red-500 text-center text-white my-3 rounded">
                         {error}
                       </div>
                       <div className="relative w-full mb-3">
