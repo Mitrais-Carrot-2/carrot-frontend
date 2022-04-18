@@ -220,7 +220,7 @@ export default function Navbar() {
 
                 {notifications.length !== undefined && notifications.length > 0 ?
                   <>
-                    <div className="w-[110%] -ml-[12px] overflow-y-auto max-h-[230px]">
+                    <div className="w-[110%] -ml-[12px] overflow-y-auto max-h-[230px]" style={{scrollbarWidth: 'none'}}>
                     {
                       notifications.map((notif) => {
                         return (
