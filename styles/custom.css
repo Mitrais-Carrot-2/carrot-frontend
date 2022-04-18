@@ -6,7 +6,7 @@ html {
 
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 10px !important;
+  margin-bottom: 80px !important;
   background: url("../public/img/mitrais-carrot-bg-pattern.png") #ecf0f5 !important;
   background-position: bottom right !important;
   background-repeat: no-repeat !important;
