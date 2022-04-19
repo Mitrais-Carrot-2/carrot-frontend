@@ -167,7 +167,7 @@ export default function CreateUser() {
       .then((res) => {
           console.log(res);
           setUserFormData({});
-      simulateMouseClick(element);
+          simulateMouseClick(element);
         window.alert("Successfully updated");
       })
       .catch((err) => {

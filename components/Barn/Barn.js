@@ -78,7 +78,7 @@ export default function Barn(props) {
             />
           </div>
 
-          <h2>Barn Settings:</h2>
+          <h2 className="mb-2">Barn Settings:</h2>
           <BarnReward id={props.barnId} />
         </form>
         <style jsx>{`
@@ -119,10 +119,12 @@ export default function Barn(props) {
         //Renew Barn info in List of Barns
         props.editTable(res.data.t);
         window.alert("Barn updated");
+        props.closeClick();
       })
       .catch((err) => {
         console.log(err);
         window.alert("Barn update failed");
+        props.closeClick();
       });
   }
   return (

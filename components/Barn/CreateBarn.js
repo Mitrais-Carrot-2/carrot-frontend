@@ -29,10 +29,12 @@ export default function CreateBarn(props) {
         //Return Barn info to Show Barn
         props.updateTable(res.data.t);
         window.alert("Barn created successfully");
+        props.closeClick();
       })
       .catch((err) => {
         console.log(err.message);
         window.alert("Barn creation failed");
+        props.closeClick();
       });
   }
   function createTable() {
