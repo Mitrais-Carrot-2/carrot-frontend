@@ -34,6 +34,7 @@ export default function AdminLayout() {
                   onClick={() => {
                     setShowCreateUser(false), setShowUpdateUser(true);
                   }}
+                  id="btn-update-user"
                   className="btn btn-carrot radius-5"
                 >
                   {" "}

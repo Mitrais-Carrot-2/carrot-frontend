@@ -144,13 +144,30 @@ export default function CreateUser() {
     label: "No Supervisor",
   });
 
+  const mouseClickEvents = ['mousedown', 'click', 'mouseup'];
+  function simulateMouseClick(element){
+    mouseClickEvents.forEach(mouseEventType =>
+      element.dispatchEvent(
+        new MouseEvent(mouseEventType, {
+            view: window,
+            bubbles: true,
+            cancelable: true,
+            buttons: 1
+        })
+      )
+    );
+  }
+
   function createUser() {
-    console.log();
+    let element = document.querySelector('button[id="btn-update-user"]');
+    
+    // console.log();
     axios
       .post("http://localhost:8181/api/admin/signup", userFormData)
       .then((res) => {
-        console.log(res);
-        setUserFormData({});
+          console.log(res);
+          setUserFormData({});
+      simulateMouseClick(element);
         window.alert("Successfully updated");
       })
       .catch((err) => {
