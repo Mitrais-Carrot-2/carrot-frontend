@@ -30,11 +30,15 @@ const TransferHistory = () => {
         axios.get(urlTransfer)
         .then(res => {
             // sort res data by date desc
-            let sortData = res.data.sort((a, b) => {
+            
+            let sortData = res.data.filter(item => {
+                return item.type!="TYPE_BARN_TO_FREEZER"
+            });
+
+            sortData = sortData.sort((a, b) => {
                 return new Date(b.shareAt) - new Date(a.shareAt);
             });
 
-            console.log("get transfer history");
             sortData.forEach((data, i) => {       
                 // console.log("res data ", i, " = ", data)
                 setDataTransfer(dataTransfer => 
