@@ -135,7 +135,7 @@ export default function CreateUser() {
     return {
       value: s.userId,
 
-      label: `${s.userId}: ${s.firstName} ${s.lastName}`,
+      label: `${s.username} - ${s.firstName} ${s.lastName}`,
     };
   });
 
