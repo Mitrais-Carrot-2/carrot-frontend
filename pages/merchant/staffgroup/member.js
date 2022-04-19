@@ -97,7 +97,7 @@ export default function StaffGroupMember(props) {
                             <div className="col-md-6">
                                 <button
                                     id="add-member-button"
-                                    className="col-sm-6 btn bg-[#17a2b8] text-white mt-4 pull-right radius-5"
+                                    className="col-sm-6 btn btn-info mt-4 pull-right radius-5"
                                     onClick={() => {
                                         setShowAddMember(true);
                                     }}

@@ -11,6 +11,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter} from "reactstrap";
 import checkGreen from "@public/img/checkGreen.png";
 import Navbar from "@components/Navbar";
 import Footer from "@components/Footer";
+import Head from "@components/Head";
 
 
 export default function itemDetails(props){
@@ -153,14 +154,17 @@ export default function itemDetails(props){
     }
 
     return (
-        <body>
-            <Navbar />
-            <div className="container">         
-                {item? renderItemDetails(item) : null}
-                {item? <BuyItemModal show={showBuyModal} toggle={toggleBuyModal} object={item} action={requestBuy} /> : null}
-                {buyRequestModal()}
-            </div>
-            <Footer />
-        </body>
+        <>
+            <Head title="Item Details" />
+            <body>
+                <Navbar />
+                <div className="container">         
+                    {item? renderItemDetails(item) : null}
+                    {item? <BuyItemModal show={showBuyModal} toggle={toggleBuyModal} object={item} action={requestBuy} /> : null}
+                    {buyRequestModal()}
+                </div>
+                <Footer />
+            </body>
+        </>
     )
 }

@@ -51,7 +51,7 @@ export default function Bazaar() {
               </div>
               <div className="col-md-6">
                 <button
-                  className="col-sm-6 btn bg-[#17a2b8] text-white mt-0 pull-right radius-5"
+                  className="col-sm-6 btn btn-info mt-0 pull-right radius-5"
                   onClick={() => {
                     setShowCreateBazaar(true);
                   }}

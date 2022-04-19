@@ -10,6 +10,8 @@ import Image from "next/image";
 import DataTable from 'react-data-table-component';
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Head from '@components/Head';
+
 
 const TransferHistory = () => {
     const router = useRouter();
@@ -146,6 +148,8 @@ const TransferHistory = () => {
 
 
     return (
+        <>
+        <Head title="Transfer History" />
         <body>
             <Navbar />
             <div className="container">
@@ -168,6 +172,7 @@ const TransferHistory = () => {
             </div>
             <Footer />
         </body>
+        </>
     )
 }
 

@@ -59,7 +59,7 @@ export default function Home() {
           margin-bottom: 10px;
         }
       `}</style>
-      <Head />
+      <Head title="Dashboard" />
       <Employee />
       {/* {checkRoles()} */}
       

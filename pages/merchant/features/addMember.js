@@ -84,7 +84,7 @@ export default function AddGroupMember(props) {
             <Modal
                 title="Add New Member"
                 body={addMember()}
-                action="Create Group"
+                action="Add Member"
                 closeClick={props.closeClick}
                 actionClick={postMember}
             />
