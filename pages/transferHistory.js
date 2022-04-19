@@ -11,8 +11,7 @@ import DataTable from 'react-data-table-component';
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-
-export default function TransferHistory() {
+const TransferHistory = () => {
     const router = useRouter();
     const [dataTransfer, setDataTransfer] = useState([]);
     const [searchInput, setSearchInput] = useState(""); 
@@ -30,9 +29,14 @@ export default function TransferHistory() {
     useEffect(() => {
         axios.get(urlTransfer)
         .then(res => {
-            res.data.forEach((data, i) => {       
-                // console.log("res data ", i, " = ", data)
+            // sort res data by date desc
+            let sortData = res.data.sort((a, b) => {
+                return new Date(b.shareAt) - new Date(a.shareAt);
+            });
 
+            console.log("get transfer history");
+            sortData.forEach((data, i) => {       
+                // console.log("res data ", i, " = ", data)
                 setDataTransfer(dataTransfer => 
                     [...dataTransfer, { 
                                     num: i+1,
@@ -54,13 +58,13 @@ export default function TransferHistory() {
             name: "#",
             selector: row => row.num,
             sortable: true,
-            width: "60px",
+            minWidth: "50px",
         },
         {
             name: "To/From",
             selector: row => row.user,
             sortable: true,
-            width: "200px",
+            minWidth: "150px",
             wrap: true,
             // center: true,
         },
@@ -80,7 +84,7 @@ export default function TransferHistory() {
             name: "Note",
             selector: row => row.note,
             sortable: true,
-            width: "400px",
+            minWidth: "400px",
             wrap:true,
             // center: true,
 
@@ -89,7 +93,7 @@ export default function TransferHistory() {
             name: "Date",
             selector: row => row.shareAt,
             sortable: true,
-            width: "200px",
+            minWidth: "200px",
             wrap:true,
             // center: true,
 
@@ -162,3 +166,5 @@ export default function TransferHistory() {
         </body>
     )
 }
+
+export default TransferHistory;

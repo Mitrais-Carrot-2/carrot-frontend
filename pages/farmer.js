@@ -10,10 +10,11 @@ import Router from "next/router";
 export default function Farmer() {
   const [barns, setBarns] = useState([]);
   const [activeBarn, setActiveBarn] = useState({});
-  const [showBarns, setShowBarns] = useState(true);
+  const [showBarns, setShowBarns] = useState(false);
   const [showDistribution, setShowDistribution] = useState(false);
 
   useEffect(() => {
+    if (jsCookie.get("roles")){
     if (!jsCookie.get("roles").split(",").includes("ROLE_FARMER")) {
       Router.push("/");
     } else {
@@ -32,6 +33,7 @@ export default function Farmer() {
           console.log("barns", res.data);
         });
     }
+  }
   }, []);
 
   function updateBarns(newBarns) {

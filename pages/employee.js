@@ -63,7 +63,7 @@ export default function Employee(props) {
                       key={i}
                       id={`btn-${roleTxt.toLowerCase()}`}
                       onClick={() => router.push("/" + role.toLowerCase())}
-                      className="btn btn-carrot radius-5 mx-2"
+                      className="btn btn-carrot radius-5 mx-2 my-1"
                     >
                       {roleTxt}
                     </button>
