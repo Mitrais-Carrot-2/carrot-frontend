@@ -6,7 +6,7 @@ html {
 
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px !important;
+  margin-bottom: 80px !important;
   background: url("../public/img/mitrais-carrot-bg-pattern.png") #ecf0f5 !important;
   background-position: bottom right !important;
   background-repeat: no-repeat !important;
@@ -43,11 +43,12 @@ h2 {
 
 /* Not required for template or sticky footer method. */
 
-body > .container {
+body>.container {
   padding: 0 0 10px 0 !important;
   width: 75%;
   margin: 0 auto;
 }
+
 /* .container {
   padding: 48px 80px;
 } */
@@ -64,7 +65,7 @@ body > .container {
   }
 } */
 
-.footer > .container {
+.footer>.container {
   padding-right: 15px;
   padding-left: 15px;
 }
@@ -140,7 +141,7 @@ table td {
 
 .btn-success,
 .btn-primary {
-  background-color:  #4bbc7e;
+  background-color: #4bbc7e;
   border-color: #4bbc7e;
   -webkit-box-shadow: -2px 6px 33px -8px rgba(75, 188, 126, 1);
   -moz-box-shadow: -2px 6px 33px -8px rgba(75, 188, 126, 1);
@@ -149,14 +150,14 @@ table td {
 
 
 .btn-primary:hover,
-.btn-primary:focus{
+.btn-primary:focus {
   background-color: #33a968;
   border-color: #33a968;
 }
 
 .btn-primary:not(:disabled):not(.disabled).active,
 .btn-primary:not(:disabled):not(.disabled):active,
-.show > .btn-primary.dropdown-toggle {
+.show>.btn-primary.dropdown-toggle {
   background-color: #1e7846;
   border-color: #1e7846;
 }
@@ -289,7 +290,7 @@ table td {
 .btn-carrot:disabled {
   background-color: #d8d8d8;
   border: 1px solid #d8d8d8;
-  -webkit-box-shadow:  0px 0px;
+  -webkit-box-shadow: 0px 0px;
   -moz-box-shadow: 0px 0px;
   box-shadow: 0px 0px;
   color: #999;
@@ -325,7 +326,7 @@ table td {
   /* fallback for old browsers */
   background: -webkit-linear-gradient(to bottom right, #54cfc5, #1FA1CF);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom right,#54cfc5, #1FA1CF);
+  background: linear-gradient(to bottom right, #54cfc5, #1FA1CF);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-box-shadow: 2px 6px 48px 0px rgba(0, 139, 194, 0.29);
   -moz-box-shadow: 2px 6px 48px 0px rgba(0, 139, 194, 0.29);
@@ -513,7 +514,7 @@ a:not([href]):not([tabindex]) {
 }
 
 .admin-tabs .nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
+.nav-pills .show>.nav-link {
   color: #fff;
   background-color: #ff5722;
   font-weight: bold;
@@ -607,15 +608,11 @@ ul.roles {
 }
 
 .search-input {
-	height: 32px;
-	width: 200px;
-	border-radius: 5px;
-	border: 1px solid #e5e5e5;
-	padding: 0 32px 0 16px;
-}
-
-.search-input:hover {
-  cursor: pointer;
+  height: 32px;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid #e5e5e5;
+  padding: 0 32px 0 16px;
 }
 
 /* width */
@@ -625,15 +622,15 @@ ul.roles {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }

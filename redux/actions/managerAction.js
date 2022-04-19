@@ -106,6 +106,7 @@ export const shareToGroup = (token, req) => (dispatch) => {
         console.log("SHARE TO GROUP", err.message);
     }).finally(() => {
         dispatch(getFreezer(token));
+        dispatch(getFreezerHistory(token));
         dispatch({ type: SHARE_TO_GROUP_SUCCESS, payload: `Transfer to Group Success!` });
         // dispatch(getFreezerHistory(token));
     });
