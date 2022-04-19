@@ -62,13 +62,13 @@ const TransferHistory = () => {
             name: "#",
             selector: row => row.num,
             sortable: true,
-            width: "60px",
+            minWidth: "50px",
         },
         {
             name: "To/From",
             selector: row => row.user,
             sortable: true,
-            width: "200px",
+            minWidth: "150px",
             wrap: true,
             // center: true,
         },
@@ -88,7 +88,7 @@ const TransferHistory = () => {
             name: "Note",
             selector: row => row.note,
             sortable: true,
-            width: "400px",
+            minWidth: "400px",
             wrap:true,
             // center: true,
 
@@ -97,7 +97,7 @@ const TransferHistory = () => {
             name: "Date",
             selector: row => row.shareAt,
             sortable: true,
-            width: "200px",
+            minWidth: "200px",
             wrap:true,
             // center: true,
 

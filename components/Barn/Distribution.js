@@ -55,9 +55,11 @@ export default function Distribution(props) {
         <label>Carrot Amount:</label>
         <input
           value={carrotAmount}
-          type="text"
+          type="number"
+          min={1}
+          autoComplete="off"
           name="carrotAmount"
-          onChange={(item) => setCarrotAmount(item.target.value)}
+          onChange={(item) => setCarrotAmount(item.target.value < 0 ? item.target.value * -1 : item.target.value)}
         />
         <label>Message:</label>
         <textarea

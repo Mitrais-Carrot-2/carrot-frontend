@@ -44,7 +44,7 @@ export default function CreateItem(props) {
                 if (!err.response.data.status) {
                     window.alert(err.response.data.message)
                 } else {
-                    window.alert("Failed: Manager Not Selected!")
+                    window.alert("Failed: Bazaar Not Selected!")
                 }
             })
     }

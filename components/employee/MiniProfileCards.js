@@ -22,9 +22,11 @@ export default function MiniProfileCards(props) {
     return (
       <>
         <h3>{props.user.firstName + " " + props.user.lastName}</h3>
-        <h4>{props.user.jobFamily} - {props.user.jobGrade}</h4>
+        <h4>
+          {props.user.jobFamily} - {props.user.jobGrade}
+        </h4>
       </>
-    )
+    );
   }
 
   function basketCardBody() {
@@ -33,9 +35,11 @@ export default function MiniProfileCards(props) {
     return (
       <>
         <h3>My {date.getFullYear()} Basket:</h3>
-        <h3 id="carrot-amount-dashboard">{props.basket ? props.basket.carrotAmount : ""} Carrots</h3>
+        <h3 id="carrot-amount-dashboard">
+          {props.basket ? props.basket.carrotAmount : ""} Carrots
+        </h3>
       </>
-    )
+    );
   }
 
   function historyCardBody() {
@@ -43,35 +47,48 @@ export default function MiniProfileCards(props) {
       <>
         <h3 className="mb-2">My Carrot History</h3>
         <button
-          className="btn-outline-white text-[11px] radius-5 p-1 border-1 border-white hover:bg-white hover:text-blue-800"
-          onClick={() => router.push({
-            pathname: "/transferHistory",
-            query: { carrotAmount: props.basket.carrotAmount, 
-                      shareCarrot:props.basket.shareCarrot, 
-                      rewardCarrot:props.basket.rewardCarrot, 
-                      bazaarCarrot:props.basket.bazaarCarrot }
-          })}
+          className="m-auto w-20 btn-outline-white text-[11px] radius-5 p-1 border-1 border-white hover:bg-white hover:text-blue-800 text-center"
+          onClick={() =>
+            router.push({
+              pathname: "/transferHistory",
+              query: {
+                carrotAmount: props.basket.carrotAmount,
+                shareCarrot: props.basket.shareCarrot,
+                rewardCarrot: props.basket.rewardCarrot,
+                bazaarCarrot: props.basket.bazaarCarrot,
+              },
+            })
+          }
         >
           View
         </button>
       </>
-    )
+    );
   }
 
   return (
     <section>
       <div className="mx-auto my-4">
         <div className="grid grid-cols-3 gap-3 text-white mini-card">
-          <MiniCard cardType="mini-card-profile" 
-                    image={profilePicture} 
-                    body={profileCardBody()} 
-                    imgClass="cursor-pointer hover:opacity-70"
-                    clickAction={()=>router.push("/user/profile")} 
+          <MiniCard
+            cardType="mini-card-profile"
+            image={profilePicture}
+            body={profileCardBody()}
+            imgClass="cursor-pointer hover:opacity-70"
+            clickAction={() => router.push("/user/profile")}
           />
-          <MiniCard cardType="mini-card-basket" image={basketIcon} body={basketCardBody()} />
-          <MiniCard cardType="mini-card-history" image={carrotIconTwo} body={historyCardBody()} />
+          <MiniCard
+            cardType="mini-card-basket"
+            image={basketIcon}
+            body={basketCardBody()}
+          />
+          <MiniCard
+            cardType="mini-card-history"
+            image={carrotIconTwo}
+            body={historyCardBody()}
+          />
         </div>
       </div>
     </section>
-  )
+  );
 }
