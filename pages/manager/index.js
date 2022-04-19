@@ -28,14 +28,16 @@ const Index = ({ state }) => {
     // console.log("manager", manager);
 
     useEffect(() => {
-        if (!jsCookie.get("roles").split(",").includes("ROLE_MANAGER")) {
-            Router.push("/");
-        } else {
-            getGroup();
-            dispatch(getStaff(auth.token));
-            dispatch(getFreezer(auth.token));
-            dispatch(getFreezerHistory(auth.token));
-            dispatch({ type: "SHARE_TO_STAFF_SUCCESS", payload: null });
+        if(jsCookie.get("roles")) {
+            if (!jsCookie.get("roles").split(",").includes("ROLE_MANAGER")) {
+                Router.push("/");
+            } else {
+                getGroup();
+                dispatch(getStaff(auth.token));
+                dispatch(getFreezer(auth.token));
+                dispatch(getFreezerHistory(auth.token));
+                dispatch({ type: "SHARE_TO_STAFF_SUCCESS", payload: null });
+            }
         }
     }, []);
 
