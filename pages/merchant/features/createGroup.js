@@ -24,7 +24,6 @@ export default function CreateGroup(props) {
             label: `${s.firstName} ${s.lastName}`
         }
     })
-
     function postGroup() {
         console.log(group)
         axios.post(process.env.NEXT_PUBLIC_API_URL + "bazaar/group/", group)
