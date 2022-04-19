@@ -43,7 +43,7 @@ export default function Exchange() {
 
     return (
         <body>
-            <Head />
+            <Head title={"Merchant"} />
             <Navbar />
             <Merchant />
             <div className="container">

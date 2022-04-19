@@ -39,7 +39,7 @@ export default function BazaarItem() {
 
     return (
         <body>
-            <Head />
+            <Head title={"Merchant"} />
             <Navbar />
             <Merchant />
             <div className="container">
@@ -85,12 +85,12 @@ export default function BazaarItem() {
                             </thead>
                             <tbody>
                                 {bazaarItem.map((data, index) => {
-                                    if(index+1 == bazaarItem.length) {
+                                    if (index + 1 == bazaarItem.length) {
                                         console.log("end of table")
                                         lastDataId.current = "last-data"
                                         console.log("id last = ", lastDataId.current)
                                     }
-                                    return ( 
+                                    return (
                                         <tr id={lastDataId.current} key={index + 1}>
                                             <td>{index + 1}</td>
                                             <td style={{ display: "none" }}>{data.id}</td>

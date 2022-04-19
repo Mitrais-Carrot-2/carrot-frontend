@@ -32,7 +32,7 @@ export default function Bazaar() {
 
   return (
     <body>
-      <Head />
+      <Head title={"Merchant"} />
       <Navbar />
       <Merchant />
       <div className="container">

@@ -37,7 +37,7 @@ export default function StaffGroup(props) {
 
     return (
         <body>
-            <Head />
+            <Head title={"Merchant"} />
             <Navbar />
             <Merchant />
             <div className="container">

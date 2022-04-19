@@ -9,7 +9,7 @@ export default function MerchantPage() {
     const router = useRouter();
     return (
         <body>
-            <Head />
+            <Head title={"Merchant"} />
             <Navbar />
             <Merchant />
             <Footer />
