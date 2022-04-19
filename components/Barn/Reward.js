@@ -89,7 +89,7 @@ export default function Reward(props) {
                     ).innerHTML = "Save");
               });
           }}
-          className="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-0 px-0 rounded "
+          className="btn border-none bg-[#4bbc7e] hover:bg-[#33a968] text-white font-bold p-1 my-1 rounded "
         >
           Edit
         </Button>
@@ -99,7 +99,7 @@ export default function Reward(props) {
           onClick={() => {
             props.deleteReward(props.reward.id);
           }}
-          className="btn bg-red-500 hover:bg-red-700 text-white font-bold py-0 px-0 rounded "
+          className="btn bg-red-500 hover:bg-red-700 text-white font-bold p-1 rounded "
         >
           Delete
         </p>

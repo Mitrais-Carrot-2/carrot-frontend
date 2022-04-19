@@ -37,9 +37,17 @@ export default function Distribution(props) {
     };
   });
 
+
+  function clearForm(state) {
+    setDistributeCarrot(state)
+    setManagerId(null)
+    setCarrotAmount(0)
+    setMessage("")
+  }
+
   function getTransactionDetail() {
     return (
-      <div className="grid grid-cols-2 gap-1">
+      <form className="grid grid-cols-2 gap-1">
         <label className="align-right">Manager ID:</label>
         <Select
           className="my-2"
@@ -60,6 +68,20 @@ export default function Distribution(props) {
           autoComplete="off"
           name="carrotAmount"
           onChange={(item) => setCarrotAmount(item.target.value < 0 ? item.target.value * -1 : item.target.value)}
+          className="form-control block
+          w-full
+          px-3
+          py-3
+          text-base
+          font-normal
+          text-gray-700
+          bg-white bg-clip-padding
+          border border-solid border-gray-300
+          rounded
+          transition
+          ease-in-out
+          m-0
+          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
         />
         <label>Message:</label>
         <textarea
@@ -67,51 +89,71 @@ export default function Distribution(props) {
           type="text"
           name="message"
           onChange={(item) => setMessage(item.target.value)}
+          className="form-control block
+          w-full
+          px-3
+          py-3
+          text-base
+          font-normal
+          text-gray-700
+          bg-white bg-clip-padding
+          border border-solid border-gray-300
+          rounded
+          transition
+          ease-in-out
+          mb-3
+          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
         />
-      </div>
+      </form>
     );
   }
   function sendCarrot() {
-    axios
-      .post(
-        process.env.NEXT_PUBLIC_API_URL + "farmer/transfer/distribute",
-        {
-          managerId: managerId,
-          barnId: props.barn.id,
-          carrotAmount: carrotAmount,
-          note: message,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${jsCookie.get("token")}`,
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Credentials": true,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        window.alert(
-          `Successfully distributed ${carrotAmount} carrot to ${managerName}`
-        );
-        setNewTransfer([
-          ...newTransfer,
+    if (managerId && carrotAmount > 0) {
+        axios
+        .post(
+          process.env.NEXT_PUBLIC_API_URL + "farmer/transfer/distribute",
           {
-            id: res.data.transferId,
-            carrotAmount: res.data.carrotAmount,
-            receiverId: res.data.receiverId,
-            shareAt: res.data.shareAt,
-            note: res.data.note,
+            managerId: managerId,
+            barnId: props.barn.id,
+            carrotAmount: carrotAmount,
+            note: message,
           },
-        ]);
-        props.barn.carrotAmount -= res.data.carrotAmount;
-        props.barn.distributedCarrot += res.data.carrotAmount;
-      })
-      .catch((err) => {
-        console.log(err);
-        window.alert(`Failed to distribute carrot, Error: ${err}`);
-      });
+          {
+            headers: {
+              Authorization: `Bearer ${jsCookie.get("token")}`,
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Credentials": true,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          window.alert(
+            `Successfully distributed ${carrotAmount} carrot to ${managerName}`
+          );
+          setNewTransfer([
+            ...newTransfer,
+            {
+              id: res.data.transferId,
+              carrotAmount: res.data.carrotAmount,
+              receiverId: res.data.receiverId,
+              shareAt: res.data.shareAt,
+              note: res.data.note,
+            },
+          ]);
+          props.barn.carrotAmount -= res.data.carrotAmount;
+          props.barn.distributedCarrot += res.data.carrotAmount;
+          setManagerId(null)
+        })
+        .catch((err) => {
+          console.log(err);
+          window.alert(`Failed to distribute carrot, Error: ${err}`);
+        });
+    }
+    else {
+      window.alert("Please fill valid data!");
+    }
   }
   function showPage() {
     if (props.barn) {
@@ -158,7 +200,7 @@ export default function Distribution(props) {
             <Modal
               title="Distribution Detail"
               body={getTransactionDetail()}
-              closeClick={setDistributeCarrot}
+              closeClick={clearForm}
               action="Send Carrot"
               actionClick={sendCarrot}
             />

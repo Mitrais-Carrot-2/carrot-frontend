@@ -46,7 +46,7 @@ const TransferHistory = () => {
                 setDataTransfer(dataTransfer => 
                     [...dataTransfer, { 
                                     num: i+1,
-                                    user: data.username,
+                                    user: data.name,
                                     type: data.type.substring(5), 
                                     note: data.note, 
                                     carrotAmount: data.carrotAmount,
