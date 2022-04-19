@@ -32,6 +32,7 @@ export default function EditUser() {
     const urlManager = `http://localhost:8181/api/farmer/transfer/manager`;
 
     axios.get(urlManager).then((response) => setAllManager(response.data));
+    
   }
 
   const offices = [
@@ -126,7 +127,7 @@ export default function EditUser() {
     return {
       value: s.userId,
 
-      label: `${s.userId}: ${s.username} - ${s.firstName} ${s.lastName}`,
+      label: `${s.username} - ${s.firstName} ${s.lastName}`,
     };
   });
 
@@ -172,6 +173,7 @@ export default function EditUser() {
           </thead>
           <tbody>
             {userList.map((user, index) => {
+              let manager = allManager.find((item) => item.userId === user.supervisorId)
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
@@ -180,13 +182,8 @@ export default function EditUser() {
                   <td>{user.firstName + " " + user.lastName}</td>
                   <td>{user.jobFamily + ", " + user.jobGrade}</td>
                   <td>
-                    {allManager.map((item) => {
-                      if (item.userId === user.supervisorId) {
-                        return item.username;
-                      } else {
-                        return "No Manager";
-                      }
-                    })}
+                    {manager ? manager.firstName + " " + manager.lastName : "No Supervisor"}
+                    {/* {manager ? manager.firstName? manager.firstName + " " + manager.lastName : "Loading..." : "No Supervisor"} */}
                   </td>
                   {/* <td>{user.supervisorId}</td> */}
                   <td>
@@ -211,7 +208,14 @@ export default function EditUser() {
                     >
                       <i className="fa fa-edit text-blue-600 fa-x px-1"></i>
                     </button>
-                    {showModal && (
+                    
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        {showModal && (
                       <Modal
                         title={"Edit " + userFormData.username}
                         body={editModal()}
@@ -220,12 +224,6 @@ export default function EditUser() {
                         actionClick={updateUser}
                       />
                     )}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
       </div>
     </section>
   );

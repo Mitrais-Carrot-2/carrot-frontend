@@ -80,7 +80,7 @@ const Tabs = (props) => {
                 setErrorMessage('Not enough Carrot Left!');
             }
         } else {
-            setErrorMessage('Please fill in all the fields!');
+            setErrorMessage('Please fill in valid data!');
         }
     }
 
