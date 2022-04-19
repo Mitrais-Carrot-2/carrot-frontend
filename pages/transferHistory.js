@@ -45,7 +45,7 @@ const TransferHistory = () => {
                                     note: data.note, 
                                     carrotAmount: data.carrotAmount,
                                     shareAt: data.shareAt.substring(0,19).replace("T", " ")
-                                    }]
+                    }]
                     
                     )
             })
