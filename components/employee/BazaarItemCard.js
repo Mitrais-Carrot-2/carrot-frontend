@@ -110,7 +110,7 @@ export default function BazaarItemCard(props) {
                     />
                     <div className="flex-auto p-6 card-body">
                         <h5 id={"item-name-" + props.index} className="card-title truncate">{item.name}</h5>
-                        <p className="card-title-orange">{item.price} Carrots</p>
+                        <p className="card-title-orange truncate">{item.price} Carrots</p>
                     </div>
                     {renderViewDetailsButton(viewDetailsButtonClassMany)}
                 </div>
