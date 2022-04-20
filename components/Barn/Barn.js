@@ -66,7 +66,7 @@ export default function Barn(props) {
             />
             <label>Carrot Amount</label>
             <input
-              value={selectedBarn.carrotAmount}
+              value={selectedBarn.carrotAmount < 0 ? selectedBarn.carrotAmount * -1 : selectedBarn.carrotAmount}
               type="number"
               name="carrotAmount"
               onChange={(item) =>

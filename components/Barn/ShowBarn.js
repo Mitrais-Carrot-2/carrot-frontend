@@ -67,7 +67,7 @@ export default function ShowBarn(props) {
         return (
           <Fragment>
             <button
-              className="btn btn-info m-2"
+              className="btn btn-info m-1"
               onClick={() => {
                 setSelectedBarn({
                   id: row.id,
@@ -84,7 +84,7 @@ export default function ShowBarn(props) {
               Manage
             </button>
             <button
-              className="btn btn-info m-2"
+              className="btn btn-info m-1"
               onClick={() => {
                 setSelectedBarn({
                   id: row.id,
